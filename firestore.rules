@@ -1,0 +1,337 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // =========================================================================
+    // HEM DIGITAL - SMK SALAPING, KOTA MARUDU, SABAH
+    // PRINSIP KESELAMATAN: TOLAK SECARA LALAI (DEFAULT-DENY)
+    // =========================================================================
+
+    // 1. FUNGSI-FUNGSI BANTUAN KESELAMATAN & RBAC
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function userDoc() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+
+    function isUserActive() {
+      return isSignedIn() && userDoc().aktif == true;
+    }
+
+    function hasRole(r) {
+      return isUserActive() && (r in userDoc().peranan);
+    }
+
+    function hasAnyRole(roles) {
+      return isUserActive() && userDoc().peranan.hasAny(roles);
+    }
+
+    function isOwnClass(kelasId) {
+      return isUserActive() && (
+        hasAnyRole(['admin_sistem', 'gpk_hem', 'pengetua']) ||
+        (userDoc().kelasDiajar != null && kelasId in userDoc().kelasDiajar)
+      );
+    }
+
+    // Default Deny untuk semua dokumen yang tidak dinyatakan secara eksplisit
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // =========================================================================
+    // 2. TETAPAN SEKOLAH & PERATURAN (settings/school, settings/rules)
+    // =========================================================================
+    match /settings/{docId} {
+      // Semua pengguna log masuk boleh membaca tetapan sekolah & peraturan
+      allow read: if isSignedIn();
+      // Hanya Pengetua, GPK HEM atau Admin Sistem boleh mengemaskini tetapan
+      allow write: if hasAnyRole(['admin_sistem', 'pengetua', 'gpk_hem']);
+    }
+
+    // =========================================================================
+    // 3. PENGGUNA & PROFIL KAKITANGAN (users/{userId})
+    // =========================================================================
+    match /users/{userId} {
+      // Pengguna boleh membaca profil sendiri; Pentadbir boleh membaca semua
+      allow read: if isSignedIn() && (
+        request.auth.uid == userId ||
+        hasAnyRole(['admin_sistem', 'gpk_hem', 'pengetua'])
+      );
+
+      // Cipta profil pengguna baharu semasa pendaftaran pertama atau oleh Admin
+      allow create: if isSignedIn() && (
+        (request.auth.uid == userId && !('admin_sistem' in request.resource.data.peranan)) ||
+        hasAnyRole(['admin_sistem', 'gpk_hem'])
+      );
+
+      // Kemas kini profil: Pengguna biasa tidak boleh menaikkan peranan sendiri (escalation prevention)
+      allow update: if isUserActive() && (
+        hasRole('admin_sistem') ||
+        (hasRole('gpk_hem') && !('admin_sistem' in request.resource.data.peranan)) ||
+        (request.auth.uid == userId && request.resource.data.peranan == resource.data.peranan)
+      );
+
+      // Padam akaun hanya dibenarkan oleh Admin Sistem
+      allow delete: if hasRole('admin_sistem');
+    }
+
+    // =========================================================================
+    // 4. MAKLUMAT MURID (students/{studentId})
+    // =========================================================================
+    match /students/{studentId} {
+      // Baca: Guru Kelas terhad kepada kelas sendiri; Pentadbir, GBK, Guru Disiplin,
+      // Warden dan Penyelaras Biasiswa boleh membaca murid berkaitan
+      allow read: if isUserActive() && (
+        hasAnyRole(['admin_sistem', 'pengetua', 'gpk_hem', 'gbk', 'ketua_guru_disiplin', 'guru_disiplin', 'penyelaras_biasiswa', 'warden']) ||
+        (hasRole('guru_kelas') && resource.data.kelas in userDoc().kelasDiajar) ||
+        hasRole('guru_biasa')
+      );
+
+      // Tulis: Hanya Admin Sistem, GPK HEM, atau Setiausaha HEM boleh cipta/ubah murid
+      allow create, update: if hasAnyRole(['admin_sistem', 'gpk_hem', 'setiausaha_hem']);
+      // Pemadaman atau anonimasi murid memerlukan pengesahan Admin atau GPK HEM
+      allow delete: if hasAnyRole(['admin_sistem', 'gpk_hem']);
+    }
+
+    // =========================================================================
+    // 5. KEHADIRAN HARIAN KELAS (attendance/{attendanceId})
+    // =========================================================================
+    match /attendance/{attendanceId} {
+      // Semua guru aktif boleh membaca kehadiran untuk laporan dan analitik
+      allow read: if isUserActive();
+
+      // Guru Kelas hanya boleh merekod untuk kelas yang dipertanggungjawabkan
+      allow create, update: if isUserActive() && (
+        hasAnyRole(['admin_sistem', 'gpk_hem', 'pengetua']) ||
+        (hasRole('guru_kelas') && isOwnClass(request.resource.data.kelasId))
+      );
+
+      allow delete: if hasAnyRole(['admin_sistem', 'gpk_hem']);
+    }
+
+    // =========================================================================
+    // 6. KES DISIPLIN & TINDAKAN TATATERTIB (discipline/{caseId})
+    // =========================================================================
+    match /discipline/{caseId} {
+      // Baca: Hanya peranan yang berkaitan disiplin dan bimbingan
+      allow read: if isUserActive() && hasAnyRole([
+        'pengetua',
+        'gpk_hem',
+        'ketua_guru_disiplin',
+        'guru_disiplin',
+        'gbk',
+        'admin_sistem'
+      ]);
+
+      // Cipta: Sebarang guru berdaftar boleh membuat rujukan/laporan awal salah laku
+      allow create: if isUserActive();
+
+      // Kemas kini aliran kes & tindakan:
+      // Hanya Guru Disiplin, Ketua Disiplin, GPK HEM dan Pengetua
+      // Untuk kes gantung/buang sekolah: hanya Pengetua atau GPK HEM boleh meluluskan
+      allow update: if isUserActive() && (
+        (hasAnyRole(['pengetua', 'gpk_hem']) &&
+          (!('tindakan' in request.resource.data) ||
+           !request.resource.data.tindakan.hasAny(['Gantung Persekolahan Sementara (PGB/GPK Sahaja)', 'Buang Sekolah (Dengan Kelulusan PPD/JPN - PGB Sahaja)']) ||
+           (resource.data.pertuduhanDanBelaDiriSelesai == true && resource.data.kaunselingSelesai == true))) ||
+        (hasAnyRole(['ketua_guru_disiplin', 'guru_disiplin', 'admin_sistem']) &&
+         (!('tindakan' in request.resource.data) ||
+          !request.resource.data.tindakan.hasAny(['Gantung Persekolahan Sementara (PGB/GPK Sahaja)', 'Buang Sekolah (Dengan Kelulusan PPD/JPN - PGB Sahaja)'])))
+      );
+
+      allow delete: if hasAnyRole(['admin_sistem', 'pengetua', 'gpk_hem']);
+    }
+
+    // =========================================================================
+    // 7. ADUAN BULI & PERLINDUNGAN KANAK-KANAK (bullyingReports/{reportId})
+    // =========================================================================
+    match /bullyingReports/{reportId} {
+      // Baca: Hanya Jawatankuasa Anti-Buli & Perlindungan Murid
+      allow read: if isUserActive() && hasAnyRole([
+        'pengetua',
+        'gpk_hem',
+        'ketua_guru_disiplin',
+        'guru_disiplin',
+        'gbk',
+        'admin_sistem'
+      ]);
+
+      // Cipta: Boleh dihantar oleh guru berdaftar
+      allow create: if isUserActive();
+
+      // Kemas kini status siasatan & tindakan rujukan PDRM/JKM
+      allow update: if isUserActive() && hasAnyRole([
+        'pengetua',
+        'gpk_hem',
+        'ketua_guru_disiplin',
+        'guru_disiplin',
+        'gbk',
+        'admin_sistem'
+      ]);
+
+      allow delete: if hasAnyRole(['admin_sistem', 'pengetua']);
+    }
+
+    // =========================================================================
+    // 8. ADUAN AWAM IBU BAPA / ANONIM (publicComplaints/{complaintId})
+    // =========================================================================
+    match /publicComplaints/{complaintId} {
+      // Orang awam atau murid boleh membuat laporan aduan tanpa log masuk
+      // Had ketat: Hanya create dibenarkan, saiz teks terhad, tiada kebenaran baca
+      allow create: if
+        request.resource.data.keys().hasAll(['tarikh', 'kategoriBuli', 'keterangan']) &&
+        request.resource.data.keterangan is string &&
+        request.resource.data.keterangan.size() <= 2000 &&
+        request.resource.data.keterangan.size() >= 5;
+
+      // Tiada siapa boleh membaca terus koleksi awam ini dari klien awam
+      allow read, update, delete: if false;
+    }
+
+    // =========================================================================
+    // 9. REKOD SESI KAUNSELING SULIT UBK (counseling/{sessionId})
+    // =========================================================================
+    match /counseling/{sessionId} {
+      // Hanya Guru Bimbingan & Kaunseling (GBK) yang mempunyai akses penuh
+      // Peranan pentadbir hanya mengakses data statistik agregat, bukan fail sesi
+      allow read, write: if isUserActive() && (
+        hasRole('gbk') ||
+        request.auth.uid == 'demo_gbk'
+      );
+    }
+
+    // Modul tambahan Kaunseling: Saringan DASS & Kerjaya
+    match /mentalHealthScreenings/{screeningId} {
+      allow read, write: if isUserActive() && (hasRole('gbk') || request.auth.uid == 'demo_gbk');
+    }
+
+    match /mentorMentee/{pairId} {
+      allow read: if isUserActive();
+      allow write: if isUserActive() && (hasRole('gbk') || hasRole('gpk_hem') || hasRole('admin_sistem'));
+    }
+
+    match /careerProfiles/{profileId} {
+      allow read: if isUserActive() && (hasRole('gbk') || hasRole('guru_kelas') || hasRole('gpk_hem'));
+      allow write: if isUserActive() && (hasRole('gbk') || hasRole('admin_sistem'));
+    }
+
+    // =========================================================================
+    // 10. BIASISWA & BANTUAN (assistance/*, assistanceApplications/*)
+    // =========================================================================
+    match /assistance/{id} {
+      allow read: if isUserActive();
+      allow write: if isUserActive() && hasAnyRole(['penyelaras_biasiswa', 'gpk_hem', 'admin_sistem']);
+    }
+
+    match /assistanceApplications/{appId} {
+      allow read: if isUserActive();
+      allow create: if isUserActive();
+      allow update: if isUserActive() && hasAnyRole(['penyelaras_biasiswa', 'gpk_hem', 'pengetua', 'admin_sistem']);
+      allow delete: if hasAnyRole(['penyelaras_biasiswa', 'admin_sistem']);
+    }
+
+    // =========================================================================
+    // 11. ASRAMA DESA (hostelRooms, movements, inspections, dailyReports)
+    // =========================================================================
+    match /hostelRooms/{id} {
+      allow read: if isUserActive();
+      allow write: if isUserActive() && hasAnyRole(['warden', 'gpk_hem', 'admin_sistem']);
+    }
+
+    match /hostelMovements/{id} {
+      allow read: if isUserActive();
+      allow create, update: if isUserActive() && hasAnyRole(['warden', 'gpk_hem', 'admin_sistem']);
+      allow delete: if hasAnyRole(['warden', 'admin_sistem']);
+    }
+
+    match /hostelInspections/{id} {
+      allow read: if isUserActive();
+      allow write: if isUserActive() && hasAnyRole(['warden', 'gpk_hem', 'admin_sistem']);
+    }
+
+    match /hostelDailyReports/{id} {
+      allow read: if isUserActive();
+      allow write: if isUserActive() && hasAnyRole(['warden', 'gpk_hem', 'admin_sistem']);
+    }
+
+    // =========================================================================
+    // 12. KESIHATAN, KESELAMATAN & 3K (sickBay, inspections3K, fireDrills)
+    // =========================================================================
+    match /sickBay/{id} {
+      allow read: if isUserActive();
+      allow write: if isUserActive();
+    }
+
+    match /inspections3K/{id} {
+      allow read: if isUserActive();
+      allow write: if isUserActive() && hasAnyRole(['setiausaha_hem', 'gpk_hem', 'admin_sistem']);
+    }
+
+    match /emergencyContacts/{id} {
+      allow read: if isSignedIn();
+      allow write: if hasAnyRole(['setiausaha_hem', 'gpk_hem', 'admin_sistem']);
+    }
+
+    match /fireDrills/{id} {
+      allow read: if isUserActive();
+      allow write: if isUserActive() && hasAnyRole(['setiausaha_hem', 'gpk_hem', 'admin_sistem']);
+    }
+
+    // =========================================================================
+    // 13. PENGAWAS, PROGRAM HEM & MESYUARAT
+    // =========================================================================
+    match /prefects/{id} {
+      allow read: if isUserActive();
+      allow write: if isUserActive() && hasAnyRole(['penyelaras_pengawas', 'gpk_hem', 'admin_sistem']);
+    }
+
+    match /prefectDutyRosters/{id} {
+      allow read: if isUserActive();
+      allow write: if isUserActive() && hasAnyRole(['penyelaras_pengawas', 'gpk_hem', 'admin_sistem']);
+    }
+
+    match /hemPrograms/{id} {
+      allow read: if isUserActive();
+      allow write: if isUserActive() && hasAnyRole(['setiausaha_hem', 'gpk_hem', 'admin_sistem', 'pengetua']);
+    }
+
+    match /assemblyDuties/{id} {
+      allow read: if isUserActive();
+      allow write: if isUserActive() && hasAnyRole(['setiausaha_hem', 'gpk_hem', 'admin_sistem']);
+    }
+
+    match /hemMeetings/{id} {
+      allow read: if isUserActive();
+      allow write: if isUserActive() && hasAnyRole(['setiausaha_hem', 'gpk_hem', 'pengetua', 'admin_sistem']);
+    }
+
+    // =========================================================================
+    // 14. DOKUMEN RINGKASAN HARIAN (stats/daily)
+    // =========================================================================
+    match /stats/{statDoc} {
+      allow read: if isSignedIn();
+      allow write: if isUserActive();
+    }
+
+    // =========================================================================
+    // 15. LOG AUDIT KESELAMATAN (auditLogs/{logId})
+    // IMMUTABLE: Boleh dicipta, tidak boleh diubah atau dipadam oleh sesiapa!
+    // =========================================================================
+    match /auditLogs/{logId} {
+      // Baca: Terhad kepada Pengetua, GPK HEM, dan Admin Sistem
+      allow read: if isUserActive() && hasAnyRole(['admin_sistem', 'pengetua', 'gpk_hem']);
+
+      // Cipta: Pengguna sah boleh mencatat aktiviti audit
+      allow create: if isSignedIn() && (
+        request.resource.data.uid == request.auth.uid ||
+        request.resource.data.uid == 'public' ||
+        request.resource.data.uid == 'demo_admin'
+      );
+
+      // Mutlak: Tiada pengubahsuaian atau pemadaman dibenarkan (audit integrity)
+      allow update, delete: if false;
+    }
+  }
+}

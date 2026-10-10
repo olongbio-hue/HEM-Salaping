@@ -1,0 +1,52 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isLessThan5MB() {
+      return request.resource.size < 5 * 1024 * 1024;
+    }
+
+    function isImageOrPdf() {
+      return request.resource.contentType.matches('image/.*') ||
+             request.resource.contentType == 'application/pdf';
+    }
+
+    // Default deny
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+
+    // Bukti Aduan Buli (Public atau Guru)
+    match /aduan_buli/{fileName} {
+      allow read: if isSignedIn();
+      allow create: if isLessThan5MB() && isImageOrPdf();
+      allow update, delete: if isSignedIn();
+    }
+
+    // Dokumen Sokongan Biasiswa & Bantuan (KWAPM, BAP, BKP)
+    match /dokumen_bantuan/{fileName} {
+      allow read: if isSignedIn();
+      allow create, update: if isSignedIn() && isLessThan5MB() && isImageOrPdf();
+      allow delete: if isSignedIn();
+    }
+
+    // Gambar Audit 3K & Pemeriksaan Asrama
+    match /audit_3k/{fileName} {
+      allow read: if isSignedIn();
+      allow create, update: if isSignedIn() && isLessThan5MB() && request.resource.contentType.matches('image/.*');
+      allow delete: if isSignedIn();
+    }
+
+    // Lampiran Program HEM & Minit Mesyuarat
+    match /program_hem/{fileName} {
+      allow read: if isSignedIn();
+      allow create, update: if isSignedIn() && isLessThan5MB() && isImageOrPdf();
+      allow delete: if isSignedIn();
+    }
+  }
+}

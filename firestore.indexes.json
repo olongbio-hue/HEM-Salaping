@@ -1,0 +1,78 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "students",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "tingkatan", "order": "ASCENDING" },
+        { "fieldPath": "kelas", "order": "ASCENDING" },
+        { "fieldPath": "status", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "attendance",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "kelasId", "order": "ASCENDING" },
+        { "fieldPath": "tarikh", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "discipline",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "tarikh", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "discipline",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "tahap", "order": "ASCENDING" },
+        { "fieldPath": "tarikh", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "bullyingReports",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "tarikh", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "auditLogs",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "koleksi", "order": "ASCENDING" },
+        { "fieldPath": "masa", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "hostelMovements",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "statusKelulusan", "order": "ASCENDING" },
+        { "fieldPath": "tarikhKeluar", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "assistanceApplications",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "jenisBantuan", "order": "ASCENDING" },
+        { "fieldPath": "status", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "hemPrograms",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "unit", "order": "ASCENDING" },
+        { "fieldPath": "tarikh", "order": "DESCENDING" }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

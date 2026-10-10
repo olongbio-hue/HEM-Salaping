@@ -1,0 +1,266 @@
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { UserProfile, UserRole } from '../types';
+import { DEMO_USERS } from '../constants';
+import { getUsersList, saveUserProfile } from '../services/dataService';
+
+interface AuthContextType {
+  currentUser: UserProfile | null;
+  loading: boolean;
+  loginWithEmail: (email: string, pass: string) => Promise<boolean>;
+  loginAsDemoUser: (uid: string) => void;
+  logout: () => void;
+  hasRole: (role: UserRole | UserRole[]) => boolean;
+  isPengetuaOrGpkHem: boolean;
+  canRecordAttendance: (classId?: string) => boolean;
+  canViewCounseling: boolean;
+  canManageDiscipline: boolean;
+  canManageAssistance: boolean;
+  canManageHostel: boolean;
+  canManagePrefects: boolean;
+  canManage3K: boolean;
+  canManageUsers: boolean;
+  allUsers: UserProfile[];
+  refreshUsers: () => Promise<void>;
+  updateUserRole: (uid: string, roles: UserRole[], classes?: string[]) => Promise<void>;
+}
+
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+const AUTH_STORAGE_KEY = 'hem_current_user_uid_v1';
+
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [currentUser, setCurrentUser] = useState<UserProfile | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [allUsers, setAllUsers] = useState<UserProfile[]>([]);
+
+  useEffect(() => {
+    async function initAuth() {
+      try {
+        const users = await getUsersList();
+        setAllUsers(users);
+
+        const savedUid = localStorage.getItem(AUTH_STORAGE_KEY);
+        if (savedUid) {
+          const matched = users.find(u => u.uid === savedUid);
+          if (matched) {
+            setCurrentUser(matched);
+          } else {
+            // Default to GPK HEM if saved not found
+            setCurrentUser(users.find(u => u.uid === 'demo_gpk_hem') || users[0] || null);
+          }
+        } else {
+          // Default start as GPK HEM for rich showcase
+          const defaultUser = users.find(u => u.uid === 'demo_gpk_hem') || users[0];
+          if (defaultUser) {
+            setCurrentUser(defaultUser);
+            localStorage.setItem(AUTH_STORAGE_KEY, defaultUser.uid);
+          }
+        }
+      } catch (err) {
+        console.error('Ralat inisialisasi sesi pengguna:', err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    initAuth();
+  }, []);
+
+  const refreshUsers = async () => {
+    const list = await getUsersList();
+    setAllUsers(list);
+    if (currentUser) {
+      const updatedCurrent = list.find(u => u.uid === currentUser.uid);
+      if (updatedCurrent) setCurrentUser(updatedCurrent);
+    }
+  };
+
+  const loginWithEmail = async (email: string, pass: string): Promise<boolean> => {
+    // Check against demo accounts or existing users
+    const normalizedEmail = email.trim().toLowerCase();
+    const demoMatch = DEMO_USERS.find(
+      u => u.emel.toLowerCase() === normalizedEmail && (u.kataLaluan === pass || pass === 'salaping123')
+    );
+
+    if (demoMatch) {
+      const users = await getUsersList();
+      const existing = users.find(u => u.uid === demoMatch.uid);
+      const userProfile: UserProfile = existing || {
+        uid: demoMatch.uid,
+        nama: demoMatch.nama,
+        emel: demoMatch.emel,
+        peranan: demoMatch.peranan,
+        kelasDiajar: demoMatch.kelasDiajar,
+        aktif: true,
+        dicipta: '2026-01-01T00:00:00.000Z'
+      };
+      setCurrentUser(userProfile);
+      localStorage.setItem(AUTH_STORAGE_KEY, userProfile.uid);
+      return true;
+    }
+
+    const matchedUser = allUsers.find(u => u.emel.toLowerCase() === normalizedEmail);
+    if (matchedUser && pass === 'salaping123') {
+      setCurrentUser(matchedUser);
+      localStorage.setItem(AUTH_STORAGE_KEY, matchedUser.uid);
+      return true;
+    }
+
+    throw new Error('E-mel atau kata laluan tidak sah. Gunakan kata laluan demo: salaping123');
+  };
+
+  const loginAsDemoUser = (uid: string) => {
+    const matched = allUsers.find(u => u.uid === uid) || DEMO_USERS.find(u => u.uid === uid);
+    if (matched) {
+      const profile: UserProfile = {
+        uid: matched.uid,
+        nama: matched.nama,
+        emel: matched.emel,
+        peranan: matched.peranan,
+        kelasDiajar: matched.kelasDiajar,
+        aktif: true,
+        dicipta: '2026-01-01T00:00:00.000Z'
+      };
+      setCurrentUser(profile);
+      localStorage.setItem(AUTH_STORAGE_KEY, profile.uid);
+    }
+  };
+
+  const logout = () => {
+    setCurrentUser(null);
+    localStorage.removeItem(AUTH_STORAGE_KEY);
+  };
+
+  const hasRole = (role: UserRole | UserRole[]): boolean => {
+    if (!currentUser || !currentUser.aktif) return false;
+    // Admin sistem has global bypass for configuration/administrative views
+    if (currentUser.peranan.includes('admin_sistem')) return true;
+
+    const roleArr = Array.isArray(role) ? role : [role];
+    return currentUser.peranan.some(r => roleArr.includes(r));
+  };
+
+  const isPengetuaOrGpkHem = hasRole(['pengetua', 'gpk_hem', 'admin_sistem']);
+
+  const canRecordAttendance = (classId?: string): boolean => {
+    if (!currentUser) return false;
+    if (isPengetuaOrGpkHem) return true;
+    if (currentUser.peranan.includes('guru_kelas')) {
+      if (!classId) return true;
+      return currentUser.kelasDiajar?.includes(classId) ?? true;
+    }
+    return false;
+  };
+
+  const canViewCounseling = Boolean(
+    currentUser && (
+      currentUser.peranan.includes('gbk') ||
+      currentUser.peranan.includes('pengetua') ||
+      currentUser.peranan.includes('gpk_hem') ||
+      currentUser.peranan.includes('admin_sistem')
+    )
+  );
+
+  const canManageDiscipline = Boolean(
+    currentUser && (
+      currentUser.peranan.includes('ketua_guru_disiplin') ||
+      currentUser.peranan.includes('guru_disiplin') ||
+      currentUser.peranan.includes('gpk_hem') ||
+      currentUser.peranan.includes('pengetua') ||
+      currentUser.peranan.includes('admin_sistem')
+    )
+  );
+
+  const canManageAssistance = Boolean(
+    currentUser && (
+      currentUser.peranan.includes('penyelaras_biasiswa') ||
+      currentUser.peranan.includes('gpk_hem') ||
+      currentUser.peranan.includes('pengetua') ||
+      currentUser.peranan.includes('admin_sistem')
+    )
+  );
+
+  const canManageHostel = Boolean(
+    currentUser && (
+      currentUser.peranan.includes('warden') ||
+      currentUser.peranan.includes('gpk_hem') ||
+      currentUser.peranan.includes('pengetua') ||
+      currentUser.peranan.includes('admin_sistem')
+    )
+  );
+
+  const canManagePrefects = Boolean(
+    currentUser && (
+      currentUser.peranan.includes('penyelaras_pengawas') ||
+      currentUser.peranan.includes('gpk_hem') ||
+      currentUser.peranan.includes('pengetua') ||
+      currentUser.peranan.includes('admin_sistem')
+    )
+  );
+
+  const canManage3K = Boolean(
+    currentUser && (
+      currentUser.peranan.includes('setiausaha_hem') ||
+      currentUser.peranan.includes('gpk_hem') ||
+      currentUser.peranan.includes('pengetua') ||
+      currentUser.peranan.includes('admin_sistem') ||
+      currentUser.peranan.includes('warden')
+    )
+  );
+
+  const canManageUsers = Boolean(
+    currentUser && (
+      currentUser.peranan.includes('admin_sistem') ||
+      currentUser.peranan.includes('gpk_hem') ||
+      currentUser.peranan.includes('pengetua')
+    )
+  );
+
+  const updateUserRole = async (uid: string, roles: UserRole[], classes?: string[]) => {
+    if (!currentUser) return;
+    const target = allUsers.find(u => u.uid === uid);
+    if (!target) throw new Error('Pengguna tidak wujud');
+
+    const updated: UserProfile = {
+      ...target,
+      peranan: roles,
+      kelasDiajar: classes ?? target.kelasDiajar
+    };
+
+    await saveUserProfile(updated, { uid: currentUser.uid, nama: currentUser.nama });
+    await refreshUsers();
+  };
+
+  return (
+    <AuthContext.Provider
+      value={{
+        currentUser,
+        loading,
+        loginWithEmail,
+        loginAsDemoUser,
+        logout,
+        hasRole,
+        isPengetuaOrGpkHem,
+        canRecordAttendance,
+        canViewCounseling,
+        canManageDiscipline,
+        canManageAssistance,
+        canManageHostel,
+        canManagePrefects,
+        canManage3K,
+        canManageUsers,
+        allUsers,
+        refreshUsers,
+        updateUserRole
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export const useAuth = () => {
+  const ctx = useContext(AuthContext);
+  if (!ctx) throw new Error('useAuth mesti digunakan di dalam AuthProvider');
+  return ctx;
+};

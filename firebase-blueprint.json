@@ -1,0 +1,43 @@
+{
+  "entities": {
+    "Student": {
+      "title": "Student",
+      "description": "Maklumat murid SMK Salaping",
+      "type": "object",
+      "properties": {
+        "noMurid": { "type": "string" },
+        "nama": { "type": "string" },
+        "noKP": { "type": "string" },
+        "jantina": { "type": "string", "enum": ["lelaki", "perempuan"] },
+        "tingkatan": { "type": "number" },
+        "kelas": { "type": "string" },
+        "status": { "type": "string", "enum": ["aktif", "pindah", "berhenti", "tamat", "cicir"] }
+      },
+      "required": ["noMurid", "nama", "noKP", "tingkatan", "kelas", "status"]
+    },
+    "DailyAttendance": {
+      "title": "DailyAttendance",
+      "description": "Rekod kehadiran kelas harian",
+      "type": "object",
+      "properties": {
+        "tarikh": { "type": "string" },
+        "kelasId": { "type": "string" },
+        "direkodOleh": { "type": "string" },
+        "jumlahHadir": { "type": "number" },
+        "jumlahMurid": { "type": "number" },
+        "peratus": { "type": "number" }
+      },
+      "required": ["tarikh", "kelasId", "direkodOleh", "peratus"]
+    }
+  },
+  "firestore": {
+    "/students/{studentId}": {
+      "schema": "Student",
+      "description": "Koleksi murid berdaftar SMK Salaping"
+    },
+    "/attendance/{attendanceId}": {
+      "schema": "DailyAttendance",
+      "description": "Koleksi rekod kehadiran mengikut tarikh dan kelas"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "HEM Digital - SMK Salaping",
+  "description": "Sistem Pengurusan Hal Ehwal Murid (HEM) komprehensif untuk SMK Salaping, Kota Marudu, Sabah dengan pemantauan kehadiran, analisis risiko cicir, pengurusan disiplin, profil murid, dan integrasi luar talian.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
