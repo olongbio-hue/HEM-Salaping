@@ -1,4 +1,4 @@
-import { SchoolSettings, RulesSettings, UserRole } from '../types';
+import { SchoolSettings, RulesSettings, UserRole, DashboardSettings } from '../types';
 
 export const ROLE_LABELS: Record<UserRole, { title: string; short: string; color: string; desc: string }> = {
   pengetua: {
@@ -93,6 +93,48 @@ export const INITIAL_SCHOOL_SETTINGS: SchoolSettings = {
   warnaAksen: '#d97706', // Emas/Kuning Warisan Sabah
   motoSekolah: 'Ilmuan Gemilang',
   modulAsramaAktif: true // Fasa 3: Kawalan aktif/mati modul asrama
+};
+
+export const DEFAULT_DASHBOARD_SETTINGS: DashboardSettings = {
+  ucapanAwalan: 'Selamat Bertugas',
+  subteksBanner: 'Portal Pengurusan Hal Ehwal Murid (HEM) Bersepadu',
+  tunjukLogo: true,
+  tunjukIlustrasiBanner: true,
+  gambarBannerUrl: '/src/assets/images/salaping_student_banner_1791731561584.jpg',
+  lencanaBannerText: 'Kemenjadian Murid Salaping',
+  tajukAspirasi: 'Aspirasi Murid Salaping • Modal Insan',
+  subtajukAspirasi: 'Kepimpinan • Kejayaan Akademik • Keunggulan Sahsiah',
+  tunjukMetrikModalInsan: true,
+  tunjukPautanPantas: true,
+
+  pengumumanAktif: true,
+  pengumumanTajuk: 'Hebahan Pentadbiran HEM & Pengurusan Sekolah',
+  pengumumanMesej: 'Sila pastikan data profil murid dan rekod kehadiran harian dikemaskini tepat pada masanya mengikut garis panduan PPD Kota Marudu.',
+  pengumumanJenis: 'info',
+  pengumumanTarikh: '2026-10-11',
+
+  kpiCards: {
+    enrolmen: true,
+    kehadiran: true,
+    ketidakhadiran: true,
+    risikoCicir: true,
+    disiplin: true,
+    kaunseling: true,
+    bantuan: true,
+    asrama: true
+  },
+
+  hadSenaraiTindakanSegera: 4,
+  julatHariGrafTrend: 30,
+  paparPanelTindakanSegera: true,
+  paparPanelMesyuarat: true,
+  paparBarisPintasPantas: true,
+  paparCartaTrend: true,
+  paparCartaTingkatan: true,
+  paparTaburanJantina: true,
+  paparKelasTerendah: true,
+  teksPautanPengumuman: '',
+  urlPautanPengumuman: ''
 };
 
 // ================= KONSTAN FASA 3 =================

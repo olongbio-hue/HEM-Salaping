@@ -123,6 +123,52 @@ export interface SchoolSettings {
   modulAsramaAktif?: boolean; // Fasa 3: Tetapan aktifkan/matikan modul asrama
 }
 
+export interface DashboardSettings {
+  // Banner Header
+  ucapanAwalan: string;
+  subteksBanner: string;
+  tunjukLogo: boolean;
+  tunjukIlustrasiBanner: boolean;
+  gambarBannerUrl: string;
+  lencanaBannerText: string;
+  tajukAspirasi: string;
+  subtajukAspirasi: string;
+  tunjukMetrikModalInsan: boolean;
+  tunjukPautanPantas: boolean;
+
+  // Hebahan & Pengumuman Pentadbiran HEM
+  pengumumanAktif: boolean;
+  pengumumanTajuk: string;
+  pengumumanMesej: string;
+  pengumumanJenis: 'info' | 'amaran' | 'penting' | 'kejayaan';
+  pengumumanTarikh: string;
+
+  // Kawalan Keterlihatan Kad KPI
+  kpiCards: {
+    enrolmen: boolean;
+    kehadiran: boolean;
+    ketidakhadiran: boolean;
+    risikoCicir: boolean;
+    disiplin: boolean;
+    kaunseling: boolean;
+    bantuan: boolean;
+    asrama: boolean;
+  };
+
+  // Tetapan Panel & Carta
+  hadSenaraiTindakanSegera: number;
+  julatHariGrafTrend: 7 | 14 | 30;
+  paparPanelTindakanSegera?: boolean;
+  paparPanelMesyuarat?: boolean;
+  paparBarisPintasPantas?: boolean;
+  paparCartaTrend?: boolean;
+  paparCartaTingkatan?: boolean;
+  paparTaburanJantina?: boolean;
+  paparKelasTerendah?: boolean;
+  teksPautanPengumuman?: string;
+  urlPautanPengumuman?: string;
+}
+
 export interface RulesSettings {
   sasaranKehadiranSekolah: number; // e.g. 90%
   ambangRisikoCicir: {

@@ -29,11 +29,13 @@ import {
   PrefectDutyRoster,
   HemProgram,
   AssemblyDuty,
-  HemMeeting
+  HemMeeting,
+  DashboardSettings
 } from '../types';
 import {
   INITIAL_SCHOOL_SETTINGS,
   INITIAL_RULES_SETTINGS,
+  DEFAULT_DASHBOARD_SETTINGS,
   CLASSES_LIST,
   DEMO_USERS,
   DEFAULT_EMERGENCY_CONTACTS,
@@ -106,6 +108,7 @@ const STORAGE_KEYS = {
   FOLLOW_UPS: 'hem_smks_followups_v1',
   SCHOOL_SETTINGS: 'hem_smks_school_settings_v1',
   RULES_SETTINGS: 'hem_smks_rules_settings_v2',
+  DASHBOARD_SETTINGS: 'hem_smks_dashboard_settings_v1',
   AUDIT_LOGS: 'hem_smks_audit_logs_v1',
   USERS: 'hem_smks_users_v1',
   CLASSES: 'hem_smks_classes_v1'
@@ -439,6 +442,24 @@ export async function saveRulesSettings(rules: RulesSettings, user: { uid: strin
     }
   }
   await addAuditLog(user, 'ubah', 'settings', 'rules', 'Mengemaskini peraturan disiplin, ambang cicir, dan panduan lapor pihak luar');
+}
+
+export async function getDashboardSettings(): Promise<DashboardSettings> {
+  initializeDemoDataIfEmpty();
+  const current = getLocalItem<DashboardSettings>(STORAGE_KEYS.DASHBOARD_SETTINGS, DEFAULT_DASHBOARD_SETTINGS);
+  return { ...DEFAULT_DASHBOARD_SETTINGS, ...current, kpiCards: { ...DEFAULT_DASHBOARD_SETTINGS.kpiCards, ...(current?.kpiCards || {}) } };
+}
+
+export async function saveDashboardSettings(settings: DashboardSettings, user: { uid: string; nama: string }): Promise<void> {
+  setLocalItem(STORAGE_KEYS.DASHBOARD_SETTINGS, settings);
+  if (db && isFirebaseConfigured) {
+    try {
+      await setDoc(doc(db, 'settings', 'dashboard'), settings, { merge: true });
+    } catch (err) {
+      console.warn('Ralat menyimpan settings/dashboard ke Firestore:', err);
+    }
+  }
+  await addAuditLog(user, 'ubah', 'settings', 'dashboard', 'Mengemaskini konfigurasi dan paparan Dashboard Utama');
 }
 
 // ================= STUDENTS SERVICE =================

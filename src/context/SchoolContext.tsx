@@ -1,23 +1,27 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { SchoolSettings, RulesSettings } from '../types';
-import { INITIAL_SCHOOL_SETTINGS, INITIAL_RULES_SETTINGS } from '../constants';
+import { SchoolSettings, RulesSettings, DashboardSettings } from '../types';
+import { INITIAL_SCHOOL_SETTINGS, INITIAL_RULES_SETTINGS, DEFAULT_DASHBOARD_SETTINGS } from '../constants';
 import {
   getSchoolSettings,
   saveSchoolSettings,
   getRulesSettings,
-  saveRulesSettings
+  saveRulesSettings,
+  getDashboardSettings,
+  saveDashboardSettings
 } from '../services/dataService';
 import { useAuth } from './AuthContext';
 
 interface SchoolContextType {
   school: SchoolSettings;
   rules: RulesSettings;
+  dashboardSettings: DashboardSettings;
   loading: boolean;
   isOnline: boolean;
   lowDataMode: boolean;
   toggleLowDataMode: () => void;
   updateSchool: (newSettings: Partial<SchoolSettings>) => Promise<void>;
   updateRules: (newRules: Partial<RulesSettings>) => Promise<void>;
+  updateDashboardSettings: (newSettings: Partial<DashboardSettings>) => Promise<void>;
   refreshSettings: () => Promise<void>;
   toast: { message: string; type: 'success' | 'error' | 'info' } | null;
   showToast: (message: string, type?: 'success' | 'error' | 'info') => void;
@@ -28,6 +32,7 @@ const SchoolContext = createContext<SchoolContextType | undefined>(undefined);
 export const SchoolProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [school, setSchool] = useState<SchoolSettings>(INITIAL_SCHOOL_SETTINGS);
   const [rules, setRules] = useState<RulesSettings>(INITIAL_RULES_SETTINGS);
+  const [dashboardSettings, setDashboardSettings] = useState<DashboardSettings>(DEFAULT_DASHBOARD_SETTINGS);
   const [loading, setLoading] = useState(true);
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [lowDataMode, setLowDataMode] = useState<boolean>(() => {
@@ -88,9 +93,14 @@ export const SchoolProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
   const refreshSettings = async () => {
     try {
-      const [sData, rData] = await Promise.all([getSchoolSettings(), getRulesSettings()]);
+      const [sData, rData, dData] = await Promise.all([
+        getSchoolSettings(),
+        getRulesSettings(),
+        getDashboardSettings()
+      ]);
       setSchool(sData);
       setRules(rData);
+      setDashboardSettings(dData);
 
       // Kemaskini pembolehubah CSS dinamik sekolah
       if (sData.warnaUtama) {
@@ -129,17 +139,34 @@ export const SchoolProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     showToast('Ambang risiko cicir dan peraturan berjaya dikemaskini.', 'success');
   };
 
+  const updateDashboardSettings = async (newSettings: Partial<DashboardSettings>) => {
+    const updated: DashboardSettings = {
+      ...dashboardSettings,
+      ...newSettings,
+      kpiCards: {
+        ...dashboardSettings.kpiCards,
+        ...(newSettings.kpiCards || {})
+      }
+    };
+    setDashboardSettings(updated);
+    const operator = currentUser || { uid: 'system', nama: 'Pentadbir' };
+    await saveDashboardSettings(updated, { uid: operator.uid, nama: operator.nama });
+    showToast('Konfigurasi paparan Dashboard berjaya dikemaskini!', 'success');
+  };
+
   return (
     <SchoolContext.Provider
       value={{
         school,
         rules,
+        dashboardSettings,
         loading,
         isOnline,
         lowDataMode,
         toggleLowDataMode,
         updateSchool,
         updateRules,
+        updateDashboardSettings,
         refreshSettings,
         toast,
         showToast

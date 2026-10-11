@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useSchool } from '../context/SchoolContext';
 import { SchoolSettings, RulesSettings, UserRole, ClassInfo, UserProfile } from '../types';
@@ -29,10 +30,12 @@ import {
   Plus,
   Trash2,
   Check,
-  X
+  X,
+  LayoutDashboard
 } from 'lucide-react';
 import { RoleBadge } from '../components/RoleBadge';
 import { SchoolLogo } from '../components/SchoolLogo';
+import { DashboardSettingsTab } from '../components/DashboardSettingsTab';
 import {
   exportCompleteBackupJSON,
   importCompleteBackupJSON,
@@ -43,10 +46,25 @@ import {
 } from '../services/dataService';
 
 export const Settings: React.FC<{ onOpenResetModal: () => void }> = ({ onOpenResetModal }) => {
-  const { school, rules, updateSchool, updateRules, showToast, lowDataMode, toggleLowDataMode } = useSchool();
+  const [searchParams] = useSearchParams();
+  const urlTab = searchParams.get('tab') as any;
+
+  const {
+    school,
+    rules,
+    dashboardSettings,
+    updateSchool,
+    updateRules,
+    updateDashboardSettings,
+    showToast,
+    lowDataMode,
+    toggleLowDataMode
+  } = useSchool();
   const { allUsers, canManageUsers, updateUserRole, currentUser } = useAuth();
 
-  const [activeTab, setActiveTab] = useState<'sekolah' | 'peraturan' | 'pengguna' | 'sandaran' | 'firebase'>('sekolah');
+  const [activeTab, setActiveTab] = useState<'sekolah' | 'dashboard' | 'peraturan' | 'pengguna' | 'sandaran' | 'firebase'>(
+    urlTab === 'dashboard' ? 'dashboard' : 'sekolah'
+  );
   const [saving, setSaving] = useState(false);
   const [backupLoading, setBackupLoading] = useState(false);
 
@@ -310,6 +328,16 @@ export const Settings: React.FC<{ onOpenResetModal: () => void }> = ({ onOpenRes
         >
           <Building2 className="w-4 h-4" />
           <span>Profil & Identiti Sekolah</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('dashboard')}
+          className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all whitespace-nowrap ${
+            activeTab === 'dashboard' ? 'bg-blue-700 text-white shadow-xs' : 'text-slate-600 hover:bg-slate-100'
+          }`}
+        >
+          <LayoutDashboard className="w-4 h-4" />
+          <span>Pengurusan Dashboard</span>
         </button>
 
         <button
@@ -628,7 +656,23 @@ export const Settings: React.FC<{ onOpenResetModal: () => void }> = ({ onOpenRes
         </form>
       )}
 
-      {/* ================= TAB 2: PERATURAN & AMBANG ================= */}
+      {/* ================= TAB 2: PENGURUSAN DASHBOARD ================= */}
+      {activeTab === 'dashboard' && (
+        <DashboardSettingsTab
+          initialSettings={dashboardSettings}
+          onSave={async (newSettings) => {
+            setSaving(true);
+            try {
+              await updateDashboardSettings(newSettings);
+            } finally {
+              setSaving(false);
+            }
+          }}
+          saving={saving}
+        />
+      )}
+
+      {/* ================= TAB 3: PERATURAN & AMBANG ================= */}
       {activeTab === 'peraturan' && (
         <form onSubmit={handleSaveRules} className="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4 text-xs">
           <div className="flex items-center justify-between border-b border-slate-100 pb-3">

@@ -42,7 +42,10 @@ import {
   FileText,
   Trophy,
   GraduationCap,
-  UserPlus
+  UserPlus,
+  Settings,
+  Megaphone,
+  Info
 } from 'lucide-react';
 import {
   ResponsiveContainer,
@@ -61,7 +64,7 @@ import { SchoolLogo } from '../components/SchoolLogo';
 
 export const Dashboard: React.FC = () => {
   const { currentUser, isPengetuaOrGpkHem } = useAuth();
-  const { school, rules } = useSchool();
+  const { school, rules, dashboardSettings } = useSchool();
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
