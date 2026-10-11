@@ -570,7 +570,37 @@ export const Students: React.FC = () => {
           </table>
         </div>
 
-        {paginatedStudents.length === 0 && (
+        {students.length === 0 ? (
+          <div className="p-8 sm:p-12 text-center space-y-4">
+            <div className="w-16 h-16 rounded-2xl bg-blue-100 text-blue-700 flex items-center justify-center mx-auto shadow-inner">
+              <UserPlus className="w-8 h-8" />
+            </div>
+            <div className="space-y-1 max-w-md mx-auto">
+              <h3 className="text-base font-extrabold text-slate-900">
+                Pangkalan Data Murid Masih Kosong
+              </h3>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                Data demo telah dikosongkan untuk persediaan data sebenar. Anda boleh mendaftarkan murid pertama secara individu atau memuat naik fail senarai murid CSV terus dari APDM KPM.
+              </p>
+            </div>
+            <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+              <button
+                onClick={() => setShowAddModal(true)}
+                className="px-4 py-2 bg-blue-700 hover:bg-blue-800 text-white font-extrabold text-xs rounded-xl shadow-xs transition-colors flex items-center gap-1.5"
+              >
+                <UserPlus className="w-4 h-4" />
+                <span>Daftar Murid Baharu</span>
+              </button>
+              <button
+                onClick={() => setShowImportModal(true)}
+                className="px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold text-xs rounded-xl shadow-xs transition-colors flex items-center gap-1.5"
+              >
+                <FileSpreadsheet className="w-4 h-4" />
+                <span>Import CSV (APDM)</span>
+              </button>
+            </div>
+          </div>
+        ) : paginatedStudents.length === 0 ? (
           <EmptyState
             title="Tiada Murid Dijumpai"
             description="Tiada rekod murid yang sepadan dengan kriteria carian atau tapisan semasa."
@@ -585,7 +615,7 @@ export const Students: React.FC = () => {
               setFilterEtnik('semua');
             }}
           />
-        )}
+        ) : null}
 
         {/* Pagination Bar */}
         {totalPages > 1 && (

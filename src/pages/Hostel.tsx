@@ -335,8 +335,8 @@ export const Hostel: React.FC = () => {
         <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
           <span className="text-[11px] font-semibold text-slate-500 block">Jumlah Penghuni Berdaftar</span>
           <div className="text-2xl font-black text-indigo-900 mt-1">{students.length} Murid</div>
-          <p className="text-[10px] text-slate-500 mt-1">
-            Kapasiti: {students.length} / {totalCapacity || 60} Katil (Baki: {(totalCapacity || 60) - students.length})
+          <p className="text-[10px] text-slate-600 mt-1 font-medium">
+            Kuota Asrama: <span className="font-bold text-slate-800">{students.length} / {totalCapacity || 60} Katil</span> (Baki Kuota: <span className="font-bold text-indigo-700">{(totalCapacity || 60) - students.length}</span>)
           </p>
         </div>
 

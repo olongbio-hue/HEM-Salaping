@@ -18,6 +18,7 @@ import {
   Scale
 } from 'lucide-react';
 import { RoleBadge } from './RoleBadge';
+import { SchoolLogo } from './SchoolLogo';
 
 interface NavbarProps {
   onToggleSidebar: () => void;
@@ -45,8 +46,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar, onOpenResetModa
           </button>
 
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-lg bg-blue-900 text-amber-400 flex items-center justify-center font-bold text-sm shadow-xs border border-blue-950">
-              <Building2 className="w-5 h-5" />
+            <div className="flex items-center justify-center shrink-0">
+              <SchoolLogo size="md" className="drop-shadow-xs hover:scale-105 transition-transform" />
             </div>
             <div>
               <div className="flex items-center gap-2">

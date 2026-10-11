@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { useSchool } from '../context/SchoolContext';
 import { DEMO_USERS } from '../constants';
 import { Building2, KeyRound, Mail, LogIn, Sparkles, Shield, AlertCircle, ArrowRight } from 'lucide-react';
+import { SchoolLogo } from '../components/SchoolLogo';
 
 export const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -42,8 +43,10 @@ export const Login: React.FC = () => {
   return (
     <div className="min-h-screen bg-slate-100 flex flex-col justify-center py-8 px-4 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-blue-900 text-amber-400 shadow-xl border-2 border-blue-950 mb-3">
-          <Building2 className="w-9 h-9" />
+        <div className="flex justify-center mb-3">
+          <div className="p-2.5 rounded-2xl bg-white shadow-lg border border-slate-200">
+            <SchoolLogo size="xl" className="drop-shadow-sm hover:scale-105 transition-transform" />
+          </div>
         </div>
         <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
           HEM Digital

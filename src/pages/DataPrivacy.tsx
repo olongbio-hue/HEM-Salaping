@@ -14,6 +14,7 @@ import {
   Building,
   Scale
 } from 'lucide-react';
+import { SchoolLogo } from '../components/SchoolLogo';
 
 export const DataPrivacy: React.FC = () => {
   const { school } = useSchool();
@@ -81,21 +82,27 @@ export const DataPrivacy: React.FC = () => {
       {/* Kandungan Notis Lengkap */}
       <div className="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-xs space-y-6 text-slate-800 text-xs sm:text-sm leading-relaxed">
         {/* Kepala Surat Sekolah (Untuk Cetakan) */}
-        <div className="text-center border-b-2 border-slate-900 pb-4 space-y-1">
-          <h2 className="text-base font-black text-slate-900 uppercase">
-            {school.nama}
-          </h2>
-          <p className="text-xs text-slate-600">
-            {school.alamat}, {school.poskod} {school.bandar}, {school.negeri}
-          </p>
-          <p className="text-[11px] text-slate-500 font-mono">
-            KOD SEKOLAH: {school.kodSekolah} • TEL: {school.noTelefon} • EMEL: {school.emel}
-          </p>
-          <div className="pt-2">
-            <h3 className="text-sm font-black text-slate-900 uppercase underline">
-              NOTIS PERLINDUNGAN & PERSETUJUAN PEMPROSESAN DATA PERIBADI MURID (APDP 2010)
-            </h3>
+        <div className="flex items-center justify-between border-b-2 border-slate-900 pb-4 gap-4">
+          <div className="shrink-0">
+            <SchoolLogo size="lg" className="drop-shadow-xs" />
           </div>
+          <div className="text-center flex-1 space-y-1">
+            <h2 className="text-base font-black text-slate-900 uppercase">
+              {school.nama}
+            </h2>
+            <p className="text-xs text-slate-600">
+              {school.alamat}, {school.poskod} {school.bandar}, {school.negeri}
+            </p>
+            <p className="text-[11px] text-slate-500 font-mono">
+              KOD SEKOLAH: {school.kodSekolah} • TEL: {school.noTelefon} • EMEL: {school.emel}
+            </p>
+            <div className="pt-1.5">
+              <h3 className="text-sm font-black text-slate-900 uppercase underline">
+                NOTIS PERLINDUNGAN & PERSETUJUAN PEMPROSESAN DATA PERIBADI MURID (APDP 2010)
+              </h3>
+            </div>
+          </div>
+          <div className="shrink-0 w-14 hidden sm:block" />
         </div>
 
         {/* Bahagian 1 */}

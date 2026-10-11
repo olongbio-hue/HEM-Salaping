@@ -84,14 +84,14 @@ export const INITIAL_SCHOOL_SETTINGS: SchoolSettings = {
   negeri: 'Sabah',
   noTelefon: '088-661234',
   emel: 'smksalaping.hem@moe.gov.my',
-  logo: '',
+  logo: '/src/assets/images/smk_salaping_crest_1791732075810.jpg',
   namaPengetua: 'En. Justin Bin Moduying',
   namaGpkHem: 'Pn. Masnah Binti Japar',
   tahunSemasa: 2026,
   sesi: 'Pagi',
   warnaUtama: '#1e3a8a', // Biru Tua Rasmi KPM
   warnaAksen: '#d97706', // Emas/Kuning Warisan Sabah
-  motoSekolah: 'Berilmu, Berdisiplin, Berbakti',
+  motoSekolah: 'Ilmuan Gemilang',
   modulAsramaAktif: true // Fasa 3: Kawalan aktif/mati modul asrama
 };
 
@@ -107,15 +107,15 @@ export const DEFAULT_ASSISTANCE_TYPES = [
   'Biasiswa Kerajaan Negeri Sabah (BKNS)'
 ];
 
-export const DEFAULT_ASSISTANCE_BUDGETS: Record<string, { perMurid: number; peruntukanSekolah: number }> = {
-  'Bantuan Awal Persekolahan (BAP)': { perMurid: 150, peruntukanSekolah: 36000 },
-  'Kumpulan Wang Amanah Pelajar Miskin (KWAPM)': { perMurid: 300, peruntukanSekolah: 28500 },
-  'Biasiswa Kecil Persekutuan (BKP)': { perMurid: 700, peruntukanSekolah: 17500 },
-  'Rancangan Makanan Tambahan (RMT)': { perMurid: 450, peruntukanSekolah: 22500 },
-  'Skim Pinjaman Buku Teks (SPBT)': { perMurid: 0, peruntukanSekolah: 0 },
-  'Bantuan Pakaian & Peralatan Sekolah PIBG': { perMurid: 200, peruntukanSekolah: 8000 },
-  'Bantuan Zakat & Kebajikan Komuniti': { perMurid: 250, peruntukanSekolah: 5000 },
-  'Biasiswa Kerajaan Negeri Sabah (BKNS)': { perMurid: 1000, peruntukanSekolah: 15000 }
+export const DEFAULT_ASSISTANCE_BUDGETS: Record<string, { kuotaMurid: number; perMurid: number; peruntukanSekolah: number; sumber?: string }> = {
+  'Bantuan Awal Persekolahan (BAP)': { kuotaMurid: 240, perMurid: 150, peruntukanSekolah: 36000, sumber: 'KPM (Semua Murid Warganegara)' },
+  'Kumpulan Wang Amanah Pelajar Miskin (KWAPM)': { kuotaMurid: 95, perMurid: 300, peruntukanSekolah: 28500, sumber: 'KPM (eKasih / Miskin B40)' },
+  'Biasiswa Kecil Persekutuan (BKP)': { kuotaMurid: 25, perMurid: 700, peruntukanSekolah: 17500, sumber: 'Bahagian Biasiswa KPM' },
+  'Rancangan Makanan Tambahan (RMT)': { kuotaMurid: 50, perMurid: 450, peruntukanSekolah: 22500, sumber: 'KPM' },
+  'Skim Pinjaman Buku Teks (SPBT)': { kuotaMurid: 240, perMurid: 0, peruntukanSekolah: 0, sumber: 'Bahagian Buku Teks KPM' },
+  'Bantuan Pakaian & Peralatan Sekolah PIBG': { kuotaMurid: 40, perMurid: 200, peruntukanSekolah: 8000, sumber: 'Tabung Kebajikan PIBG' },
+  'Bantuan Zakat & Kebajikan Komuniti': { kuotaMurid: 20, perMurid: 250, peruntukanSekolah: 5000, sumber: 'Pusat Zakat Sabah (MUIS)' },
+  'Biasiswa Kerajaan Negeri Sabah (BKNS)': { kuotaMurid: 15, perMurid: 1000, peruntukanSekolah: 15000, sumber: 'Kerajaan Negeri Sabah' }
 };
 
 export const DEFAULT_EMERGENCY_CONTACTS = [

@@ -343,6 +343,14 @@ export interface CareerCounselingProfile {
 }
 
 // ================= BANTUAN & AUDIT =================
+export interface AssistanceBudgetConfig {
+  kuotaMurid: number;
+  perMurid: number;
+  peruntukanSekolah: number;
+  sumber?: string;
+  catatan?: string;
+}
+
 export interface AssistanceRecord {
   id: string;
   studentId: string;

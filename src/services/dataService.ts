@@ -37,7 +37,8 @@ import {
   CLASSES_LIST,
   DEMO_USERS,
   DEFAULT_EMERGENCY_CONTACTS,
-  DEFAULT_HOSTEL_ROOMS
+  DEFAULT_HOSTEL_ROOMS,
+  DEFAULT_ASSISTANCE_BUDGETS
 } from '../constants';
 import {
   generateFictitiousStudents,
@@ -88,6 +89,7 @@ const STORAGE_KEYS = {
   COUNSELING: 'hem_smks_counseling_v2',
   ASSISTANCE: 'hem_smks_assistance_v1',
   ASSISTANCE_APPS: 'hem_smks_assistance_apps_v3',
+  ASSISTANCE_BUDGETS: 'hem_smks_assistance_budgets_v3',
   HOSTEL_ROOMS: 'hem_smks_hostel_rooms_v3',
   HOSTEL_MOVEMENTS: 'hem_smks_hostel_movements_v3',
   HOSTEL_INSPECTIONS: 'hem_smks_hostel_inspections_v3',
@@ -126,10 +128,133 @@ function setLocalItem<T>(key: string, value: T): void {
   }
 }
 
+export function initializeCleanProductionData(): void {
+  console.log('[HEM Digital] Memulakan persekitaran bersih untuk data sebenar SMK Salaping...');
+  setLocalItem(STORAGE_KEYS.STUDENTS, []);
+  setLocalItem(STORAGE_KEYS.ATTENDANCE, []);
+  setLocalItem(STORAGE_KEYS.DISCIPLINE, []);
+  setLocalItem(STORAGE_KEYS.BOARD_MEETINGS, []);
+  setLocalItem(STORAGE_KEYS.BULLYING_REPORTS, []);
+  setLocalItem(STORAGE_KEYS.AWARENESS_PROGRAMS, []);
+  setLocalItem(STORAGE_KEYS.MENTAL_HEALTH, []);
+  setLocalItem(STORAGE_KEYS.MENTOR_MENTEE, []);
+  setLocalItem(STORAGE_KEYS.CAREER_PROFILES, []);
+  setLocalItem(STORAGE_KEYS.COUNSELING, []);
+  setLocalItem(STORAGE_KEYS.ASSISTANCE, []);
+  setLocalItem(STORAGE_KEYS.ASSISTANCE_APPS, []);
+  setLocalItem(STORAGE_KEYS.HOSTEL_MOVEMENTS, []);
+  setLocalItem(STORAGE_KEYS.HOSTEL_INSPECTIONS, []);
+  setLocalItem(STORAGE_KEYS.HOSTEL_DAILY_REPORTS, []);
+  setLocalItem(STORAGE_KEYS.SICK_BAY, []);
+  setLocalItem(STORAGE_KEYS.INSPECTIONS_3K, []);
+  setLocalItem(STORAGE_KEYS.PREFECTS, []);
+  setLocalItem(STORAGE_KEYS.PREFECT_ROSTERS, []);
+  setLocalItem(STORAGE_KEYS.HEM_PROGRAMS, []);
+  setLocalItem(STORAGE_KEYS.ASSEMBLY_DUTIES, []);
+  setLocalItem(STORAGE_KEYS.HEM_MEETINGS, []);
+  setLocalItem(STORAGE_KEYS.FOLLOW_UPS, []);
+
+  // Bilik asrama sedia ada tetapi kosong tanpa penghuni demo
+  const cleanRooms = DEFAULT_HOSTEL_ROOMS.map(r => ({
+    ...r,
+    penghuniIds: []
+  }));
+  setLocalItem(STORAGE_KEYS.HOSTEL_ROOMS, cleanRooms);
+  setLocalItem(STORAGE_KEYS.EMERGENCY_CONTACTS, DEFAULT_EMERGENCY_CONTACTS);
+
+  // Tetapan rasmi sekolah, peraturan ambang, dan kelas
+  setLocalItem(STORAGE_KEYS.SCHOOL_SETTINGS, INITIAL_SCHOOL_SETTINGS);
+  setLocalItem(STORAGE_KEYS.RULES_SETTINGS, INITIAL_RULES_SETTINGS);
+  setLocalItem(STORAGE_KEYS.CLASSES, CLASSES_LIST);
+
+  const initialUsers: UserProfile[] = DEMO_USERS.map(u => ({
+    uid: u.uid,
+    nama: u.nama,
+    emel: u.emel,
+    peranan: u.peranan,
+    kelasDiajar: u.kelasDiajar,
+    aktif: true,
+    dicipta: '2026-01-01T00:00:00.000Z'
+  }));
+  setLocalItem(STORAGE_KEYS.USERS, initialUsers);
+
+  const initialLog: AuditLog = {
+    id: `log_${Date.now()}`,
+    uid: 'admin_sistem',
+    namaPengguna: 'Admin Sistem',
+    tindakan: 'cipta',
+    koleksi: 'system',
+    dokumenId: 'data_sebenar_sedia',
+    perincian: 'Pangkalan data dibersihkan untuk kemasukan data sekolah sebenar SMK Salaping. Tetapan rasmi dan peranan pentadbir aktif.',
+    masa: new Date().toISOString()
+  };
+  setLocalItem(STORAGE_KEYS.AUDIT_LOGS, [initialLog]);
+
+  localStorage.setItem('hem_production_mode', 'true');
+  localStorage.setItem('hem_demo_data_purged', 'true');
+}
+
+export function clearAllDemoDataForProduction(operator?: { uid: string; nama: string }): void {
+  console.log('[HEM Digital] Mengosongkan data demo fiktif dan menetapkan mod data sebenar...');
+  setLocalItem(STORAGE_KEYS.STUDENTS, []);
+  setLocalItem(STORAGE_KEYS.ATTENDANCE, []);
+  setLocalItem(STORAGE_KEYS.DISCIPLINE, []);
+  setLocalItem(STORAGE_KEYS.BOARD_MEETINGS, []);
+  setLocalItem(STORAGE_KEYS.BULLYING_REPORTS, []);
+  setLocalItem(STORAGE_KEYS.AWARENESS_PROGRAMS, []);
+  setLocalItem(STORAGE_KEYS.MENTAL_HEALTH, []);
+  setLocalItem(STORAGE_KEYS.MENTOR_MENTEE, []);
+  setLocalItem(STORAGE_KEYS.CAREER_PROFILES, []);
+  setLocalItem(STORAGE_KEYS.COUNSELING, []);
+  setLocalItem(STORAGE_KEYS.ASSISTANCE, []);
+  setLocalItem(STORAGE_KEYS.ASSISTANCE_APPS, []);
+  setLocalItem(STORAGE_KEYS.HOSTEL_MOVEMENTS, []);
+  setLocalItem(STORAGE_KEYS.HOSTEL_INSPECTIONS, []);
+  setLocalItem(STORAGE_KEYS.HOSTEL_DAILY_REPORTS, []);
+  setLocalItem(STORAGE_KEYS.SICK_BAY, []);
+  setLocalItem(STORAGE_KEYS.INSPECTIONS_3K, []);
+  setLocalItem(STORAGE_KEYS.PREFECTS, []);
+  setLocalItem(STORAGE_KEYS.PREFECT_ROSTERS, []);
+  setLocalItem(STORAGE_KEYS.HEM_PROGRAMS, []);
+  setLocalItem(STORAGE_KEYS.ASSEMBLY_DUTIES, []);
+  setLocalItem(STORAGE_KEYS.HEM_MEETINGS, []);
+  setLocalItem(STORAGE_KEYS.FOLLOW_UPS, []);
+
+  // Setkan bilik asrama tanpa penghuni fiktif
+  const cleanRooms = DEFAULT_HOSTEL_ROOMS.map(r => ({
+    ...r,
+    penghuniIds: []
+  }));
+  setLocalItem(STORAGE_KEYS.HOSTEL_ROOMS, cleanRooms);
+
+  // Tandakan mod data sebenar
+  localStorage.setItem('hem_production_mode', 'true');
+  localStorage.setItem('hem_demo_data_purged', 'true');
+
+  const op = operator || { uid: 'admin_sistem', nama: 'Admin Sistem' };
+  const log: AuditLog = {
+    id: `log_${Date.now()}`,
+    uid: op.uid,
+    namaPengguna: op.nama,
+    tindakan: 'padam',
+    koleksi: 'system',
+    dokumenId: 'demo_purged',
+    perincian: 'Data demo fiktif murid dan operasi telah dikosongkan. Sistem sedia sepenuhnya untuk kemasukan data sebenar.',
+    masa: new Date().toISOString()
+  };
+  const logs = getLocalItem<AuditLog[]>(STORAGE_KEYS.AUDIT_LOGS, []);
+  logs.unshift(log);
+  setLocalItem(STORAGE_KEYS.AUDIT_LOGS, logs.slice(0, 300));
+}
+
 export function initializeDemoDataIfEmpty(): void {
-  const existingStudents = localStorage.getItem(STORAGE_KEYS.STUDENTS);
-  if (!existingStudents) {
-    resetAllToDemoData();
+  const isProduction = localStorage.getItem('hem_production_mode') === 'true';
+  const hasInitialized = localStorage.getItem('hem_demo_data_purged') === 'true';
+
+  if (!isProduction || !hasInitialized) {
+    // Automatik kosongkan sebarang data demo sedia ada bagi membolehkan data sekolah sebenar
+    clearAllDemoDataForProduction();
+    return;
   }
 }
 
@@ -217,10 +342,13 @@ export function resetAllToDemoData(): void {
     tindakan: 'cipta',
     koleksi: 'system',
     dokumenId: 'demo_data_fasa3',
-    perincian: 'Data demo fiktif lengkap SMK Salaping (Fasa 1, Fasa 2 & Fasa 3) berjaya dimuatkan semula.',
+    perincian: 'Data demo fiktif lengkap SMK Salaping (Fasa 1, Fasa 2 & Fasa 3) dimuatkan semula untuk tujuan latihan.',
     masa: new Date().toISOString()
   };
   setLocalItem(STORAGE_KEYS.AUDIT_LOGS, [initialLog]);
+
+  localStorage.removeItem('hem_demo_data_purged');
+  localStorage.removeItem('hem_production_mode');
 
   if (db && isFirebaseConfigured) {
     syncDemoDataToFirestore();
@@ -276,7 +404,12 @@ export function getAuditLogs(): AuditLog[] {
 // ================= SCHOOL & RULES SETTINGS =================
 export async function getSchoolSettings(): Promise<SchoolSettings> {
   initializeDemoDataIfEmpty();
-  return getLocalItem<SchoolSettings>(STORAGE_KEYS.SCHOOL_SETTINGS, INITIAL_SCHOOL_SETTINGS);
+  const settings = getLocalItem<SchoolSettings>(STORAGE_KEYS.SCHOOL_SETTINGS, INITIAL_SCHOOL_SETTINGS);
+  if (!settings.logo || settings.logo === '') {
+    settings.logo = INITIAL_SCHOOL_SETTINGS.logo;
+    setLocalItem(STORAGE_KEYS.SCHOOL_SETTINGS, settings);
+  }
+  return settings;
 }
 
 export async function saveSchoolSettings(settings: SchoolSettings, user: { uid: string; nama: string }): Promise<void> {
@@ -668,6 +801,25 @@ export async function saveAssistanceApplication(
   );
 }
 
+export async function getAssistanceBudgets(): Promise<Record<string, { kuotaMurid: number; perMurid: number; peruntukanSekolah: number; sumber?: string }>> {
+  initializeDemoDataIfEmpty();
+  return getLocalItem(STORAGE_KEYS.ASSISTANCE_BUDGETS, DEFAULT_ASSISTANCE_BUDGETS);
+}
+
+export async function saveAssistanceBudgets(
+  budgets: Record<string, { kuotaMurid: number; perMurid: number; peruntukanSekolah: number; sumber?: string }>,
+  operator: { uid: string; nama: string }
+): Promise<void> {
+  setLocalItem(STORAGE_KEYS.ASSISTANCE_BUDGETS, budgets);
+  await addAuditLog(
+    operator,
+    'ubah',
+    'assistance_budgets',
+    'all',
+    'Mengemaskini kuota penerima dan peruntukan bajet bantuan sekolah'
+  );
+}
+
 // ================= ASRAMA SERVICES =================
 export async function getHostelRooms(): Promise<HostelRoom[]> {
   initializeDemoDataIfEmpty();
@@ -946,6 +1098,20 @@ export async function saveUserProfile(
 
 export async function getClassesList(): Promise<ClassInfo[]> {
   return getLocalItem<ClassInfo[]>(STORAGE_KEYS.CLASSES, CLASSES_LIST);
+}
+
+export async function saveClassesList(
+  classes: ClassInfo[],
+  operator: { uid: string; nama: string }
+): Promise<void> {
+  setLocalItem(STORAGE_KEYS.CLASSES, classes);
+  await addAuditLog(
+    operator,
+    'ubah',
+    'classes',
+    'school_classes',
+    `Mengemaskini senarai kelas sekolah (${classes.length} kelas didaftarkan)`
+  );
 }
 
 // ================= EMERGENCY FULL DATA BACKUP (OFFLINE-FIRST SABAH) =================

@@ -14,6 +14,7 @@ import {
   Info,
   HelpCircle
 } from 'lucide-react';
+import { SchoolLogo } from '../components/SchoolLogo';
 
 export const PublicBullyingReport: React.FC = () => {
   const { school, showToast } = useSchool();
@@ -101,11 +102,16 @@ export const PublicBullyingReport: React.FC = () => {
 
         {/* Title Card */}
         <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-md">
-          <div className="flex items-center gap-3 mb-2">
-            <div className="w-12 h-12 rounded-xl bg-rose-700 text-white flex items-center justify-center font-bold shadow-md">
-              <ShieldAlert className="w-6 h-6" />
+          <div className="flex items-center gap-3.5 mb-2">
+            <div className="shrink-0">
+              <SchoolLogo size="lg" className="drop-shadow-xs" />
             </div>
             <div>
+              <div className="flex items-center gap-2">
+                <span className="px-2 py-0.5 rounded bg-rose-100 text-rose-800 font-extrabold text-[10px]">
+                  PORTAL ADUAN RASMI
+                </span>
+              </div>
               <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
                 Saluran Aduan Buli & Perlindungan Kanak-Kanak
               </h1>

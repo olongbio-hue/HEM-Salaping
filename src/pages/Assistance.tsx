@@ -7,7 +7,9 @@ import {
   saveAssistanceRecord,
   getAssistanceApplications,
   saveAssistanceApplication,
-  getStudents
+  getStudents,
+  getAssistanceBudgets,
+  saveAssistanceBudgets
 } from '../services/dataService';
 import { DEFAULT_ASSISTANCE_TYPES, DEFAULT_ASSISTANCE_BUDGETS } from '../constants';
 import { generateAssistanceRecipientsPDF } from '../services/pdfService';
@@ -28,7 +30,10 @@ import {
   Layers,
   Sparkles,
   PieChart as PieIcon,
-  ShieldAlert
+  ShieldAlert,
+  Sliders,
+  Edit2,
+  Scale
 } from 'lucide-react';
 import { EmptyState } from '../components/EmptyState';
 
@@ -40,11 +45,20 @@ export const Assistance: React.FC = () => {
   const [records, setRecords] = useState<AssistanceRecord[]>([]);
   const [applications, setApplications] = useState<AssistanceApplication[]>([]);
   const [students, setStudents] = useState<Student[]>([]);
+  const [budgets, setBudgets] = useState<Record<string, { kuotaMurid: number; perMurid: number; peruntukanSekolah: number; sumber?: string }>>(DEFAULT_ASSISTANCE_BUDGETS);
 
   const [activeTab, setActiveTab] = useState<'senarai' | 'permohonan' | 'bajet' | 'pertindihan'>('senarai');
   const [searchTerm, setSearchTerm] = useState('');
   const [filterType, setFilterType] = useState('semua');
   const [filterYear, setFilterYear] = useState<number>(2026);
+
+  // Quota Edit Modal State
+  const [showQuotaModal, setShowQuotaModal] = useState(false);
+  const [editingType, setEditingType] = useState<string>(DEFAULT_ASSISTANCE_TYPES[0]);
+  const [editKuota, setEditKuota] = useState<number>(25);
+  const [editKadar, setEditKadar] = useState<number>(700);
+  const [editSiling, setEditSiling] = useState<number>(17500);
+  const [editSumber, setEditSumber] = useState<string>('KPM');
 
   // Modal State
   const [showApplyModal, setShowApplyModal] = useState(false);
@@ -66,14 +80,16 @@ export const Assistance: React.FC = () => {
   async function loadData() {
     try {
       setLoading(true);
-      const [recList, appList, stList] = await Promise.all([
+      const [recList, appList, stList, bMap] = await Promise.all([
         getAssistanceRecords(),
         getAssistanceApplications(),
-        getStudents()
+        getStudents(),
+        getAssistanceBudgets()
       ]);
       setRecords(recList);
       setApplications(appList);
       setStudents(stList);
+      setBudgets(bMap);
       if (stList.length > 0) {
         setApplyStudentId(stList[0].id);
         setRecStudentId(stList[0].id);
@@ -84,6 +100,34 @@ export const Assistance: React.FC = () => {
       setLoading(false);
     }
   }
+
+  const openEditQuotaModal = (type: string) => {
+    const b = budgets[type] || DEFAULT_ASSISTANCE_BUDGETS[type] || { kuotaMurid: 30, perMurid: 150, peruntukanSekolah: 4500, sumber: 'KPM' };
+    setEditingType(type);
+    setEditKuota(b.kuotaMurid || 30);
+    setEditKadar(b.perMurid || 150);
+    setEditSiling(b.peruntukanSekolah || 4500);
+    setEditSumber(b.sumber || 'KPM');
+    setShowQuotaModal(true);
+  };
+
+  const handleSaveQuota = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const operator = currentUser || { uid: 'auth', nama: 'Penyelaras Bantuan' };
+    const updated = {
+      ...budgets,
+      [editingType]: {
+        kuotaMurid: Number(editKuota),
+        perMurid: Number(editKadar),
+        peruntukanSekolah: Number(editSiling),
+        sumber: editSumber
+      }
+    };
+    await saveAssistanceBudgets(updated, operator);
+    setBudgets(updated);
+    setShowQuotaModal(false);
+    showToast(`Kuota dan siling bajet ${editingType} berjaya dikemaskini.`, 'success');
+  };
 
   // Handle Mark as Received / Signed
   const handleToggleReceived = async (rec: AssistanceRecord) => {
@@ -282,6 +326,9 @@ export const Assistance: React.FC = () => {
   const totalAgihanDone = records.filter(r => r.statusAgihan === 'telah_terima').reduce((acc, curr) => acc + curr.jumlahBantuan, 0);
   const totalDanaPeruntukan = records.reduce((acc, curr) => acc + curr.jumlahBantuan, 0);
   const uniqueRecipients = new Set(records.map(r => r.studentId)).size;
+  const totalQuotaAll = Object.values(budgets).reduce((acc, b) => acc + (b.kuotaMurid || 0), 0);
+  const totalFilledQuota = records.length;
+  const totalRemainingQuota = Math.max(0, totalQuotaAll - totalFilledQuota);
 
   return (
     <div className="p-3 sm:p-6 space-y-6 max-w-7xl mx-auto pb-24 lg:pb-12">
@@ -298,7 +345,7 @@ export const Assistance: React.FC = () => {
             Pengurusan Biasiswa & Agihan Bantuan
           </h1>
           <p className="text-xs text-slate-500 mt-0.5">
-            Pengesanan permohonan, penyerahan berakuan terima, semakan pertindihan, dan peruntukan bajet KPM
+            Pengesanan permohonan, kuota skim bantuan, penyerahan berakuan terima, semakan pertindihan, dan siling bajet
           </p>
         </div>
 
@@ -341,32 +388,42 @@ export const Assistance: React.FC = () => {
         </div>
       </div>
 
-      {/* KPI Cards (Bajet vs Agihan & Statistik) */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+      {/* KPI Cards (Bajet vs Agihan & Statistik Kuota) */}
+      <div className="grid grid-cols-2 lg:grid-cols-5 gap-3">
         <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
-          <span className="text-[11px] font-semibold text-slate-500 block">Jumlah Penerima Unik</span>
+          <span className="text-[11px] font-semibold text-slate-500 block">Penerima Unik</span>
           <div className="text-2xl font-black text-slate-900 mt-1">{uniqueRecipients} Murid</div>
-          <p className="text-[10px] text-teal-700 mt-1 font-semibold">
-            {overlappingStudents.length > 0 ? `⚠️ ${overlappingStudents.length} murid terima > 1 bantuan` : 'Tiada pertindihan berganda'}
+          <p className="text-[10px] text-teal-700 mt-1 font-semibold truncate">
+            {overlappingStudents.length > 0 ? `⚠️ ${overlappingStudents.length} murid >1 bantuan` : 'Tiada pertindihan'}
+          </p>
+        </div>
+
+        <div className="bg-white p-4 rounded-xl border border-teal-200 bg-teal-50/20 shadow-xs">
+          <span className="text-[11px] font-semibold text-teal-800 block">Status Kuota Bantuan</span>
+          <div className="text-2xl font-black text-teal-900 mt-1">
+            {totalFilledQuota} / {totalQuotaAll} <span className="text-xs font-bold text-slate-500">Tempat</span>
+          </div>
+          <p className="text-[10px] text-teal-700 mt-1 font-bold">
+            Baki: {totalRemainingQuota} kuota ({((totalFilledQuota / (totalQuotaAll || 1)) * 100).toFixed(0)}% terisi)
           </p>
         </div>
 
         <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
-          <span className="text-[11px] font-semibold text-slate-500 block">Jumlah Peruntukan Disasarkan</span>
+          <span className="text-[11px] font-semibold text-slate-500 block">Siling Bajet Sasaran</span>
           <div className="text-2xl font-black text-blue-900 mt-1">RM {totalDanaPeruntukan.toLocaleString()}</div>
-          <p className="text-[10px] text-slate-500 mt-1">{records.length} rekod bantuan diluluskan</p>
+          <p className="text-[10px] text-slate-500 mt-1">{records.length} rekod diluluskan</p>
         </div>
 
         <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
-          <span className="text-[11px] font-semibold text-slate-500 block">Jumlah Dana Telah Diagih</span>
+          <span className="text-[11px] font-semibold text-slate-500 block">Dana Telah Diagih</span>
           <div className="text-2xl font-black text-emerald-700 mt-1">RM {totalAgihanDone.toLocaleString()}</div>
-          <p className="text-[10px] text-emerald-600 mt-1 font-bold">
-            {totalDanaPeruntukan > 0 ? ((totalAgihanDone / totalDanaPeruntukan) * 100).toFixed(0) : 0}% telah diserah dengan akuan terima
+          <p className="text-[10px] text-emerald-600 mt-1 font-bold truncate">
+            {totalDanaPeruntukan > 0 ? ((totalAgihanDone / totalDanaPeruntukan) * 100).toFixed(0) : 0}% telah serah akuan
           </p>
         </div>
 
-        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
-          <span className="text-[11px] font-semibold text-slate-500 block">Permohonan Dalam Semakan</span>
+        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs col-span-2 lg:col-span-1">
+          <span className="text-[11px] font-semibold text-slate-500 block">Permohonan Semakan</span>
           <div className="text-2xl font-black text-amber-700 mt-1">{applications.filter(a => a.status !== 'lulus' && a.status !== 'ditolak').length} Kes</div>
           <p className="text-[10px] text-slate-500 mt-1">JBMS SMK Salaping</p>
         </div>
@@ -411,7 +468,7 @@ export const Assistance: React.FC = () => {
           }`}
         >
           <PieIcon className="w-4 h-4" />
-          <span>Pemantauan Bajet Skim</span>
+          <span>Pemantauan Kuota & Bajet Skim</span>
         </button>
       </div>
 
@@ -721,53 +778,181 @@ export const Assistance: React.FC = () => {
         </div>
       )}
 
-      {/* ================= TAB 4: PEMANTAUAN BAJET SKIM ================= */}
+      {/* ================= TAB 4: PEMANTAUAN KUOTA & BAJET SKIM ================= */}
       {activeTab === 'bajet' && (
-        <div className="space-y-4">
+        <div className="space-y-5">
+          {/* Executive Quota & Allocation Summary Banner */}
+          <div className="bg-gradient-to-r from-teal-900 via-teal-800 to-slate-900 rounded-2xl p-5 text-white shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <span className="px-2.5 py-0.5 rounded-full bg-teal-500/20 text-teal-200 text-[10px] font-extrabold uppercase tracking-wider border border-teal-400/30">
+                  Pengawasan Kuota KPM & Agensi
+                </span>
+                <span className="text-xs text-teal-200/80">Sesi Persekolahan 2026</span>
+              </div>
+              <h3 className="text-lg font-black tracking-tight">Status Kapasiti & Kuota Agihan Bantuan Sekolah</h3>
+              <p className="text-xs text-teal-100/70 max-w-2xl leading-relaxed">
+                Setiap jenis bantuan diperuntukkan had kuota murid dan siling kewangan rasmi. Penyelaras boleh menyelaraskan kuota mengikut surat kelulusan PPD/JPN terkini.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="bg-white/10 backdrop-blur-xs px-3.5 py-2.5 rounded-xl border border-white/10 text-right">
+                <span className="text-[10px] text-teal-200 uppercase font-bold block">Pemanfaatan Kuota</span>
+                <span className="text-xl font-black text-white">
+                  {((totalFilledQuota / (totalQuotaAll || 1)) * 100).toFixed(1)}%
+                </span>
+              </div>
+              {canManageAssistance && (
+                <button
+                  onClick={() => openEditQuotaModal(DEFAULT_ASSISTANCE_TYPES[0])}
+                  className="flex items-center gap-1.5 px-3.5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold rounded-xl text-xs transition-all shadow-sm"
+                >
+                  <Sliders className="w-4 h-4" />
+                  <span>Selaras Kuota Skim</span>
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Grid of Aid Schemes with Quota & Budget details */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {DEFAULT_ASSISTANCE_TYPES.map(type => {
               const matchingRecs = records.filter(r => r.jenisBantuan === type);
               const totalUsed = matchingRecs.reduce((a, b) => a + b.jumlahBantuan, 0);
-              const budgetConfig = DEFAULT_ASSISTANCE_BUDGETS[type] || { perMurid: 150, peruntukanSekolah: 20000 };
-              const percentUsed = budgetConfig.peruntukanSekolah > 0 ? (totalUsed / budgetConfig.peruntukanSekolah) * 100 : 0;
+              const bConfig = budgets[type] || DEFAULT_ASSISTANCE_BUDGETS[type] || { kuotaMurid: 30, perMurid: 150, peruntukanSekolah: 4500, sumber: 'KPM' };
+              const kuota = bConfig.kuotaMurid || 1;
+              const filled = matchingRecs.length;
+              const remainingQuota = kuota - filled;
+              const quotaPercent = Math.min((filled / kuota) * 100, 100);
+              const percentUsed = bConfig.peruntukanSekolah > 0 ? (totalUsed / bConfig.peruntukanSekolah) * 100 : 0;
+
+              const isQuotaExceeded = filled > kuota;
+              const isQuotaFull = filled === kuota;
+              const isNearQuota = !isQuotaFull && !isQuotaExceeded && quotaPercent >= 80;
 
               return (
-                <div key={type} className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-3 text-xs">
+                <div
+                  key={type}
+                  className={`bg-white p-5 rounded-2xl border transition-all space-y-3.5 text-xs shadow-xs hover:shadow-md ${
+                    isQuotaExceeded
+                      ? 'border-red-300 ring-1 ring-red-200'
+                      : isQuotaFull
+                      ? 'border-amber-300'
+                      : 'border-slate-200'
+                  }`}
+                >
+                  {/* Card Header */}
                   <div className="flex items-start justify-between gap-2">
-                    <h4 className="font-extrabold text-slate-900 text-sm leading-tight">{type}</h4>
-                    <span className="px-2 py-0.5 rounded-full font-black text-[10px] bg-teal-100 text-teal-800">
-                      {matchingRecs.length} Penerima
+                    <div className="space-y-0.5">
+                      <h4 className="font-extrabold text-slate-900 text-sm leading-tight">{type}</h4>
+                      <span className="text-[10px] font-semibold text-slate-500 block">
+                        Sumber: {bConfig.sumber || 'KPM'}
+                      </span>
+                    </div>
+
+                    {/* Quota Status Badge */}
+                    <span
+                      className={`px-2.5 py-1 rounded-full font-black text-[10px] shrink-0 border ${
+                        isQuotaExceeded
+                          ? 'bg-red-100 text-red-800 border-red-300'
+                          : isQuotaFull
+                          ? 'bg-amber-100 text-amber-800 border-amber-300'
+                          : isNearQuota
+                          ? 'bg-yellow-100 text-yellow-800 border-yellow-300'
+                          : 'bg-emerald-100 text-emerald-800 border-emerald-300'
+                      }`}
+                    >
+                      {isQuotaExceeded
+                        ? `LEBIH KUOTA (+${filled - kuota})`
+                        : isQuotaFull
+                        ? 'KUOTA PENUH'
+                        : isNearQuota
+                        ? `BAKI ${remainingQuota} KUOTA`
+                        : `BAKI ${remainingQuota} KUOTA`}
                     </span>
                   </div>
 
-                  <div className="space-y-1">
+                  {/* Quota Gauge (Murid) */}
+                  <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 space-y-1.5">
+                    <div className="flex items-center justify-between text-[11px]">
+                      <span className="font-semibold text-slate-600 flex items-center gap-1">
+                        <Users className="w-3.5 h-3.5 text-teal-700" />
+                        <span>Pengisian Kuota Murid:</span>
+                      </span>
+                      <span className="font-black text-slate-900">
+                        {filled} / {kuota} Murid ({((filled / kuota) * 100).toFixed(0)}%)
+                      </span>
+                    </div>
+
+                    <div className="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
+                      <div
+                        className={`h-full rounded-full transition-all ${
+                          isQuotaExceeded
+                            ? 'bg-red-600'
+                            : isQuotaFull
+                            ? 'bg-amber-600'
+                            : isNearQuota
+                            ? 'bg-yellow-500'
+                            : 'bg-teal-600'
+                        }`}
+                        style={{ width: `${Math.min(quotaPercent, 100)}%` }}
+                      />
+                    </div>
+
+                    <div className="flex items-center justify-between text-[10px] text-slate-500 pt-0.5">
+                      <span>{filled} penerima berdaftar</span>
+                      <span className={remainingQuota <= 0 ? 'font-bold text-red-600' : 'text-emerald-700 font-semibold'}>
+                        {remainingQuota > 0 ? `${remainingQuota} kekosongan kuota` : 'Tiada baki kuota'}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Financial & Siling Bajet */}
+                  <div className="space-y-1.5 pt-1">
                     <div className="flex justify-between text-slate-500 text-[11px]">
-                      <span>Kadar Per Murid:</span>
-                      <span className="font-bold text-slate-800">RM {budgetConfig.perMurid}</span>
+                      <span>Kadar Bantuan:</span>
+                      <span className="font-bold text-slate-800">
+                        {bConfig.perMurid > 0 ? `RM ${bConfig.perMurid} / murid` : 'Bukan Tunai (Buku)'}
+                      </span>
                     </div>
                     <div className="flex justify-between text-slate-500 text-[11px]">
-                      <span>Jumlah Dana Diguna:</span>
+                      <span>Dana Diagihkan:</span>
                       <span className="font-black text-teal-800">RM {totalUsed.toLocaleString()}</span>
                     </div>
-                    {budgetConfig.peruntukanSekolah > 0 && (
+                    {bConfig.peruntukanSekolah > 0 && (
                       <div className="flex justify-between text-slate-500 text-[11px]">
-                        <span>Peruntukan Siling Sekolah:</span>
-                        <span className="font-bold text-slate-800">RM {budgetConfig.peruntukanSekolah.toLocaleString()}</span>
+                        <span>Siling Peruntukan:</span>
+                        <span className="font-bold text-slate-800">RM {bConfig.peruntukanSekolah.toLocaleString()}</span>
                       </div>
                     )}
                   </div>
 
-                  {budgetConfig.peruntukanSekolah > 0 && (
+                  {/* Financial Bar */}
+                  {bConfig.peruntukanSekolah > 0 && (
                     <div>
-                      <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden mt-2">
+                      <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
                         <div
-                          className="bg-teal-600 h-full rounded-full transition-all"
+                          className="bg-emerald-600 h-full rounded-full transition-all"
                           style={{ width: `${Math.min(percentUsed, 100)}%` }}
                         />
                       </div>
-                      <span className="text-[10px] text-slate-500 mt-1 block text-right font-semibold">
-                        {percentUsed.toFixed(1)}% dimanfaatkan
+                      <span className="text-[10px] text-slate-500 mt-1 block text-right font-medium">
+                        {percentUsed.toFixed(1)}% daripada siling dana
                       </span>
+                    </div>
+                  )}
+
+                  {/* Action button */}
+                  {canManageAssistance && (
+                    <div className="pt-2 border-t border-slate-100 flex justify-end">
+                      <button
+                        onClick={() => openEditQuotaModal(type)}
+                        className="flex items-center gap-1 text-[11px] font-bold text-teal-800 hover:text-teal-950 hover:underline"
+                      >
+                        <Edit2 className="w-3.5 h-3.5" />
+                        <span>Selaras Kuota & Siling</span>
+                      </button>
                     </div>
                   )}
                 </div>
@@ -818,6 +1003,27 @@ export const Assistance: React.FC = () => {
                   ))}
                 </select>
               </div>
+
+              {/* Info Kuota Skim Semasa */}
+              {(() => {
+                const bConfig = budgets[applyJenis] || DEFAULT_ASSISTANCE_BUDGETS[applyJenis] || { kuotaMurid: 30, perMurid: 150, peruntukanSekolah: 4500 };
+                const filled = records.filter(r => r.jenisBantuan === applyJenis).length;
+                const rem = (bConfig.kuotaMurid || 30) - filled;
+                const isFull = rem <= 0;
+                return (
+                  <div className={`p-3 rounded-xl border flex items-center justify-between ${isFull ? 'bg-red-50 border-red-200 text-red-900' : 'bg-teal-50 border-teal-200 text-teal-900'}`}>
+                    <div>
+                      <span className="font-bold text-[11px] block">Status Kuota {applyJenis}:</span>
+                      <span className="text-[10px] text-slate-600">
+                        {filled} / {bConfig.kuotaMurid} murid terisi • Kadar: RM{bConfig.perMurid}
+                      </span>
+                    </div>
+                    <span className={`px-2 py-0.5 rounded font-black text-[10px] ${isFull ? 'bg-red-200 text-red-800' : 'bg-teal-200 text-teal-800'}`}>
+                      {isFull ? 'KUOTA PENUH' : `Baki ${rem} Kuota`}
+                    </span>
+                  </div>
+                );
+              })()}
 
               <div>
                 <label className="font-bold text-slate-800 block mb-1">Justifikasi / Sebab Permohonan:</label>
@@ -893,8 +1099,9 @@ export const Assistance: React.FC = () => {
                 <select
                   value={recJenis}
                   onChange={e => {
-                    setRecJenis(e.target.value);
-                    const b = DEFAULT_ASSISTANCE_BUDGETS[e.target.value];
+                    const t = e.target.value;
+                    setRecJenis(t);
+                    const b = budgets[t] || DEFAULT_ASSISTANCE_BUDGETS[t];
                     if (b) setRecJumlah(b.perMurid);
                   }}
                   className="w-full border border-slate-300 rounded-lg p-2 font-medium"
@@ -906,6 +1113,27 @@ export const Assistance: React.FC = () => {
                   ))}
                 </select>
               </div>
+
+              {/* Info Kuota Skim Semasa */}
+              {(() => {
+                const bConfig = budgets[recJenis] || DEFAULT_ASSISTANCE_BUDGETS[recJenis] || { kuotaMurid: 30, perMurid: 150, peruntukanSekolah: 4500 };
+                const filled = records.filter(r => r.jenisBantuan === recJenis).length;
+                const rem = (bConfig.kuotaMurid || 30) - filled;
+                const isFull = rem <= 0;
+                return (
+                  <div className={`p-3 rounded-xl border flex items-center justify-between ${isFull ? 'bg-red-50 border-red-200 text-red-900' : 'bg-teal-50 border-teal-200 text-teal-900'}`}>
+                    <div>
+                      <span className="font-bold text-[11px] block">Status Kuota {recJenis}:</span>
+                      <span className="text-[10px] text-slate-600">
+                        {filled} / {bConfig.kuotaMurid} murid terisi ({((filled / (bConfig.kuotaMurid || 1)) * 100).toFixed(0)}%)
+                      </span>
+                    </div>
+                    <span className={`px-2 py-0.5 rounded font-black text-[10px] ${isFull ? 'bg-red-200 text-red-800' : 'bg-teal-200 text-teal-800'}`}>
+                      {isFull ? 'KUOTA PENUH' : `Baki ${rem} Kuota`}
+                    </span>
+                  </div>
+                );
+              })()}
 
               <div>
                 <label className="font-bold text-slate-800 block mb-1">Kadar Amaun (RM):</label>
@@ -931,6 +1159,152 @@ export const Assistance: React.FC = () => {
                   className="px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl shadow-xs"
                 >
                   Daftar Penerima
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* ================= MODAL SELARAS KUOTA & SILING BAJET ================= */}
+      {showQuotaModal && (
+        <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4 z-50 animate-in fade-in">
+          <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 space-y-4 text-xs">
+            <div className="flex items-center justify-between border-b pb-3">
+              <div className="flex items-center gap-2">
+                <Sliders className="w-5 h-5 text-teal-700" />
+                <h3 className="text-base font-extrabold text-slate-900">Selaras Kuota & Siling Skim Bantuan</h3>
+              </div>
+              <button onClick={() => setShowQuotaModal(false)} className="p-1 text-slate-400 hover:text-slate-600">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleSaveQuota} className="space-y-3.5">
+              <div>
+                <label className="font-bold text-slate-800 block mb-1">Pilih Jenis Skim Bantuan:</label>
+                <select
+                  value={editingType}
+                  onChange={e => {
+                    const t = e.target.value;
+                    setEditingType(t);
+                    const b = budgets[t] || DEFAULT_ASSISTANCE_BUDGETS[t];
+                    if (b) {
+                      setEditKuota(b.kuotaMurid || 30);
+                      setEditKadar(b.perMurid || 150);
+                      setEditSiling(b.peruntukanSekolah || 4500);
+                      setEditSumber(b.sumber || 'KPM');
+                    }
+                  }}
+                  className="w-full border border-slate-300 rounded-lg p-2 font-bold text-slate-900 bg-slate-50"
+                >
+                  {DEFAULT_ASSISTANCE_TYPES.map(t => (
+                    <option key={t} value={t}>
+                      {t}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="font-bold text-slate-800 block mb-1">
+                    Had Kuota Murid (Orang):
+                  </label>
+                  <input
+                    type="number"
+                    min={1}
+                    required
+                    value={editKuota}
+                    onChange={e => {
+                      const k = Number(e.target.value);
+                      setEditKuota(k);
+                      if (editKadar > 0) setEditSiling(k * editKadar);
+                    }}
+                    className="w-full border border-slate-300 rounded-lg p-2 font-black text-slate-900"
+                  />
+                  <span className="text-[10px] text-slate-500 mt-0.5 block">
+                    Kapasiti penerima diluluskan
+                  </span>
+                </div>
+
+                <div>
+                  <label className="font-bold text-slate-800 block mb-1">
+                    Kadar Per Murid (RM):
+                  </label>
+                  <input
+                    type="number"
+                    min={0}
+                    required
+                    value={editKadar}
+                    onChange={e => {
+                      const r = Number(e.target.value);
+                      setEditKadar(r);
+                      if (editKuota > 0) setEditSiling(editKuota * r);
+                    }}
+                    className="w-full border border-slate-300 rounded-lg p-2 font-black text-slate-900"
+                  />
+                  <span className="text-[10px] text-slate-500 mt-0.5 block">
+                    Kadar peruntukan seorang murid
+                  </span>
+                </div>
+              </div>
+
+              <div>
+                <label className="font-bold text-slate-800 block mb-1">
+                  Siling Peruntukan Dana Sekolah (RM):
+                </label>
+                <input
+                  type="number"
+                  min={0}
+                  required
+                  value={editSiling}
+                  onChange={e => setEditSiling(Number(e.target.value))}
+                  className="w-full border border-slate-300 rounded-lg p-2 font-black text-slate-900"
+                />
+                <span className="text-[10px] text-slate-500 mt-0.5 block">
+                  Jumlah dana siling keseluruhan bagi skim ini
+                </span>
+              </div>
+
+              <div>
+                <label className="font-bold text-slate-800 block mb-1">
+                  Sumber Pembiayaan / Agensi Penyalur:
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={editSumber}
+                  onChange={e => setEditSumber(e.target.value)}
+                  placeholder="Contoh: KPM / Kerajaan Negeri Sabah / Tabung PIBG / MUIS"
+                  className="w-full border border-slate-300 rounded-lg p-2 font-medium text-slate-900"
+                />
+              </div>
+
+              <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-amber-900 text-[11px] space-y-1">
+                <span className="font-bold flex items-center gap-1">
+                  <AlertTriangle className="w-3.5 h-3.5 text-amber-600" />
+                  Nota Penyelarasan Kuota:
+                </span>
+                <p>
+                  Perubahan kuota akan direkodkan dalam fail Audit Log. Pastikan penyelarasan berasaskan surat kelulusan peruntukan rasmi PPD/JPN/KPM.
+                </p>
+              </div>
+
+              <div className="flex justify-end gap-2 pt-2 border-t">
+                <button
+                  type="button"
+                  onClick={() => setShowQuotaModal(false)}
+                  className="px-4 py-2 border border-slate-300 text-slate-700 font-bold rounded-xl"
+                >
+                  Batal
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-teal-800 hover:bg-teal-900 text-white font-bold rounded-xl shadow-xs flex items-center gap-1.5"
+                >
+                  <Check className="w-4 h-4" />
+                  <span>Simpan Kuota & Bajet</span>
                 </button>
               </div>
             </form>

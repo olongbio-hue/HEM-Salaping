@@ -39,7 +39,10 @@ import {
   HeartPulse,
   CalendarDays,
   CheckSquare,
-  FileText
+  FileText,
+  Trophy,
+  GraduationCap,
+  UserPlus
 } from 'lucide-react';
 import {
   ResponsiveContainer,
@@ -54,6 +57,7 @@ import {
   Legend
 } from 'recharts';
 import { SkeletonCard, SkeletonTable } from '../components/SkeletonLoader';
+import { SchoolLogo } from '../components/SchoolLogo';
 
 export const Dashboard: React.FC = () => {
   const { currentUser, isPengetuaOrGpkHem } = useAuth();
@@ -156,7 +160,7 @@ export const Dashboard: React.FC = () => {
     });
   });
 
-  const todayPercentage = todayTotal > 0 ? Number(((todayPresent / todayTotal) * 100).toFixed(1)) : 91.5;
+  const todayPercentage = todayTotal > 0 ? Number(((todayPresent / todayTotal) * 100).toFixed(1)) : 0;
   const criticalRiskStudents = riskList.filter(r => r.riskTier === 'amaran3' || r.riskTier === 'amaran2');
   const openDisciplineCases = discipline.filter(d => d.statusKes !== 'selesai');
   const openCounselingCases = counseling.filter(c => c.status === 'aktif');
@@ -170,7 +174,7 @@ export const Dashboard: React.FC = () => {
       hadir += r.jumlahHadir;
       total += r.jumlahMurid;
     });
-    const peratus = total > 0 ? Number(((hadir / total) * 100).toFixed(1)) : 90;
+    const peratus = total > 0 ? Number(((hadir / total) * 100).toFixed(1)) : 0;
     // format date as DD/MM
     const parts = d.split('-');
     const label = `${parts[2]}/${parts[1]}`;
@@ -218,37 +222,184 @@ export const Dashboard: React.FC = () => {
 
   return (
     <div className="p-3 sm:p-6 space-y-6 max-w-7xl mx-auto pb-20 lg:pb-8">
-      {/* Welcome Banner */}
-      <div className="bg-gradient-to-r from-blue-900 via-indigo-900 to-blue-950 rounded-2xl p-5 sm:p-6 text-white shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-blue-800 text-amber-300 border border-blue-700">
-              Sesi {school.sesi} • Tahun {school.tahunSemasa}
-            </span>
-            <span className="text-xs text-blue-200">
-              Tarikh Semasa: {new Date().toLocaleDateString('ms-MY', { day: '2-digit', month: 'long', year: 'numeric' })}
-            </span>
-          </div>
-          <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight">
-            Selamat Bertugas, {currentUser?.nama}
-          </h1>
-          <p className="text-xs sm:text-sm text-blue-200 mt-1">
-            {school.nama} ({school.kodSekolah}) • {school.bandar}, Sabah. Sasaran Kehadiran Sekolah:{' '}
-            <strong className="text-amber-300">{rules.sasaranKehadiranSekolah}%</strong>
-          </p>
-        </div>
+      {/* Header Utama: Ilustrasi Pelajar & Kecemerlangan HEM */}
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-blue-950 to-indigo-950 text-white shadow-2xl border border-blue-900/40">
+        {/* Glow ambient background effects */}
+        <div className="absolute -top-24 -left-24 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-1/2 -right-24 w-96 h-96 bg-amber-500/15 rounded-full blur-3xl pointer-events-none" />
 
-        {/* Action Button */}
-        <div className="flex items-center gap-2 shrink-0">
-          <button
-            onClick={() => navigate('/kehadiran')}
-            className="px-4 py-2.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs sm:text-sm rounded-xl shadow-md transition-all flex items-center gap-2"
-          >
-            <CalendarCheck className="w-4 h-4" />
-            <span>Rekod Kehadiran Hari Ini</span>
-          </button>
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center p-5 sm:p-7 lg:p-8">
+          {/* Kolum Kiri: Informasi, Ucapan & Metrik Kecemerlangan Modal Insan */}
+          <div className="lg:col-span-7 space-y-4">
+            {/* Lencana Sesi & Kemenjadian */}
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="inline-flex items-center gap-1.5 text-[11px] font-extrabold px-3 py-1 rounded-full bg-blue-800/80 text-amber-300 border border-blue-700/80 shadow-xs">
+                <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                <span>Sesi {school.sesi} • Tahun {school.tahunSemasa}</span>
+              </span>
+              <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold px-3 py-1 rounded-full bg-white/10 text-emerald-300 border border-white/10">
+                <Trophy className="w-3.5 h-3.5 text-emerald-400" />
+                <span>Kecemerlangan & Kemenjadian Murid</span>
+              </span>
+              <span className="text-xs text-blue-200/80 hidden sm:inline">
+                {new Date().toLocaleDateString('ms-MY', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' })}
+              </span>
+            </div>
+
+            {/* Ucapan Pengguna & Identiti Sekolah */}
+            <div className="flex items-start gap-3.5 sm:gap-4">
+              <div className="shrink-0 p-1.5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 shadow-lg">
+                <SchoolLogo size="lg" className="drop-shadow-md hover:scale-105 transition-transform" />
+              </div>
+              <div className="space-y-1">
+                <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-white leading-tight">
+                  Selamat Bertugas, <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-200 to-amber-400">{currentUser?.nama || 'Warga Pendidik'}</span>
+                </h1>
+                <p className="text-xs sm:text-sm text-blue-100/90 leading-relaxed max-w-xl">
+                  {school.nama} ({school.kodSekolah}) • {school.bandar}, Sabah.
+                  <span className="block text-blue-200/85 mt-0.5">
+                    Moto: <em>"{school.motoSekolah || 'Ilmuan Gemilang'}"</em> • Sasaran Kehadiran Sekolah: <strong className="text-amber-300">{rules.sasaranKehadiranSekolah}%</strong>
+                  </span>
+                </p>
+              </div>
+            </div>
+
+            {/* Metrik Pantas Kemenjadian & Kesejahteraan Murid */}
+            <div className="grid grid-cols-3 gap-2 sm:gap-3 pt-1">
+              <div className="bg-white/5 hover:bg-white/10 transition-colors border border-white/10 rounded-xl p-2.5 backdrop-blur-xs">
+                <div className="flex items-center gap-1.5 text-amber-300 text-[11px] font-extrabold">
+                  <Award className="w-3.5 h-3.5" />
+                  <span>Sahsiah & Disiplin</span>
+                </div>
+                <div className="text-xs sm:text-sm font-black text-white mt-1">
+                  {totalEnrolment - openDisciplineCases.length} / {totalEnrolment}
+                </div>
+                <span className="text-[10px] text-blue-200/70 block truncate">Bebas tindakan kes</span>
+              </div>
+
+              <div className="bg-white/5 hover:bg-white/10 transition-colors border border-white/10 rounded-xl p-2.5 backdrop-blur-xs">
+                <div className="flex items-center gap-1.5 text-emerald-300 text-[11px] font-extrabold">
+                  <TrendingUp className="w-3.5 h-3.5" />
+                  <span>Kehadiran Hari Ini</span>
+                </div>
+                <div className="text-xs sm:text-sm font-black text-white mt-1">
+                  {todayPercentage}%
+                </div>
+                <span className="text-[10px] text-blue-200/70 block truncate">{todayPresent} hadir ke sekolah</span>
+              </div>
+
+              <div className="bg-white/5 hover:bg-white/10 transition-colors border border-white/10 rounded-xl p-2.5 backdrop-blur-xs">
+                <div className="flex items-center gap-1.5 text-teal-300 text-[11px] font-extrabold">
+                  <HeartHandshake className="w-3.5 h-3.5" />
+                  <span>Kebajikan & Bantuan</span>
+                </div>
+                <div className="text-xs sm:text-sm font-black text-white mt-1">
+                  {totalAssistance} Penerima
+                </div>
+                <span className="text-[10px] text-blue-200/70 block truncate">Biasiswa & agihan</span>
+              </div>
+            </div>
+
+            {/* Butang Tindakan Pantas */}
+            <div className="flex flex-wrap items-center gap-2.5 pt-1">
+              <button
+                onClick={() => navigate('/kehadiran')}
+                className="px-4 py-2.5 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-950 font-black text-xs sm:text-sm rounded-xl shadow-lg hover:shadow-amber-500/25 transition-all flex items-center gap-2"
+              >
+                <CalendarCheck className="w-4 h-4" />
+                <span>Rekod Kehadiran Hari Ini</span>
+              </button>
+
+              <button
+                onClick={() => navigate('/program-mesyuarat')}
+                className="px-3.5 py-2.5 bg-white/10 hover:bg-white/20 text-white font-bold text-xs rounded-xl border border-white/15 transition-all flex items-center gap-2 backdrop-blur-xs"
+              >
+                <CalendarDays className="w-4 h-4 text-blue-300" />
+                <span>Kalendar & Program HEM</span>
+              </button>
+
+              <button
+                onClick={() => navigate('/bantuan')}
+                className="px-3.5 py-2.5 bg-white/10 hover:bg-white/20 text-white font-bold text-xs rounded-xl border border-white/15 transition-all flex items-center gap-2 backdrop-blur-xs"
+              >
+                <Award className="w-4 h-4 text-amber-300" />
+                <span>Skim Bantuan</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Kolum Kanan: Ilustrasi Bergambar Pelajar & Kecemerlangan */}
+          <div className="lg:col-span-5 relative">
+            <div className="relative rounded-2xl overflow-hidden border-2 border-white/15 shadow-2xl group bg-slate-950">
+              <img
+                src="/src/assets/images/salaping_student_banner_1791731561584.jpg"
+                alt="Ilustrasi Kecemerlangan & Kemenjadian Murid SMK Salaping"
+                referrerPolicy="no-referrer"
+                className="w-full h-56 sm:h-64 lg:h-72 object-cover object-top transition-transform duration-700 group-hover:scale-105"
+              />
+              {/* Lapisan Bayangan Gradien */}
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent pointer-events-none" />
+
+              {/* Lencana Atas Ilustrasi */}
+              <div className="absolute top-3 right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-950/80 backdrop-blur-md border border-amber-400/40 text-[10px] font-extrabold text-amber-300 shadow-md">
+                <Trophy className="w-3.5 h-3.5 text-amber-400" />
+                <span>Kemenjadian Murid Salaping</span>
+              </div>
+
+              {/* Kapsul Penerangan Bawah Ilustrasi */}
+              <div className="absolute bottom-3 left-3 right-3 p-2.5 rounded-xl bg-slate-900/90 backdrop-blur-md border border-white/10 text-white">
+                <div className="flex items-center justify-between">
+                  <div className="space-y-0.5">
+                    <span className="text-[10px] font-extrabold uppercase tracking-wider text-amber-300 block">
+                      Aspirasi Murid Salaping • Modal Insan
+                    </span>
+                    <h3 className="text-xs font-bold text-slate-100">
+                      Kepimpinan • Kejayaan Akademik • Keunggulan Sahsiah
+                    </h3>
+                  </div>
+                  <span className="shrink-0 w-7 h-7 rounded-lg bg-amber-500/20 text-amber-300 flex items-center justify-center font-black text-xs border border-amber-500/30">
+                    ★
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+
+      {/* Onboarding Banner untuk Mod Data Sebenar */}
+      {totalEnrolment === 0 && (
+        <div className="p-4 sm:p-5 rounded-2xl border-2 border-dashed border-blue-300 bg-blue-50/70 flex flex-col sm:flex-row sm:items-center justify-between gap-4 animate-in fade-in">
+          <div className="flex items-start gap-3">
+            <div className="w-10 h-10 rounded-xl bg-blue-700 text-white flex items-center justify-center shrink-0 shadow-md">
+              <UserPlus className="w-5 h-5" />
+            </div>
+            <div className="space-y-0.5">
+              <h3 className="font-extrabold text-sm text-blue-950">
+                Pangkalan Data Murid Bersih (Sedia untuk Data Sekolah Sebenar)
+              </h3>
+              <p className="text-xs text-blue-900/80 leading-relaxed max-w-2xl">
+                Data demo fiktif telah dipadamkan sepenuhnya. Mulakan kemasukan rekod murid sebenar SMK Salaping melalui borang pendaftaran individu atau import fail CSV (APDM).
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 shrink-0">
+            <button
+              onClick={() => navigate('/murid')}
+              className="px-4 py-2 bg-blue-700 hover:bg-blue-800 text-white font-extrabold text-xs rounded-xl shadow-xs transition-colors flex items-center gap-1.5"
+            >
+              <UserPlus className="w-4 h-4" />
+              <span>Daftar / Import Murid</span>
+            </button>
+            <button
+              onClick={() => navigate('/tetapan')}
+              className="px-3 py-2 bg-white hover:bg-slate-100 text-slate-800 border border-slate-300 font-bold text-xs rounded-xl transition-colors"
+            >
+              <span>Tetapan Sekolah</span>
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Filter Bar */}
       <div className="bg-white p-3.5 rounded-xl border border-slate-200 shadow-xs flex flex-wrap items-center justify-between gap-3 text-xs">
@@ -431,8 +582,8 @@ export const Dashboard: React.FC = () => {
             </div>
           </div>
           <div className="text-2xl font-extrabold text-teal-800">{totalAssistance}</div>
-          <p className="text-[11px] text-slate-500 mt-1">
-            BAP, BKP, KWAPM & EMK
+          <p className="text-[11px] text-teal-700 font-semibold mt-1">
+            Pantau Kuota & Agihan Skim
           </p>
         </div>
 
@@ -447,9 +598,9 @@ export const Dashboard: React.FC = () => {
               <Home className="w-4 h-4" />
             </div>
           </div>
-          <div className="text-2xl font-extrabold text-indigo-800">{totalHostel}</div>
-          <p className="text-[11px] text-slate-500 mt-1">
-            Murid pedalaman Kota Marudu
+          <div className="text-2xl font-extrabold text-indigo-800">{totalHostel} <span className="text-xs font-medium text-slate-500">/ 60</span></div>
+          <p className="text-[11px] text-indigo-700 font-semibold mt-1">
+            Kapasiti & Kuota Katil Asrama
           </p>
         </div>
       </div>

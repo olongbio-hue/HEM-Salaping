@@ -24,6 +24,7 @@ import {
   CalendarDays,
   CheckSquare
 } from 'lucide-react';
+import { SchoolLogo } from './SchoolLogo';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -158,8 +159,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onOpenResetMo
         {/* Header Sidebar */}
         <div className="h-16 flex items-center justify-between px-5 border-b border-slate-800 bg-slate-950/40">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center font-extrabold text-sm shadow-md">
-              H
+            <div className="flex items-center justify-center shrink-0">
+              <SchoolLogo size="sm" className="drop-shadow-md" />
             </div>
             <div>
               <span className="font-bold text-white text-base tracking-tight">HEM Digital</span>
