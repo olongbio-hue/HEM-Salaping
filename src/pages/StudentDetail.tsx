@@ -705,7 +705,7 @@ export const StudentDetail: React.FC = () => {
               <div className="p-4 bg-indigo-50 border border-indigo-200 rounded-xl space-y-1">
                 <span className="font-bold text-indigo-900 text-sm">Penghuni Aktif Asrama Desa</span>
                 <p className="text-indigo-800">Kamar / Dorm: <strong>{student.kamarAsrama || 'Kamar Kinabalu 2'}</strong></p>
-                <p className="text-indigo-800">Warden Bertugas: <strong>Cikgu Jerry Mojuntin</strong></p>
+                <p className="text-indigo-800">Warden Bertugas: <strong>{school.namaKetuaWarden || 'Warden Bertugas'}</strong></p>
               </div>
               <p className="text-slate-600">
                 Murid tinggal di asrama kerana jarak perjalanan dari {student.kampung} adalah sejauh {student.jarakKm} km.

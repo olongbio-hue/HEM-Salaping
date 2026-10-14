@@ -45,7 +45,7 @@ import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip, BarChart, Bar, XAxis
 
 export const Counseling: React.FC = () => {
   const { currentUser, canViewCounseling, isPengetuaOrGpkHem } = useAuth();
-  const { showToast } = useSchool();
+  const { showToast, school } = useSchool();
 
   const isGBK = currentUser?.peranan.includes('gbk') || false;
 
@@ -162,7 +162,7 @@ export const Counseling: React.FC = () => {
         catatanSesi: encryptedNote,
         tindakanSusulan: tindakanSusulan || 'Pemantauan berterusan',
         gbkUid: currentUser?.uid || 'gbk',
-        namaGbk: currentUser?.nama || 'Cik Norazimah Binti Abdullah (GBK)',
+        namaGbk: currentUser?.nama || (school.namaGbk ? `${school.namaGbk} (GBK)` : 'Guru Bimbingan & Kaunseling (GBK)'),
         status: 'aktif',
         dicipta: new Date().toISOString()
       };
@@ -278,7 +278,7 @@ export const Counseling: React.FC = () => {
               Unit Bimbingan & Kaunseling (UBK)
             </span>
             <span className="text-xs text-purple-300">
-              Guru Kaunselor: Cik Norazimah Binti Abdullah
+              Guru Kaunselor: {school.namaGbk || 'Guru Bimbingan & Kaunseling'}
             </span>
           </div>
           <h1 className="text-xl sm:text-2xl font-black tracking-tight">

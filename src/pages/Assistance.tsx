@@ -339,7 +339,7 @@ export const Assistance: React.FC = () => {
             <span className="text-xs font-bold px-2 py-0.5 rounded bg-teal-100 text-teal-900">
               Unit Biasiswa & Kebajikan Murid (HEM Fasa 3)
             </span>
-            <span className="text-xs text-slate-500">Penyelaras: Pn. Grace Liew • SMK Salaping</span>
+            <span className="text-xs text-slate-500">Penyelaras: {school.namaPenyelarasBiasiswa || 'Penyelaras Biasiswa & Kebajikan'} • {school.nama}</span>
           </div>
           <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
             Pengurusan Biasiswa & Agihan Bantuan

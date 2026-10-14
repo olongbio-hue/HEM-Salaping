@@ -17,6 +17,7 @@ export interface UserProfile {
   nama: string;
   emel: string;
   peranan: UserRole[];
+  jawatan?: string;
   kelasDiajar?: string[]; // e.g. ["1-arif", "3-marikh"]
   telefon?: string;
   aktif: boolean;
@@ -115,6 +116,14 @@ export interface SchoolSettings {
   logo: string;
   namaPengetua: string;
   namaGpkHem: string;
+  namaGpk1?: string;
+  namaGpkKoko?: string;
+  namaKetuaDisiplin?: string;
+  namaGbk?: string;
+  namaKetuaWarden?: string;
+  namaPenyelarasBiasiswa?: string;
+  namaPenyelarasPengawas?: string;
+  namaGuruData?: string;
   tahunSemasa: number;
   sesi: 'Pagi' | 'Petang';
   warnaUtama: string; // Hex color

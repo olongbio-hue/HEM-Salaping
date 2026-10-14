@@ -170,25 +170,27 @@ export function initializeCleanProductionData(): void {
   setLocalItem(STORAGE_KEYS.RULES_SETTINGS, INITIAL_RULES_SETTINGS);
   setLocalItem(STORAGE_KEYS.CLASSES, CLASSES_LIST);
 
-  const initialUsers: UserProfile[] = DEMO_USERS.map(u => ({
-    uid: u.uid,
-    nama: u.nama,
-    emel: u.emel,
-    peranan: u.peranan,
-    kelasDiajar: u.kelasDiajar,
-    aktif: true,
-    dicipta: '2026-01-01T00:00:00.000Z'
-  }));
+  const initialUsers: UserProfile[] = [
+    {
+      uid: 'admin_sekolah',
+      nama: 'Pentadbir Sistem HEM',
+      emel: 'admin@smksalaping.edu.my',
+      peranan: ['admin_sistem', 'pengetua', 'gpk_hem'],
+      jawatan: 'Pentadbir Utama Sekolah',
+      aktif: true,
+      dicipta: '2026-01-01T00:00:00.000Z'
+    }
+  ];
   setLocalItem(STORAGE_KEYS.USERS, initialUsers);
 
   const initialLog: AuditLog = {
     id: `log_${Date.now()}`,
-    uid: 'admin_sistem',
-    namaPengguna: 'Admin Sistem',
+    uid: 'admin_sekolah',
+    namaPengguna: 'Pentadbir Sistem HEM',
     tindakan: 'cipta',
     koleksi: 'system',
     dokumenId: 'data_sebenar_sedia',
-    perincian: 'Pangkalan data dibersihkan untuk kemasukan data sekolah sebenar SMK Salaping. Tetapan rasmi dan peranan pentadbir aktif.',
+    perincian: 'Pangkalan data dibersihkan sepenuhnya untuk kemasukan data sekolah sebenar SMK Salaping. Tiada data demo fiktif murid atau staf.',
     masa: new Date().toISOString()
   };
   setLocalItem(STORAGE_KEYS.AUDIT_LOGS, [initialLog]);
@@ -198,7 +200,7 @@ export function initializeCleanProductionData(): void {
 }
 
 export function clearAllDemoDataForProduction(operator?: { uid: string; nama: string }): void {
-  console.log('[HEM Digital] Mengosongkan data demo fiktif dan menetapkan mod data sebenar...');
+  console.log('[HEM Digital] Mengosongkan semua data demo murid, rekod, dan nama demo staf...');
   setLocalItem(STORAGE_KEYS.STUDENTS, []);
   setLocalItem(STORAGE_KEYS.ATTENDANCE, []);
   setLocalItem(STORAGE_KEYS.DISCIPLINE, []);
@@ -223,18 +225,38 @@ export function clearAllDemoDataForProduction(operator?: { uid: string; nama: st
   setLocalItem(STORAGE_KEYS.HEM_MEETINGS, []);
   setLocalItem(STORAGE_KEYS.FOLLOW_UPS, []);
 
-  // Setkan bilik asrama tanpa penghuni fiktif
+  // Bilik asrama sedia ada tetapi kosong tanpa penghuni demo
   const cleanRooms = DEFAULT_HOSTEL_ROOMS.map(r => ({
     ...r,
     penghuniIds: []
   }));
   setLocalItem(STORAGE_KEYS.HOSTEL_ROOMS, cleanRooms);
 
-  // Tandakan mod data sebenar
+  // Padamkan semua akaun demo dan nama-nama staf demo
+  const currentUsers = getLocalItem<UserProfile[]>(STORAGE_KEYS.USERS, []);
+  const cleanUsers = currentUsers.filter(u => 
+    !u.uid.startsWith('demo_') &&
+    !['En. Justin Bin Moduying', 'Pn. Masnah Binti Japar', 'Ustaz Hafiz Bin Roslan', 'Cik Norazimah Binti Abdullah', 'Cikgu Elda Grace Majanil', 'Cikgu Jerry Mojuntin', 'Pn. Grace Liew', 'En. Walter Gindol'].includes(u.nama)
+  );
+
+  if (cleanUsers.length === 0) {
+    cleanUsers.push({
+      uid: 'admin_sekolah',
+      nama: 'Pentadbir Sistem HEM',
+      emel: 'admin@smksalaping.edu.my',
+      peranan: ['admin_sistem', 'pengetua', 'gpk_hem'],
+      jawatan: 'Pentadbir Utama Sekolah',
+      aktif: true,
+      dicipta: new Date().toISOString()
+    });
+  }
+  setLocalItem(STORAGE_KEYS.USERS, cleanUsers);
+
+  // Tandakan mod data sebenar kekal
   localStorage.setItem('hem_production_mode', 'true');
   localStorage.setItem('hem_demo_data_purged', 'true');
 
-  const op = operator || { uid: 'admin_sistem', nama: 'Admin Sistem' };
+  const op = operator || { uid: 'admin_sekolah', nama: 'Pentadbir Sistem' };
   const log: AuditLog = {
     id: `log_${Date.now()}`,
     uid: op.uid,
@@ -242,7 +264,7 @@ export function clearAllDemoDataForProduction(operator?: { uid: string; nama: st
     tindakan: 'padam',
     koleksi: 'system',
     dokumenId: 'demo_purged',
-    perincian: 'Data demo fiktif murid dan operasi telah dikosongkan. Sistem sedia sepenuhnya untuk kemasukan data sebenar.',
+    perincian: 'Data demo fiktif murid, rekod kehadiran, dan akaun staf demo telah dipadamkan sepenuhnya. Sistem sedia untuk data sebenar.',
     masa: new Date().toISOString()
   };
   const logs = getLocalItem<AuditLog[]>(STORAGE_KEYS.AUDIT_LOGS, []);
@@ -251,13 +273,10 @@ export function clearAllDemoDataForProduction(operator?: { uid: string; nama: st
 }
 
 export function initializeDemoDataIfEmpty(): void {
-  const isProduction = localStorage.getItem('hem_production_mode') === 'true';
+  // Kekalkan mod data sebenar tanpa menjana data demo
   const hasInitialized = localStorage.getItem('hem_demo_data_purged') === 'true';
-
-  if (!isProduction || !hasInitialized) {
-    // Automatik kosongkan sebarang data demo sedia ada bagi membolehkan data sekolah sebenar
+  if (!hasInitialized) {
     clearAllDemoDataForProduction();
-    return;
   }
 }
 
@@ -412,6 +431,45 @@ export async function getSchoolSettings(): Promise<SchoolSettings> {
     settings.logo = INITIAL_SCHOOL_SETTINGS.logo;
     setLocalItem(STORAGE_KEYS.SCHOOL_SETTINGS, settings);
   }
+
+  // Bersihkan sebarang nama demo lama yang mungkin masih tersimpan
+  const demoNames = [
+    'En. Justin Bin Moduying',
+    'Pn. Masnah Binti Japar',
+    'Ustaz Hafiz Bin Roslan',
+    'Cik Norazimah Binti Abdullah',
+    'Cikgu Jerry Mojuntin',
+    'Pn. Grace Liew',
+    'En. Walter Gindol',
+    'Cikgu Elda Grace Majanil',
+    'Ustaz Mohd Azlan'
+  ];
+
+  let cleaned = false;
+  const adminKeys: (keyof SchoolSettings)[] = [
+    'namaPengetua',
+    'namaGpkHem',
+    'namaGpk1',
+    'namaGpkKoko',
+    'namaKetuaDisiplin',
+    'namaGbk',
+    'namaKetuaWarden',
+    'namaPenyelarasBiasiswa',
+    'namaPenyelarasPengawas',
+    'namaGuruData'
+  ];
+
+  for (const k of adminKeys) {
+    if (typeof settings[k] === 'string' && demoNames.includes(settings[k] as string)) {
+      (settings as any)[k] = '';
+      cleaned = true;
+    }
+  }
+
+  if (cleaned) {
+    setLocalItem(STORAGE_KEYS.SCHOOL_SETTINGS, settings);
+  }
+
   return settings;
 }
 
@@ -1091,7 +1149,40 @@ export async function addFollowUpAction(
 
 // ================= USER PROFILES & ROLES =================
 export async function getUsersList(): Promise<UserProfile[]> {
-  return getLocalItem<UserProfile[]>(STORAGE_KEYS.USERS, []);
+  const users = getLocalItem<UserProfile[]>(STORAGE_KEYS.USERS, []);
+  const demoNames = [
+    'En. Justin Bin Moduying',
+    'Pn. Masnah Binti Japar',
+    'Ustaz Hafiz Bin Roslan',
+    'Cik Norazimah Binti Abdullah',
+    'Cikgu Elda Grace Majanil',
+    'Cikgu Jerry Mojuntin',
+    'Pn. Grace Liew',
+    'En. Walter Gindol',
+    'Ustaz Mohd Azlan'
+  ];
+
+  const cleanUsers = users.filter(u => 
+    !u.uid.startsWith('demo_') &&
+    !demoNames.includes(u.nama)
+  );
+
+  if (cleanUsers.length === 0) {
+    cleanUsers.push({
+      uid: 'admin_sekolah',
+      nama: 'Pentadbir Sistem HEM',
+      emel: 'admin@smksalaping.edu.my',
+      peranan: ['admin_sistem', 'pengetua', 'gpk_hem'],
+      jawatan: 'Pentadbir Utama Sekolah',
+      aktif: true,
+      dicipta: new Date().toISOString()
+    });
+    setLocalItem(STORAGE_KEYS.USERS, cleanUsers);
+  } else if (cleanUsers.length !== users.length) {
+    setLocalItem(STORAGE_KEYS.USERS, cleanUsers);
+  }
+
+  return cleanUsers;
 }
 
 export async function saveUserProfile(
@@ -1114,6 +1205,63 @@ export async function saveUserProfile(
     'users',
     profile.uid,
     `Mengemaskini profil/peranan pengguna: ${profile.nama} (${profile.emel}) -> [${profile.peranan.join(', ')}]`
+  );
+}
+
+export async function deleteUserProfile(
+  uid: string,
+  operator: { uid: string; nama: string }
+): Promise<void> {
+  const currentList = await getUsersList();
+  const userToDelete = currentList.find(u => u.uid === uid);
+  const updatedList = currentList.filter(u => u.uid !== uid);
+  setLocalItem(STORAGE_KEYS.USERS, updatedList);
+
+  if (db && isFirebaseConfigured) {
+    try {
+      await deleteDoc(doc(db, 'users', uid));
+    } catch (err) {
+      console.warn('Ralat memadam pengguna dari Firestore:', err);
+    }
+  }
+
+  await addAuditLog(
+    operator,
+    'padam',
+    'users',
+    uid,
+    `Memadam profil guru/pengguna: ${userToDelete?.nama || uid} (${userToDelete?.emel || ''})`
+  );
+}
+
+export async function purgeAllDemoUsers(
+  operator: { uid: string; nama: string }
+): Promise<void> {
+  const currentList = await getUsersList();
+  const cleanUsers = currentList.filter(u => 
+    !u.uid.startsWith('demo_') &&
+    !['En. Justin Bin Moduying', 'Pn. Masnah Binti Japar', 'Ustaz Hafiz Bin Roslan', 'Cik Norazimah Binti Abdullah', 'Cikgu Elda Grace Majanil', 'Cikgu Jerry Mojuntin', 'Pn. Grace Liew', 'En. Walter Gindol'].includes(u.nama)
+  );
+
+  if (cleanUsers.length === 0) {
+    cleanUsers.push({
+      uid: 'admin_sekolah',
+      nama: 'Pentadbir Sistem HEM',
+      emel: 'admin@smksalaping.edu.my',
+      peranan: ['admin_sistem', 'pengetua', 'gpk_hem'],
+      jawatan: 'Pentadbir Utama Sekolah',
+      aktif: true,
+      dicipta: new Date().toISOString()
+    });
+  }
+
+  setLocalItem(STORAGE_KEYS.USERS, cleanUsers);
+  await addAuditLog(
+    operator,
+    'padam',
+    'users',
+    'purge_demo_users',
+    'Memadamkan semua nama staf dan akaun pengguna demo dari pangkalan data.'
   );
 }
 

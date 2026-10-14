@@ -165,7 +165,7 @@ export const Hostel: React.FC = () => {
     if (!permitStudentId) return;
 
     try {
-      const operator = currentUser || { uid: 'warden', nama: 'Cikgu Jerry Mojuntin' };
+      const operator = currentUser || { uid: 'warden', nama: school.namaKetuaWarden || 'Warden Asrama' };
       const newPermit: HostelMovementLog = {
         id: `mv_${Date.now()}`,
         studentId: permitStudentId,
@@ -238,7 +238,7 @@ export const Hostel: React.FC = () => {
       const newHdr: HostelDailyReport = {
         id: `hdr_${Date.now()}`,
         tarikh: new Date().toISOString().split('T')[0],
-        wardenBertugas: currentUser?.nama || 'Cikgu Jerry Mojuntin',
+        wardenBertugas: currentUser?.nama || school.namaKetuaWarden || 'Warden Bertugas',
         kiraanMuridMalam: {
           hadir: Number(rcHadir),
           pulangBermalam: Number(rcBermalam),
@@ -293,7 +293,7 @@ export const Hostel: React.FC = () => {
             <span className="text-xs font-bold px-2 py-0.5 rounded bg-indigo-100 text-indigo-900">
               Pengurusan Asrama Desa (HEM Fasa 3)
             </span>
-            <span className="text-xs text-slate-500">Ketua Warden: Cikgu Jerry Mojuntin • SMK Salaping</span>
+            <span className="text-xs text-slate-500">Ketua Warden: {school.namaKetuaWarden || 'Warden Asrama'} • {school.nama}</span>
           </div>
           <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
             Asrama Desa SMK Salaping

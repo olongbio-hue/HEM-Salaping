@@ -85,8 +85,16 @@ export const INITIAL_SCHOOL_SETTINGS: SchoolSettings = {
   noTelefon: '088-661234',
   emel: 'smksalaping.hem@moe.gov.my',
   logo: '/src/assets/images/smk_salaping_crest_1791732075810.jpg',
-  namaPengetua: 'En. Justin Bin Moduying',
-  namaGpkHem: 'Pn. Masnah Binti Japar',
+  namaPengetua: '',
+  namaGpkHem: '',
+  namaGpk1: '',
+  namaGpkKoko: '',
+  namaKetuaDisiplin: '',
+  namaGbk: '',
+  namaKetuaWarden: '',
+  namaPenyelarasBiasiswa: '',
+  namaPenyelarasPengawas: '',
+  namaGuruData: '',
   tahunSemasa: 2026,
   sesi: 'Pagi',
   warnaUtama: '#1e3a8a', // Biru Tua Rasmi KPM
@@ -339,81 +347,27 @@ export const TRANSPORT_LABELS: Record<string, { label: string; icon: string }> =
   lain: { label: 'Lain-lain', icon: '🚲' }
 };
 
+export const DEFAULT_PRODUCTION_ADMIN = {
+  uid: 'admin_sekolah',
+  nama: 'Pentadbir Sistem HEM',
+  emel: 'admin@smksalaping.edu.my',
+  peranan: ['admin_sistem', 'pengetua', 'gpk_hem'] as UserRole[],
+  jawatan: 'Pentadbir Utama Sekolah',
+  kataLaluan: 'salaping123',
+  kelasDiajar: [] as string[]
+};
+
 export const DEMO_USERS = [
-  {
-    uid: 'demo_pengetua',
-    nama: 'En. Justin Bin Moduying',
-    emel: 'pengetua@smksalaping.edu.my',
-    peranan: ['pengetua'] as UserRole[],
-    jawatan: 'Pengetua Cemerlang',
-    kataLaluan: 'salaping123'
-  },
-  {
-    uid: 'demo_gpk_hem',
-    nama: 'Pn. Masnah Binti Japar',
-    emel: 'gpkhem@smksalaping.edu.my',
-    peranan: ['gpk_hem'] as UserRole[],
-    jawatan: 'GPK Hal Ehwal Murid',
-    kataLaluan: 'salaping123'
-  },
-  {
-    uid: 'demo_ketua_disiplin',
-    nama: 'Ustaz Hafiz Bin Roslan',
-    emel: 'disiplin@smksalaping.edu.my',
-    peranan: ['ketua_guru_disiplin', 'guru_disiplin'] as UserRole[],
-    jawatan: 'Ketua Guru Disiplin',
-    kataLaluan: 'salaping123'
-  },
-  {
-    uid: 'demo_gbk',
-    nama: 'Cik Norazimah Binti Abdullah',
-    emel: 'kaunseling@smksalaping.edu.my',
-    peranan: ['gbk'] as UserRole[],
-    jawatan: 'Guru Bimbingan & Kaunseling',
-    kataLaluan: 'salaping123'
-  },
-  {
-    uid: 'demo_guru_kelas_3m',
-    nama: 'Cikgu Elda Grace Majanil',
-    emel: 'elda.marikh@smksalaping.edu.my',
-    peranan: ['guru_kelas'] as UserRole[],
-    kelasDiajar: ['3-marikh'],
-    jawatan: 'Guru Kelas 3 Marikh',
-    kataLaluan: 'salaping123'
-  },
-  {
-    uid: 'demo_warden',
-    nama: 'Cikgu Jerry Mojuntin',
-    emel: 'warden@smksalaping.edu.my',
-    peranan: ['warden'] as UserRole[],
-    jawatan: 'Ketua Warden Asrama Desa',
-    kataLaluan: 'salaping123'
-  },
-  {
-    uid: 'demo_biasiswa',
-    nama: 'Pn. Grace Liew',
-    emel: 'biasiswa@smksalaping.edu.my',
-    peranan: ['penyelaras_biasiswa'] as UserRole[],
-    jawatan: 'Penyelaras Biasiswa & Bantuan',
-    kataLaluan: 'salaping123'
-  },
-  {
-    uid: 'demo_admin',
-    nama: 'En. Walter Gindol (ICT)',
-    emel: 'admin@smksalaping.edu.my',
-    peranan: ['admin_sistem', 'gpk_hem'] as UserRole[],
-    jawatan: 'Admin Sistem & Guru Data',
-    kataLaluan: 'salaping123'
-  }
+  DEFAULT_PRODUCTION_ADMIN
 ];
 
 export const CLASSES_LIST = [
-  { id: '1-arif', tingkatan: 1, nama: '1 Arif', guruKelasUid: 'demo_guru_1a', namaGuruKelas: 'Cikgu Raini Majakil', tahun: 2026, kapasiti: 32 },
-  { id: '1-bestari', tingkatan: 1, nama: '1 Bestari', guruKelasUid: 'demo_guru_1b', namaGuruKelas: 'Cikgu Stephen Gonsilou', tahun: 2026, kapasiti: 30 },
-  { id: '2-arif', tingkatan: 2, nama: '2 Arif', guruKelasUid: 'demo_guru_2a', namaGuruKelas: 'Cikgu Rosnah Bte Daim', tahun: 2026, kapasiti: 30 },
-  { id: '2-bestari', tingkatan: 2, nama: '2 Bestari', guruKelasUid: 'demo_guru_2b', namaGuruKelas: 'Cikgu Dennis Wong', tahun: 2026, kapasiti: 28 },
-  { id: '3-arif', tingkatan: 3, nama: '3 Arif', guruKelasUid: 'demo_guru_3a', namaGuruKelas: 'Cikgu Mary Majapil', tahun: 2026, kapasiti: 30 },
-  { id: '3-marikh', tingkatan: 3, nama: '3 Marikh', guruKelasUid: 'demo_guru_kelas_3m', namaGuruKelas: 'Cikgu Elda Grace Majanil', tahun: 2026, kapasiti: 30 },
-  { id: '4-sains', tingkatan: 4, nama: '4 Sains', guruKelasUid: 'demo_guru_4s', namaGuruKelas: 'Cikgu Albert Sompungan', tahun: 2026, kapasiti: 28 },
-  { id: '5-sains', tingkatan: 5, nama: '5 Sains', guruKelasUid: 'demo_guru_5s', namaGuruKelas: 'Cikgu Noraini Bte Salleh', tahun: 2026, kapasiti: 28 }
+  { id: '1-arif', tingkatan: 1, nama: '1 Arif', tahun: 2026, kapasiti: 32 },
+  { id: '1-bestari', tingkatan: 1, nama: '1 Bestari', tahun: 2026, kapasiti: 30 },
+  { id: '2-arif', tingkatan: 2, nama: '2 Arif', tahun: 2026, kapasiti: 30 },
+  { id: '2-bestari', tingkatan: 2, nama: '2 Bestari', tahun: 2026, kapasiti: 28 },
+  { id: '3-arif', tingkatan: 3, nama: '3 Arif', tahun: 2026, kapasiti: 30 },
+  { id: '3-marikh', tingkatan: 3, nama: '3 Marikh', tahun: 2026, kapasiti: 30 },
+  { id: '4-sains', tingkatan: 4, nama: '4 Sains', tahun: 2026, kapasiti: 28 },
+  { id: '5-sains', tingkatan: 5, nama: '5 Sains', tahun: 2026, kapasiti: 28 }
 ];

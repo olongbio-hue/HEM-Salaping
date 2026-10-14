@@ -478,15 +478,15 @@ export const HelpManual: React.FC = () => {
             <div className="space-y-8">
               <p>Diuji dan Disemak oleh:</p>
               <div>
-                <strong className="block underline uppercase">En. Walter Gindol</strong>
-                <span className="text-slate-500 text-[11px]">Guru Data &amp; Admin Sistem</span>
+                <strong className="block underline uppercase">{school.namaGuruData || 'Guru Data & Admin Sistem'}</strong>
+                <span className="text-slate-500 text-[11px]">Guru Data &amp; Admin Sistem • {school.nama}</span>
               </div>
             </div>
 
             <div className="space-y-8">
               <p>Disahkan dan Diterima oleh:</p>
               <div>
-                <strong className="block underline uppercase">{school.namaGpkHem || 'Pn. Masnah Binti Japar'}</strong>
+                <strong className="block underline uppercase">{school.namaGpkHem || 'GPK Hal Ehwal Murid'}</strong>
                 <span className="text-slate-500 text-[11px]">GPK Hal Ehwal Murid • {school.nama}</span>
               </div>
             </div>

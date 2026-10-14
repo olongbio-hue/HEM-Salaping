@@ -27,7 +27,7 @@ import { EmptyState } from '../components/EmptyState';
 
 export const Prefects: React.FC = () => {
   const { currentUser, isPengetuaOrGpkHem } = useAuth();
-  const { showToast } = useSchool();
+  const { showToast, school } = useSchool();
 
   const [loading, setLoading] = useState(true);
   const [prefects, setPrefects] = useState<Prefect[]>([]);
@@ -139,7 +139,7 @@ export const Prefects: React.FC = () => {
             <span className="text-xs font-bold px-2 py-0.5 rounded bg-cyan-100 text-cyan-900">
               Badan Pengawas & Kepimpinan Murid (HEM Fasa 3)
             </span>
-            <span className="text-xs text-slate-500">Penyelaras: Ustaz Mohd Azlan • SMK Salaping</span>
+            <span className="text-xs text-slate-500">Penyelaras: {school.namaPenyelarasPengawas || 'Penyelaras Badan Pengawas'} • {school.nama}</span>
           </div>
           <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
             Pengurusan Lembaga Pengawas Sekolah

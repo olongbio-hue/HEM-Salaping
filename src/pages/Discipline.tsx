@@ -233,8 +233,12 @@ export const Discipline: React.FC = () => {
         tempat: boardTempat,
         kesIds: cases.filter(c => c.statusKes === 'lembaga_disiplin').map(c => c.id),
         studentIds: cases.filter(c => c.statusKes === 'lembaga_disiplin').map(c => c.studentId),
-        pengerusi: 'En. Justin Bin Moduying (Pengetua)',
-        ahliHadir: ['Pn. Masnah Binti Japar (GPK HEM)', 'Ustaz Hafiz Bin Roslan (Ketua Guru Disiplin)', 'Cik Norazimah Binti Abdullah (GBK)'],
+        pengerusi: school.namaPengetua ? `${school.namaPengetua} (Pengetua)` : 'Pengetua',
+        ahliHadir: [
+          school.namaGpkHem ? `${school.namaGpkHem} (GPK HEM)` : 'GPK HEM',
+          school.namaKetuaDisiplin ? `${school.namaKetuaDisiplin} (Ketua Guru Disiplin)` : 'Ketua Guru Disiplin',
+          school.namaGbk ? `${school.namaGbk} (GBK)` : 'Guru Bimbingan & Kaunseling (GBK)'
+        ],
         minitRingkas: boardMinit || 'Sidang khas membincangkan kes salah laku disiplin murid bersama ibu bapa.',
         keputusan: boardKeputusan || 'Keputusan dalam pertimbangan Lembaga Disiplin Sekolah.',
         status: 'dijadualkan',
@@ -350,7 +354,7 @@ export const Discipline: React.FC = () => {
               Prinsip SSDM (Salah Laku & Tindakan Sahaja)
             </span>
             <span className="text-xs text-slate-500">
-              Ketua Guru Disiplin: Ustaz Hafiz Bin Roslan
+              Ketua Guru Disiplin: {school.namaKetuaDisiplin || 'Ketua Guru Disiplin'}
             </span>
           </div>
           <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">

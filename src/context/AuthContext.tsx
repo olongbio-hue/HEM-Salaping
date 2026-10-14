@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { UserProfile, UserRole } from '../types';
 import { DEMO_USERS } from '../constants';
-import { getUsersList, saveUserProfile } from '../services/dataService';
+import { getUsersList, saveUserProfile, deleteUserProfile, purgeAllDemoUsers } from '../services/dataService';
 
 interface AuthContextType {
   currentUser: UserProfile | null;
@@ -22,6 +22,9 @@ interface AuthContextType {
   allUsers: UserProfile[];
   refreshUsers: () => Promise<void>;
   updateUserRole: (uid: string, roles: UserRole[], classes?: string[]) => Promise<void>;
+  saveUser: (user: UserProfile) => Promise<void>;
+  deleteUser: (uid: string) => Promise<void>;
+  purgeDemoUsers: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -40,20 +43,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setAllUsers(users);
 
         const savedUid = localStorage.getItem(AUTH_STORAGE_KEY);
-        if (savedUid) {
+        const cleanUser = users.find(u => !u.uid.startsWith('demo_')) || users[0];
+
+        if (savedUid && !savedUid.startsWith('demo_')) {
           const matched = users.find(u => u.uid === savedUid);
           if (matched) {
             setCurrentUser(matched);
           } else {
-            // Default to GPK HEM if saved not found
-            setCurrentUser(users.find(u => u.uid === 'demo_gpk_hem') || users[0] || null);
+            setCurrentUser(cleanUser || null);
+            if (cleanUser) localStorage.setItem(AUTH_STORAGE_KEY, cleanUser.uid);
           }
         } else {
-          // Default start as GPK HEM for rich showcase
-          const defaultUser = users.find(u => u.uid === 'demo_gpk_hem') || users[0];
-          if (defaultUser) {
-            setCurrentUser(defaultUser);
-            localStorage.setItem(AUTH_STORAGE_KEY, defaultUser.uid);
+          // Default to registered clean administrator
+          if (cleanUser) {
+            setCurrentUser(cleanUser);
+            localStorage.setItem(AUTH_STORAGE_KEY, cleanUser.uid);
           }
         }
       } catch (err) {
@@ -231,6 +235,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     await refreshUsers();
   };
 
+  const saveUser = async (user: UserProfile) => {
+    const operator = currentUser || { uid: 'admin_sekolah', nama: 'Pentadbir Sistem' };
+    await saveUserProfile(user, { uid: operator.uid, nama: operator.nama });
+    await refreshUsers();
+  };
+
+  const deleteUser = async (uid: string) => {
+    const operator = currentUser || { uid: 'admin_sekolah', nama: 'Pentadbir Sistem' };
+    await deleteUserProfile(uid, { uid: operator.uid, nama: operator.nama });
+    await refreshUsers();
+  };
+
+  const purgeDemoUsers = async () => {
+    const operator = currentUser || { uid: 'admin_sekolah', nama: 'Pentadbir Sistem' };
+    await purgeAllDemoUsers({ uid: operator.uid, nama: operator.nama });
+    await refreshUsers();
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -251,7 +273,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         canManageUsers,
         allUsers,
         refreshUsers,
-        updateUserRole
+        updateUserRole,
+        saveUser,
+        deleteUser,
+        purgeDemoUsers
       }}
     >
       {children}

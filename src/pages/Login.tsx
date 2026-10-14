@@ -15,7 +15,7 @@ export const Login: React.FC = () => {
   const [forgotEmail, setForgotEmail] = useState('');
   const [forgotSuccess, setForgotSuccess] = useState(false);
 
-  const { loginWithEmail, loginAsDemoUser } = useAuth();
+  const { loginWithEmail, loginAsDemoUser, allUsers } = useAuth();
   const { school, showToast } = useSchool();
   const navigate = useNavigate();
 
@@ -138,30 +138,42 @@ export const Login: React.FC = () => {
             </button>
           </form>
 
-          {/* Bahagian Log Masuk Pantas Pengguna Demo */}
+          {/* Bahagian Log Masuk Pantas Pengguna Berdaftar */}
           <div className="mt-6 pt-5 border-t border-slate-200">
-            <div className="flex items-center gap-1.5 text-xs font-bold text-slate-700 mb-2">
-              <Sparkles className="w-4 h-4 text-amber-500" />
-              <span>Log Masuk Pantas Persona Demo:</span>
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center gap-1.5 text-xs font-bold text-slate-700">
+                <Sparkles className="w-4 h-4 text-amber-500" />
+                <span>Pilih Akaun Bertugas Rasmi Sekolah:</span>
+              </div>
+              <span className="text-[10px] font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded-full">
+                {allUsers.length} Pengguna
+              </span>
             </div>
             <p className="text-[11px] text-slate-500 mb-3">
-              Kata laluan demo untuk semua akaun ialah <code className="px-1.5 py-0.5 bg-slate-100 rounded font-mono font-bold text-slate-800">salaping123</code>. Ketik mana-mana persona di bawah untuk terus masuk:
+              Ketik mana-mana nama pendidik atau pentadbir berdaftar di bawah untuk terus memulakan sesi tugas:
             </p>
 
-            <div className="grid grid-cols-2 gap-2">
-              {DEMO_USERS.map((user) => (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-56 overflow-y-auto p-1">
+              {allUsers.map((user) => (
                 <button
                   key={user.uid}
                   type="button"
                   onClick={() => handleQuickDemoLogin(user.uid)}
-                  className="p-2 text-left bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-300 rounded-xl transition-all group"
+                  className="p-2.5 text-left bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-300 rounded-xl transition-all group"
                 >
                   <p className="text-[11px] font-bold text-slate-900 group-hover:text-blue-900 truncate">
-                    {user.jawatan}
+                    {user.nama}
                   </p>
-                  <p className="text-[10px] text-slate-500 truncate">{user.nama}</p>
+                  <p className="text-[10px] text-slate-500 truncate">
+                    {user.jawatan || user.peranan.join(', ').toUpperCase()}
+                  </p>
                 </button>
               ))}
+              {allUsers.length === 0 && (
+                <div className="col-span-2 text-center text-xs text-slate-400 py-3">
+                  Tiada pengguna berdaftar. Log masuk menggunakan akaun pentadbir sistem.
+                </div>
+              )}
             </div>
           </div>
         </div>

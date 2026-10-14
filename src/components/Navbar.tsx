@@ -27,7 +27,7 @@ interface NavbarProps {
 
 export const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar, onOpenResetModal }) => {
   const navigate = useNavigate();
-  const { currentUser, loginAsDemoUser, logout } = useAuth();
+  const { currentUser, allUsers, loginAsDemoUser, logout } = useAuth();
   const { school, isOnline } = useSchool();
   const [showRoleMenu, setShowRoleMenu] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
@@ -127,33 +127,56 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar, onOpenResetModa
             </button>
 
             {showRoleMenu && (
-              <div className="absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-slate-200 py-2 z-50 animate-in fade-in zoom-in-95 duration-100">
-                <div className="px-3 py-1.5 border-b border-slate-100">
-                  <p className="text-xs font-semibold text-slate-700">Tukar Peranan Pengguna Demo</p>
-                  <p className="text-[11px] text-slate-500">Pilih peranan untuk menguji kebenaran modul:</p>
+              <div className="absolute right-0 mt-2 w-72 bg-white rounded-xl shadow-xl border border-slate-200 py-2 z-50 animate-in fade-in zoom-in-95 duration-100">
+                <div className="px-3 py-1.5 border-b border-slate-100 flex items-center justify-between">
+                  <div>
+                    <p className="text-xs font-bold text-slate-800">Tukar Pengguna Bertugas</p>
+                    <p className="text-[10px] text-slate-500">Pilih staf/guru berdaftar sekolah:</p>
+                  </div>
+                  <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-blue-50 text-blue-700">
+                    {allUsers.length} Staf
+                  </span>
                 </div>
                 <div className="max-h-72 overflow-y-auto py-1">
-                  {DEMO_USERS.map((demo) => {
-                    const isSelected = currentUser?.uid === demo.uid;
+                  {allUsers.map((user) => {
+                    const isSelected = currentUser?.uid === user.uid;
                     return (
                       <button
-                        key={demo.uid}
+                        key={user.uid}
                         onClick={() => {
-                          loginAsDemoUser(demo.uid);
+                          loginAsDemoUser(user.uid);
                           setShowRoleMenu(false);
                         }}
                         className={`w-full text-left px-3 py-2 text-xs flex items-center justify-between hover:bg-slate-50 transition-colors ${
                           isSelected ? 'bg-blue-50/70 text-blue-900 font-semibold' : 'text-slate-700'
                         }`}
                       >
-                        <div>
-                          <div className="font-medium text-slate-900">{demo.nama}</div>
-                          <div className="text-[11px] text-slate-500">{demo.jawatan}</div>
+                        <div className="min-w-0 pr-2">
+                          <div className="font-bold text-slate-900 truncate">{user.nama}</div>
+                          <div className="text-[10px] text-slate-500 truncate">
+                            {user.jawatan || user.peranan.join(', ').toUpperCase()}
+                          </div>
                         </div>
                         {isSelected && <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />}
                       </button>
                     );
                   })}
+                  {allUsers.length === 0 && (
+                    <div className="px-3 py-4 text-center text-xs text-slate-500">
+                      Tiada pengguna berdaftar.
+                    </div>
+                  )}
+                </div>
+                <div className="px-3 pt-2 border-t border-slate-100">
+                  <button
+                    onClick={() => {
+                      setShowRoleMenu(false);
+                      navigate('/tetapan?tab=pengguna');
+                    }}
+                    className="w-full py-1.5 text-center text-[11px] font-bold text-blue-700 hover:text-blue-900 bg-blue-50/60 rounded-lg"
+                  >
+                    + Urus / Tambah Staf di Tetapan
+                  </button>
                 </div>
               </div>
             )}

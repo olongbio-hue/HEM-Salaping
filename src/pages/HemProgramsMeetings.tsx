@@ -107,8 +107,8 @@ export const HemProgramsMeetings: React.FC = () => {
     {
       id: `fu_${Date.now()}_1`,
       perkara: 'Kemas kini senarai murid layak KWAPM & e-Kasih',
-      tindakanOlehUid: 'demo_biasiswa',
-      namaTindakanOleh: 'Penyelaras Biasiswa (Pn. Grace Liew)',
+      tindakanOlehUid: 'biasiswa',
+      namaTindakanOleh: 'Penyelaras Biasiswa',
       tarikhAkhir: new Date(Date.now() + 7 * 86400000).toISOString().split('T')[0],
       status: 'dalam_tindakan'
     },

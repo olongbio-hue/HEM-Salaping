@@ -31,17 +31,18 @@ import {
   Trash2,
   Check,
   X,
-  LayoutDashboard
+  LayoutDashboard,
+  GraduationCap
 } from 'lucide-react';
 import { RoleBadge } from '../components/RoleBadge';
 import { SchoolLogo } from '../components/SchoolLogo';
 import { DashboardSettingsTab } from '../components/DashboardSettingsTab';
+import { TeacherManagementTab } from '../components/TeacherManagementTab';
 import {
   exportCompleteBackupJSON,
   importCompleteBackupJSON,
   getClassesList,
   saveClassesList,
-  saveUserProfile,
   clearAllDemoDataForProduction
 } from '../services/dataService';
 
@@ -60,7 +61,7 @@ export const Settings: React.FC<{ onOpenResetModal: () => void }> = ({ onOpenRes
     lowDataMode,
     toggleLowDataMode
   } = useSchool();
-  const { allUsers, canManageUsers, updateUserRole, currentUser } = useAuth();
+  const { allUsers, canManageUsers, updateUserRole, currentUser, refreshUsers, loginAsDemoUser } = useAuth();
 
   const [activeTab, setActiveTab] = useState<'sekolah' | 'dashboard' | 'peraturan' | 'pengguna' | 'sandaran' | 'firebase'>(
     urlTab === 'dashboard' ? 'dashboard' : 'sekolah'
@@ -78,18 +79,6 @@ export const Settings: React.FC<{ onOpenResetModal: () => void }> = ({ onOpenRes
   const [newClassName, setNewClassName] = useState('');
   const [newClassForm, setNewClassForm] = useState<number>(1);
   const [savingClass, setSavingClass] = useState(false);
-
-  // User Management State (Add User)
-  const [showAddUserModal, setShowAddUserModal] = useState(false);
-  const [newUserName, setNewUserName] = useState('');
-  const [newUserEmail, setNewUserEmail] = useState('');
-  const [newUserRoles, setNewUserRoles] = useState<UserRole[]>(['guru_kelas']);
-  const [newUserClass, setNewUserClass] = useState('');
-  const [savingUser, setSavingUser] = useState(false);
-
-  // Selected User for Editing Roles
-  const [editingUserId, setEditingUserId] = useState<string | null>(null);
-  const [userRoles, setUserRoles] = useState<UserRole[]>([]);
 
   // Sync state whenever context data updates
   useEffect(() => {
@@ -180,44 +169,6 @@ export const Settings: React.FC<{ onOpenResetModal: () => void }> = ({ onOpenRes
     }
   };
 
-  const handleCreateNewUser = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newUserName.trim() || !newUserEmail.trim()) {
-      showToast('Sila isikan nama dan e-mel pengguna.', 'error');
-      return;
-    }
-
-    try {
-      setSavingUser(true);
-      const uid = `user_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`;
-      const newUser: UserProfile = {
-        uid,
-        nama: newUserName.trim(),
-        emel: newUserEmail.trim().toLowerCase(),
-        peranan: newUserRoles,
-        kelasDiajar: newUserClass ? [newUserClass] : undefined,
-        aktif: true,
-        dicipta: new Date().toISOString()
-      };
-
-      const operator = currentUser || { uid: 'admin_sistem', nama: 'Admin Sistem' };
-      await saveUserProfile(newUser, { uid: operator.uid, nama: operator.nama });
-      showToast(`Akaun ${newUser.nama} berjaya didaftarkan!`, 'success');
-      setShowAddUserModal(false);
-      setNewUserName('');
-      setNewUserEmail('');
-      setNewUserRoles(['guru_kelas']);
-      setNewUserClass('');
-      setTimeout(() => {
-        window.location.reload();
-      }, 500);
-    } catch (err) {
-      showToast('Gagal mendaftarkan pengguna baharu.', 'error');
-    } finally {
-      setSavingUser(false);
-    }
-  };
-
   const handleClearAllDemoData = () => {
     if (window.confirm('AMARAN: Ini akan memadamkan SEMUA rekod demo murid, kehadiran demo, dan disiplin demo bagi membolehkan kemasukan data sekolah sebenar. Teruskan?')) {
       const operator = currentUser || { uid: 'admin_sistem', nama: 'Admin Sistem' };
@@ -226,16 +177,6 @@ export const Settings: React.FC<{ onOpenResetModal: () => void }> = ({ onOpenRes
       setTimeout(() => {
         window.location.reload();
       }, 500);
-    }
-  };
-
-  const handleSaveUserRole = async (uid: string) => {
-    try {
-      await updateUserRole(uid, userRoles);
-      showToast('Peranan pengguna berjaya dikemaskini!', 'success');
-      setEditingUserId(null);
-    } catch (err) {
-      showToast('Gagal mengemaskini peranan pengguna.', 'error');
     }
   };
 
@@ -350,17 +291,15 @@ export const Settings: React.FC<{ onOpenResetModal: () => void }> = ({ onOpenRes
           <span>Peraturan & Ambang SOP 1:3:7</span>
         </button>
 
-        {canManageUsers && (
-          <button
-            onClick={() => setActiveTab('pengguna')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all whitespace-nowrap ${
-              activeTab === 'pengguna' ? 'bg-blue-700 text-white shadow-xs' : 'text-slate-600 hover:bg-slate-100'
-            }`}
-          >
-            <Users className="w-4 h-4" />
-            <span>Pengguna & Peranan (RBAC)</span>
-          </button>
-        )}
+        <button
+          onClick={() => setActiveTab('pengguna')}
+          className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all whitespace-nowrap ${
+            activeTab === 'pengguna' ? 'bg-blue-700 text-white shadow-xs' : 'text-slate-600 hover:bg-slate-100'
+          }`}
+        >
+          <Users className="w-4 h-4" />
+          <span>Pengurusan Pentadbir & Guru ({allUsers.length})</span>
+        </button>
 
         <button
           onClick={() => setActiveTab('sandaran')}
@@ -446,28 +385,6 @@ export const Settings: React.FC<{ onOpenResetModal: () => void }> = ({ onOpenRes
             </div>
 
             <div>
-              <label className="font-bold text-slate-700 block mb-1">Nama Pengetua</label>
-              <input
-                type="text"
-                required
-                value={schoolForm.namaPengetua}
-                onChange={e => setSchoolForm({ ...schoolForm, namaPengetua: e.target.value })}
-                className="w-full border border-slate-300 rounded-lg p-2 font-bold"
-              />
-            </div>
-
-            <div>
-              <label className="font-bold text-slate-700 block mb-1">Nama GPK HEM</label>
-              <input
-                type="text"
-                required
-                value={schoolForm.namaGpkHem}
-                onChange={e => setSchoolForm({ ...schoolForm, namaGpkHem: e.target.value })}
-                className="w-full border border-slate-300 rounded-lg p-2 font-bold"
-              />
-            </div>
-
-            <div>
               <label className="font-bold text-slate-700 block mb-1">Tahun Persekolahan</label>
               <input
                 type="number"
@@ -548,6 +465,136 @@ export const Settings: React.FC<{ onOpenResetModal: () => void }> = ({ onOpenRes
                   value={schoolForm.warnaUtama}
                   onChange={e => setSchoolForm({ ...schoolForm, warnaUtama: e.target.value })}
                   className="border border-slate-300 rounded-lg p-2 font-mono flex-1 uppercase"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* ================= SEKSYEN KHAS: BARISAN PENTADBIR SEKOLAH ================= */}
+          <div className="p-4 sm:p-5 rounded-2xl border border-indigo-200 bg-indigo-50/40 space-y-4 mt-4">
+            <div className="border-b border-indigo-100 pb-2.5 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <h3 className="font-extrabold text-slate-900 text-xs sm:text-sm flex items-center gap-2">
+                  <GraduationCap className="w-4 h-4 text-indigo-700" />
+                  <span>Nama-Nama Pentadbir & Barisan Kepimpinan Sekolah</span>
+                </h3>
+                <p className="text-[11px] text-slate-500">
+                  Kemas kini nama sebenar barisan pentadbir sekolah untuk paparan rasmi surat amaran, sidang lembaga disiplin, UBK, kebajikan, dan asrama.
+                </p>
+              </div>
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-800 border border-indigo-200 self-start sm:self-center">
+                10 Jawatan Pentadbiran
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+              <div className="p-3 bg-white rounded-xl border border-indigo-100 shadow-xs">
+                <label className="font-bold text-slate-800 block text-xs mb-1">1. Pengetua</label>
+                <input
+                  type="text"
+                  placeholder="Nama penuh Pengetua"
+                  value={schoolForm.namaPengetua}
+                  onChange={e => setSchoolForm({ ...schoolForm, namaPengetua: e.target.value })}
+                  className="w-full border border-slate-300 rounded-lg p-2 font-bold text-xs"
+                />
+              </div>
+
+              <div className="p-3 bg-white rounded-xl border border-indigo-100 shadow-xs">
+                <label className="font-bold text-slate-800 block text-xs mb-1">2. GPK Hal Ehwal Murid (GPK HEM)</label>
+                <input
+                  type="text"
+                  placeholder="Nama penuh GPK HEM"
+                  value={schoolForm.namaGpkHem}
+                  onChange={e => setSchoolForm({ ...schoolForm, namaGpkHem: e.target.value })}
+                  className="w-full border border-slate-300 rounded-lg p-2 font-bold text-xs"
+                />
+              </div>
+
+              <div className="p-3 bg-white rounded-xl border border-indigo-100 shadow-xs">
+                <label className="font-bold text-slate-800 block text-xs mb-1">3. GPK Pentadbiran / GPK 1</label>
+                <input
+                  type="text"
+                  placeholder="Nama penuh GPK 1"
+                  value={schoolForm.namaGpk1 || ''}
+                  onChange={e => setSchoolForm({ ...schoolForm, namaGpk1: e.target.value })}
+                  className="w-full border border-slate-300 rounded-lg p-2 font-bold text-xs"
+                />
+              </div>
+
+              <div className="p-3 bg-white rounded-xl border border-indigo-100 shadow-xs">
+                <label className="font-bold text-slate-800 block text-xs mb-1">4. GPK Kokurikulum</label>
+                <input
+                  type="text"
+                  placeholder="Nama penuh GPK Kokurikulum"
+                  value={schoolForm.namaGpkKoko || ''}
+                  onChange={e => setSchoolForm({ ...schoolForm, namaGpkKoko: e.target.value })}
+                  className="w-full border border-slate-300 rounded-lg p-2 font-bold text-xs"
+                />
+              </div>
+
+              <div className="p-3 bg-white rounded-xl border border-indigo-100 shadow-xs">
+                <label className="font-bold text-slate-800 block text-xs mb-1">5. Ketua Guru Disiplin</label>
+                <input
+                  type="text"
+                  placeholder="Nama penuh Ketua Disiplin"
+                  value={schoolForm.namaKetuaDisiplin || ''}
+                  onChange={e => setSchoolForm({ ...schoolForm, namaKetuaDisiplin: e.target.value })}
+                  className="w-full border border-slate-300 rounded-lg p-2 font-bold text-xs"
+                />
+              </div>
+
+              <div className="p-3 bg-white rounded-xl border border-indigo-100 shadow-xs">
+                <label className="font-bold text-slate-800 block text-xs mb-1">6. Guru Kaunseling (GBK)</label>
+                <input
+                  type="text"
+                  placeholder="Nama penuh Guru Kaunseling"
+                  value={schoolForm.namaGbk || ''}
+                  onChange={e => setSchoolForm({ ...schoolForm, namaGbk: e.target.value })}
+                  className="w-full border border-slate-300 rounded-lg p-2 font-bold text-xs"
+                />
+              </div>
+
+              <div className="p-3 bg-white rounded-xl border border-indigo-100 shadow-xs">
+                <label className="font-bold text-slate-800 block text-xs mb-1">7. Ketua Warden Asrama</label>
+                <input
+                  type="text"
+                  placeholder="Nama penuh Ketua Warden"
+                  value={schoolForm.namaKetuaWarden || ''}
+                  onChange={e => setSchoolForm({ ...schoolForm, namaKetuaWarden: e.target.value })}
+                  className="w-full border border-slate-300 rounded-lg p-2 font-bold text-xs"
+                />
+              </div>
+
+              <div className="p-3 bg-white rounded-xl border border-indigo-100 shadow-xs">
+                <label className="font-bold text-slate-800 block text-xs mb-1">8. Penyelaras Biasiswa & Kebajikan</label>
+                <input
+                  type="text"
+                  placeholder="Nama penuh Penyelaras Biasiswa"
+                  value={schoolForm.namaPenyelarasBiasiswa || ''}
+                  onChange={e => setSchoolForm({ ...schoolForm, namaPenyelarasBiasiswa: e.target.value })}
+                  className="w-full border border-slate-300 rounded-lg p-2 font-bold text-xs"
+                />
+              </div>
+
+              <div className="p-3 bg-white rounded-xl border border-indigo-100 shadow-xs">
+                <label className="font-bold text-slate-800 block text-xs mb-1">9. Penyelaras Badan Pengawas</label>
+                <input
+                  type="text"
+                  placeholder="Nama penuh Penyelaras Pengawas"
+                  value={schoolForm.namaPenyelarasPengawas || ''}
+                  onChange={e => setSchoolForm({ ...schoolForm, namaPenyelarasPengawas: e.target.value })}
+                  className="w-full border border-slate-300 rounded-lg p-2 font-bold text-xs"
+                />
+              </div>
+
+              <div className="p-3 bg-white rounded-xl border border-indigo-100 shadow-xs">
+                <label className="font-bold text-slate-800 block text-xs mb-1">10. Guru Data & Maklumat HEM</label>
+                <input
+                  type="text"
+                  placeholder="Nama penuh Guru Data"
+                  value={schoolForm.namaGuruData || ''}
+                  onChange={e => setSchoolForm({ ...schoolForm, namaGuruData: e.target.value })}
+                  className="w-full border border-slate-300 rounded-lg p-2 font-bold text-xs"
                 />
               </div>
             </div>
@@ -848,103 +895,16 @@ export const Settings: React.FC<{ onOpenResetModal: () => void }> = ({ onOpenRes
         </form>
       )}
 
-      {/* ================= TAB 3: PENGURUSAN PENGGUNA (RBAC) ================= */}
-      {activeTab === 'pengguna' && canManageUsers && (
-        <div className="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4 text-xs">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-3">
-            <div>
-              <h2 className="text-sm font-bold text-slate-900">Pengurusan Pengguna & Peranan Berasaskan Peranan (RBAC)</h2>
-              <p className="text-slate-500 text-[11px]">Koleksi: users/{'{uid}'}. Admin Sistem dan GPK HEM boleh menambah guru baharu dan menetapkan peranan.</p>
-            </div>
-            <button
-              type="button"
-              onClick={() => setShowAddUserModal(true)}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-blue-700 hover:bg-blue-800 text-white font-bold rounded-xl shadow-xs self-start sm:self-center"
-            >
-              <UserPlus className="w-4 h-4" />
-              <span>Daftar Guru / Pengguna Baharu</span>
-            </button>
-          </div>
-
-          <div className="divide-y divide-slate-100">
-            {allUsers.map(user => {
-              const isEditing = editingUserId === user.uid;
-
-              return (
-                <div key={user.uid} className="py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className="font-bold text-slate-900 text-sm">{user.nama}</span>
-                      <span className="text-slate-400">({user.emel})</span>
-                    </div>
-
-                    <div className="flex flex-wrap gap-1 mt-1.5">
-                      {user.peranan.map(r => (
-                        <RoleBadge key={r} role={r} size="sm" />
-                      ))}
-                    </div>
-
-                    {user.kelasDiajar && user.kelasDiajar.length > 0 && (
-                      <p className="text-[11px] text-slate-500 mt-1">
-                        Kelas Dipertanggungjawabkan: <strong>{user.kelasDiajar.join(', ').toUpperCase()}</strong>
-                      </p>
-                    )}
-                  </div>
-
-                  <div className="shrink-0">
-                    {isEditing ? (
-                      <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
-                        <span className="font-bold block">Pilih Peranan Baharu:</span>
-                        <div className="grid grid-cols-2 gap-1 text-[11px]">
-                          {(Object.keys(ROLE_LABELS) as UserRole[]).map(r => (
-                            <label key={r} className="flex items-center gap-1.5 cursor-pointer">
-                              <input
-                                type="checkbox"
-                                checked={userRoles.includes(r)}
-                                onChange={e => {
-                                  if (e.target.checked) {
-                                    setUserRoles([...userRoles, r]);
-                                  } else {
-                                    setUserRoles(userRoles.filter(role => role !== r));
-                                  }
-                                }}
-                              />
-                              <span>{ROLE_LABELS[r].title}</span>
-                            </label>
-                          ))}
-                        </div>
-                        <div className="flex justify-end gap-1.5 pt-1">
-                          <button
-                            onClick={() => setEditingUserId(null)}
-                            className="px-2.5 py-1 text-slate-600 hover:bg-slate-200 rounded"
-                          >
-                            Batal
-                          </button>
-                          <button
-                            onClick={() => handleSaveUserRole(user.uid)}
-                            className="px-3 py-1 bg-blue-700 text-white font-bold rounded"
-                          >
-                            Simpan Peranan
-                          </button>
-                        </div>
-                      </div>
-                    ) : (
-                      <button
-                        onClick={() => {
-                          setEditingUserId(user.uid);
-                          setUserRoles([...user.peranan]);
-                        }}
-                        className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-lg border border-slate-300"
-                      >
-                        Ubah Peranan
-                      </button>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
+      {/* ================= TAB 4: PENGURUSAN PENTADBIR & GURU ================= */}
+      {activeTab === 'pengguna' && (
+        <TeacherManagementTab
+          allUsers={allUsers}
+          classesList={classesList}
+          currentUser={currentUser}
+          onRefreshUsers={refreshUsers}
+          onSwitchUser={loginAsDemoUser}
+          showToast={showToast}
+        />
       )}
 
       {/* ================= TAB 4: SANDARAN & MOD LUAR TALIAN ================= */}
@@ -1132,113 +1092,6 @@ VITE_FIREBASE_APP_ID="1:123456789012:web:abcdef"`}
                 </pre>
               </div>
             </div>
-          </div>
-        </div>
-      )}
-
-      {/* ================= MODAL DAFTAR PENGGUNA / GURU BAHARU ================= */}
-      {showAddUserModal && (
-        <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4 z-50 animate-in fade-in">
-          <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 space-y-4 text-xs">
-            <div className="flex items-center justify-between border-b pb-3">
-              <div className="flex items-center gap-2">
-                <UserPlus className="w-5 h-5 text-blue-700" />
-                <h3 className="text-base font-extrabold text-slate-900">Daftar Guru / Kakitangan Baharu</h3>
-              </div>
-              <button
-                onClick={() => setShowAddUserModal(false)}
-                className="p-1 text-slate-400 hover:text-slate-600 rounded-lg"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <form onSubmit={handleCreateNewUser} className="space-y-3.5">
-              <div>
-                <label className="font-bold text-slate-800 block mb-1">Nama Penuh Guru / Kakitangan:</label>
-                <input
-                  type="text"
-                  required
-                  placeholder="Contoh: Cikgu Mohamad Faizal Bin Salleh"
-                  value={newUserName}
-                  onChange={e => setNewUserName(e.target.value)}
-                  className="w-full border border-slate-300 rounded-lg p-2 font-bold text-slate-900"
-                />
-              </div>
-
-              <div>
-                <label className="font-bold text-slate-800 block mb-1">Alamat E-mel Rasmi (KPM/Sekolah):</label>
-                <input
-                  type="email"
-                  required
-                  placeholder="Contoh: faizal.moe@moe.gov.my"
-                  value={newUserEmail}
-                  onChange={e => setNewUserEmail(e.target.value)}
-                  className="w-full border border-slate-300 rounded-lg p-2 font-mono text-slate-900"
-                />
-              </div>
-
-              <div>
-                <label className="font-bold text-slate-800 block mb-1">Pilih Peranan Bertanggungjawab (RBAC):</label>
-                <div className="grid grid-cols-2 gap-2 p-3 bg-slate-50 border border-slate-200 rounded-xl max-h-48 overflow-y-auto">
-                  {(Object.keys(ROLE_LABELS) as UserRole[]).map(r => (
-                    <label key={r} className="flex items-center gap-1.5 cursor-pointer text-[11px]">
-                      <input
-                        type="checkbox"
-                        checked={newUserRoles.includes(r)}
-                        onChange={e => {
-                          if (e.target.checked) {
-                            setNewUserRoles([...newUserRoles, r]);
-                          } else {
-                            if (newUserRoles.length > 1) {
-                              setNewUserRoles(newUserRoles.filter(x => x !== r));
-                            }
-                          }
-                        }}
-                        className="rounded accent-blue-600"
-                      />
-                      <span className="font-medium text-slate-800">{ROLE_LABELS[r].title}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              {newUserRoles.includes('guru_kelas') && (
-                <div>
-                  <label className="font-bold text-slate-800 block mb-1">Kelas Dipertanggungjawabkan:</label>
-                  <select
-                    value={newUserClass}
-                    onChange={e => setNewUserClass(e.target.value)}
-                    className="w-full border border-slate-300 rounded-lg p-2 font-bold text-slate-900 bg-slate-50"
-                  >
-                    <option value="">Pilih Kelas (Jika Ada)</option>
-                    {classesList.map(c => (
-                      <option key={c.id} value={c.id}>
-                        {c.nama} (Tingkatan {c.tingkatan})
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              )}
-
-              <div className="flex justify-end gap-2 pt-3 border-t">
-                <button
-                  type="button"
-                  onClick={() => setShowAddUserModal(false)}
-                  className="px-4 py-2 border border-slate-300 text-slate-700 font-bold rounded-xl"
-                >
-                  Batal
-                </button>
-                <button
-                  type="submit"
-                  disabled={savingUser}
-                  className="px-4 py-2 bg-blue-700 hover:bg-blue-800 text-white font-bold rounded-xl shadow-xs flex items-center gap-1.5"
-                >
-                  <Check className="w-4 h-4" />
-                  <span>{savingUser ? 'Mendaftar...' : 'Daftar Pengguna'}</span>
-                </button>
-              </div>
-            </form>
           </div>
         </div>
       )}
