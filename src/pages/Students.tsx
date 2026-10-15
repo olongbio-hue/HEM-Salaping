@@ -36,6 +36,7 @@ import {
 } from 'lucide-react';
 import { EmptyState } from '../components/EmptyState';
 import { SABAH_ETHNICS } from '../constants';
+import { ClassStudentBatchModal } from '../components/ClassStudentBatchModal';
 
 export const Students: React.FC = () => {
   const { currentUser, isPengetuaOrGpkHem } = useAuth();
@@ -76,6 +77,7 @@ export const Students: React.FC = () => {
 
   // Modals
   const [showAddModal, setShowAddModal] = useState(false);
+  const [showClassBatchModal, setShowClassBatchModal] = useState(false);
   const [showImportModal, setShowImportModal] = useState(false);
   const [showPromotionModal, setShowPromotionModal] = useState(false);
 
@@ -276,11 +278,20 @@ export const Students: React.FC = () => {
         {/* Action Buttons */}
         <div className="flex flex-wrap items-center gap-2">
           <button
+            onClick={() => setShowClassBatchModal(true)}
+            className="flex items-center gap-1.5 px-3.5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs font-extrabold shadow-xs transition-colors"
+            title="Daftar senarai nama keseluruhan murid bagi sesebuah kelas melalui muat naik fail Excel (APDM), CSV atau teks"
+          >
+            <FileSpreadsheet className="w-4 h-4 text-emerald-200" />
+            <span>Upload Senarai Sekelas</span>
+          </button>
+
+          <button
             onClick={() => setShowAddModal(true)}
             className="flex items-center gap-1.5 px-3.5 py-2 bg-blue-700 hover:bg-blue-800 text-white rounded-xl text-xs font-bold shadow-xs transition-colors"
           >
             <UserPlus className="w-4 h-4" />
-            <span>Tambah Murid</span>
+            <span>Tambah Individu</span>
           </button>
 
           <button
@@ -658,6 +669,19 @@ export const Students: React.FC = () => {
           </div>
         )}
       </div>
+
+      {/* Modal Daftar Senarai Murid Mengikut Kelas (Pukal Sekelas) */}
+      <ClassStudentBatchModal
+        isOpen={showClassBatchModal}
+        classesList={classesList}
+        existingStudents={students}
+        initialClass={filterKelas !== 'semua' ? filterKelas : undefined}
+        onClose={() => setShowClassBatchModal(false)}
+        onSuccess={() => {
+          setShowClassBatchModal(false);
+          loadStudentsList();
+        }}
+      />
 
       {/* Modal Tambah Murid */}
       {showAddModal && (

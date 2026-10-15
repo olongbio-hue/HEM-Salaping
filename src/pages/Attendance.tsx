@@ -28,9 +28,11 @@ import {
   Search,
   CheckCircle2,
   AlertTriangle,
-  Download
+  Download,
+  FileSpreadsheet
 } from 'lucide-react';
 import { EmptyState } from '../components/EmptyState';
+import { ClassStudentBatchModal } from '../components/ClassStudentBatchModal';
 
 export const Attendance: React.FC = () => {
   const { currentUser, isPengetuaOrGpkHem, canRecordAttendance } = useAuth();
@@ -61,28 +63,27 @@ export const Attendance: React.FC = () => {
   // Reason modal state for student
   const [editingStudentId, setEditingStudentId] = useState<string | null>(null);
   const [tempStatus, setTempStatus] = useState<AttendanceStatus>('tidak_hadir');
+  const [showClassBatchModal, setShowClassBatchModal] = useState(false);
   const [tempReason, setTempReason] = useState<string>('');
   const [tempSurat, setTempSurat] = useState<boolean>(false);
 
-  useEffect(() => {
-    async function loadData() {
-      try {
-        setLoading(true);
-        const [stList, atList, clsList] = await Promise.all([
-          getStudents(),
-          getAttendanceList(),
-          getClassesList()
-        ]);
-        setStudents(stList);
-        setAllAttendance(atList);
-        setClassesList(clsList);
-      } catch (err) {
-        console.error('Ralat memuatkan data kehadiran:', err);
-      } finally {
-        setLoading(false);
-      }
+  const refreshAttendanceData = async () => {
+    try {
+      const [stList, atList, clsList] = await Promise.all([
+        getStudents(),
+        getAttendanceList(),
+        getClassesList()
+      ]);
+      setStudents(stList);
+      setAllAttendance(atList);
+      setClassesList(clsList);
+    } catch (err) {
+      console.error('Ralat memuatkan data kehadiran:', err);
     }
-    loadData();
+  };
+
+  useEffect(() => {
+    refreshAttendanceData();
   }, []);
 
   // When selected date or class changes, load existing record or prepare initial defaults
@@ -322,6 +323,16 @@ export const Attendance: React.FC = () => {
                   </option>
                 ))}
               </select>
+
+              <button
+                type="button"
+                onClick={() => setShowClassBatchModal(true)}
+                className="px-2.5 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 rounded-lg font-bold text-[11px] flex items-center gap-1 transition-colors"
+                title="Upload senarai nama pelajar untuk kelas ini"
+              >
+                <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-600" />
+                <span>Upload Sekelas</span>
+              </button>
             </div>
           )}
         </div>
@@ -500,11 +511,31 @@ export const Attendance: React.FC = () => {
               );
             })}
 
-            {filteredStudents.length === 0 && (
+            {currentClassStudents.length === 0 ? (
+              <div className="p-8 text-center text-xs space-y-3 bg-slate-50/50">
+                <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center mx-auto">
+                  <FileSpreadsheet className="w-5 h-5 text-emerald-700" />
+                </div>
+                <div className="space-y-1">
+                  <p className="font-bold text-slate-800">Belum Ada Murid Didaftarkan Bagi Kelas Ini ({selectedClassInfo?.nama})</p>
+                  <p className="text-slate-500 max-w-md mx-auto">
+                    Anda boleh memuat naik senarai nama keseluruhan murid bagi kelas ini melalui fail Excel (APDM) atau salin & tampal teks.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowClassBatchModal(true)}
+                  className="px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl text-xs inline-flex items-center gap-1.5 shadow-xs transition-colors"
+                >
+                  <FileSpreadsheet className="w-4 h-4 text-emerald-200" />
+                  <span>Upload Senarai Murid {selectedClassInfo?.nama}</span>
+                </button>
+              </div>
+            ) : filteredStudents.length === 0 ? (
               <div className="p-8 text-center text-xs text-slate-500">
                 Tiada murid dijumpai untuk carian ini.
               </div>
-            )}
+            ) : null}
           </div>
 
           {/* Floating Save Bar on Mobile */}
@@ -747,6 +778,19 @@ export const Attendance: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* Modal Upload Senarai Murid Sekelas */}
+      <ClassStudentBatchModal
+        isOpen={showClassBatchModal}
+        classesList={classesList}
+        existingStudents={students}
+        initialClass={selectedClassInfo?.nama}
+        onClose={() => setShowClassBatchModal(false)}
+        onSuccess={() => {
+          setShowClassBatchModal(false);
+          refreshAttendanceData();
+        }}
+      />
     </div>
   );
 };
