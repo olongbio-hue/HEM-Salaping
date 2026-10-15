@@ -387,7 +387,7 @@ export const DashboardSettingsTab: React.FC<DashboardSettingsTabProps> = ({
               />
               <button
                 type="button"
-                onClick={() => setForm({ ...form, gambarBannerUrl: '/src/assets/images/salaping_student_banner_1791731561584.jpg' })}
+                onClick={() => setForm({ ...form, gambarBannerUrl: '/banner.jpg' })}
                 className="px-3 py-2 bg-slate-200 hover:bg-slate-300 text-slate-800 rounded-xl font-bold text-[11px] whitespace-nowrap transition-colors"
               >
                 Guna Gambar Pelajar Salaping (Asal)
@@ -398,11 +398,14 @@ export const DashboardSettingsTab: React.FC<DashboardSettingsTabProps> = ({
               <div className="flex items-center gap-3 pt-2">
                 <div className="w-24 h-16 rounded-lg overflow-hidden border border-slate-300 bg-slate-900 shrink-0">
                   <img
-                    src={form.gambarBannerUrl}
+                    src={form.gambarBannerUrl.startsWith('/src/assets/images/') ? '/banner.jpg' : form.gambarBannerUrl}
                     alt="Pratonton Banner"
                     className="w-full h-full object-cover object-top"
                     onError={(e) => {
-                      (e.target as HTMLElement).style.display = 'none';
+                      const target = e.currentTarget;
+                      if (!target.src.endsWith('/banner.jpg')) {
+                        target.src = '/banner.jpg';
+                      }
                     }}
                   />
                 </div>

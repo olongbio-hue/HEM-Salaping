@@ -61,6 +61,7 @@ import {
 } from 'recharts';
 import { SkeletonCard, SkeletonTable } from '../components/SkeletonLoader';
 import { SchoolLogo } from '../components/SchoolLogo';
+import defaultBannerImg from '../assets/images/salaping_student_banner_1791731561584.jpg';
 
 export const Dashboard: React.FC = () => {
   const { currentUser, isPengetuaOrGpkHem } = useAuth();
@@ -335,9 +336,20 @@ export const Dashboard: React.FC = () => {
           <div className="lg:col-span-5 relative">
             <div className="relative rounded-2xl overflow-hidden border-2 border-white/15 shadow-2xl group bg-slate-950">
               <img
-                src="/src/assets/images/salaping_student_banner_1791731561584.jpg"
+                src={
+                  (dashboardSettings?.gambarBannerUrl && !dashboardSettings.gambarBannerUrl.startsWith('/src/assets/images/'))
+                    ? dashboardSettings.gambarBannerUrl
+                    : (defaultBannerImg || '/banner.jpg')
+                }
                 alt="Ilustrasi Kecemerlangan & Kemenjadian Murid SMK Salaping"
-                referrerPolicy="no-referrer"
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  if (defaultBannerImg && target.src !== defaultBannerImg) {
+                    target.src = defaultBannerImg;
+                  } else if (!target.src.endsWith('/banner.jpg')) {
+                    target.src = '/banner.jpg';
+                  }
+                }}
                 className="w-full h-56 sm:h-64 lg:h-72 object-cover object-top transition-transform duration-700 group-hover:scale-105"
               />
               {/* Lapisan Bayangan Gradien */}

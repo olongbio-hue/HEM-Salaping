@@ -427,8 +427,8 @@ export function getAuditLogs(): AuditLog[] {
 export async function getSchoolSettings(): Promise<SchoolSettings> {
   initializeDemoDataIfEmpty();
   const settings = getLocalItem<SchoolSettings>(STORAGE_KEYS.SCHOOL_SETTINGS, INITIAL_SCHOOL_SETTINGS);
-  if (!settings.logo || settings.logo === '') {
-    settings.logo = INITIAL_SCHOOL_SETTINGS.logo;
+  if (!settings.logo || settings.logo === '' || settings.logo.startsWith('/src/assets/images/')) {
+    settings.logo = '/logo.png';
     setLocalItem(STORAGE_KEYS.SCHOOL_SETTINGS, settings);
   }
 
@@ -505,7 +505,12 @@ export async function saveRulesSettings(rules: RulesSettings, user: { uid: strin
 export async function getDashboardSettings(): Promise<DashboardSettings> {
   initializeDemoDataIfEmpty();
   const current = getLocalItem<DashboardSettings>(STORAGE_KEYS.DASHBOARD_SETTINGS, DEFAULT_DASHBOARD_SETTINGS);
-  return { ...DEFAULT_DASHBOARD_SETTINGS, ...current, kpiCards: { ...DEFAULT_DASHBOARD_SETTINGS.kpiCards, ...(current?.kpiCards || {}) } };
+  const merged = { ...DEFAULT_DASHBOARD_SETTINGS, ...current, kpiCards: { ...DEFAULT_DASHBOARD_SETTINGS.kpiCards, ...(current?.kpiCards || {}) } };
+  if (!merged.gambarBannerUrl || merged.gambarBannerUrl.startsWith('/src/assets/images/')) {
+    merged.gambarBannerUrl = '/banner.jpg';
+    setLocalItem(STORAGE_KEYS.DASHBOARD_SETTINGS, merged);
+  }
+  return merged;
 }
 
 export async function saveDashboardSettings(settings: DashboardSettings, user: { uid: string; nama: string }): Promise<void> {
