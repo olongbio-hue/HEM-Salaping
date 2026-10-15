@@ -519,7 +519,7 @@ export const Attendance: React.FC = () => {
                 <div className="space-y-1">
                   <p className="font-bold text-slate-800">Belum Ada Murid Didaftarkan Bagi Kelas Ini ({selectedClassInfo?.nama})</p>
                   <p className="text-slate-500 max-w-md mx-auto">
-                    Anda boleh memuat naik senarai nama keseluruhan murid bagi kelas ini melalui fail Excel (APDM) atau salin & tampal teks.
+                    Anda boleh memuat naik senarai nama keseluruhan murid bagi kelas ini melalui fail Excel (idMe KPM) atau salin & tampal teks.
                   </p>
                 </div>
                 <button

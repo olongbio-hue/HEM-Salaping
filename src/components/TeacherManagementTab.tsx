@@ -847,7 +847,7 @@ export const TeacherManagementTab: React.FC<TeacherManagementTabProps> = ({
                 </div>
                 <div>
                   <h3 className="text-sm font-extrabold text-slate-900">Import Pukal Senarai Guru</h3>
-                  <p className="text-[11px] text-slate-500">Tampal senarai nama guru dari Excel / APDM / e-Operasi</p>
+                  <p className="text-[11px] text-slate-500">Tampal senarai nama guru dari Excel / e-Operasi / idMe KPM</p>
                 </div>
               </div>
               <button

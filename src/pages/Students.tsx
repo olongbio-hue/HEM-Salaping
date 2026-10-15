@@ -280,7 +280,7 @@ export const Students: React.FC = () => {
           <button
             onClick={() => setShowClassBatchModal(true)}
             className="flex items-center gap-1.5 px-3.5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs font-extrabold shadow-xs transition-colors"
-            title="Daftar senarai nama keseluruhan murid bagi sesebuah kelas melalui muat naik fail Excel (APDM), CSV atau teks"
+            title="Daftar senarai nama keseluruhan murid bagi sesebuah kelas melalui muat naik fail Excel (idMe KPM), CSV atau teks"
           >
             <FileSpreadsheet className="w-4 h-4 text-emerald-200" />
             <span>Upload Senarai Sekelas</span>
@@ -591,23 +591,30 @@ export const Students: React.FC = () => {
                 Pangkalan Data Murid Masih Kosong
               </h3>
               <p className="text-xs text-slate-500 leading-relaxed">
-                Data demo telah dikosongkan untuk persediaan data sebenar. Anda boleh mendaftarkan murid pertama secara individu atau memuat naik fail senarai murid CSV terus dari APDM KPM.
+                Data demo telah dikosongkan untuk persediaan data sebenar. Anda boleh mendaftarkan murid secara pukal mengikut kelas, secara individu, atau mengimport fail CSV dari Sistem Pengurusan Murid (idMe KPM / MOEIS).
               </p>
             </div>
             <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+              <button
+                onClick={() => setShowClassBatchModal(true)}
+                className="px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold text-xs rounded-xl shadow-xs transition-colors flex items-center gap-1.5"
+              >
+                <FileSpreadsheet className="w-4 h-4" />
+                <span>Upload Senarai Sekelas</span>
+              </button>
               <button
                 onClick={() => setShowAddModal(true)}
                 className="px-4 py-2 bg-blue-700 hover:bg-blue-800 text-white font-extrabold text-xs rounded-xl shadow-xs transition-colors flex items-center gap-1.5"
               >
                 <UserPlus className="w-4 h-4" />
-                <span>Daftar Murid Baharu</span>
+                <span>Daftar Individu</span>
               </button>
               <button
                 onClick={() => setShowImportModal(true)}
-                className="px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold text-xs rounded-xl shadow-xs transition-colors flex items-center gap-1.5"
+                className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-extrabold text-xs rounded-xl border border-slate-300 transition-colors flex items-center gap-1.5"
               >
-                <FileSpreadsheet className="w-4 h-4" />
-                <span>Import CSV (APDM)</span>
+                <Upload className="w-4 h-4 text-slate-500" />
+                <span>Import CSV / idMe</span>
               </button>
             </div>
           </div>

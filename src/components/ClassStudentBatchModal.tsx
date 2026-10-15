@@ -611,7 +611,7 @@ export const ClassStudentBatchModal: React.FC<ClassStudentBatchModalProps> = ({
                   {fileName ? `Fail Dipilih: ${fileName}` : 'Klik untuk Pilih Fail Senarai Pelajar atau Seret ke Sini'}
                 </span>
                 <p className="text-slate-500 text-[11px] mt-1 max-w-md">
-                  Menyokong fail <strong>Excel (.xlsx, .xls)</strong> dari APDM, fail <strong>CSV</strong>, atau fail teks senarai nama.
+                  Menyokong fail <strong>Excel (.xlsx, .xls)</strong> dari Sistem Pengurusan Murid (idMe KPM / MOEIS), fail <strong>CSV</strong>, atau fail teks senarai nama kelas.
                 </p>
                 <span className="mt-2.5 px-3 py-1 rounded-full bg-white text-emerald-800 text-[10px] font-bold border border-emerald-200 shadow-xs">
                   Sistem mengekstrak nama, No. KP & mengesan jantina secara automatik

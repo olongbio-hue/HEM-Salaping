@@ -394,7 +394,7 @@ export const Dashboard: React.FC = () => {
                 Pangkalan Data Murid Bersih (Sedia untuk Data Sekolah Sebenar)
               </h3>
               <p className="text-xs text-blue-900/80 leading-relaxed max-w-2xl">
-                Data demo fiktif telah dipadamkan sepenuhnya. Mulakan kemasukan rekod murid sebenar SMK Salaping melalui borang pendaftaran individu atau import fail CSV (APDM).
+                Data demo fiktif telah dipadamkan sepenuhnya. Mulakan kemasukan rekod murid sebenar SMK Salaping melalui pendaftaran senarai sekelas, pendaftaran individu, atau import fail dari Sistem Pengurusan Murid (idMe KPM / MOEIS).
               </p>
             </div>
           </div>
