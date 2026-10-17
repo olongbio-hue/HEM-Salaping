@@ -1175,8 +1175,8 @@ export async function getUsersList(): Promise<UserProfile[]> {
   if (cleanUsers.length === 0) {
     cleanUsers.push({
       uid: 'admin_sekolah',
-      nama: 'Pentadbir Sistem HEM',
-      emel: 'admin@smksalaping.edu.my',
+      nama: 'Pentadbir Sistem HEM (DELIMa)',
+      emel: 'admin.salaping@moe-dl.edu.my',
       peranan: ['admin_sistem', 'pengetua', 'gpk_hem'],
       jawatan: 'Pentadbir Utama Sekolah',
       aktif: true,
@@ -1251,8 +1251,8 @@ export async function purgeAllDemoUsers(
   if (cleanUsers.length === 0) {
     cleanUsers.push({
       uid: 'admin_sekolah',
-      nama: 'Pentadbir Sistem HEM',
-      emel: 'admin@smksalaping.edu.my',
+      nama: 'Pentadbir Sistem HEM (DELIMa)',
+      emel: 'admin.salaping@moe-dl.edu.my',
       peranan: ['admin_sistem', 'pengetua', 'gpk_hem'],
       jawatan: 'Pentadbir Utama Sekolah',
       aktif: true,

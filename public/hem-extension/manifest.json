@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "HEM Sync - idMe KPM",
+  "version": "1.0",
+  "description": "Penyelaras data murid dan kehadiran idMe KPM ke Dashboard HEM Digital SMK Salaping",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://*/*",
+    "http://*/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "HEM Sync"
+  }
+}

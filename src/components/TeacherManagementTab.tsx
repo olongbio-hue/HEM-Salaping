@@ -592,17 +592,17 @@ export const TeacherManagementTab: React.FC<TeacherManagementTabProps> = ({
 
               <div>
                 <label className="font-bold text-slate-800 block mb-1">
-                  Alamat E-mel Rasmi (KPM/Sekolah)
+                  Alamat E-mel Rasmi DELIMa KPM (@moe-dl.edu.my)
                 </label>
                 <input
                   type="email"
-                  placeholder="Contoh: nama@smksalaping.edu.my (autogen jika kosong)"
+                  placeholder="Contoh: g-12345678@moe-dl.edu.my (autogen jika kosong)"
                   value={addEmail}
                   onChange={e => setAddEmail(e.target.value)}
                   className="w-full border border-slate-300 rounded-xl p-2.5 font-mono text-slate-800"
                 />
                 <span className="text-[10px] text-slate-400 mt-1 block">
-                  Jika dikosongkan, e-mel rasmi sekolah akan dijana secara automatik.
+                  Jika dikosongkan, e-mel DELIMa rasmi guru akan dijana secara automatik.
                 </span>
               </div>
 

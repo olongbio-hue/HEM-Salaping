@@ -972,6 +972,43 @@ export const Settings: React.FC<{ onOpenResetModal: () => void }> = ({ onOpenRes
             </button>
           </div>
 
+          {/* Chrome Extension HEM Sync Card */}
+          <div className="p-4 sm:p-5 rounded-2xl border-2 border-emerald-300 bg-emerald-50/60 space-y-3">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-emerald-700 text-white flex items-center justify-center shrink-0 shadow-md">
+                  <Download className="w-5 h-5 text-emerald-200" />
+                </div>
+                <div>
+                  <h3 className="font-extrabold text-sm text-emerald-950">
+                    Chrome Extension: HEM Sync (idMe KPM)
+                  </h3>
+                  <p className="text-[11px] text-emerald-800">
+                    Pakej fail lengkap (.zip) untuk menyelaraskan senarai murid dan kehadiran idMe KPM terus ke Firestore.
+                  </p>
+                </div>
+              </div>
+              <a
+                href="/hem-extension.zip"
+                download="hem-extension.zip"
+                className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold text-xs rounded-xl shadow-xs transition-colors shrink-0"
+              >
+                <Download className="w-4 h-4" />
+                <span>Muat Turun Extension (hem-extension.zip)</span>
+              </a>
+            </div>
+
+            <div className="p-3 bg-white/80 rounded-xl border border-emerald-200 text-[11px] text-slate-700 space-y-1.5 leading-relaxed">
+              <span className="font-bold text-emerald-950 block">Panduan Pemasangan di Chrome:</span>
+              <ol className="list-decimal list-inside space-y-1 pl-1 text-slate-600">
+                <li>Klik butang hijau di atas untuk memuat turun <code>hem-extension.zip</code>.</li>
+                <li>Buka fail zip di komputer anda, klik kanan dan pilih <strong>"Extract All..." (Ekstrak Semua)</strong> ke dalam satu folder.</li>
+                <li>Di Google Chrome, buka alamat <code>chrome://extensions</code> dan aktifkan suis <strong>Developer mode</strong> di penjuru atas kanan.</li>
+                <li>Klik butang <strong>"Load unpacked"</strong>. <em>(Perhatian: Tetingkap yang muncul adalah tetingkap <strong>Pilih Folder</strong>. Klik pada folder hasil ekstrak tadi dan tekan butang <strong>"Select Folder"</strong> di bahagian bawah kanan. Fail di dalamnya memang tidak akan dipaparkan kerana tetingkap ini mencari folder, bukan fail).</em></li>
+              </ol>
+            </div>
+          </div>
+
           {/* Sandaran Keseluruhan Sistem JSON */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Muat Turun Sandaran */}

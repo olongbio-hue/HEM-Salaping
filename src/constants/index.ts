@@ -347,10 +347,12 @@ export const TRANSPORT_LABELS: Record<string, { label: string; icon: string }> =
   lain: { label: 'Lain-lain', icon: '🚲' }
 };
 
+export const VALID_DELIMA_DOMAINS = ['moe-dl.edu.my', 'moe.gov.my'];
+
 export const DEFAULT_PRODUCTION_ADMIN = {
   uid: 'admin_sekolah',
-  nama: 'Pentadbir Sistem HEM',
-  emel: 'admin@smksalaping.edu.my',
+  nama: 'Pentadbir Sistem HEM (DELIMa)',
+  emel: 'admin.salaping@moe-dl.edu.my',
   peranan: ['admin_sistem', 'pengetua', 'gpk_hem'] as UserRole[],
   jawatan: 'Pentadbir Utama Sekolah',
   kataLaluan: 'salaping123',

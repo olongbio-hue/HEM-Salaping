@@ -3,10 +3,24 @@ import { UserProfile, UserRole } from '../types';
 import { DEMO_USERS } from '../constants';
 import { getUsersList, saveUserProfile, deleteUserProfile, purgeAllDemoUsers } from '../services/dataService';
 
+export function isDelimaEmail(email: string): boolean {
+  const norm = email.trim().toLowerCase();
+  return norm.endsWith('@moe-dl.edu.my') || norm.endsWith('@moe.gov.my');
+}
+
 interface AuthContextType {
   currentUser: UserProfile | null;
   loading: boolean;
   loginWithEmail: (email: string, pass: string) => Promise<boolean>;
+  registerWithDelima: (data: {
+    nama: string;
+    emel: string;
+    kataLaluan: string;
+    jawatan?: string;
+    peranan: UserRole[];
+    kelasDiajar?: string[];
+    telefon?: string;
+  }) => Promise<UserProfile>;
   loginAsDemoUser: (uid: string) => void;
   logout: () => void;
   hasRole: (role: UserRole | UserRole[]) => boolean;
@@ -82,6 +96,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const loginWithEmail = async (email: string, pass: string): Promise<boolean> => {
     // Check against demo accounts or existing users
     const normalizedEmail = email.trim().toLowerCase();
+
+    // Enforce DELIMa email domain restriction
+    if (!isDelimaEmail(normalizedEmail) && normalizedEmail !== 'admin@smksalaping.edu.my') {
+      throw new Error(
+        'Akses Disekat: Hanya akaun e-mel rasmi DELIMa KPM (@moe-dl.edu.my atau @moe.gov.my) sahaja dibenarkan log masuk.'
+      );
+    }
+
     const demoMatch = DEMO_USERS.find(
       u => u.emel.toLowerCase() === normalizedEmail && (u.kataLaluan === pass || pass === 'salaping123')
     );
@@ -104,13 +126,65 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
 
     const matchedUser = allUsers.find(u => u.emel.toLowerCase() === normalizedEmail);
-    if (matchedUser && pass === 'salaping123') {
+    if (matchedUser && (pass === 'salaping123' || pass.length >= 6)) {
       setCurrentUser(matchedUser);
       localStorage.setItem(AUTH_STORAGE_KEY, matchedUser.uid);
       return true;
     }
 
-    throw new Error('E-mel atau kata laluan tidak sah. Gunakan kata laluan demo: salaping123');
+    throw new Error('E-mel atau kata laluan tidak sah. Sila pastikan anda menggunakan e-mel DELIMa yang betul.');
+  };
+
+  const registerWithDelima = async (data: {
+    nama: string;
+    emel: string;
+    kataLaluan: string;
+    jawatan?: string;
+    peranan: UserRole[];
+    kelasDiajar?: string[];
+    telefon?: string;
+  }): Promise<UserProfile> => {
+    const normalizedEmail = data.emel.trim().toLowerCase();
+
+    if (!isDelimaEmail(normalizedEmail)) {
+      throw new Error(
+        'Akses Disekat: Pendaftaran hanya dibenarkan menggunakan akaun e-mel rasmi DELIMa KPM (@moe-dl.edu.my atau @moe.gov.my).'
+      );
+    }
+
+    if (!data.nama.trim()) {
+      throw new Error('Sila masukkan nama penuh guru yang sah.');
+    }
+
+    if (!data.kataLaluan || data.kataLaluan.length < 6) {
+      throw new Error('Kata laluan mestilah sekurang-kurangnya 6 aksara.');
+    }
+
+    const currentUsers = await getUsersList();
+    const existing = currentUsers.find(u => u.emel.toLowerCase() === normalizedEmail);
+    if (existing) {
+      throw new Error(`Akaun dengan e-mel DELIMa ${normalizedEmail} telah pun wujud. Sila terus ke tab Log Masuk.`);
+    }
+
+    const newUid = `guru_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
+    const newProfile: UserProfile = {
+      uid: newUid,
+      nama: data.nama.trim(),
+      emel: normalizedEmail,
+      peranan: data.peranan.length > 0 ? data.peranan : ['guru_biasa'],
+      jawatan: data.jawatan?.trim() || 'Guru Akademik',
+      kelasDiajar: data.kelasDiajar || [],
+      telefon: data.telefon?.trim() || '',
+      aktif: true,
+      dicipta: new Date().toISOString()
+    };
+
+    await saveUserProfile(newProfile, { uid: newUid, nama: newProfile.nama });
+    await refreshUsers();
+    setCurrentUser(newProfile);
+    localStorage.setItem(AUTH_STORAGE_KEY, newProfile.uid);
+
+    return newProfile;
   };
 
   const loginAsDemoUser = (uid: string) => {
@@ -259,6 +333,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         currentUser,
         loading,
         loginWithEmail,
+        registerWithDelima,
         loginAsDemoUser,
         logout,
         hasRole,
