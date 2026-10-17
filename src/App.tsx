@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { SchoolProvider, useSchool } from './context/SchoolContext';
+import { registerHemSyncListener } from './hemSyncListener';
 import { Navbar } from './components/Navbar';
 import { Sidebar } from './components/Sidebar';
 import { BottomNav } from './components/BottomNav';
@@ -76,6 +77,19 @@ const AppLayout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [resetModalOpen, setResetModalOpen] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
+  const { showToast } = useSchool();
+
+  useEffect(() => {
+    const handleHemSync = (e: Event) => {
+      const customEvent = e as CustomEvent;
+      const { mode, count } = customEvent.detail || {};
+      showToast(`HEM Sync: ${count} rekod ${mode === 'students' ? 'murid' : 'kehadiran'} berjaya diselaraskan!`, 'success');
+      setRefreshKey(prev => prev + 1);
+    };
+
+    window.addEventListener('hem-data-synced', handleHemSync);
+    return () => window.removeEventListener('hem-data-synced', handleHemSync);
+  }, [showToast]);
 
   return (
     <div className="min-h-screen bg-slate-100 flex flex-col antialiased">
@@ -128,6 +142,15 @@ const AppLayout: React.FC = () => {
 };
 
 export default function App() {
+  useEffect(() => {
+    const unregister = registerHemSyncListener();
+    return () => {
+      if (typeof unregister === 'function') {
+        unregister();
+      }
+    };
+  }, []);
+
   return (
     <BrowserRouter>
       <AuthProvider>
