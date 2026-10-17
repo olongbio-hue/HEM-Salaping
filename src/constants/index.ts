@@ -349,18 +349,43 @@ export const TRANSPORT_LABELS: Record<string, { label: string; icon: string }> =
 
 export const VALID_DELIMA_DOMAINS = ['moe-dl.edu.my', 'moe.gov.my'];
 
-export const DEFAULT_PRODUCTION_ADMIN = {
-  uid: 'admin_sekolah',
-  nama: 'Pentadbir Sistem HEM (DELIMa)',
-  emel: 'admin.salaping@moe-dl.edu.my',
-  peranan: ['admin_sistem', 'pengetua', 'gpk_hem'] as UserRole[],
-  jawatan: 'Pentadbir Utama Sekolah',
-  kataLaluan: 'salaping123',
-  kelasDiajar: [] as string[]
-};
+export const SPECIAL_ADMIN_ACCOUNTS = [
+  {
+    uid: 'admin_utama_khas',
+    idPengguna: 'admin_salaping',
+    emel: 'admin.khas@salaping.edu.my',
+    nama: 'Admin Sistem HEM (Penyelaras ICT)',
+    jawatan: 'Pentadbir Sistem & Data HEM',
+    peranan: ['admin_sistem', 'pengetua', 'gpk_hem'] as UserRole[],
+    kataLaluan: 'admin#salaping2026',
+    kelasDiajar: [] as string[]
+  },
+  {
+    uid: 'pengetua_khas',
+    idPengguna: 'pengetua_salaping',
+    emel: 'pengetua.khas@salaping.edu.my',
+    nama: 'Pengetua SMK Salaping',
+    jawatan: 'Pengetua / Ketua Pentadbir Sekolah',
+    peranan: ['pengetua'] as UserRole[],
+    kataLaluan: 'pengetua#salaping2026',
+    kelasDiajar: [] as string[]
+  },
+  {
+    uid: 'gpkhem_khas',
+    idPengguna: 'gpkhem_salaping',
+    emel: 'gpkhem.khas@salaping.edu.my',
+    nama: 'GPK Hal Ehwal Murid',
+    jawatan: 'Guru Penolong Kanan HEM',
+    peranan: ['gpk_hem'] as UserRole[],
+    kataLaluan: 'gpkhem#salaping2026',
+    kelasDiajar: [] as string[]
+  }
+];
+
+export const DEFAULT_PRODUCTION_ADMIN = SPECIAL_ADMIN_ACCOUNTS[0];
 
 export const DEMO_USERS = [
-  DEFAULT_PRODUCTION_ADMIN
+  ...SPECIAL_ADMIN_ACCOUNTS
 ];
 
 export const CLASSES_LIST = [

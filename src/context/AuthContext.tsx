@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { UserProfile, UserRole } from '../types';
-import { DEMO_USERS } from '../constants';
+import { DEMO_USERS, SPECIAL_ADMIN_ACCOUNTS } from '../constants';
 import { getUsersList, saveUserProfile, deleteUserProfile, purgeAllDemoUsers } from '../services/dataService';
 
 export function isDelimaEmail(email: string): boolean {
@@ -93,30 +93,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const loginWithEmail = async (email: string, pass: string): Promise<boolean> => {
-    // Check against demo accounts or existing users
-    const normalizedEmail = email.trim().toLowerCase();
+  const loginWithEmail = async (loginIdOrEmail: string, pass: string): Promise<boolean> => {
+    const cleanInput = loginIdOrEmail.trim().toLowerCase();
 
-    // Enforce DELIMa email domain restriction
-    if (!isDelimaEmail(normalizedEmail) && normalizedEmail !== 'admin@smksalaping.edu.my') {
-      throw new Error(
-        'Akses Disekat: Hanya akaun e-mel rasmi DELIMa KPM (@moe-dl.edu.my atau @moe.gov.my) sahaja dibenarkan log masuk.'
-      );
-    }
-
-    const demoMatch = DEMO_USERS.find(
-      u => u.emel.toLowerCase() === normalizedEmail && (u.kataLaluan === pass || pass === 'salaping123')
+    // 1. Semakan Khas: Adakah pengguna menggunakan ID / E-mel Khas Pentadbiran (Admin Sistem, Pengetua, GPK HEM)?
+    const specialMatch = SPECIAL_ADMIN_ACCOUNTS.find(
+      u => (u.idPengguna.toLowerCase() === cleanInput || u.emel.toLowerCase() === cleanInput) &&
+           (u.kataLaluan === pass || pass === 'salaping123')
     );
 
-    if (demoMatch) {
-      const users = await getUsersList();
-      const existing = users.find(u => u.uid === demoMatch.uid);
-      const userProfile: UserProfile = existing || {
-        uid: demoMatch.uid,
-        nama: demoMatch.nama,
-        emel: demoMatch.emel,
-        peranan: demoMatch.peranan,
-        kelasDiajar: demoMatch.kelasDiajar,
+    if (specialMatch) {
+      const userProfile: UserProfile = {
+        uid: specialMatch.uid,
+        nama: specialMatch.nama,
+        emel: specialMatch.emel,
+        peranan: specialMatch.peranan,
+        jawatan: specialMatch.jawatan,
+        kelasDiajar: specialMatch.kelasDiajar,
         aktif: true,
         dicipta: '2026-01-01T00:00:00.000Z'
       };
@@ -125,14 +118,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return true;
     }
 
-    const matchedUser = allUsers.find(u => u.emel.toLowerCase() === normalizedEmail);
+    // 2. Semakan Guru Biasa: Wajib menggunakan e-mel rasmi DELIMa KPM (@moe-dl.edu.my atau @moe.gov.my)
+    if (!isDelimaEmail(cleanInput)) {
+      throw new Error(
+        'Akses Ditolak: Guru diwajibkan menggunakan akaun e-mel rasmi DELIMa KPM (@moe-dl.edu.my). Untuk Pentadbir (Admin, Pengetua, GPK HEM), sila gunakan ID Khas Pentadbiran.'
+      );
+    }
+
+    const matchedUser = allUsers.find(u => u.emel.toLowerCase() === cleanInput);
     if (matchedUser && (pass === 'salaping123' || pass.length >= 6)) {
       setCurrentUser(matchedUser);
       localStorage.setItem(AUTH_STORAGE_KEY, matchedUser.uid);
       return true;
     }
 
-    throw new Error('E-mel atau kata laluan tidak sah. Sila pastikan anda menggunakan e-mel DELIMa yang betul.');
+    throw new Error('E-mel DELIMa atau kata laluan tidak sah. Sila semak semula atau daftar akaun guru baharu.');
   };
 
   const registerWithDelima = async (data: {
