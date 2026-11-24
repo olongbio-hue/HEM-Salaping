@@ -84,59 +84,59 @@ export const PublicBullyingReport: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#1b2337] py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-2xl mx-auto space-y-6">
         {/* Navigation & Header */}
         <div className="flex items-center justify-between">
           <button
             onClick={() => navigate('/')}
-            className="flex items-center gap-1.5 text-xs font-bold text-slate-600 hover:text-slate-900"
+            className="flex items-center gap-1.5 text-xs font-bold text-slate-600 dark:text-slate-300 hover:text-slate-900"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Kembali ke Portal</span>
           </button>
-          <span className="text-[11px] font-bold px-2 py-0.5 rounded bg-rose-100 text-rose-800 border border-rose-300">
+          <span className="text-[11px] font-bold px-2 py-0.5 rounded bg-rose-100 dark:bg-rose-500/20 text-rose-800 dark:text-rose-300 border border-rose-300 dark:border-rose-500/30">
             Saluran Rahsia & Selamat
           </span>
         </div>
 
         {/* Title Card */}
-        <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-md">
+        <div className="bg-white dark:bg-[#222b42] p-6 rounded-2xl border border-slate-200 dark:border-white/10 shadow-md">
           <div className="flex items-center gap-3.5 mb-2">
             <div className="shrink-0">
               <SchoolLogo size="lg" className="drop-shadow-xs" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="px-2 py-0.5 rounded bg-rose-100 text-rose-800 font-extrabold text-[10px]">
+                <span className="px-2 py-0.5 rounded bg-rose-100 dark:bg-rose-500/20 text-rose-800 dark:text-rose-300 font-extrabold text-[10px]">
                   PORTAL ADUAN RASMI
                 </span>
               </div>
-              <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+              <h1 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">
                 Saluran Aduan Buli & Perlindungan Kanak-Kanak
               </h1>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-slate-500 dark:text-slate-400">
                 {school.nama} ({school.kodSekolah}) • Kota Marudu, Sabah
               </p>
             </div>
           </div>
 
-          <p className="text-xs text-slate-600 mt-2 leading-relaxed bg-slate-50 p-3 rounded-xl border border-slate-200">
+          <p className="text-xs text-slate-600 dark:text-slate-300 mt-2 leading-relaxed bg-slate-50 dark:bg-[#1b2337] p-3 rounded-xl border border-slate-200 dark:border-white/10">
             Pihak sekolah komited terhadap <strong>Dasar Perlindungan Kanak-Kanak (CPP) KPM</strong> dan sifar toleransi terhadap sebarang salah laku buli, gangguan, atau penderaan. Setiap aduan disiasat secara rahsia oleh Jawatankuasa HEM & Kaunselor.
           </p>
         </div>
 
         {submittedRef ? (
-          <div className="bg-white p-8 rounded-2xl border border-emerald-300 shadow-lg text-center space-y-4">
-            <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto ring-4 ring-emerald-50">
+          <div className="bg-white dark:bg-[#222b42] p-8 rounded-2xl border border-emerald-300 dark:border-emerald-500/30 shadow-lg text-center space-y-4">
+            <div className="w-16 h-16 rounded-full bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 flex items-center justify-center mx-auto ring-4 ring-emerald-50">
               <CheckCircle2 className="w-8 h-8" />
             </div>
-            <h2 className="text-xl font-black text-slate-900">Aduan Berjaya Diterima</h2>
-            <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl inline-block">
-              <span className="text-xs text-slate-500 block">Nombor Rujukan Aduan Anda:</span>
-              <strong className="text-lg font-mono text-blue-900">{submittedRef}</strong>
+            <h2 className="text-xl font-black text-slate-900 dark:text-white">Aduan Berjaya Diterima</h2>
+            <div className="p-4 bg-slate-50 dark:bg-[#1b2337] border border-slate-200 dark:border-white/10 rounded-xl inline-block">
+              <span className="text-xs text-slate-500 dark:text-slate-400 block">Nombor Rujukan Aduan Anda:</span>
+              <strong className="text-lg font-mono text-blue-900 dark:text-sky-300">{submittedRef}</strong>
             </div>
-            <p className="text-xs text-slate-600 max-w-md mx-auto leading-relaxed">
+            <p className="text-xs text-slate-600 dark:text-slate-300 max-w-md mx-auto leading-relaxed">
               Terima kasih atas keprihatinan anda. Pasukan Petugas Disiplin dan Kaunselor SMK Salaping telah menerima aduan ini dan tindakan siasatan segera akan dimulakan mengikut Prosedur Operasi Standard KPM.
             </p>
             <div className="pt-2">
@@ -153,13 +153,13 @@ export const PublicBullyingReport: React.FC = () => {
             </div>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-md space-y-5 text-xs">
+          <form onSubmit={handleSubmit} className="bg-white dark:bg-[#222b42] p-6 rounded-2xl border border-slate-200 dark:border-white/10 shadow-md space-y-5 text-xs">
             {/* Bahagian 1: Identiti Pelapor */}
-            <div className="space-y-3 pb-4 border-b border-slate-100">
+            <div className="space-y-3 pb-4 border-b border-slate-100 dark:border-white/5">
               <div className="flex items-center justify-between">
-                <span className="font-extrabold text-sm text-slate-900">1. Maklumat Pelapor</span>
+                <span className="font-extrabold text-sm text-slate-900 dark:text-white">1. Maklumat Pelapor</span>
                 <div className="flex items-center gap-2">
-                  <label htmlFor="chkAnon" className="font-semibold text-rose-700 cursor-pointer">
+                  <label htmlFor="chkAnon" className="font-semibold text-rose-700 dark:text-rose-300 cursor-pointer">
                     Hantar Tanpa Nama (Anonim)
                   </label>
                   <input
@@ -173,7 +173,7 @@ export const PublicBullyingReport: React.FC = () => {
               </div>
 
               {aduanAnonim ? (
-                <div className="p-3 bg-amber-50 rounded-xl border border-amber-200 text-amber-900 flex items-center gap-2 text-[11px]">
+                <div className="p-3 bg-amber-50 dark:bg-amber-500/15 rounded-xl border border-amber-200 dark:border-amber-500/30 text-amber-900 dark:text-amber-300 flex items-center gap-2 text-[11px]">
                   <Lock className="w-4 h-4 text-amber-600 shrink-0" />
                   <span>
                     Identiti anda <strong>TIDAK AKAN DIREKODKAN</strong>. Maklumat anda kekal 100% terlindung dan selamat.
@@ -182,21 +182,21 @@ export const PublicBullyingReport: React.FC = () => {
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
                   <div>
-                    <label className="font-bold text-slate-700 block mb-1">Nama Anda</label>
+                    <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Nama Anda</label>
                     <input
                       type="text"
                       value={namaPelapor}
                       onChange={e => setNamaPelapor(e.target.value)}
                       placeholder="Nama penuh anda"
-                      className="w-full border border-slate-300 rounded-lg p-2"
+                      className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2"
                     />
                   </div>
                   <div>
-                    <label className="font-bold text-slate-700 block mb-1">Hubungan</label>
+                    <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Hubungan</label>
                     <select
                       value={hubunganPelapor}
                       onChange={e => setHubunganPelapor(e.target.value as any)}
-                      className="w-full border border-slate-300 rounded-lg p-2 font-medium"
+                      className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-medium"
                     >
                       <option value="murid">Murid SMK Salaping</option>
                       <option value="ibu_bapa">Ibu Bapa / Penjaga</option>
@@ -205,13 +205,13 @@ export const PublicBullyingReport: React.FC = () => {
                     </select>
                   </div>
                   <div>
-                    <label className="font-bold text-slate-700 block mb-1">No. Telefon (Untuk Tindakan)</label>
+                    <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">No. Telefon (Untuk Tindakan)</label>
                     <input
                       type="text"
                       value={noTelPelapor}
                       onChange={e => setNoTelPelapor(e.target.value)}
                       placeholder="Contoh: 019-8765432"
-                      className="w-full border border-slate-300 rounded-lg p-2 font-mono"
+                      className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-mono"
                     />
                   </div>
                 </div>
@@ -219,57 +219,57 @@ export const PublicBullyingReport: React.FC = () => {
             </div>
 
             {/* Bahagian 2: Mangsa & Kejadian */}
-            <div className="space-y-3 pb-4 border-b border-slate-100">
-              <span className="font-extrabold text-sm text-slate-900 block">2. Butiran Mangsa & Pelaku</span>
+            <div className="space-y-3 pb-4 border-b border-slate-100 dark:border-white/5">
+              <span className="font-extrabold text-sm text-slate-900 dark:text-white block">2. Butiran Mangsa & Pelaku</span>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="font-bold text-slate-700 block mb-1">Nama Mangsa *</label>
+                  <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Nama Mangsa *</label>
                   <input
                     type="text"
                     required
                     value={mangsaNama}
                     onChange={e => setMangsaNama(e.target.value)}
                     placeholder="Nama murid yang dibuli / dianiaya"
-                    className="w-full border border-slate-300 rounded-lg p-2 font-medium"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-medium"
                   />
                 </div>
 
                 <div>
-                  <label className="font-bold text-slate-700 block mb-1">Tingkatan / Kelas Mangsa (Jika tahu)</label>
+                  <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Tingkatan / Kelas Mangsa (Jika tahu)</label>
                   <input
                     type="text"
                     value={mangsaKelas}
                     onChange={e => setMangsaKelas(e.target.value)}
                     placeholder="Contoh: 2 Arif / Tingkatan 3"
-                    className="w-full border border-slate-300 rounded-lg p-2"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="font-bold text-slate-700 block mb-1">Pihak / Individu Terlibat (Pelaku)</label>
+                <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Pihak / Individu Terlibat (Pelaku)</label>
                 <input
                   type="text"
                   value={pihakTerlibat}
                   onChange={e => setPihakTerlibat(e.target.value)}
                   placeholder="Nama murid yang membuli, panggilan, atau ciri-ciri mereka"
-                  className="w-full border border-slate-300 rounded-lg p-2"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2"
                 />
               </div>
             </div>
 
             {/* Bahagian 3: Jenis Buli & Keterangan */}
             <div className="space-y-3">
-              <span className="font-extrabold text-sm text-slate-900 block">3. Perincian Kejadian Buli</span>
+              <span className="font-extrabold text-sm text-slate-900 dark:text-white block">3. Perincian Kejadian Buli</span>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
-                  <label className="font-bold text-slate-700 block mb-1">Kategori Buli *</label>
+                  <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Kategori Buli *</label>
                   <select
                     value={kategoriBuli}
                     onChange={e => setKategoriBuli(e.target.value as any)}
-                    className="w-full border border-slate-300 rounded-lg p-2 font-bold"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-bold"
                   >
                     <option value="fizikal">Buli Fizikal (Pukul, Tolak, Peras Ugut)</option>
                     <option value="lisan">Buli Lisan (Ejek, Hina, Mengugut)</option>
@@ -281,11 +281,11 @@ export const PublicBullyingReport: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="font-bold text-slate-700 block mb-1">Tahap Kesegeraan *</label>
+                  <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Tahap Kesegeraan *</label>
                   <select
                     value={tahapSegera}
                     onChange={e => setTahapSegera(e.target.value as any)}
-                    className="w-full border border-slate-300 rounded-lg p-2 font-bold"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-bold"
                   >
                     <option value="rendah">Rendah (Peringatan & Nasihat)</option>
                     <option value="sederhana">Sederhana (Perlu Siasatan)</option>
@@ -295,19 +295,19 @@ export const PublicBullyingReport: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="font-bold text-slate-700 block mb-1">Lokasi Kejadian</label>
+                  <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Lokasi Kejadian</label>
                   <input
                     type="text"
                     value={lokasi}
                     onChange={e => setLokasi(e.target.value)}
                     placeholder="Contoh: Tandas Blok B / Asrama Desa"
-                    className="w-full border border-slate-300 rounded-lg p-2"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="font-bold text-slate-700 block mb-1">
+                <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">
                   Keterangan Kejadian * (Apakah yang berlaku?)
                 </label>
                 <textarea
@@ -316,7 +316,7 @@ export const PublicBullyingReport: React.FC = () => {
                   value={keterangan}
                   onChange={e => setKeterangan(e.target.value)}
                   placeholder="Sila nyatakan kronologi kejadian, masa, apa yang berlaku, dan kesan kepada mangsa..."
-                  className="w-full border border-slate-300 rounded-lg p-2.5"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2.5"
                 />
               </div>
             </div>
@@ -330,7 +330,7 @@ export const PublicBullyingReport: React.FC = () => {
                 <Send className="w-4 h-4" />
                 <span>{loading ? 'Menghantar Aduan...' : 'Hantar Aduan Buli Sekarang'}</span>
               </button>
-              <p className="text-[11px] text-center text-slate-500 mt-2">
+              <p className="text-[11px] text-center text-slate-500 dark:text-slate-400 mt-2">
                 Aduan anda dilindungi di bawah kerahsiaan Jawatankuasa Pengurusan Murid SMK Salaping.
               </p>
             </div>

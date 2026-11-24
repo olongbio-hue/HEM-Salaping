@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useSchool } from '../context/SchoolContext';
 import { Student, StudentStatus, IncomeCategory } from '../types';
@@ -42,13 +42,21 @@ export const Students: React.FC = () => {
   const { currentUser, isPengetuaOrGpkHem } = useAuth();
   const { showToast } = useSchool();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   const [loading, setLoading] = useState(true);
   const [students, setStudents] = useState<Student[]>([]);
   const [classesList, setClassesList] = useState<{ id: string; nama: string; tingkatan: number }[]>([]);
 
   // Search & Filters
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState(() => searchParams.get('q') || '');
+
+  useEffect(() => {
+    const q = searchParams.get('q');
+    if (q !== null) {
+      setSearchTerm(q);
+    }
+  }, [searchParams]);
   const [filterTingkatan, setFilterTingkatan] = useState('semua');
   const [filterKelas, setFilterKelas] = useState('semua');
   const [filterStatus, setFilterStatus] = useState<string>('aktif');
@@ -257,20 +265,20 @@ export const Students: React.FC = () => {
   return (
     <div className="p-3 sm:p-6 space-y-6 max-w-7xl mx-auto pb-24 lg:pb-12">
       {/* Header and Actions */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white dark:bg-[#222b42] p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-900">
+            <span className="text-xs font-bold px-2 py-0.5 rounded bg-blue-100 dark:bg-sky-500/20 text-blue-900 dark:text-sky-300">
               Pangkalan Data Murid
             </span>
-            <span className="text-xs text-slate-500">
+            <span className="text-xs text-slate-500 dark:text-slate-400">
               Jumlah: <strong>{students.length}</strong> murid berdaftar
             </span>
           </div>
-          <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+          <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
             Pengurusan Profil & Enrolmen Murid
           </h1>
-          <p className="text-xs text-slate-500 mt-0.5">
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
             Carian pantas, profil komprehensif, import CSV, dan proses naik tingkatan
           </p>
         </div>
@@ -296,18 +304,18 @@ export const Students: React.FC = () => {
 
           <button
             onClick={() => setShowImportModal(true)}
-            className="flex items-center gap-1.5 px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition-colors"
+            className="flex items-center gap-1.5 px-3 py-2 bg-slate-100 dark:bg-[#161e31] hover:bg-slate-200 dark:hover:bg-[#323f61] text-slate-700 dark:text-slate-200 rounded-xl text-xs font-bold transition-colors"
           >
-            <Upload className="w-4 h-4 text-slate-500" />
+            <Upload className="w-4 h-4 text-slate-500 dark:text-slate-400" />
             <span className="hidden sm:inline">Import CSV</span>
           </button>
 
           <button
             onClick={handleExportCSV}
-            className="flex items-center gap-1.5 px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition-colors"
+            className="flex items-center gap-1.5 px-3 py-2 bg-slate-100 dark:bg-[#161e31] hover:bg-slate-200 dark:hover:bg-[#323f61] text-slate-700 dark:text-slate-200 rounded-xl text-xs font-bold transition-colors"
             title="Eksport data murid ke fail CSV"
           >
-            <Download className="w-4 h-4 text-slate-500" />
+            <Download className="w-4 h-4 text-slate-500 dark:text-slate-400" />
             <span className="hidden sm:inline">Eksport CSV</span>
           </button>
 
@@ -315,15 +323,15 @@ export const Students: React.FC = () => {
             <>
               <button
                 onClick={() => setShowPromotionModal(true)}
-                className="flex items-center gap-1.5 px-3 py-2 bg-amber-100 hover:bg-amber-200 text-amber-900 border border-amber-300 rounded-xl text-xs font-bold transition-colors"
+                className="flex items-center gap-1.5 px-3 py-2 bg-amber-100 dark:bg-amber-500/20 hover:bg-amber-200 text-amber-900 dark:text-amber-300 border border-amber-300 dark:border-amber-500/30 rounded-xl text-xs font-bold transition-colors"
               >
-                <TrendingUp className="w-4 h-4 text-amber-700" />
+                <TrendingUp className="w-4 h-4 text-amber-700 dark:text-amber-300" />
                 <span>Naik Tingkatan</span>
               </button>
 
               <button
                 onClick={() => setShowAnonymizeModal(true)}
-                className="flex items-center gap-1.5 px-3 py-2 bg-rose-50 hover:bg-rose-100 text-rose-800 border border-rose-300 rounded-xl text-xs font-bold transition-colors"
+                className="flex items-center gap-1.5 px-3 py-2 bg-rose-50 dark:bg-rose-500/15 hover:bg-rose-100 text-rose-800 dark:text-rose-300 border border-rose-300 dark:border-rose-500/30 rounded-xl text-xs font-bold transition-colors"
                 title="Pematuhan APDP: Padam/Anonimkan data murid tamat atau berpindah dengan kelulusan dua peringkat"
               >
                 <ShieldAlert className="w-4 h-4 text-rose-600" />
@@ -335,7 +343,7 @@ export const Students: React.FC = () => {
       </div>
 
       {/* Filter Bar */}
-      <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs space-y-3">
+      <div className="bg-white dark:bg-[#222b42] p-4 rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs space-y-3">
         {/* Search Input & Quick Reveal IC */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="relative flex-1">
@@ -348,7 +356,7 @@ export const Students: React.FC = () => {
                 setCurrentPage(1);
               }}
               placeholder="Cari murid ikut nama, No. Murid, No. KP, atau kampung..."
-              className="w-full pl-9 pr-3 py-2 text-xs border border-slate-300 rounded-xl bg-slate-50 focus:bg-white focus:ring-1 focus:ring-blue-600 outline-hidden"
+              className="w-full pl-9 pr-3 py-2 text-xs border border-slate-300 dark:border-white/15 rounded-xl bg-slate-50 dark:bg-[#1b2337] focus:bg-white focus:ring-1 focus:ring-blue-600 outline-hidden"
             />
           </div>
 
@@ -358,21 +366,21 @@ export const Students: React.FC = () => {
               onClick={handleToggleShowFullIC}
               className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold border transition-colors ${
                 showFullIC
-                  ? 'bg-amber-50 text-amber-900 border-amber-300'
-                  : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'
+                  ? 'bg-amber-50 dark:bg-amber-500/15 text-amber-900 dark:text-amber-300 border-amber-300 dark:border-amber-500/30'
+                  : 'bg-slate-50 dark:bg-[#1b2337] text-slate-600 dark:text-slate-300 border-slate-200 dark:border-white/10 hover:bg-slate-100 dark:hover:bg-[#2a3552]'
               }`}
               title="Paparan No. KP penuh atau bertopeng (Pematuhan APDP 2010)"
             >
-              {showFullIC ? <EyeOff className="w-3.5 h-3.5 text-amber-600" /> : <Eye className="w-3.5 h-3.5 text-slate-500" />}
+              {showFullIC ? <EyeOff className="w-3.5 h-3.5 text-amber-600" /> : <Eye className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />}
               <span>{showFullIC ? 'Topengkan No. KP' : 'Papar No. KP Penuh'}</span>
             </button>
           </div>
         </div>
 
         {/* Filter Dropdowns Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2 pt-2 border-t border-slate-100 text-xs">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2 pt-2 border-t border-slate-100 dark:border-white/5 text-xs">
           <div>
-            <label className="text-[11px] font-semibold text-slate-500 block mb-1">Tingkatan</label>
+            <label className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block mb-1">Tingkatan</label>
             <select
               value={filterTingkatan}
               onChange={(e) => {
@@ -380,7 +388,7 @@ export const Students: React.FC = () => {
                 setFilterKelas('semua');
                 setCurrentPage(1);
               }}
-              className="w-full border border-slate-300 rounded-lg p-1.5 bg-slate-50 text-slate-800"
+              className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-1.5 bg-slate-50 dark:bg-[#1b2337] text-slate-800 dark:text-slate-100"
             >
               <option value="semua">Semua</option>
               <option value="1">Tingkatan 1</option>
@@ -392,14 +400,14 @@ export const Students: React.FC = () => {
           </div>
 
           <div>
-            <label className="text-[11px] font-semibold text-slate-500 block mb-1">Kelas</label>
+            <label className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block mb-1">Kelas</label>
             <select
               value={filterKelas}
               onChange={(e) => {
                 setFilterKelas(e.target.value);
                 setCurrentPage(1);
               }}
-              className="w-full border border-slate-300 rounded-lg p-1.5 bg-slate-50 text-slate-800"
+              className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-1.5 bg-slate-50 dark:bg-[#1b2337] text-slate-800 dark:text-slate-100"
             >
               <option value="semua">Semua Kelas</option>
               {classesList.map(c => (
@@ -411,14 +419,14 @@ export const Students: React.FC = () => {
           </div>
 
           <div>
-            <label className="text-[11px] font-semibold text-slate-500 block mb-1">Status Murid</label>
+            <label className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block mb-1">Status Murid</label>
             <select
               value={filterStatus}
               onChange={(e) => {
                 setFilterStatus(e.target.value);
                 setCurrentPage(1);
               }}
-              className="w-full border border-slate-300 rounded-lg p-1.5 bg-slate-50 text-slate-800"
+              className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-1.5 bg-slate-50 dark:bg-[#1b2337] text-slate-800 dark:text-slate-100"
             >
               <option value="semua">Semua Status</option>
               <option value="aktif">Aktif</option>
@@ -429,14 +437,14 @@ export const Students: React.FC = () => {
           </div>
 
           <div>
-            <label className="text-[11px] font-semibold text-slate-500 block mb-1">Asrama</label>
+            <label className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block mb-1">Asrama</label>
             <select
               value={filterAsrama}
               onChange={(e) => {
                 setFilterAsrama(e.target.value);
                 setCurrentPage(1);
               }}
-              className="w-full border border-slate-300 rounded-lg p-1.5 bg-slate-50 text-slate-800"
+              className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-1.5 bg-slate-50 dark:bg-[#1b2337] text-slate-800 dark:text-slate-100"
             >
               <option value="semua">Semua</option>
               <option value="ya">Penghuni Asrama</option>
@@ -445,14 +453,14 @@ export const Students: React.FC = () => {
           </div>
 
           <div>
-            <label className="text-[11px] font-semibold text-slate-500 block mb-1">Pendapatan</label>
+            <label className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block mb-1">Pendapatan</label>
             <select
               value={filterIncome}
               onChange={(e) => {
                 setFilterIncome(e.target.value);
                 setCurrentPage(1);
               }}
-              className="w-full border border-slate-300 rounded-lg p-1.5 bg-slate-50 text-slate-800"
+              className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-1.5 bg-slate-50 dark:bg-[#1b2337] text-slate-800 dark:text-slate-100"
             >
               <option value="semua">Semua</option>
               <option value="B40">B40 (Bantuan)</option>
@@ -462,14 +470,14 @@ export const Students: React.FC = () => {
           </div>
 
           <div>
-            <label className="text-[11px] font-semibold text-slate-500 block mb-1">Etnik Sabah</label>
+            <label className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block mb-1">Etnik Sabah</label>
             <select
               value={filterEtnik}
               onChange={(e) => {
                 setFilterEtnik(e.target.value);
                 setCurrentPage(1);
               }}
-              className="w-full border border-slate-300 rounded-lg p-1.5 bg-slate-50 text-slate-800"
+              className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-1.5 bg-slate-50 dark:bg-[#1b2337] text-slate-800 dark:text-slate-100"
             >
               <option value="semua">Semua Etnik</option>
               {SABAH_ETHNICS.map(et => (
@@ -481,8 +489,8 @@ export const Students: React.FC = () => {
       </div>
 
       {/* Table of Students */}
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
-        <div className="p-3.5 bg-slate-50 border-b border-slate-200 flex items-center justify-between text-xs text-slate-600 font-semibold">
+      <div className="bg-white dark:bg-[#222b42] rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs overflow-hidden">
+        <div className="p-3.5 bg-slate-50 dark:bg-[#1b2337] border-b border-slate-200 dark:border-white/10 flex items-center justify-between text-xs text-slate-600 dark:text-slate-300 font-semibold">
           <span>Menunjukkan {paginatedStudents.length} daripada {sortedStudents.length} murid yang sepadan</span>
           <div className="flex items-center gap-2">
             <span>Susun:</span>
@@ -491,7 +499,7 @@ export const Students: React.FC = () => {
                 setSortBy('nama');
                 setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
               }}
-              className="px-2 py-1 bg-white border border-slate-300 rounded hover:bg-slate-100 flex items-center gap-1 font-bold text-slate-800"
+              className="px-2 py-1 bg-white dark:bg-[#222b42] border border-slate-300 dark:border-white/15 rounded hover:bg-slate-100 dark:hover:bg-[#2a3552] flex items-center gap-1 font-bold text-slate-800 dark:text-slate-100"
             >
               <span>Nama</span>
               <ArrowUpDown className="w-3 h-3" />
@@ -501,7 +509,7 @@ export const Students: React.FC = () => {
 
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-slate-100/75 text-slate-700 font-bold border-b border-slate-200">
+            <thead className="bg-slate-100/75 dark:bg-[#161e31] text-slate-700 dark:text-slate-200 font-bold border-b border-slate-200 dark:border-white/10">
               <tr>
                 <th className="p-3">No. Murid</th>
                 <th className="p-3">Nama Murid</th>
@@ -513,27 +521,27 @@ export const Students: React.FC = () => {
                 <th className="p-3 text-right">Tindakan</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-slate-100 dark:divide-white/5">
               {paginatedStudents.map((s) => (
                 <tr
                   key={s.id}
                   onClick={() => navigate(`/murid/${s.id}`)}
                   className="hover:bg-blue-50/50 cursor-pointer transition-colors"
                 >
-                  <td className="p-3 font-mono font-semibold text-slate-600">
+                  <td className="p-3 font-mono font-semibold text-slate-600 dark:text-slate-300">
                     {s.noMurid}
                   </td>
                   <td className="p-3">
-                    <div className="font-bold text-slate-900">{s.nama}</div>
+                    <div className="font-bold text-slate-900 dark:text-white">{s.nama}</div>
                     <div className="text-[11px] text-slate-400">
                       Penjaga: {s.penjaga[0]?.nama || '-'} ({s.penjaga[0]?.noTel || '-'})
                     </div>
                   </td>
-                  <td className="p-3 font-mono text-slate-700">
+                  <td className="p-3 font-mono text-slate-700 dark:text-slate-200">
                     {formatIC(s.noKP)}
                   </td>
                   <td className="p-3">
-                    <span className="px-2 py-0.5 rounded bg-blue-50 text-blue-800 font-bold border border-blue-200">
+                    <span className="px-2 py-0.5 rounded bg-blue-50 dark:bg-sky-500/15 text-blue-800 dark:text-sky-300 font-bold border border-blue-200 dark:border-sky-500/30">
                       {s.kelas}
                     </span>
                   </td>
@@ -542,7 +550,7 @@ export const Students: React.FC = () => {
                     <div className="text-[11px] text-slate-400 capitalize">{s.jantina}</div>
                   </td>
                   <td className="p-3">
-                    <div className="font-medium text-slate-800">{s.kampung}</div>
+                    <div className="font-medium text-slate-800 dark:text-slate-100">{s.kampung}</div>
                     <div className="text-[11px] text-slate-400">
                       {s.jarakKm} km • {s.caraKeSekolah.replace('_', ' ')}
                     </div>
@@ -550,15 +558,15 @@ export const Students: React.FC = () => {
                   <td className="p-3">
                     <div className="flex flex-wrap gap-1">
                       {s.penghuniAsrama && (
-                        <span className="px-1.5 py-0.2 rounded text-[10px] font-bold bg-indigo-100 text-indigo-800">
+                        <span className="px-1.5 py-0.2 rounded text-[10px] font-bold bg-indigo-100 dark:bg-indigo-500/20 text-indigo-800 dark:text-indigo-300">
                           Asrama
                         </span>
                       )}
-                      <span className="px-1.5 py-0.2 rounded text-[10px] font-semibold bg-slate-100 text-slate-700">
+                      <span className="px-1.5 py-0.2 rounded text-[10px] font-semibold bg-slate-100 dark:bg-[#161e31] text-slate-700 dark:text-slate-200">
                         {s.kategoriPendapatan}
                       </span>
                       {s.oku.status && (
-                        <span className="px-1.5 py-0.2 rounded text-[10px] font-bold bg-purple-100 text-purple-800">
+                        <span className="px-1.5 py-0.2 rounded text-[10px] font-bold bg-purple-100 dark:bg-purple-500/20 text-purple-800 dark:text-purple-300">
                           OKU
                         </span>
                       )}
@@ -570,7 +578,7 @@ export const Students: React.FC = () => {
                         e.stopPropagation();
                         navigate(`/murid/${s.id}`);
                       }}
-                      className="text-xs font-semibold text-blue-700 hover:text-blue-900 hover:underline px-2 py-1"
+                      className="text-xs font-semibold text-blue-700 dark:text-sky-300 hover:text-blue-900 hover:underline px-2 py-1"
                     >
                       Profil Penuh
                     </button>
@@ -583,14 +591,14 @@ export const Students: React.FC = () => {
 
         {students.length === 0 ? (
           <div className="p-8 sm:p-12 text-center space-y-4">
-            <div className="w-16 h-16 rounded-2xl bg-blue-100 text-blue-700 flex items-center justify-center mx-auto shadow-inner">
+            <div className="w-16 h-16 rounded-2xl bg-blue-100 dark:bg-sky-500/20 text-blue-700 dark:text-sky-300 flex items-center justify-center mx-auto shadow-inner">
               <UserPlus className="w-8 h-8" />
             </div>
             <div className="space-y-1 max-w-md mx-auto">
-              <h3 className="text-base font-extrabold text-slate-900">
+              <h3 className="text-base font-extrabold text-slate-900 dark:text-white">
                 Pangkalan Data Murid Masih Kosong
               </h3>
-              <p className="text-xs text-slate-500 leading-relaxed">
+              <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
                 Data demo telah dikosongkan untuk persediaan data sebenar. Anda boleh mendaftarkan murid secara pukal mengikut kelas, secara individu, atau mengimport fail CSV dari Sistem Pengurusan Murid (idMe KPM / MOEIS).
               </p>
             </div>
@@ -611,9 +619,9 @@ export const Students: React.FC = () => {
               </button>
               <button
                 onClick={() => setShowImportModal(true)}
-                className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-extrabold text-xs rounded-xl border border-slate-300 transition-colors flex items-center gap-1.5"
+                className="px-4 py-2 bg-slate-100 dark:bg-[#161e31] hover:bg-slate-200 dark:hover:bg-[#323f61] text-slate-700 dark:text-slate-200 font-extrabold text-xs rounded-xl border border-slate-300 dark:border-white/15 transition-colors flex items-center gap-1.5"
               >
-                <Upload className="w-4 h-4 text-slate-500" />
+                <Upload className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                 <span>Import CSV / idMe</span>
               </button>
             </div>
@@ -637,7 +645,7 @@ export const Students: React.FC = () => {
 
         {/* Pagination Bar */}
         {totalPages > 1 && (
-          <div className="p-3 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-xs text-slate-600">
+          <div className="p-3 bg-slate-50 dark:bg-[#1b2337] border-t border-slate-200 dark:border-white/10 flex items-center justify-between text-xs text-slate-600 dark:text-slate-300">
             <div>
               Halaman {currentPage} daripada {totalPages}
             </div>
@@ -645,7 +653,7 @@ export const Students: React.FC = () => {
               <button
                 onClick={() => setCurrentPage(p => Math.max(p - 1, 1))}
                 disabled={currentPage === 1}
-                className="p-1.5 rounded-lg border border-slate-200 hover:bg-slate-100 disabled:opacity-40"
+                className="p-1.5 rounded-lg border border-slate-200 dark:border-white/10 hover:bg-slate-100 dark:hover:bg-[#2a3552] disabled:opacity-40"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
@@ -658,7 +666,7 @@ export const Students: React.FC = () => {
                     className={`w-7 h-7 rounded-lg font-bold ${
                       currentPage === pageNum
                         ? 'bg-blue-700 text-white'
-                        : 'border border-slate-200 hover:bg-slate-100'
+                        : 'border border-slate-200 dark:border-white/10 hover:bg-slate-100 dark:hover:bg-[#2a3552]'
                     }`}
                   >
                     {pageNum}
@@ -668,7 +676,7 @@ export const Students: React.FC = () => {
               <button
                 onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))}
                 disabled={currentPage === totalPages}
-                className="p-1.5 rounded-lg border border-slate-200 hover:bg-slate-100 disabled:opacity-40"
+                className="p-1.5 rounded-lg border border-slate-200 dark:border-white/10 hover:bg-slate-100 dark:hover:bg-[#2a3552] disabled:opacity-40"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>
@@ -729,27 +737,27 @@ export const Students: React.FC = () => {
       {/* Modal Anonimasi Murid Tamat (Dua Peringkat - PDPA) */}
       {showAnonymizeModal && (
         <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center p-4">
-          <div className="bg-white w-full max-w-lg rounded-2xl p-6 shadow-2xl space-y-4">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div className="bg-white dark:bg-[#222b42] w-full max-w-lg rounded-2xl p-6 shadow-2xl space-y-4">
+            <div className="flex items-center justify-between border-b border-slate-100 dark:border-white/5 pb-3">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-rose-100 text-rose-700 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-lg bg-rose-100 dark:bg-rose-500/20 text-rose-700 dark:text-rose-300 flex items-center justify-center">
                   <ShieldAlert className="w-4 h-4" />
                 </div>
                 <div>
-                  <h3 className="font-extrabold text-sm text-slate-900">
+                  <h3 className="font-extrabold text-sm text-slate-900 dark:text-white">
                     Proses Anonimasi Data Murid (Pematuhan APDP 2010)
                   </h3>
-                  <p className="text-[11px] text-slate-500">Kelulusan Dua Peringkat (Peringkat {anonymizeStep} daripada 2)</p>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">Kelulusan Dua Peringkat (Peringkat {anonymizeStep} daripada 2)</p>
                 </div>
               </div>
-              <button onClick={() => setShowAnonymizeModal(false)} className="p-1 rounded-lg text-slate-400 hover:bg-slate-100">
+              <button onClick={() => setShowAnonymizeModal(false)} className="p-1 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-[#2a3552]">
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {anonymizeStep === 1 ? (
               <div className="space-y-4 text-xs">
-                <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-amber-900 space-y-1">
+                <div className="p-3 bg-amber-50 dark:bg-amber-500/15 border border-amber-200 dark:border-amber-500/30 rounded-xl text-amber-900 dark:text-amber-300 space-y-1">
                   <strong>Peringkat 1: Pengenalpastian & Cadangan Rekod</strong>
                   <p className="text-[11px] leading-relaxed">
                     Sistem akan memadamkan maklumat peribadi yang boleh dikenal pasti (PII: No. KP, No Tel Penjaga, Alamat Kampung) bagi murid yang telah tamat atau berpindah sekolah, bagi mematuhi prinsip penyimpanan data minimum Akta Perlindungan Data Peribadi 2010.
@@ -757,39 +765,39 @@ export const Students: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="font-bold text-slate-700 block mb-1">Pilih Status Rekod Sasaran:</label>
+                  <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Pilih Status Rekod Sasaran:</label>
                   <select
                     value={anonymizeTargetStatus}
                     onChange={e => setAnonymizeTargetStatus(e.target.value as any)}
-                    className="w-full border border-slate-300 rounded-xl p-2.5 font-medium"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2.5 font-medium"
                   >
                     <option value="tamat">Murid Berstatus "Tamat" (Alumni Tingkatan 5)</option>
                     <option value="pindah">Murid Berstatus "Pindah" (Telah Bertukar Sekolah)</option>
                   </select>
                 </div>
 
-                <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between">
-                  <span className="text-slate-600">Jumlah Rekod Murid Terlibat:</span>
-                  <span className="text-base font-black text-rose-700">
+                <div className="p-3 bg-slate-50 dark:bg-[#1b2337] border border-slate-200 dark:border-white/10 rounded-xl flex items-center justify-between">
+                  <span className="text-slate-600 dark:text-slate-300">Jumlah Rekod Murid Terlibat:</span>
+                  <span className="text-base font-black text-rose-700 dark:text-rose-300">
                     {students.filter(s => s.status === anonymizeTargetStatus).length} Murid
                   </span>
                 </div>
 
                 <div>
-                  <label className="font-bold text-slate-700 block mb-1">Catatan Pegawai Pemohon (Guru Data / SU HEM):</label>
+                  <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Catatan Pegawai Pemohon (Guru Data / SU HEM):</label>
                   <textarea
                     rows={2}
                     placeholder="cth: Pembersihan data kohort SPM 2025 selepas tamat tempoh simpanan fail..."
                     value={anonymizeOfficerNotes}
                     onChange={e => setAnonymizeOfficerNotes(e.target.value)}
-                    className="w-full border border-slate-300 rounded-xl p-2.5"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2.5"
                   />
                 </div>
 
-                <div className="flex justify-end gap-2 pt-2 border-t border-slate-100">
+                <div className="flex justify-end gap-2 pt-2 border-t border-slate-100 dark:border-white/5">
                   <button
                     onClick={() => setShowAnonymizeModal(false)}
-                    className="px-4 py-2 text-slate-600 border border-slate-300 rounded-xl font-bold"
+                    className="px-4 py-2 text-slate-600 dark:text-slate-300 border border-slate-300 dark:border-white/15 rounded-xl font-bold"
                   >
                     Batal
                   </button>
@@ -809,9 +817,9 @@ export const Students: React.FC = () => {
               </div>
             ) : (
               <form onSubmit={handleExecuteAnonymize} className="space-y-4 text-xs">
-                <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl text-rose-900 space-y-1">
+                <div className="p-3 bg-rose-50 dark:bg-rose-500/15 border border-rose-200 dark:border-rose-500/30 rounded-xl text-rose-900 dark:text-rose-300 space-y-1">
                   <div className="flex items-center gap-1.5 font-bold">
-                    <Lock className="w-4 h-4 text-rose-700" />
+                    <Lock className="w-4 h-4 text-rose-700 dark:text-rose-300" />
                     <span>Peringkat 2: Pengesahan Rasmi Pengetua / GPK HEM</span>
                   </div>
                   <p className="text-[11px] leading-relaxed">
@@ -820,17 +828,17 @@ export const Students: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="font-bold text-slate-700 block mb-1">Pegawai Pengesah:</label>
+                  <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Pegawai Pengesah:</label>
                   <input
                     type="text"
                     disabled
                     value={currentUser?.nama || 'Pengetua / GPK HEM'}
-                    className="w-full bg-slate-100 border border-slate-300 rounded-xl p-2.5 font-bold text-slate-800"
+                    className="w-full bg-slate-100 dark:bg-[#161e31] border border-slate-300 dark:border-white/15 rounded-xl p-2.5 font-bold text-slate-800 dark:text-slate-100"
                   />
                 </div>
 
                 <div>
-                  <label className="font-bold text-slate-700 block mb-1">
+                  <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">
                     Masukkan Kata Laluan Pentadbir (salaping123):
                   </label>
                   <input
@@ -839,15 +847,15 @@ export const Students: React.FC = () => {
                     placeholder="Kata laluan keselamatan pentadbir"
                     value={anonymizeApproverPassword}
                     onChange={e => setAnonymizeApproverPassword(e.target.value)}
-                    className="w-full border border-slate-300 rounded-xl p-2.5"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2.5"
                   />
                 </div>
 
-                <div className="flex justify-end gap-2 pt-2 border-t border-slate-100">
+                <div className="flex justify-end gap-2 pt-2 border-t border-slate-100 dark:border-white/5">
                   <button
                     type="button"
                     onClick={() => setAnonymizeStep(1)}
-                    className="px-4 py-2 text-slate-600 border border-slate-300 rounded-xl font-bold"
+                    className="px-4 py-2 text-slate-600 dark:text-slate-300 border border-slate-300 dark:border-white/15 rounded-xl font-bold"
                   >
                     Kembali
                   </button>
@@ -952,10 +960,10 @@ const StudentAddModal: React.FC<{
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs overflow-y-auto">
-      <div className="bg-white rounded-2xl max-w-xl w-full p-6 shadow-2xl border border-slate-200 my-8">
-        <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-          <div className="flex items-center gap-2 font-bold text-base text-slate-900">
-            <UserPlus className="w-5 h-5 text-blue-700" />
+      <div className="bg-white dark:bg-[#222b42] rounded-2xl max-w-xl w-full p-6 shadow-2xl border border-slate-200 dark:border-white/10 my-8">
+        <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-white/5">
+          <div className="flex items-center gap-2 font-bold text-base text-slate-900 dark:text-white">
+            <UserPlus className="w-5 h-5 text-blue-700 dark:text-sky-300" />
             <span>Pendaftaran Murid Baharu</span>
           </div>
           <button onClick={onClose} className="p-1 text-slate-400 hover:text-slate-600 rounded">
@@ -964,7 +972,7 @@ const StudentAddModal: React.FC<{
         </div>
 
         {errorMsg && (
-          <div className="my-3 p-3 bg-red-50 text-red-700 text-xs rounded-xl border border-red-200 flex items-center gap-2">
+          <div className="my-3 p-3 bg-red-50 dark:bg-red-500/15 text-red-700 dark:text-red-300 text-xs rounded-xl border border-red-200 dark:border-red-500/30 flex items-center gap-2">
             <AlertCircle className="w-4 h-4 shrink-0" />
             <span>{errorMsg}</span>
           </div>
@@ -973,35 +981,35 @@ const StudentAddModal: React.FC<{
         <form onSubmit={handleSubmit} className="space-y-4 py-3 text-xs">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="font-semibold text-slate-700 block mb-1">Nama Penuh Murid *</label>
+              <label className="font-semibold text-slate-700 dark:text-slate-200 block mb-1">Nama Penuh Murid *</label>
               <input
                 type="text"
                 required
                 value={nama}
                 onChange={e => setNama(e.target.value)}
                 placeholder="Contoh: Averlyn Anak Moduying"
-                className="w-full border border-slate-300 rounded-lg p-2"
+                className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2"
               />
             </div>
 
             <div>
-              <label className="font-semibold text-slate-700 block mb-1">No. KP / MyKad (12 Digit) *</label>
+              <label className="font-semibold text-slate-700 dark:text-slate-200 block mb-1">No. KP / MyKad (12 Digit) *</label>
               <input
                 type="text"
                 required
                 value={noKP}
                 onChange={e => setNoKP(e.target.value)}
                 placeholder="Contoh: 110412-12-5432"
-                className="w-full border border-slate-300 rounded-lg p-2 font-mono"
+                className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-mono"
               />
             </div>
 
             <div>
-              <label className="font-semibold text-slate-700 block mb-1">Tingkatan</label>
+              <label className="font-semibold text-slate-700 dark:text-slate-200 block mb-1">Tingkatan</label>
               <select
                 value={tingkatan}
                 onChange={e => setTingkatan(Number(e.target.value))}
-                className="w-full border border-slate-300 rounded-lg p-2"
+                className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2"
               >
                 {[1, 2, 3, 4, 5].map(t => (
                   <option key={t} value={t}>Tingkatan {t}</option>
@@ -1010,11 +1018,11 @@ const StudentAddModal: React.FC<{
             </div>
 
             <div>
-              <label className="font-semibold text-slate-700 block mb-1">Kelas</label>
+              <label className="font-semibold text-slate-700 dark:text-slate-200 block mb-1">Kelas</label>
               <select
                 value={kelas}
                 onChange={e => setKelas(e.target.value)}
-                className="w-full border border-slate-300 rounded-lg p-2 font-bold"
+                className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-bold"
               >
                 {classesList.map(c => (
                   <option key={c.id} value={c.nama}>{c.nama}</option>
@@ -1023,11 +1031,11 @@ const StudentAddModal: React.FC<{
             </div>
 
             <div>
-              <label className="font-semibold text-slate-700 block mb-1">Jantina</label>
+              <label className="font-semibold text-slate-700 dark:text-slate-200 block mb-1">Jantina</label>
               <select
                 value={jantina}
                 onChange={e => setJantina(e.target.value as any)}
-                className="w-full border border-slate-300 rounded-lg p-2"
+                className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2"
               >
                 <option value="lelaki">Lelaki</option>
                 <option value="perempuan">Perempuan</option>
@@ -1035,11 +1043,11 @@ const StudentAddModal: React.FC<{
             </div>
 
             <div>
-              <label className="font-semibold text-slate-700 block mb-1">Etnik Sabah</label>
+              <label className="font-semibold text-slate-700 dark:text-slate-200 block mb-1">Etnik Sabah</label>
               <select
                 value={etnik}
                 onChange={e => setEtnik(e.target.value)}
-                className="w-full border border-slate-300 rounded-lg p-2"
+                className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2"
               >
                 {SABAH_ETHNICS.map(et => (
                   <option key={et} value={et}>{et}</option>
@@ -1048,46 +1056,46 @@ const StudentAddModal: React.FC<{
             </div>
 
             <div>
-              <label className="font-semibold text-slate-700 block mb-1">Kampung (Kota Marudu)</label>
+              <label className="font-semibold text-slate-700 dark:text-slate-200 block mb-1">Kampung (Kota Marudu)</label>
               <input
                 type="text"
                 value={kampung}
                 onChange={e => setKampung(e.target.value)}
-                className="w-full border border-slate-300 rounded-lg p-2"
+                className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2"
               />
             </div>
 
             <div>
-              <label className="font-semibold text-slate-700 block mb-1">Jarak ke Sekolah (KM)</label>
+              <label className="font-semibold text-slate-700 dark:text-slate-200 block mb-1">Jarak ke Sekolah (KM)</label>
               <input
                 type="number"
                 value={jarakKm}
                 onChange={e => setJarakKm(Number(e.target.value))}
-                className="w-full border border-slate-300 rounded-lg p-2"
+                className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2"
               />
             </div>
 
             <div>
-              <label className="font-semibold text-slate-700 block mb-1">Nama Penjaga Utama</label>
+              <label className="font-semibold text-slate-700 dark:text-slate-200 block mb-1">Nama Penjaga Utama</label>
               <input
                 type="text"
                 required
                 value={namaPenjaga}
                 onChange={e => setNamaPenjaga(e.target.value)}
                 placeholder="Nama Bapa / Ibu / Penjaga"
-                className="w-full border border-slate-300 rounded-lg p-2"
+                className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2"
               />
             </div>
 
             <div>
-              <label className="font-semibold text-slate-700 block mb-1">No. Telefon Penjaga (WhatsApp)</label>
+              <label className="font-semibold text-slate-700 dark:text-slate-200 block mb-1">No. Telefon Penjaga (WhatsApp)</label>
               <input
                 type="text"
                 required
                 value={telPenjaga}
                 onChange={e => setTelPenjaga(e.target.value)}
                 placeholder="Contoh: 019-8765432"
-                className="w-full border border-slate-300 rounded-lg p-2 font-mono"
+                className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-mono"
               />
             </div>
           </div>
@@ -1100,16 +1108,16 @@ const StudentAddModal: React.FC<{
               onChange={e => setPenghuniAsrama(e.target.checked)}
               className="rounded text-blue-600"
             />
-            <label htmlFor="asramaChk" className="text-slate-800 font-medium">
+            <label htmlFor="asramaChk" className="text-slate-800 dark:text-slate-100 font-medium">
               Murid ini mendaftar sebagai penghuni Asrama Desa SMK Salaping
             </label>
           </div>
 
-          <div className="flex justify-end gap-2 pt-4 border-t border-slate-100">
+          <div className="flex justify-end gap-2 pt-4 border-t border-slate-100 dark:border-white/5">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg"
+              className="px-4 py-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#2a3552] rounded-lg"
             >
               Batal
             </button>
@@ -1224,10 +1232,10 @@ const StudentImportModal: React.FC<{
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs overflow-y-auto">
-      <div className="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl border border-slate-200 my-8">
-        <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-          <div className="flex items-center gap-2 font-bold text-base text-slate-900">
-            <Upload className="w-5 h-5 text-blue-700" />
+      <div className="bg-white dark:bg-[#222b42] rounded-2xl max-w-2xl w-full p-6 shadow-2xl border border-slate-200 dark:border-white/10 my-8">
+        <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-white/5">
+          <div className="flex items-center gap-2 font-bold text-base text-slate-900 dark:text-white">
+            <Upload className="w-5 h-5 text-blue-700 dark:text-sky-300" />
             <span>Import Data Murid Melalui CSV</span>
           </div>
           <button onClick={onClose} className="p-1 text-slate-400 hover:text-slate-600 rounded">
@@ -1236,15 +1244,15 @@ const StudentImportModal: React.FC<{
         </div>
 
         <div className="space-y-3 py-3 text-xs">
-          <p className="text-slate-600">
+          <p className="text-slate-600 dark:text-slate-300">
             Tampal data format CSV di bawah atau salin contoh format yang disediakan:
           </p>
 
           <div className="flex items-center justify-between">
-            <span className="font-semibold text-slate-700">Teks CSV:</span>
+            <span className="font-semibold text-slate-700 dark:text-slate-200">Teks CSV:</span>
             <button
               onClick={() => setCsvText(sampleCsv)}
-              className="text-blue-700 font-semibold hover:underline"
+              className="text-blue-700 dark:text-sky-300 font-semibold hover:underline"
             >
               Gunakan Contoh Data
             </button>
@@ -1255,7 +1263,7 @@ const StudentImportModal: React.FC<{
             value={csvText}
             onChange={e => setCsvText(e.target.value)}
             placeholder="NoKP,Nama,Jantina,Tingkatan,Kelas,Kampung,Etnik,TelPenjaga..."
-            className="w-full border border-slate-300 rounded-lg p-2.5 font-mono text-[11px]"
+            className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2.5 font-mono text-[11px]"
           />
 
           <button
@@ -1266,7 +1274,7 @@ const StudentImportModal: React.FC<{
           </button>
 
           {errors.length > 0 && (
-            <div className="p-3 bg-red-50 border border-red-200 rounded-xl space-y-1 text-red-700">
+            <div className="p-3 bg-red-50 dark:bg-red-500/15 border border-red-200 dark:border-red-500/30 rounded-xl space-y-1 text-red-700 dark:text-red-300">
               <span className="font-bold block">Ralat Dikesan:</span>
               {errors.map((e, idx) => (
                 <p key={idx}>• {e}</p>
@@ -1276,18 +1284,18 @@ const StudentImportModal: React.FC<{
 
           {previewStudents.length > 0 && (
             <div className="space-y-2 pt-2">
-              <div className="flex items-center justify-between font-bold text-slate-800">
+              <div className="flex items-center justify-between font-bold text-slate-800 dark:text-slate-100">
                 <span>Pratonton Murid Sah ({previewStudents.length} murid):</span>
-                <span className="text-emerald-700">Sedia Diimport</span>
+                <span className="text-emerald-700 dark:text-emerald-300">Sedia Diimport</span>
               </div>
-              <div className="max-h-48 overflow-y-auto border border-slate-200 rounded-lg divide-y divide-slate-100">
+              <div className="max-h-48 overflow-y-auto border border-slate-200 dark:border-white/10 rounded-lg divide-y divide-slate-100 dark:divide-white/5">
                 {previewStudents.map((s, idx) => (
                   <div key={idx} className="p-2 flex items-center justify-between">
                     <div>
-                      <span className="font-bold text-slate-900">{s.nama}</span>
-                      <span className="text-slate-500 ml-2">({s.noKP})</span>
+                      <span className="font-bold text-slate-900 dark:text-white">{s.nama}</span>
+                      <span className="text-slate-500 dark:text-slate-400 ml-2">({s.noKP})</span>
                     </div>
-                    <span className="font-semibold text-blue-700">{s.kelas}</span>
+                    <span className="font-semibold text-blue-700 dark:text-sky-300">{s.kelas}</span>
                   </div>
                 ))}
               </div>
@@ -1295,10 +1303,10 @@ const StudentImportModal: React.FC<{
           )}
         </div>
 
-        <div className="flex justify-end gap-2 pt-4 border-t border-slate-100">
+        <div className="flex justify-end gap-2 pt-4 border-t border-slate-100 dark:border-white/5">
           <button
             onClick={onClose}
-            className="px-4 py-2 text-xs text-slate-600 hover:bg-slate-100 rounded-lg"
+            className="px-4 py-2 text-xs text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#2a3552] rounded-lg"
           >
             Batal
           </button>
@@ -1358,9 +1366,9 @@ const StudentPromotionWizardModal: React.FC<{
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
-      <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200">
-        <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-          <div className="flex items-center gap-2 font-bold text-base text-slate-900">
+      <div className="bg-white dark:bg-[#222b42] rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 dark:border-white/10">
+        <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-white/5">
+          <div className="flex items-center gap-2 font-bold text-base text-slate-900 dark:text-white">
             <TrendingUp className="w-5 h-5 text-amber-600" />
             <span>Wizard Naik Tingkatan Hujung Tahun</span>
           </div>
@@ -1370,17 +1378,17 @@ const StudentPromotionWizardModal: React.FC<{
         </div>
 
         <div className="space-y-4 py-4 text-xs">
-          <div className="p-3 bg-amber-50 text-amber-900 rounded-xl border border-amber-200">
+          <div className="p-3 bg-amber-50 dark:bg-amber-500/15 text-amber-900 dark:text-amber-300 rounded-xl border border-amber-200 dark:border-amber-500/30">
             <strong>Langkah Akhir Sesi:</strong> Modul ini menaikkan tingkatan murid secara pukal (Contoh: Tingkatan 1 ke Tingkatan 2, atau Tingkatan 5 ke status Tamat).
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="font-semibold text-slate-700 block mb-1">Pilih Tingkatan Asal</label>
+              <label className="font-semibold text-slate-700 dark:text-slate-200 block mb-1">Pilih Tingkatan Asal</label>
               <select
                 value={selectedForm}
                 onChange={e => setSelectedForm(Number(e.target.value))}
-                className="w-full border border-slate-300 rounded-lg p-2 font-bold"
+                className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-bold"
               >
                 <option value={1}>Tingkatan 1</option>
                 <option value={2}>Tingkatan 2</option>
@@ -1391,18 +1399,18 @@ const StudentPromotionWizardModal: React.FC<{
             </div>
 
             <div>
-              <label className="font-semibold text-slate-700 block mb-1">
+              <label className="font-semibold text-slate-700 dark:text-slate-200 block mb-1">
                 {selectedForm === 5 ? 'Status Akhir' : 'Kelas Sasaran Baharu'}
               </label>
               {selectedForm === 5 ? (
-                <div className="p-2 bg-slate-100 rounded-lg font-bold text-slate-700">
+                <div className="p-2 bg-slate-100 dark:bg-[#161e31] rounded-lg font-bold text-slate-700 dark:text-slate-200">
                   Tamat SPM (Alumni)
                 </div>
               ) : (
                 <select
                   value={targetClass}
                   onChange={e => setTargetClass(e.target.value)}
-                  className="w-full border border-slate-300 rounded-lg p-2 font-bold"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-bold"
                 >
                   {classesList
                     .filter(c => c.tingkatan === selectedForm + 1)
@@ -1414,21 +1422,21 @@ const StudentPromotionWizardModal: React.FC<{
             </div>
           </div>
 
-          <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl">
-            <span className="font-bold text-slate-800">
+          <div className="p-3 bg-slate-50 dark:bg-[#1b2337] border border-slate-200 dark:border-white/10 rounded-xl">
+            <span className="font-bold text-slate-800 dark:text-slate-100">
               Jumlah Murid Terlibat: {candidates.length} orang
             </span>
-            <p className="text-slate-500 mt-0.5">
+            <p className="text-slate-500 dark:text-slate-400 mt-0.5">
               Semua murid aktif dalam Tingkatan {selectedForm} akan dipindahkan ke{' '}
               {selectedForm === 5 ? 'Status Tamat' : `Tingkatan ${selectedForm + 1} (${targetClass})`}.
             </p>
           </div>
         </div>
 
-        <div className="flex justify-end gap-2 pt-3 border-t border-slate-100">
+        <div className="flex justify-end gap-2 pt-3 border-t border-slate-100 dark:border-white/5">
           <button
             onClick={onClose}
-            className="px-4 py-2 text-xs text-slate-600 hover:bg-slate-100 rounded-lg"
+            className="px-4 py-2 text-xs text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#2a3552] rounded-lg"
           >
             Batal
           </button>

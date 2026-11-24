@@ -347,20 +347,20 @@ export const Discipline: React.FC = () => {
   return (
     <div className="p-3 sm:p-6 space-y-6 max-w-7xl mx-auto pb-24 lg:pb-12">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white dark:bg-[#222b42] p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-rose-100 text-rose-900 border border-rose-300">
+            <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-rose-100 dark:bg-rose-500/20 text-rose-900 dark:text-rose-300 border border-rose-300 dark:border-rose-500/30">
               Prinsip SSDM (Salah Laku & Tindakan Sahaja)
             </span>
-            <span className="text-xs text-slate-500">
+            <span className="text-xs text-slate-500 dark:text-slate-400">
               Ketua Guru Disiplin: {school.namaKetuaDisiplin || 'Ketua Guru Disiplin'}
             </span>
           </div>
-          <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+          <h1 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">
             Pengurusan Disiplin & Tatatertib Murid
           </h1>
-          <p className="text-xs text-slate-500 mt-0.5">
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
             Perekodan salah laku disiplin vs jenayah, aliran tatatertib lengkap, sidang Lembaga Disiplin, dan eksport SSDM
           </p>
         </div>
@@ -377,19 +377,19 @@ export const Discipline: React.FC = () => {
 
           <button
             onClick={handleExportSSDM}
-            className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300 rounded-xl text-xs font-bold transition-colors"
+            className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-100 dark:bg-[#161e31] hover:bg-slate-200 dark:hover:bg-[#323f61] text-slate-800 dark:text-slate-100 border border-slate-300 dark:border-white/15 rounded-xl text-xs font-bold transition-colors"
             title="Eksport data untuk kemasukan manual ke portal SSDM KPM"
           >
-            <Download className="w-4 h-4 text-slate-600" />
+            <Download className="w-4 h-4 text-slate-600 dark:text-slate-300" />
             <span>Eksport untuk SSDM</span>
           </button>
         </div>
       </div>
 
       {/* SSDM Non-direct Connection Notice */}
-      <div className="p-3 bg-amber-50 border border-amber-300 rounded-xl text-amber-900 text-xs flex items-center justify-between gap-2">
+      <div className="p-3 bg-amber-50 dark:bg-amber-500/15 border border-amber-300 dark:border-amber-500/30 rounded-xl text-amber-900 dark:text-amber-300 text-xs flex items-center justify-between gap-2">
         <div className="flex items-center gap-2">
-          <Info className="w-4 h-4 text-amber-700 shrink-0" />
+          <Info className="w-4 h-4 text-amber-700 dark:text-amber-300 shrink-0" />
           <span>
             <strong>Pemberitahuan SSDM KPM:</strong> Sistem ini tidak bersambung terus dengan portal SSDM KPM. Modul eksport menyediakan format jadual teratur bagi memudahkan guru memasukkan rekod ke SSDM secara manual.
           </span>
@@ -398,51 +398,51 @@ export const Discipline: React.FC = () => {
 
       {/* KPI Cards Strip */}
       <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
-        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
-          <span className="text-xs font-semibold text-slate-500">Jumlah Kes Dilapor</span>
-          <div className="text-2xl font-black text-slate-900 mt-1">{cases.length}</div>
+        <div className="bg-white dark:bg-[#222b42] p-4 rounded-xl border border-slate-200 dark:border-white/10 shadow-xs">
+          <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">Jumlah Kes Dilapor</span>
+          <div className="text-2xl font-black text-slate-900 dark:text-white mt-1">{cases.length}</div>
           <p className="text-[10px] text-slate-400 mt-0.5">Disiplin: {cases.filter(c => c.jenisSalahLaku === 'disiplin').length} • Jenayah: {cases.filter(c => c.jenisSalahLaku === 'jenayah').length}</p>
         </div>
 
-        <div className="bg-white p-4 rounded-xl border border-amber-200 bg-amber-50/20">
-          <span className="text-xs font-bold text-amber-900">Dalam Siasatan / Bela Diri</span>
-          <div className="text-2xl font-black text-amber-700 mt-1">
+        <div className="bg-white dark:bg-[#222b42] p-4 rounded-xl border border-amber-200 dark:border-amber-500/30 bg-amber-50/20 dark:bg-amber-500/15">
+          <span className="text-xs font-bold text-amber-900 dark:text-amber-300">Dalam Siasatan / Bela Diri</span>
+          <div className="text-2xl font-black text-amber-700 dark:text-amber-300 mt-1">
             {cases.filter(c => c.statusAliran === 'disiasat' || c.statusAliran === 'pertuduhan_bela_diri').length}
           </div>
-          <p className="text-[10px] text-amber-800 mt-0.5">Sesi pembelaan adil</p>
+          <p className="text-[10px] text-amber-800 dark:text-amber-300 mt-0.5">Sesi pembelaan adil</p>
         </div>
 
-        <div className="bg-white p-4 rounded-xl border border-purple-200 bg-purple-50/20">
-          <span className="text-xs font-bold text-purple-900">Intervensi Kaunseling</span>
-          <div className="text-2xl font-black text-purple-700 mt-1">
+        <div className="bg-white dark:bg-[#222b42] p-4 rounded-xl border border-purple-200 dark:border-purple-500/30 bg-purple-50/20 dark:bg-purple-500/15">
+          <span className="text-xs font-bold text-purple-900 dark:text-purple-300">Intervensi Kaunseling</span>
+          <div className="text-2xl font-black text-purple-700 dark:text-purple-300 mt-1">
             {cases.filter(c => c.statusAliran === 'kaunseling').length}
           </div>
-          <p className="text-[10px] text-purple-800 mt-0.5">Rujukan UBK wajib</p>
+          <p className="text-[10px] text-purple-800 dark:text-purple-300 mt-0.5">Rujukan UBK wajib</p>
         </div>
 
-        <div className="bg-white p-4 rounded-xl border border-rose-200 bg-rose-50/20">
-          <span className="text-xs font-bold text-rose-900">Murid Berulang (≥ 3 Kes)</span>
-          <div className="text-2xl font-black text-rose-700 mt-1">
+        <div className="bg-white dark:bg-[#222b42] p-4 rounded-xl border border-rose-200 dark:border-rose-500/30 bg-rose-50/20 dark:bg-rose-500/15">
+          <span className="text-xs font-bold text-rose-900 dark:text-rose-300">Murid Berulang (≥ 3 Kes)</span>
+          <div className="text-2xl font-black text-rose-700 dark:text-rose-300 mt-1">
             {recidivistList.length} Murid
           </div>
-          <p className="text-[10px] text-rose-800 mt-0.5">Perlu perhatian PGB</p>
+          <p className="text-[10px] text-rose-800 dark:text-rose-300 mt-0.5">Perlu perhatian PGB</p>
         </div>
 
-        <div className="bg-white p-4 rounded-xl border border-emerald-200 bg-emerald-50/20 col-span-2 sm:col-span-1">
-          <span className="text-xs font-bold text-emerald-900">Kadar Penyelesaian</span>
-          <div className="text-2xl font-black text-emerald-700 mt-1">
+        <div className="bg-white dark:bg-[#222b42] p-4 rounded-xl border border-emerald-200 dark:border-emerald-500/30 bg-emerald-50/20 dark:bg-emerald-500/15 col-span-2 sm:col-span-1">
+          <span className="text-xs font-bold text-emerald-900 dark:text-emerald-300">Kadar Penyelesaian</span>
+          <div className="text-2xl font-black text-emerald-700 dark:text-emerald-300 mt-1">
             {resolutionRate}%
           </div>
-          <p className="text-[10px] text-emerald-800 mt-0.5">{completedCasesCount} kes selesai</p>
+          <p className="text-[10px] text-emerald-800 dark:text-emerald-300 mt-0.5">{completedCasesCount} kes selesai</p>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-2 bg-white p-1.5 rounded-2xl border border-slate-200 overflow-x-auto text-xs font-bold">
+      <div className="flex items-center gap-2 bg-white dark:bg-[#222b42] p-1.5 rounded-2xl border border-slate-200 dark:border-white/10 overflow-x-auto text-xs font-bold">
         <button
           onClick={() => setActiveTab('kes')}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all whitespace-nowrap ${
-            activeTab === 'kes' ? 'bg-rose-700 text-white shadow-xs' : 'text-slate-600 hover:bg-slate-100'
+            activeTab === 'kes' ? 'bg-rose-700 text-white shadow-xs' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#2a3552]'
           }`}
         >
           <Layers className="w-4 h-4" />
@@ -452,7 +452,7 @@ export const Discipline: React.FC = () => {
         <button
           onClick={() => setActiveTab('lembaga')}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all whitespace-nowrap ${
-            activeTab === 'lembaga' ? 'bg-rose-700 text-white shadow-xs' : 'text-slate-600 hover:bg-slate-100'
+            activeTab === 'lembaga' ? 'bg-rose-700 text-white shadow-xs' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#2a3552]'
           }`}
         >
           <Building className="w-4 h-4" />
@@ -462,7 +462,7 @@ export const Discipline: React.FC = () => {
         <button
           onClick={() => setActiveTab('analitik')}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all whitespace-nowrap ${
-            activeTab === 'analitik' ? 'bg-rose-700 text-white shadow-xs' : 'text-slate-600 hover:bg-slate-100'
+            activeTab === 'analitik' ? 'bg-rose-700 text-white shadow-xs' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#2a3552]'
           }`}
         >
           <MapPin className="w-4 h-4" />
@@ -474,7 +474,7 @@ export const Discipline: React.FC = () => {
       {activeTab === 'kes' && (
         <div className="space-y-4">
           {/* Filter Bar */}
-          <div className="bg-white p-3.5 rounded-xl border border-slate-200 shadow-xs flex flex-wrap items-center justify-between gap-3 text-xs">
+          <div className="bg-white dark:bg-[#222b42] p-3.5 rounded-xl border border-slate-200 dark:border-white/10 shadow-xs flex flex-wrap items-center justify-between gap-3 text-xs">
             <div className="relative flex-1 max-w-sm">
               <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
               <input
@@ -482,7 +482,7 @@ export const Discipline: React.FC = () => {
                 value={searchTerm}
                 onChange={e => setSearchTerm(e.target.value)}
                 placeholder="Cari murid, kategori, rujukan kes..."
-                className="w-full pl-9 pr-3 py-2 border border-slate-300 rounded-lg outline-hidden"
+                className="w-full pl-9 pr-3 py-2 border border-slate-300 dark:border-white/15 rounded-lg outline-hidden"
               />
             </div>
 
@@ -490,7 +490,7 @@ export const Discipline: React.FC = () => {
               <select
                 value={filterJenis}
                 onChange={e => setFilterJenis(e.target.value)}
-                className="border border-slate-300 rounded-lg p-2 font-medium bg-slate-50"
+                className="border border-slate-300 dark:border-white/15 rounded-lg p-2 font-medium bg-slate-50 dark:bg-[#1b2337]"
               >
                 <option value="semua">Semua Jenis Salah Laku</option>
                 <option value="disiplin">Salah Laku Disiplin Biasa</option>
@@ -500,7 +500,7 @@ export const Discipline: React.FC = () => {
               <select
                 value={filterTahap}
                 onChange={e => setFilterTahap(e.target.value)}
-                className="border border-slate-300 rounded-lg p-2 font-medium bg-slate-50"
+                className="border border-slate-300 dark:border-white/15 rounded-lg p-2 font-medium bg-slate-50 dark:bg-[#1b2337]"
               >
                 <option value="semua">Semua Tahap</option>
                 <option value="ringan">Ringan</option>
@@ -512,7 +512,7 @@ export const Discipline: React.FC = () => {
               <select
                 value={filterStatus}
                 onChange={e => setFilterStatus(e.target.value)}
-                className="border border-slate-300 rounded-lg p-2 font-medium bg-slate-50"
+                className="border border-slate-300 dark:border-white/15 rounded-lg p-2 font-medium bg-slate-50 dark:bg-[#1b2337]"
               >
                 <option value="semua">Semua Status Aliran</option>
                 <option value="dilaporkan">1. Dilaporkan</option>
@@ -534,20 +534,20 @@ export const Discipline: React.FC = () => {
               return (
                 <div
                   key={c.id}
-                  className="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-xs space-y-3"
+                  className="bg-white dark:bg-[#222b42] p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs space-y-3"
                 >
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="font-mono font-bold text-xs text-slate-500">{c.noRujukan}</span>
-                      <span className="font-black text-sm text-slate-900">{stu?.nama || 'Murid'}</span>
-                      <span className="px-2 py-0.5 rounded bg-blue-100 text-blue-900 font-bold text-xs">
+                      <span className="font-mono font-bold text-xs text-slate-500 dark:text-slate-400">{c.noRujukan}</span>
+                      <span className="font-black text-sm text-slate-900 dark:text-white">{stu?.nama || 'Murid'}</span>
+                      <span className="px-2 py-0.5 rounded bg-blue-100 dark:bg-sky-500/20 text-blue-900 dark:text-sky-300 font-bold text-xs">
                         {stu?.kelas}
                       </span>
                       <span
                         className={`px-2 py-0.5 rounded-full font-bold text-[10px] uppercase ${
                           c.jenisSalahLaku === 'jenayah'
-                            ? 'bg-purple-100 text-purple-900 border border-purple-300'
-                            : 'bg-slate-100 text-slate-700'
+                            ? 'bg-purple-100 dark:bg-purple-500/20 text-purple-900 dark:text-purple-300 border border-purple-300 dark:border-purple-500/30'
+                            : 'bg-slate-100 dark:bg-[#161e31] text-slate-700 dark:text-slate-200'
                         }`}
                       >
                         {c.jenisSalahLaku === 'jenayah' ? 'JENAYAH' : 'DISIPLIN'}
@@ -559,8 +559,8 @@ export const Discipline: React.FC = () => {
                             : c.tahap === 'berat'
                             ? 'bg-red-600 text-white'
                             : c.tahap === 'sederhana'
-                            ? 'bg-amber-100 text-amber-800'
-                            : 'bg-slate-100 text-slate-700'
+                            ? 'bg-amber-100 dark:bg-amber-500/20 text-amber-800 dark:text-amber-300'
+                            : 'bg-slate-100 dark:bg-[#161e31] text-slate-700 dark:text-slate-200'
                         }`}
                       >
                         Tahap: {c.tahap}
@@ -569,7 +569,7 @@ export const Discipline: React.FC = () => {
 
                     <div className="flex items-center gap-2 text-xs">
                       <span className="text-slate-400">Tarikh: {c.tarikhKejadian}</span>
-                      <span className="px-2.5 py-0.5 rounded-full font-extrabold text-[10px] uppercase bg-blue-100 text-blue-900">
+                      <span className="px-2.5 py-0.5 rounded-full font-extrabold text-[10px] uppercase bg-blue-100 dark:bg-sky-500/20 text-blue-900 dark:text-sky-300">
                         Aliran: {c.statusAliran.replace('_', ' ')}
                       </span>
                     </div>
@@ -577,41 +577,41 @@ export const Discipline: React.FC = () => {
 
                   {/* Misconduct Details */}
                   <div className="text-xs space-y-1">
-                    <p className="font-bold text-slate-900">
-                      Kesalahan: <span className="text-rose-800">{c.kategori}</span> • Lokasi: {c.lokasi} ({c.masaKejadian || 'Waktu Sekolah'})
+                    <p className="font-bold text-slate-900 dark:text-white">
+                      Kesalahan: <span className="text-rose-800 dark:text-rose-300">{c.kategori}</span> • Lokasi: {c.lokasi} ({c.masaKejadian || 'Waktu Sekolah'})
                     </p>
-                    <p className="text-slate-700 bg-slate-50 p-2.5 rounded-xl border border-slate-100">
+                    <p className="text-slate-700 dark:text-slate-200 bg-slate-50 dark:bg-[#1b2337] p-2.5 rounded-xl border border-slate-100 dark:border-white/5">
                       {c.perincianKes}
                     </p>
                   </div>
 
                   {/* Step Checklist Indicator (Pertuduhan, Bela Diri, Kaunseling) */}
-                  <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs flex flex-wrap items-center justify-between gap-2">
+                  <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-[#1b2337] border border-slate-200 dark:border-white/10 text-xs flex flex-wrap items-center justify-between gap-2">
                     <div className="flex items-center gap-3">
-                      <span className="font-bold text-slate-700">Langkah SSDM:</span>
-                      <span className={`flex items-center gap-1 font-semibold ${c.langkahWajib.pertuduhanLengkap ? 'text-emerald-700' : 'text-slate-400'}`}>
+                      <span className="font-bold text-slate-700 dark:text-slate-200">Langkah SSDM:</span>
+                      <span className={`flex items-center gap-1 font-semibold ${c.langkahWajib.pertuduhanLengkap ? 'text-emerald-700 dark:text-emerald-300' : 'text-slate-400'}`}>
                         {c.langkahWajib.pertuduhanLengkap ? <Check className="w-3.5 h-3.5" /> : <Clock className="w-3.5 h-3.5" />}
                         <span>Pertuduhan</span>
                       </span>
-                      <span className={`flex items-center gap-1 font-semibold ${c.langkahWajib.belaDiriLengkap ? 'text-emerald-700' : 'text-slate-400'}`}>
+                      <span className={`flex items-center gap-1 font-semibold ${c.langkahWajib.belaDiriLengkap ? 'text-emerald-700 dark:text-emerald-300' : 'text-slate-400'}`}>
                         {c.langkahWajib.belaDiriLengkap ? <Check className="w-3.5 h-3.5" /> : <Clock className="w-3.5 h-3.5" />}
                         <span>Bela Diri</span>
                       </span>
-                      <span className={`flex items-center gap-1 font-semibold ${c.langkahWajib.kaunselingLengkap ? 'text-emerald-700' : 'text-slate-400'}`}>
+                      <span className={`flex items-center gap-1 font-semibold ${c.langkahWajib.kaunselingLengkap ? 'text-emerald-700 dark:text-emerald-300' : 'text-slate-400'}`}>
                         {c.langkahWajib.kaunselingLengkap ? <Check className="w-3.5 h-3.5" /> : <Clock className="w-3.5 h-3.5" />}
                         <span>Kaunseling</span>
                       </span>
                     </div>
 
-                    <span className="text-slate-600">
+                    <span className="text-slate-600 dark:text-slate-300">
                       Tindakan: <strong>{c.tindakanDiambil}</strong>
                     </span>
                   </div>
 
                   {/* Rekod Lampau Murid (PGB Perlu Tahu) */}
                   {pastCases.length > 0 && (
-                    <div className="p-2.5 bg-amber-50/70 border border-amber-200 rounded-xl text-xs text-amber-950 flex items-start gap-2">
-                      <History className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
+                    <div className="p-2.5 bg-amber-50/70 dark:bg-amber-500/15 border border-amber-200 dark:border-amber-500/30 rounded-xl text-xs text-amber-950 dark:text-amber-300 flex items-start gap-2">
+                      <History className="w-4 h-4 text-amber-700 dark:text-amber-300 shrink-0 mt-0.5" />
                       <div>
                         <strong>Rekod Lampau Murid ({pastCases.length} kes terdahulu):</strong> Murid ini pernah terlibat dalam kesalahan{' '}
                         {pastCases.map(pc => `${pc.kategori} (${pc.tarikhKejadian})`).join(', ')}.
@@ -620,11 +620,11 @@ export const Discipline: React.FC = () => {
                   )}
 
                   {/* Actions Button Bar */}
-                  <div className="pt-2 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-xs">
+                  <div className="pt-2 border-t border-slate-100 dark:border-white/5 flex flex-wrap items-center justify-between gap-2 text-xs">
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() => handlePrintPanggilanPenjaga(c)}
-                        className="flex items-center gap-1 px-2.5 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 rounded-lg font-semibold text-slate-700"
+                        className="flex items-center gap-1 px-2.5 py-1.5 bg-white dark:bg-[#222b42] border border-slate-300 dark:border-white/15 hover:bg-slate-100 dark:hover:bg-[#2a3552] rounded-lg font-semibold text-slate-700 dark:text-slate-200"
                       >
                         <FileDown className="w-3.5 h-3.5" />
                         <span>Surat Panggil Penjaga</span>
@@ -632,7 +632,7 @@ export const Discipline: React.FC = () => {
 
                       <button
                         onClick={() => handlePrintSuratTindakan(c)}
-                        className="flex items-center gap-1 px-2.5 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 rounded-lg font-semibold text-slate-700"
+                        className="flex items-center gap-1 px-2.5 py-1.5 bg-white dark:bg-[#222b42] border border-slate-300 dark:border-white/15 hover:bg-slate-100 dark:hover:bg-[#2a3552] rounded-lg font-semibold text-slate-700 dark:text-slate-200"
                       >
                         <FileDown className="w-3.5 h-3.5" />
                         <span>Surat Tindakan</span>
@@ -672,10 +672,10 @@ export const Discipline: React.FC = () => {
       {/* ================= TAB 2: SIDANG LEMBAGA DISIPLIN ================= */}
       {activeTab === 'lembaga' && (
         <div className="space-y-4 text-xs">
-          <div className="flex items-center justify-between bg-white p-4 rounded-xl border border-slate-200">
+          <div className="flex items-center justify-between bg-white dark:bg-[#222b42] p-4 rounded-xl border border-slate-200 dark:border-white/10">
             <div>
-              <h3 className="font-extrabold text-sm text-slate-900">Sidang Jawatankuasa Lembaga Disiplin Sekolah</h3>
-              <p className="text-slate-500">Mendengar pertuduhan kes berat, bela diri murid & penjaga, serta merumuskan hukuman tatatertib</p>
+              <h3 className="font-extrabold text-sm text-slate-900 dark:text-white">Sidang Jawatankuasa Lembaga Disiplin Sekolah</h3>
+              <p className="text-slate-500 dark:text-slate-400">Mendengar pertuduhan kes berat, bela diri murid & penjaga, serta merumuskan hukuman tatatertib</p>
             </div>
             {isPengetuaOrGpkHem && (
               <button
@@ -690,40 +690,40 @@ export const Discipline: React.FC = () => {
 
           <div className="space-y-3">
             {boardMeetings.map(bm => (
-              <div key={bm.id} className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-3">
+              <div key={bm.id} className="bg-white dark:bg-[#222b42] p-5 rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <span className="font-mono font-bold text-slate-600">{bm.noRujukan}</span>
-                    <span className="font-bold text-slate-900 text-sm">Sidang Disiplin ({bm.tarikh})</span>
+                    <span className="font-mono font-bold text-slate-600 dark:text-slate-300">{bm.noRujukan}</span>
+                    <span className="font-bold text-slate-900 dark:text-white text-sm">Sidang Disiplin ({bm.tarikh})</span>
                   </div>
                   <span className={`px-2.5 py-0.5 rounded-full font-extrabold text-[10px] uppercase ${
-                    bm.status === 'selesai' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'
+                    bm.status === 'selesai' ? 'bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300' : 'bg-amber-100 dark:bg-amber-500/20 text-amber-800 dark:text-amber-300'
                   }`}>
                     {bm.status.toUpperCase()}
                   </span>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-slate-600">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-slate-600 dark:text-slate-300">
                   <div>
-                    <span className="font-bold text-slate-800">Masa & Tempat: </span>
+                    <span className="font-bold text-slate-800 dark:text-slate-100">Masa & Tempat: </span>
                     {bm.masa} • {bm.tempat}
                   </div>
                   <div>
-                    <span className="font-bold text-slate-800">Pengerusi: </span>
+                    <span className="font-bold text-slate-800 dark:text-slate-100">Pengerusi: </span>
                     {bm.pengerusi}
                   </div>
                 </div>
 
-                <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
-                  <strong className="text-slate-800">Minit & Bukti Dikemukakan:</strong>
-                  <p className="text-slate-700 mt-1">{bm.minitRingkas}</p>
+                <div className="p-3 bg-slate-50 dark:bg-[#1b2337] rounded-xl border border-slate-100 dark:border-white/5">
+                  <strong className="text-slate-800 dark:text-slate-100">Minit & Bukti Dikemukakan:</strong>
+                  <p className="text-slate-700 dark:text-slate-200 mt-1">{bm.minitRingkas}</p>
                 </div>
 
-                <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl text-rose-950">
+                <div className="p-3 bg-rose-50 dark:bg-rose-500/15 border border-rose-200 dark:border-rose-500/30 rounded-xl text-rose-950 dark:text-rose-300">
                   <strong>Keputusan Lembaga Disiplin: </strong>
                   {bm.keputusan}
                   {bm.tarikhSusulan && (
-                    <span className="block text-[11px] text-rose-700 mt-1">
+                    <span className="block text-[11px] text-rose-700 dark:text-rose-300 mt-1">
                       Tarikh Semakan Susulan: {bm.tarikhSusulan}
                     </span>
                   )}
@@ -738,10 +738,10 @@ export const Discipline: React.FC = () => {
       {activeTab === 'analitik' && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 text-xs">
           {/* Heatmap / Analisis Lokasi Panas */}
-          <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-3">
+          <div className="bg-white dark:bg-[#222b42] p-5 rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs space-y-3">
             <div>
-              <h3 className="font-extrabold text-sm text-slate-900">Taburan Lokasi Panas Salah Laku (Heatmap)</h3>
-              <p className="text-slate-500">Kawasan tumpuan pemantauan rondaan guru disiplin & pengawas</p>
+              <h3 className="font-extrabold text-sm text-slate-900 dark:text-white">Taburan Lokasi Panas Salah Laku (Heatmap)</h3>
+              <p className="text-slate-500 dark:text-slate-400">Kawasan tumpuan pemantauan rondaan guru disiplin & pengawas</p>
             </div>
 
             <div className="space-y-2 pt-2">
@@ -751,11 +751,11 @@ export const Discipline: React.FC = () => {
                   const pct = Math.round((count / cases.length) * 100);
                   return (
                     <div key={loc} className="space-y-1">
-                      <div className="flex justify-between font-bold text-slate-800">
+                      <div className="flex justify-between font-bold text-slate-800 dark:text-slate-100">
                         <span>{loc}</span>
                         <span>{count} kes ({pct}%)</span>
                       </div>
-                      <div className="h-2.5 bg-slate-100 rounded-full overflow-hidden">
+                      <div className="h-2.5 bg-slate-100 dark:bg-[#161e31] rounded-full overflow-hidden">
                         <div
                           style={{ width: `${pct}%` }}
                           className={`h-full rounded-full ${
@@ -770,32 +770,32 @@ export const Discipline: React.FC = () => {
           </div>
 
           {/* Murid Berulang Kesalahan (Recidivism) */}
-          <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-3">
+          <div className="bg-white dark:bg-[#222b42] p-5 rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs space-y-3">
             <div>
-              <h3 className="font-extrabold text-sm text-slate-900">Murid Berulang Kesalahan (≥ 3 Kes)</h3>
-              <p className="text-slate-500">Memerlukan intervensi kaunseling berfokus dan perhatian Pengetua</p>
+              <h3 className="font-extrabold text-sm text-slate-900 dark:text-white">Murid Berulang Kesalahan (≥ 3 Kes)</h3>
+              <p className="text-slate-500 dark:text-slate-400">Memerlukan intervensi kaunseling berfokus dan perhatian Pengetua</p>
             </div>
 
             <div className="space-y-2.5 pt-2">
               {recidivistList.map(({ student: s, cases: sCases }) => (
-                <div key={s!.id} className="p-3 bg-rose-50/60 border border-rose-200 rounded-xl space-y-1">
+                <div key={s!.id} className="p-3 bg-rose-50/60 dark:bg-rose-500/15 border border-rose-200 dark:border-rose-500/30 rounded-xl space-y-1">
                   <div className="flex items-center justify-between">
-                    <span className="font-extrabold text-slate-900 text-sm">{s!.nama}</span>
-                    <span className="px-2 py-0.5 rounded font-black text-rose-800 bg-rose-100 text-xs">
+                    <span className="font-extrabold text-slate-900 dark:text-white text-sm">{s!.nama}</span>
+                    <span className="px-2 py-0.5 rounded font-black text-rose-800 dark:text-rose-300 bg-rose-100 dark:bg-rose-500/20 text-xs">
                       {sCases.length} Rekod Kes
                     </span>
                   </div>
-                  <p className="text-slate-600">
+                  <p className="text-slate-600 dark:text-slate-300">
                     Kelas: <strong>{s!.kelas}</strong> • Kampung: {s!.kampung}
                   </p>
-                  <div className="text-[11px] text-slate-500 pt-1 border-t border-rose-200/80">
+                  <div className="text-[11px] text-slate-500 dark:text-slate-400 pt-1 border-t border-rose-200/80">
                     Kesalahan terlibat: {sCases.map(c => c.kategori).join(', ')}
                   </div>
                 </div>
               ))}
 
               {recidivistList.length === 0 && (
-                <div className="p-6 text-center text-slate-500">
+                <div className="p-6 text-center text-slate-500 dark:text-slate-400">
                   Tiada murid yang mencatatkan 3 atau lebih rekod salah laku berulang.
                 </div>
               )}
@@ -807,10 +807,10 @@ export const Discipline: React.FC = () => {
       {/* Modal Rekod Kes Pantas (Mobile First) */}
       {showAddModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs overflow-y-auto">
-          <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 my-8 text-xs">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-              <div className="flex items-center gap-2 font-bold text-sm text-slate-900">
-                <ShieldAlert className="w-5 h-5 text-rose-700" />
+          <div className="bg-white dark:bg-[#222b42] rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 dark:border-white/10 my-8 text-xs">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-white/5">
+              <div className="flex items-center gap-2 font-bold text-sm text-slate-900 dark:text-white">
+                <ShieldAlert className="w-5 h-5 text-rose-700 dark:text-rose-300" />
                 <span>Perekodan Kes Salah Laku Pantas (SSDM)</span>
               </div>
               <button onClick={() => setShowAddModal(false)} className="p-1 text-slate-400 hover:text-slate-600">
@@ -821,7 +821,7 @@ export const Discipline: React.FC = () => {
             <form onSubmit={handleSaveNewCase} className="space-y-3.5 py-3">
               {/* Carian & Pemilihan Murid */}
               <div>
-                <label className="font-bold text-slate-700 block mb-1">Cari & Pilih Murid *</label>
+                <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Cari & Pilih Murid *</label>
                 <div className="relative mb-2">
                   <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
                   <input
@@ -829,13 +829,13 @@ export const Discipline: React.FC = () => {
                     value={studentSearchInput}
                     onChange={e => setStudentSearchInput(e.target.value)}
                     placeholder="Tapis senarai murid ikut nama..."
-                    className="w-full pl-9 pr-3 py-1.5 border border-slate-300 rounded-lg text-xs"
+                    className="w-full pl-9 pr-3 py-1.5 border border-slate-300 dark:border-white/15 rounded-lg text-xs"
                   />
                 </div>
                 <select
                   value={selectedStudentId}
                   onChange={e => setSelectedStudentId(e.target.value)}
-                  className="w-full border border-slate-300 rounded-lg p-2 font-bold bg-slate-50"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-bold bg-slate-50 dark:bg-[#1b2337]"
                 >
                   {students
                     .filter(s => s.nama.toLowerCase().includes(studentSearchInput.toLowerCase()))
@@ -850,7 +850,7 @@ export const Discipline: React.FC = () => {
               {/* Jenis & Tahap Salah Laku */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="font-bold text-slate-700 block mb-1">Jenis Salah Laku</label>
+                  <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Jenis Salah Laku</label>
                   <select
                     value={jenisSalahLaku}
                     onChange={e => {
@@ -864,7 +864,7 @@ export const Discipline: React.FC = () => {
                         setTahap('sederhana');
                       }
                     }}
-                    className="w-full border border-slate-300 rounded-lg p-2 font-bold"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-bold"
                   >
                     <option value="disiplin">Salah Laku Disiplin</option>
                     <option value="jenayah">Salah Laku Jenayah</option>
@@ -872,11 +872,11 @@ export const Discipline: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="font-bold text-slate-700 block mb-1">Tahap Kesalahan</label>
+                  <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Tahap Kesalahan</label>
                   <select
                     value={tahap}
                     onChange={e => setTahap(e.target.value as any)}
-                    className="w-full border border-slate-300 rounded-lg p-2 font-bold"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-bold"
                   >
                     <option value="ringan">Ringan</option>
                     <option value="sederhana">Sederhana</option>
@@ -888,11 +888,11 @@ export const Discipline: React.FC = () => {
 
               {/* Kategori Kesalahan */}
               <div>
-                <label className="font-bold text-slate-700 block mb-1">Kategori Kesalahan *</label>
+                <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Kategori Kesalahan *</label>
                 <select
                   value={kategori}
                   onChange={e => setKategori(e.target.value)}
-                  className="w-full border border-slate-300 rounded-lg p-2"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2"
                 >
                   {(jenisSalahLaku === 'jenayah' ? rules.kategoriJenayah : rules.kategoriKesalahan).map(k => (
                     <option key={k} value={k}>{k}</option>
@@ -903,66 +903,66 @@ export const Discipline: React.FC = () => {
               {/* Tarikh, Masa, Lokasi */}
               <div className="grid grid-cols-3 gap-2">
                 <div>
-                  <label className="font-bold text-slate-700 block mb-1">Tarikh</label>
+                  <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Tarikh</label>
                   <input
                     type="date"
                     value={tarikhKejadian}
                     onChange={e => setTarikhKejadian(e.target.value)}
-                    className="w-full border border-slate-300 rounded-lg p-1.5"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-1.5"
                   />
                 </div>
                 <div>
-                  <label className="font-bold text-slate-700 block mb-1">Masa</label>
+                  <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Masa</label>
                   <input
                     type="text"
                     value={masaKejadian}
                     onChange={e => setMasaKejadian(e.target.value)}
                     placeholder="08:30 AM"
-                    className="w-full border border-slate-300 rounded-lg p-1.5"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-1.5"
                   />
                 </div>
                 <div>
-                  <label className="font-bold text-slate-700 block mb-1">Tempat</label>
+                  <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Tempat</label>
                   <input
                     type="text"
                     value={lokasi}
                     onChange={e => setLokasi(e.target.value)}
                     placeholder="Tandas Blok B"
-                    className="w-full border border-slate-300 rounded-lg p-1.5"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-1.5"
                   />
                 </div>
               </div>
 
               {/* Perincian Kes & Saksi */}
               <div>
-                <label className="font-bold text-slate-700 block mb-1">Penerangan Kejadian *</label>
+                <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Penerangan Kejadian *</label>
                 <textarea
                   rows={3}
                   required
                   value={perincian}
                   onChange={e => setPerincian(e.target.value)}
                   placeholder="Ceritakan kejadian sebenar, barang dirampas, atau pengakuan awal..."
-                  className="w-full border border-slate-300 rounded-lg p-2"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="font-bold text-slate-700 block mb-1">Saksi (Jika ada)</label>
+                  <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Saksi (Jika ada)</label>
                   <input
                     type="text"
                     value={saksi}
                     onChange={e => setSaksi(e.target.value)}
                     placeholder="Pengawas / guru bertugas"
-                    className="w-full border border-slate-300 rounded-lg p-2"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2"
                   />
                 </div>
                 <div>
-                  <label className="font-bold text-slate-700 block mb-1">Tindakan Awal</label>
+                  <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Tindakan Awal</label>
                   <select
                     value={tindakan}
                     onChange={e => setTindakan(e.target.value)}
-                    className="w-full border border-slate-300 rounded-lg p-2"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2"
                   >
                     {rules.jenisTindakanDisiplin.map(t => (
                       <option key={t} value={t}>{t}</option>
@@ -972,29 +972,29 @@ export const Discipline: React.FC = () => {
               </div>
 
               {/* Lampiran Gambar Pilihan (Mobile Camera / Photo) */}
-              <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between">
+              <div className="p-3 bg-slate-50 dark:bg-[#1b2337] border border-slate-200 dark:border-white/10 rounded-xl flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <Camera className="w-4 h-4 text-slate-600" />
-                  <span className="font-semibold text-slate-700">Lampiran Bukti Bergambar (Pilihan):</span>
+                  <Camera className="w-4 h-4 text-slate-600 dark:text-slate-300" />
+                  <span className="font-semibold text-slate-700 dark:text-slate-200">Lampiran Bukti Bergambar (Pilihan):</span>
                 </div>
                 {mockPhotoName ? (
-                  <span className="font-mono text-emerald-700 font-bold">{mockPhotoName}</span>
+                  <span className="font-mono text-emerald-700 dark:text-emerald-300 font-bold">{mockPhotoName}</span>
                 ) : (
                   <button
                     type="button"
                     onClick={() => setMockPhotoName(`foto_bukti_${Date.now().toString().slice(-4)}.jpg`)}
-                    className="px-2.5 py-1 bg-white border border-slate-300 rounded text-[11px] font-bold text-slate-700 hover:bg-slate-100"
+                    className="px-2.5 py-1 bg-white dark:bg-[#222b42] border border-slate-300 dark:border-white/15 rounded text-[11px] font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#2a3552]"
                   >
                     Ambil / Muat Naik Foto
                   </button>
                 )}
               </div>
 
-              <div className="flex justify-end gap-2 pt-3 border-t border-slate-100">
+              <div className="flex justify-end gap-2 pt-3 border-t border-slate-100 dark:border-white/5">
                 <button
                   type="button"
                   onClick={() => setShowAddModal(false)}
-                  className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg"
+                  className="px-4 py-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#2a3552] rounded-lg"
                 >
                   Batal
                 </button>
@@ -1013,21 +1013,21 @@ export const Discipline: React.FC = () => {
       {/* Modal Aliran Tatatertib (SSDM Workflow Step by Step) */}
       {showWorkflowModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs overflow-y-auto">
-          <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 my-8 text-xs">
-            <h3 className="text-base font-bold text-slate-900 mb-1">
+          <div className="bg-white dark:bg-[#222b42] rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 dark:border-white/10 my-8 text-xs">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white mb-1">
               Aliran Tatatertib Kes: {showWorkflowModal.noRujukan}
             </h3>
-            <p className="text-slate-500 mb-4">
+            <p className="text-slate-500 dark:text-slate-400 mb-4">
               Murid: <strong>{students.find(s => s.id === showWorkflowModal.studentId)?.nama}</strong> • Kesalahan: {showWorkflowModal.kategori}
             </p>
 
             <div className="space-y-4">
               <div>
-                <label className="font-bold text-slate-700 block mb-1">Status Aliran Tatatertib Semasa</label>
+                <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Status Aliran Tatatertib Semasa</label>
                 <select
                   value={wfStatusAliran}
                   onChange={e => setWfStatusAliran(e.target.value as DisciplineCaseFlow)}
-                  className="w-full border border-slate-300 rounded-lg p-2 font-bold bg-slate-50"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-bold bg-slate-50 dark:bg-[#1b2337]"
                 >
                   <option value="dilaporkan">1. Dilaporkan (Aduan Masuk)</option>
                   <option value="disiasat">2. Disiasat (Kumpul Bukti & Saksi)</option>
@@ -1039,8 +1039,8 @@ export const Discipline: React.FC = () => {
               </div>
 
               {/* 3 Langkah Wajib (Checklist) */}
-              <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2.5">
-                <span className="font-extrabold text-slate-900 block">
+              <div className="p-3 bg-slate-50 dark:bg-[#1b2337] border border-slate-200 dark:border-white/10 rounded-xl space-y-2.5">
+                <span className="font-extrabold text-slate-900 dark:text-white block">
                   Semakan Langkah Tatatertib KPM (Wajib sebelum kes ditutup):
                 </span>
 
@@ -1052,7 +1052,7 @@ export const Discipline: React.FC = () => {
                     onChange={e => setWfPertuduhan(e.target.checked)}
                     className="w-4 h-4 rounded text-blue-600"
                   />
-                  <label htmlFor="stepPertuduhan" className="font-bold text-slate-800">
+                  <label htmlFor="stepPertuduhan" className="font-bold text-slate-800 dark:text-slate-100">
                     Langkah 1: Sesi Pertuduhan Rasmi Dijalankan
                   </label>
                 </div>
@@ -1066,7 +1066,7 @@ export const Discipline: React.FC = () => {
                       onChange={e => setWfBelaDiri(e.target.checked)}
                       className="w-4 h-4 rounded text-blue-600"
                     />
-                    <label htmlFor="stepBelaDiri" className="font-bold text-slate-800">
+                    <label htmlFor="stepBelaDiri" className="font-bold text-slate-800 dark:text-slate-100">
                       Langkah 2: Ruang Bela Diri Diberikan kepada Murid/Waris
                     </label>
                   </div>
@@ -1076,7 +1076,7 @@ export const Discipline: React.FC = () => {
                       value={wfBelaDiriText}
                       onChange={e => setWfBelaDiriText(e.target.value)}
                       placeholder="Ringkasan hujah / kenyataan bela diri murid..."
-                      className="w-full border border-slate-300 rounded-lg p-2 text-xs bg-white mt-1"
+                      className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 text-xs bg-white dark:bg-[#222b42] mt-1"
                     />
                   )}
                 </div>
@@ -1090,7 +1090,7 @@ export const Discipline: React.FC = () => {
                       onChange={e => setWfKaunseling(e.target.checked)}
                       className="w-4 h-4 rounded text-blue-600"
                     />
-                    <label htmlFor="stepKaunseling" className="font-bold text-slate-800">
+                    <label htmlFor="stepKaunseling" className="font-bold text-slate-800 dark:text-slate-100">
                       Langkah 3: Sesi Bimbingan & Kaunseling UBK Dilaksanakan
                     </label>
                   </div>
@@ -1100,7 +1100,7 @@ export const Discipline: React.FC = () => {
                       value={wfKaunselingText}
                       onChange={e => setWfKaunselingText(e.target.value)}
                       placeholder="Catatan intervensi sahsiah oleh GBK..."
-                      className="w-full border border-slate-300 rounded-lg p-2 text-xs bg-white mt-1"
+                      className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 text-xs bg-white dark:bg-[#222b42] mt-1"
                     />
                   )}
                 </div>
@@ -1108,28 +1108,28 @@ export const Discipline: React.FC = () => {
 
               {/* Tindakan / Hukuman Akhir */}
               <div>
-                <label className="font-bold text-slate-700 block mb-1">Tindakan / Hukuman Akhir</label>
+                <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Tindakan / Hukuman Akhir</label>
                 <select
                   value={wfTindakanAkhir}
                   onChange={e => setWfTindakanAkhir(e.target.value)}
-                  className="w-full border border-slate-300 rounded-lg p-2 font-bold"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-bold"
                 >
                   {rules.jenisTindakanDisiplin.map(t => (
                     <option key={t} value={t}>{t}</option>
                   ))}
                 </select>
                 {(wfTindakanAkhir.includes('Gantung') || wfTindakanAkhir.includes('Buang')) && (
-                  <p className="text-[11px] text-red-700 font-bold mt-1">
+                  <p className="text-[11px] text-red-700 dark:text-red-300 font-bold mt-1">
                     * Perhatian: Keputusan gantung/buang sekolah memerlukan kelulusan Pengetua / PPD mengikut Ordinan Pelajaran 1957.
                   </p>
                 )}
               </div>
             </div>
 
-            <div className="flex justify-end gap-2 mt-5 pt-3 border-t border-slate-100">
+            <div className="flex justify-end gap-2 mt-5 pt-3 border-t border-slate-100 dark:border-white/5">
               <button
                 onClick={() => setShowWorkflowModal(null)}
-                className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg"
+                className="px-4 py-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#2a3552] rounded-lg"
               >
                 Batal
               </button>
@@ -1147,9 +1147,9 @@ export const Discipline: React.FC = () => {
       {/* Modal Jadualkan Sidang Lembaga Disiplin */}
       {showBoardModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 text-xs">
-            <h3 className="text-base font-bold text-slate-900 mb-1">Jadualkan Sidang Lembaga Disiplin Sekolah</h3>
-            <p className="text-slate-500 mb-4">Pengurusan Tatatertib Tertinggi SMK Salaping</p>
+          <div className="bg-white dark:bg-[#222b42] rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-white/10 text-xs">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white mb-1">Jadualkan Sidang Lembaga Disiplin Sekolah</h3>
+            <p className="text-slate-500 dark:text-slate-400 mb-4">Pengurusan Tatatertib Tertinggi SMK Salaping</p>
 
             <form onSubmit={handleSaveBoardMeeting} className="space-y-3">
               <div>
@@ -1159,7 +1159,7 @@ export const Discipline: React.FC = () => {
                   required
                   value={boardRujukan}
                   onChange={e => setBoardRujukan(e.target.value)}
-                  className="w-full border border-slate-300 rounded-lg p-2 font-mono"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-mono"
                 />
               </div>
 
@@ -1170,7 +1170,7 @@ export const Discipline: React.FC = () => {
                     type="date"
                     value={boardTarikh}
                     onChange={e => setBoardTarikh(e.target.value)}
-                    className="w-full border border-slate-300 rounded-lg p-2"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2"
                   />
                 </div>
                 <div>
@@ -1179,7 +1179,7 @@ export const Discipline: React.FC = () => {
                     type="text"
                     value={boardMasa}
                     onChange={e => setBoardMasa(e.target.value)}
-                    className="w-full border border-slate-300 rounded-lg p-2"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2"
                   />
                 </div>
               </div>
@@ -1190,7 +1190,7 @@ export const Discipline: React.FC = () => {
                   type="text"
                   value={boardTempat}
                   onChange={e => setBoardTempat(e.target.value)}
-                  className="w-full border border-slate-300 rounded-lg p-2"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2"
                 />
               </div>
 
@@ -1201,15 +1201,15 @@ export const Discipline: React.FC = () => {
                   value={boardMinit}
                   onChange={e => setBoardMinit(e.target.value)}
                   placeholder="Ringkasan pertuduhan dan bukti..."
-                  className="w-full border border-slate-300 rounded-lg p-2"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2"
                 />
               </div>
 
-              <div className="flex justify-end gap-2 pt-3 border-t border-slate-100">
+              <div className="flex justify-end gap-2 pt-3 border-t border-slate-100 dark:border-white/5">
                 <button
                   type="button"
                   onClick={() => setShowBoardModal(false)}
-                  className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg"
+                  className="px-4 py-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#2a3552] rounded-lg"
                 >
                   Batal
                 </button>

@@ -1,9 +1,10 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 @layer base {
   :root {
-    --primary-color: #1e3a8a; /* Lalai: Biru Tua KPM */
-    --accent-color: #d97706;  /* Emas/Kuning Warisan */
+    --primary-color: #0ea5e9;
+    --accent-color: #ffc107;
   }
 
   body {
@@ -12,6 +13,30 @@
     -moz-osx-font-smoothing: grayscale;
     -webkit-tap-highlight-color: transparent;
   }
+
+  .dark body {
+    background-color: #151c2e;
+    color: #f1f5f9;
+  }
+}
+
+/* Custom subtle scrollbars for dark navy UI */
+.dark ::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #151c2e;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #2c3653;
+  border-radius: 9999px;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #3d4b73;
 }
 
 /* Print styling for official letters and reports */

@@ -194,69 +194,69 @@ export const DropoutRisk: React.FC = () => {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <div
           onClick={() => setFilterTier('amaran3')}
-          className="bg-white p-4 rounded-xl border border-red-300 shadow-xs cursor-pointer hover:border-red-500 transition-all bg-red-50/30"
+          className="bg-white dark:bg-[#222b42] p-4 rounded-xl border border-red-300 dark:border-red-500/30 shadow-xs cursor-pointer hover:border-red-500 transition-all bg-red-50/30 dark:bg-red-500/15"
         >
           <div className="flex items-center justify-between mb-1">
-            <span className="text-xs font-bold text-red-900">Amaran 3 (Kritikal)</span>
-            <span className="w-6 h-6 rounded-full bg-red-100 text-red-700 flex items-center justify-center text-xs font-extrabold">
+            <span className="text-xs font-bold text-red-900 dark:text-red-300">Amaran 3 (Kritikal)</span>
+            <span className="w-6 h-6 rounded-full bg-red-100 dark:bg-red-500/20 text-red-700 dark:text-red-300 flex items-center justify-center text-xs font-extrabold">
               3
             </span>
           </div>
-          <div className="text-2xl font-black text-red-700">{countAmaran3}</div>
-          <p className="text-[11px] text-red-800 mt-1">
+          <div className="text-2xl font-black text-red-700 dark:text-red-300">{countAmaran3}</div>
+          <p className="text-[11px] text-red-800 dark:text-red-300 mt-1">
             ≥ {rules.ambangRisikoCicir.amaran3HariBerturut} hari berturut-turut
           </p>
         </div>
 
         <div
           onClick={() => setFilterTier('amaran2')}
-          className="bg-white p-4 rounded-xl border border-amber-300 shadow-xs cursor-pointer hover:border-amber-500 transition-all bg-amber-50/30"
+          className="bg-white dark:bg-[#222b42] p-4 rounded-xl border border-amber-300 dark:border-amber-500/30 shadow-xs cursor-pointer hover:border-amber-500 transition-all bg-amber-50/30 dark:bg-amber-500/15"
         >
           <div className="flex items-center justify-between mb-1">
-            <span className="text-xs font-bold text-amber-900">Amaran 2 (Tinggi)</span>
-            <span className="w-6 h-6 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center text-xs font-extrabold">
+            <span className="text-xs font-bold text-amber-900 dark:text-amber-300">Amaran 2 (Tinggi)</span>
+            <span className="w-6 h-6 rounded-full bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-300 flex items-center justify-center text-xs font-extrabold">
               2
             </span>
           </div>
-          <div className="text-2xl font-black text-amber-700">{countAmaran2}</div>
-          <p className="text-[11px] text-amber-800 mt-1">
+          <div className="text-2xl font-black text-amber-700 dark:text-amber-300">{countAmaran2}</div>
+          <p className="text-[11px] text-amber-800 dark:text-amber-300 mt-1">
             ≥ {rules.ambangRisikoCicir.amaran2HariBerturut} hari berturut-turut
           </p>
         </div>
 
         <div
           onClick={() => setFilterTier('amaran1')}
-          className="bg-white p-4 rounded-xl border border-blue-300 shadow-xs cursor-pointer hover:border-blue-500 transition-all bg-blue-50/30"
+          className="bg-white dark:bg-[#222b42] p-4 rounded-xl border border-blue-300 dark:border-sky-500/30 shadow-xs cursor-pointer hover:border-blue-500 transition-all bg-blue-50/30 dark:bg-sky-500/15"
         >
           <div className="flex items-center justify-between mb-1">
-            <span className="text-xs font-bold text-blue-900">Amaran 1 (Awal)</span>
-            <span className="w-6 h-6 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-xs font-extrabold">
+            <span className="text-xs font-bold text-blue-900 dark:text-sky-300">Amaran 1 (Awal)</span>
+            <span className="w-6 h-6 rounded-full bg-blue-100 dark:bg-sky-500/20 text-blue-700 dark:text-sky-300 flex items-center justify-center text-xs font-extrabold">
               1
             </span>
           </div>
-          <div className="text-2xl font-black text-blue-700">{countAmaran1}</div>
-          <p className="text-[11px] text-blue-800 mt-1">
+          <div className="text-2xl font-black text-blue-700 dark:text-sky-300">{countAmaran1}</div>
+          <p className="text-[11px] text-blue-800 dark:text-sky-300 mt-1">
             ≥ {rules.ambangRisikoCicir.amaran1HariBerturut} hari berturut-turut
           </p>
         </div>
 
         <div
           onClick={() => setFilterTier('berisiko')}
-          className="bg-white p-4 rounded-xl border border-slate-300 shadow-xs cursor-pointer hover:border-slate-500 transition-all"
+          className="bg-white dark:bg-[#222b42] p-4 rounded-xl border border-slate-300 dark:border-white/15 shadow-xs cursor-pointer hover:border-slate-500 transition-all"
         >
           <div className="flex items-center justify-between mb-1">
-            <span className="text-xs font-bold text-slate-700">Jumlah Perlu Tindakan</span>
+            <span className="text-xs font-bold text-slate-700 dark:text-slate-200">Jumlah Perlu Tindakan</span>
             <AlertTriangle className="w-4 h-4 text-amber-600" />
           </div>
-          <div className="text-2xl font-black text-slate-900">
+          <div className="text-2xl font-black text-slate-900 dark:text-white">
             {countAmaran3 + countAmaran2 + countAmaran1}
           </div>
-          <p className="text-[11px] text-slate-500 mt-1">Semua kategori amaran</p>
+          <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">Semua kategori amaran</p>
         </div>
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-white p-3.5 rounded-xl border border-slate-200 shadow-xs flex flex-wrap items-center justify-between gap-3 text-xs">
+      <div className="bg-white dark:bg-[#222b42] p-3.5 rounded-xl border border-slate-200 dark:border-white/10 shadow-xs flex flex-wrap items-center justify-between gap-3 text-xs">
         <div className="flex items-center gap-2 w-full sm:w-auto flex-1 max-w-sm relative">
           <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
           <input
@@ -264,16 +264,16 @@ export const DropoutRisk: React.FC = () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Cari murid, kelas, atau kampung..."
-            className="w-full pl-9 pr-3 py-2 border border-slate-300 rounded-lg outline-hidden"
+            className="w-full pl-9 pr-3 py-2 border border-slate-300 dark:border-white/15 rounded-lg outline-hidden"
           />
         </div>
 
         <div className="flex items-center gap-2">
-          <label className="text-slate-500 font-semibold">Tapis Tahap:</label>
+          <label className="text-slate-500 dark:text-slate-400 font-semibold">Tapis Tahap:</label>
           <select
             value={filterTier}
             onChange={(e) => setFilterTier(e.target.value)}
-            className="border border-slate-300 rounded-lg px-2.5 py-1.5 font-bold bg-slate-50 text-slate-800"
+            className="border border-slate-300 dark:border-white/15 rounded-lg px-2.5 py-1.5 font-bold bg-slate-50 dark:bg-[#1b2337] text-slate-800 dark:text-slate-100"
           >
             <option value="semua">Semua Murid Termasuk Normal</option>
             <option value="berisiko">Semua Yang Berisiko Sahaja</option>
@@ -297,14 +297,14 @@ export const DropoutRisk: React.FC = () => {
           return (
             <div
               key={student.id}
-              className={`bg-white rounded-2xl border transition-all p-4 sm:p-5 shadow-xs ${
+              className={`bg-white dark:bg-[#222b42] rounded-2xl border transition-all p-4 sm:p-5 shadow-xs ${
                 riskTier === 'amaran3'
-                  ? 'border-red-300 bg-red-50/20'
+                  ? 'border-red-300 dark:border-red-500/30 bg-red-50/20 dark:bg-red-500/15'
                   : riskTier === 'amaran2'
-                  ? 'border-amber-300 bg-amber-50/20'
+                  ? 'border-amber-300 dark:border-amber-500/30 bg-amber-50/20 dark:bg-amber-500/15'
                   : riskTier === 'amaran1'
-                  ? 'border-blue-300 bg-blue-50/20'
-                  : 'border-slate-200'
+                  ? 'border-blue-300 dark:border-sky-500/30 bg-blue-50/20 dark:bg-sky-500/15'
+                  : 'border-slate-200 dark:border-white/10'
               }`}
             >
               <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
@@ -318,7 +318,7 @@ export const DropoutRisk: React.FC = () => {
                         ? 'bg-amber-500 text-slate-950'
                         : riskTier === 'amaran1'
                         ? 'bg-blue-600 text-white'
-                        : 'bg-slate-100 text-slate-700'
+                        : 'bg-slate-100 dark:bg-[#161e31] text-slate-700 dark:text-slate-200'
                     }`}
                   >
                     <span className="text-base leading-none">{consecutiveAbsences}</span>
@@ -327,35 +327,35 @@ export const DropoutRisk: React.FC = () => {
 
                   <div>
                     <div className="flex flex-wrap items-center gap-2">
-                      <h3 className="font-extrabold text-sm sm:text-base text-slate-900">
+                      <h3 className="font-extrabold text-sm sm:text-base text-slate-900 dark:text-white">
                         {student.nama}
                       </h3>
-                      <span className="text-xs font-bold px-2 py-0.5 rounded bg-slate-100 text-slate-700">
+                      <span className="text-xs font-bold px-2 py-0.5 rounded bg-slate-100 dark:bg-[#161e31] text-slate-700 dark:text-slate-200">
                         {student.kelas}
                       </span>
                       <span
                         className={`text-xs font-extrabold px-2.5 py-0.5 rounded-full ${
                           riskTier === 'amaran3'
-                            ? 'bg-red-100 text-red-800 border border-red-300'
+                            ? 'bg-red-100 dark:bg-red-500/20 text-red-800 dark:text-red-300 border border-red-300 dark:border-red-500/30'
                             : riskTier === 'amaran2'
-                            ? 'bg-amber-100 text-amber-900 border border-amber-300'
+                            ? 'bg-amber-100 dark:bg-amber-500/20 text-amber-900 dark:text-amber-300 border border-amber-300 dark:border-amber-500/30'
                             : riskTier === 'amaran1'
-                            ? 'bg-blue-100 text-blue-900 border border-blue-300'
-                            : 'bg-emerald-100 text-emerald-800'
+                            ? 'bg-blue-100 dark:bg-sky-500/20 text-blue-900 dark:text-sky-300 border border-blue-300 dark:border-sky-500/30'
+                            : 'bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300'
                         }`}
                       >
                         {assessment.riskLabel}
                       </span>
                     </div>
 
-                    <p className="text-xs text-slate-500 mt-1">
+                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
                       No. Murid: <strong>{student.noMurid}</strong> • Kampung: <strong>{student.kampung}</strong> ({student.jarakKm} km) • Pengangkutan: {student.caraKeSekolah}
                     </p>
 
-                    <div className="text-xs text-slate-600 mt-1 flex flex-wrap items-center gap-3">
+                    <div className="text-xs text-slate-600 dark:text-slate-300 mt-1 flex flex-wrap items-center gap-3">
                       <span>
                         Kehadiran 30 hari:{' '}
-                        <strong className={attendancePercentage < 80 ? 'text-rose-600' : 'text-slate-900'}>
+                        <strong className={attendancePercentage < 80 ? 'text-rose-600' : 'text-slate-900 dark:text-white'}>
                           {attendancePercentage}%
                         </strong>
                       </span>
@@ -370,7 +370,7 @@ export const DropoutRisk: React.FC = () => {
                     </div>
 
                     {student.catatanKesihatan && (
-                      <p className="text-[11px] text-slate-500 italic mt-1">
+                      <p className="text-[11px] text-slate-500 dark:text-slate-400 italic mt-1">
                         Catatan Kesihatan/Latar: {student.catatanKesihatan}
                       </p>
                     )}
@@ -405,7 +405,7 @@ export const DropoutRisk: React.FC = () => {
                       setEditingAssessment(assessment);
                       setCustomBodyText('');
                     }}
-                    className="p-2 border border-slate-300 hover:bg-slate-100 text-slate-700 rounded-xl"
+                    className="p-2 border border-slate-300 dark:border-white/15 hover:bg-slate-100 dark:hover:bg-[#2a3552] text-slate-700 dark:text-slate-200 rounded-xl"
                     title="Ubah ayat templat surat ini"
                   >
                     <Edit3 className="w-4 h-4" />
@@ -429,13 +429,13 @@ export const DropoutRisk: React.FC = () => {
               {/* Rekod Susulan Yang Telah Dibuat Bagi Murid Ini */}
               {studentFollowUps.length > 0 && (
                 <div className="mt-3 pt-3 border-t border-slate-200/80 bg-white/60 p-2.5 rounded-xl space-y-1.5">
-                  <span className="text-[11px] font-bold text-slate-700 uppercase tracking-wider">
+                  <span className="text-[11px] font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wider">
                     Log Tindakan Susulan Terdahulu ({studentFollowUps.length}):
                   </span>
                   {studentFollowUps.map(fu => (
-                    <div key={fu.id} className="text-xs text-slate-600 flex items-start gap-2">
-                      <span className="font-bold text-slate-900 shrink-0">[{fu.tarikh}]</span>
-                      <span className="px-1.5 py-0.2 rounded bg-slate-200 text-slate-800 font-semibold text-[10px] shrink-0 uppercase">
+                    <div key={fu.id} className="text-xs text-slate-600 dark:text-slate-300 flex items-start gap-2">
+                      <span className="font-bold text-slate-900 dark:text-white shrink-0">[{fu.tarikh}]</span>
+                      <span className="px-1.5 py-0.2 rounded bg-slate-200 dark:bg-[#2a3552] text-slate-800 dark:text-slate-100 font-semibold text-[10px] shrink-0 uppercase">
                         {fu.jenis.replace('_', ' ')}
                       </span>
                       <span>
@@ -460,23 +460,23 @@ export const DropoutRisk: React.FC = () => {
       {/* Modal Rekod Tindakan Susulan */}
       {followUpStudent && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 animate-in fade-in">
-            <h3 className="text-base font-bold text-slate-900 mb-1">
+          <div className="bg-white dark:bg-[#222b42] rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-white/10 animate-in fade-in">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white mb-1">
               Rekod Tindakan Susulan HEM
             </h3>
-            <p className="text-xs text-slate-500 mb-4">
+            <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">
               Murid: <strong>{followUpStudent.student.nama}</strong> ({followUpStudent.student.kelas})
             </p>
 
             <div className="space-y-3.5">
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1">
                   Jenis Tindakan
                 </label>
                 <select
                   value={actionType}
                   onChange={(e) => setActionType(e.target.value as FollowUpAction['jenis'])}
-                  className="w-full text-xs border border-slate-300 rounded-lg p-2 font-medium"
+                  className="w-full text-xs border border-slate-300 dark:border-white/15 rounded-lg p-2 font-medium"
                 >
                   <option value="panggilan_telefon">Panggilan Telefon kepada Penjaga</option>
                   <option value="lawatan_rumah">Lawatan Ziarah Cakna ke Rumah (Kampung)</option>
@@ -487,7 +487,7 @@ export const DropoutRisk: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1">
                   Hasil / Maklum Balas
                 </label>
                 <textarea
@@ -495,12 +495,12 @@ export const DropoutRisk: React.FC = () => {
                   value={actionOutcome}
                   onChange={(e) => setActionOutcome(e.target.value)}
                   placeholder="Contoh: Berjaya bercakap dengan ibu. Murid menghadapi masalah tambang van dari Kg. Sonsogon. Dicadangkan memohon bantuan asrama."
-                  className="w-full text-xs border border-slate-300 rounded-lg p-2"
+                  className="w-full text-xs border border-slate-300 dark:border-white/15 rounded-lg p-2"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1">
                   Catatan Tambahan (Pilihan)
                 </label>
                 <input
@@ -508,15 +508,15 @@ export const DropoutRisk: React.FC = () => {
                   value={actionNotes}
                   onChange={(e) => setActionNotes(e.target.value)}
                   placeholder="Contoh: Temu janji susulan pada 15 Oktober 2026"
-                  className="w-full text-xs border border-slate-300 rounded-lg p-2"
+                  className="w-full text-xs border border-slate-300 dark:border-white/15 rounded-lg p-2"
                 />
               </div>
             </div>
 
-            <div className="flex justify-end gap-2 mt-6 pt-3 border-t border-slate-100">
+            <div className="flex justify-end gap-2 mt-6 pt-3 border-t border-slate-100 dark:border-white/5">
               <button
                 onClick={() => setFollowUpStudent(null)}
-                className="px-4 py-2 text-xs text-slate-600 hover:bg-slate-100 rounded-lg font-medium"
+                className="px-4 py-2 text-xs text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#2a3552] rounded-lg font-medium"
               >
                 Batal
               </button>
@@ -534,16 +534,16 @@ export const DropoutRisk: React.FC = () => {
       {/* Modal Ubah Templat Surat Amaran Sebelum Cetak */}
       {editingAssessment && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
-          <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 animate-in fade-in">
-            <h3 className="text-base font-bold text-slate-900 mb-1">
+          <div className="bg-white dark:bg-[#222b42] rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 dark:border-white/10 animate-in fade-in">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white mb-1">
               Ubah Suai Templat Surat Amaran
             </h3>
-            <p className="text-xs text-slate-500 mb-3">
+            <p className="text-xs text-slate-500 dark:text-slate-400 mb-3">
               Surat untuk <strong>{editingAssessment.student.nama}</strong> (Tahap: {editingAssessment.riskTier.toUpperCase()})
             </p>
 
             <div className="space-y-3">
-              <p className="text-xs text-slate-600">
+              <p className="text-xs text-slate-600 dark:text-slate-300">
                 Anda boleh memperincikan perenggan surat sebelum mencetak ke PDF berkepala surat rasmi:
               </p>
               <textarea
@@ -551,14 +551,14 @@ export const DropoutRisk: React.FC = () => {
                 value={customBodyText}
                 onChange={(e) => setCustomBodyText(e.target.value)}
                 placeholder="Tulis kandungan surat tersuai atau biarkan kosong untuk menggunakan templat standard KPM..."
-                className="w-full text-xs border border-slate-300 rounded-lg p-2.5 font-mono"
+                className="w-full text-xs border border-slate-300 dark:border-white/15 rounded-lg p-2.5 font-mono"
               />
             </div>
 
-            <div className="flex justify-end gap-2 mt-5 pt-3 border-t border-slate-100">
+            <div className="flex justify-end gap-2 mt-5 pt-3 border-t border-slate-100 dark:border-white/5">
               <button
                 onClick={() => setEditingAssessment(null)}
-                className="px-4 py-2 text-xs text-slate-600 hover:bg-slate-100 rounded-lg"
+                className="px-4 py-2 text-xs text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#2a3552] rounded-lg"
               >
                 Batal
               </button>

@@ -287,23 +287,23 @@ export const TeacherManagementTab: React.FC<TeacherManagementTabProps> = ({
   };
 
   return (
-    <div className="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-xs space-y-6 text-xs">
+    <div className="bg-white dark:bg-[#222b42] p-5 sm:p-6 rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs space-y-6 text-xs">
       {/* Header Utama Pengurusan Staf & Pentadbir */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-100 dark:border-white/5 pb-4">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-900 font-extrabold text-[11px] flex items-center gap-1.5">
-              <Users className="w-3.5 h-3.5 text-blue-700" />
+            <span className="px-2.5 py-0.5 rounded-full bg-blue-100 dark:bg-sky-500/20 text-blue-900 dark:text-sky-300 font-extrabold text-[11px] flex items-center gap-1.5">
+              <Users className="w-3.5 h-3.5 text-blue-700 dark:text-sky-300" />
               <span>Pengurusan Staf & Guru Sebenar SMK Salaping</span>
             </span>
-            <span className="text-[10px] font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+            <span className="text-[10px] font-bold text-emerald-800 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-500/15 px-2 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-500/30">
               Data Sebenar Aktif
             </span>
           </div>
-          <h2 className="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight">
+          <h2 className="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight">
             Senarai Pentadbir, Guru Kelas & Warga Pendidik Sekolah
           </h2>
-          <p className="text-slate-500 text-xs max-w-2xl">
+          <p className="text-slate-500 dark:text-slate-400 text-xs max-w-2xl">
             Daftarkan semua nama guru sebenar, selaraskan peranan jawatan (Pengetua, GPK HEM, Guru Disiplin, GBK, Warden, Guru Kelas), dan tetapkan kelas jagaan masing-masing.
           </p>
         </div>
@@ -312,7 +312,7 @@ export const TeacherManagementTab: React.FC<TeacherManagementTabProps> = ({
           <button
             type="button"
             onClick={handlePurgeDemoUsers}
-            className="px-3.5 py-2 bg-rose-50 hover:bg-rose-100 text-rose-800 border border-rose-300 rounded-xl font-extrabold text-xs transition-colors flex items-center gap-1.5"
+            className="px-3.5 py-2 bg-rose-50 dark:bg-rose-500/15 hover:bg-rose-100 text-rose-800 dark:text-rose-300 border border-rose-300 dark:border-rose-500/30 rounded-xl font-extrabold text-xs transition-colors flex items-center gap-1.5"
             title="Padam semua nama-nama pengguna demo dan akaun fiktif"
           >
             <Trash2 className="w-4 h-4 text-rose-600" />
@@ -322,9 +322,9 @@ export const TeacherManagementTab: React.FC<TeacherManagementTabProps> = ({
           <button
             type="button"
             onClick={() => setShowBulkModal(true)}
-            className="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300 rounded-xl font-bold text-xs transition-colors flex items-center gap-1.5"
+            className="px-3.5 py-2 bg-slate-100 dark:bg-[#161e31] hover:bg-slate-200 dark:hover:bg-[#323f61] text-slate-800 dark:text-slate-100 border border-slate-300 dark:border-white/15 rounded-xl font-bold text-xs transition-colors flex items-center gap-1.5"
           >
-            <FileSpreadsheet className="w-4 h-4 text-slate-600" />
+            <FileSpreadsheet className="w-4 h-4 text-slate-600 dark:text-slate-300" />
             <span>+ Import Pukal Senarai Guru</span>
           </button>
 
@@ -341,39 +341,39 @@ export const TeacherManagementTab: React.FC<TeacherManagementTabProps> = ({
 
       {/* Kad Metrik Statistik Pengguna */}
       <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
-        <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
-          <span className="text-[11px] font-semibold text-slate-500 block">Jumlah Staf Berdaftar</span>
-          <div className="text-xl font-black text-slate-900 mt-0.5">{totalUsers}</div>
+        <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-[#1b2337] border border-slate-200 dark:border-white/10">
+          <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block">Jumlah Staf Berdaftar</span>
+          <div className="text-xl font-black text-slate-900 dark:text-white mt-0.5">{totalUsers}</div>
           <span className="text-[10px] text-slate-400">Termasuk pentadbir</span>
         </div>
 
-        <div className="p-3.5 rounded-xl bg-blue-50/60 border border-blue-200">
-          <span className="text-[11px] font-semibold text-blue-900 block">Guru Kelas</span>
-          <div className="text-xl font-black text-blue-800 mt-0.5">{totalGuruKelas}</div>
+        <div className="p-3.5 rounded-xl bg-blue-50/60 dark:bg-sky-500/15 border border-blue-200 dark:border-sky-500/30">
+          <span className="text-[11px] font-semibold text-blue-900 dark:text-sky-300 block">Guru Kelas</span>
+          <div className="text-xl font-black text-blue-800 dark:text-sky-300 mt-0.5">{totalGuruKelas}</div>
           <span className="text-[10px] text-blue-600">Perekod e-Kehadiran</span>
         </div>
 
-        <div className="p-3.5 rounded-xl bg-red-50/60 border border-red-200">
-          <span className="text-[11px] font-semibold text-red-900 block">Guru Disiplin</span>
-          <div className="text-xl font-black text-red-800 mt-0.5">{totalDisiplin}</div>
+        <div className="p-3.5 rounded-xl bg-red-50/60 dark:bg-red-500/15 border border-red-200 dark:border-red-500/30">
+          <span className="text-[11px] font-semibold text-red-900 dark:text-red-300 block">Guru Disiplin</span>
+          <div className="text-xl font-black text-red-800 dark:text-red-300 mt-0.5">{totalDisiplin}</div>
           <span className="text-[10px] text-red-600">Pengurusan SSDM & Kes</span>
         </div>
 
-        <div className="p-3.5 rounded-xl bg-purple-50/60 border border-purple-200">
-          <span className="text-[11px] font-semibold text-purple-900 block">Kaunseling (GBK)</span>
-          <div className="text-xl font-black text-purple-800 mt-0.5">{totalGbk}</div>
+        <div className="p-3.5 rounded-xl bg-purple-50/60 dark:bg-purple-500/15 border border-purple-200 dark:border-purple-500/30">
+          <span className="text-[11px] font-semibold text-purple-900 dark:text-purple-300 block">Kaunseling (GBK)</span>
+          <div className="text-xl font-black text-purple-800 dark:text-purple-300 mt-0.5">{totalGbk}</div>
           <span className="text-[10px] text-purple-600">Bimbingan & Minda</span>
         </div>
 
-        <div className="p-3.5 rounded-xl bg-indigo-50/60 border border-indigo-200">
-          <span className="text-[11px] font-semibold text-indigo-900 block">Warden Asrama</span>
-          <div className="text-xl font-black text-indigo-800 mt-0.5">{totalWarden}</div>
+        <div className="p-3.5 rounded-xl bg-indigo-50/60 dark:bg-indigo-500/15 border border-indigo-200 dark:border-indigo-500/30">
+          <span className="text-[11px] font-semibold text-indigo-900 dark:text-indigo-300 block">Warden Asrama</span>
+          <div className="text-xl font-black text-indigo-800 dark:text-indigo-300 mt-0.5">{totalWarden}</div>
           <span className="text-[10px] text-indigo-600">Blok Desa Salaping</span>
         </div>
       </div>
 
       {/* Bar Carian & Penapis Peranan */}
-      <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div className="p-3 rounded-xl bg-slate-50 dark:bg-[#1b2337] border border-slate-200 dark:border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3">
         <div className="relative flex-1 w-full">
           <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
           <input
@@ -381,16 +381,16 @@ export const TeacherManagementTab: React.FC<TeacherManagementTabProps> = ({
             placeholder="Cari guru mengikut nama, emel, jawatan, atau nama kelas..."
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-3 py-2 bg-white border border-slate-300 rounded-xl text-xs font-medium focus:ring-2 focus:ring-blue-600 focus:outline-hidden"
+            className="w-full pl-9 pr-3 py-2 bg-white dark:bg-[#222b42] border border-slate-300 dark:border-white/15 rounded-xl text-xs font-medium focus:ring-2 focus:ring-blue-600 focus:outline-hidden"
           />
         </div>
 
         <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto">
-          <Filter className="w-4 h-4 text-slate-500" />
+          <Filter className="w-4 h-4 text-slate-500 dark:text-slate-400" />
           <select
             value={roleFilter}
             onChange={e => setRoleFilter(e.target.value)}
-            className="bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs font-semibold text-slate-800 w-full sm:w-auto"
+            className="bg-white dark:bg-[#222b42] border border-slate-300 dark:border-white/15 rounded-xl px-3 py-2 text-xs font-semibold text-slate-800 dark:text-slate-100 w-full sm:w-auto"
           >
             <option value="semua">Semua Peranan ({allUsers.length})</option>
             <option value="pengetua">Pengetua</option>
@@ -411,7 +411,7 @@ export const TeacherManagementTab: React.FC<TeacherManagementTabProps> = ({
                 setSearchQuery('');
                 setRoleFilter('semua');
               }}
-              className="text-xs font-bold text-blue-700 hover:underline px-1"
+              className="text-xs font-bold text-blue-700 dark:text-sky-300 hover:underline px-1"
             >
               Set Semula
             </button>
@@ -429,8 +429,8 @@ export const TeacherManagementTab: React.FC<TeacherManagementTabProps> = ({
               key={user.uid}
               className={`p-4 rounded-xl border transition-all flex flex-col md:flex-row md:items-center justify-between gap-3.5 ${
                 isCurrentUser
-                  ? 'bg-blue-50/50 border-blue-300 shadow-xs'
-                  : 'bg-white border-slate-200 hover:border-slate-300'
+                  ? 'bg-blue-50/50 dark:bg-sky-500/15 border-blue-300 dark:border-sky-500/30 shadow-xs'
+                  : 'bg-white dark:bg-[#222b42] border-slate-200 dark:border-white/10 hover:border-slate-300'
               }`}
             >
               <div className="flex items-start gap-3.5">
@@ -440,9 +440,9 @@ export const TeacherManagementTab: React.FC<TeacherManagementTabProps> = ({
 
                 <div className="space-y-1">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="font-extrabold text-slate-900 text-sm">{user.nama}</span>
+                    <span className="font-extrabold text-slate-900 dark:text-white text-sm">{user.nama}</span>
                     {user.jawatan && (
-                      <span className="text-[11px] font-bold text-slate-700 px-2 py-0.5 rounded-md bg-slate-100">
+                      <span className="text-[11px] font-bold text-slate-700 dark:text-slate-200 px-2 py-0.5 rounded-md bg-slate-100 dark:bg-[#161e31]">
                         {user.jawatan}
                       </span>
                     )}
@@ -453,7 +453,7 @@ export const TeacherManagementTab: React.FC<TeacherManagementTabProps> = ({
                     )}
                   </div>
 
-                  <div className="flex flex-wrap items-center gap-3 text-[11px] text-slate-500">
+                  <div className="flex flex-wrap items-center gap-3 text-[11px] text-slate-500 dark:text-slate-400">
                     <span className="flex items-center gap-1 font-mono">
                       <Mail className="w-3.5 h-3.5 text-slate-400" />
                       <span>{user.emel}</span>
@@ -472,7 +472,7 @@ export const TeacherManagementTab: React.FC<TeacherManagementTabProps> = ({
                     ))}
 
                     {user.kelasDiajar && user.kelasDiajar.length > 0 && (
-                      <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-900 border border-emerald-200">
+                      <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-500/20 text-emerald-900 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-500/30">
                         Kelas: {user.kelasDiajar.map(c => c.replace('-', ' ').toUpperCase()).join(', ')}
                       </span>
                     )}
@@ -484,17 +484,17 @@ export const TeacherManagementTab: React.FC<TeacherManagementTabProps> = ({
                 <button
                   type="button"
                   onClick={() => onSwitchUser(user.uid)}
-                  className="px-3 py-1.5 rounded-lg border border-slate-300 text-slate-700 hover:bg-slate-100 font-bold text-xs transition-colors flex items-center gap-1.5"
+                  className="px-3 py-1.5 rounded-lg border border-slate-300 dark:border-white/15 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#2a3552] font-bold text-xs transition-colors flex items-center gap-1.5"
                   title="Tukar sesi aktif untuk menguji kebenaran peranan ini"
                 >
-                  <UserCheck className="w-3.5 h-3.5 text-slate-500" />
+                  <UserCheck className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
                   <span>Guna Akaun Ini</span>
                 </button>
 
                 <button
                   type="button"
                   onClick={() => openEditModal(user)}
-                  className="px-3 py-1.5 rounded-lg bg-blue-50 text-blue-800 hover:bg-blue-100 font-bold text-xs border border-blue-200 transition-colors flex items-center gap-1.5"
+                  className="px-3 py-1.5 rounded-lg bg-blue-50 dark:bg-sky-500/15 text-blue-800 dark:text-sky-300 hover:bg-blue-100 font-bold text-xs border border-blue-200 dark:border-sky-500/30 transition-colors flex items-center gap-1.5"
                 >
                   <Edit2 className="w-3.5 h-3.5" />
                   <span>Sunting</span>
@@ -514,10 +514,10 @@ export const TeacherManagementTab: React.FC<TeacherManagementTabProps> = ({
         })}
 
         {filteredUsers.length === 0 && (
-          <div className="p-8 text-center bg-slate-50 rounded-2xl border border-dashed border-slate-300 space-y-2">
+          <div className="p-8 text-center bg-slate-50 dark:bg-[#1b2337] rounded-2xl border border-dashed border-slate-300 dark:border-white/15 space-y-2">
             <Users className="w-8 h-8 text-slate-400 mx-auto" />
-            <p className="font-bold text-slate-700 text-sm">Tiada guru dijumpai.</p>
-            <p className="text-slate-500 text-xs">
+            <p className="font-bold text-slate-700 dark:text-slate-200 text-sm">Tiada guru dijumpai.</p>
+            <p className="text-slate-500 dark:text-slate-400 text-xs">
               Cuba tukar kata carian atau daftar guru baharu menggunakan butang di atas.
             </p>
           </div>
@@ -527,15 +527,15 @@ export const TeacherManagementTab: React.FC<TeacherManagementTabProps> = ({
       {/* ================= MODAL 1: DAFTAR GURU BAHARU ================= */}
       {showAddModal && (
         <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 z-50 animate-in fade-in">
-          <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 space-y-4 text-xs max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div className="bg-white dark:bg-[#222b42] rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 dark:border-white/10 space-y-4 text-xs max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between border-b border-slate-100 dark:border-white/5 pb-3">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center font-bold">
+                <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-sky-500/20 text-blue-700 dark:text-sky-300 flex items-center justify-center font-bold">
                   <UserPlus className="w-4 h-4" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-extrabold text-slate-900">Daftar Guru / Pentadbir Baharu</h3>
-                  <p className="text-[11px] text-slate-500">Kemasukan profil sebenar warga sekolah SMK Salaping</p>
+                  <h3 className="text-sm font-extrabold text-slate-900 dark:text-white">Daftar Guru / Pentadbir Baharu</h3>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">Kemasukan profil sebenar warga sekolah SMK Salaping</p>
                 </div>
               </div>
               <button
@@ -549,7 +549,7 @@ export const TeacherManagementTab: React.FC<TeacherManagementTabProps> = ({
 
             <form onSubmit={handleCreateUser} className="space-y-4">
               <div>
-                <label className="font-bold text-slate-800 block mb-1">
+                <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">
                   Nama Penuh Guru / Pentadbir <span className="text-rose-600">*</span>
                 </label>
                 <input
@@ -558,13 +558,13 @@ export const TeacherManagementTab: React.FC<TeacherManagementTabProps> = ({
                   placeholder="Contoh: Cikgu Mohamad Faizal Bin Salleh"
                   value={addName}
                   onChange={e => setAddName(e.target.value)}
-                  className="w-full border border-slate-300 rounded-xl p-2.5 font-bold text-slate-900"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2.5 font-bold text-slate-900 dark:text-white"
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="font-bold text-slate-800 block mb-1">
+                  <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">
                     Jawatan Rasmi Sekolah
                   </label>
                   <input
@@ -572,12 +572,12 @@ export const TeacherManagementTab: React.FC<TeacherManagementTabProps> = ({
                     placeholder="Contoh: Guru Kelas, Penolong Kanan, GBK"
                     value={addJawatan}
                     onChange={e => setAddJawatan(e.target.value)}
-                    className="w-full border border-slate-300 rounded-xl p-2.5 text-slate-800"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2.5 text-slate-800 dark:text-slate-100"
                   />
                 </div>
 
                 <div>
-                  <label className="font-bold text-slate-800 block mb-1">
+                  <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">
                     No. Telefon / WhatsApp
                   </label>
                   <input
@@ -585,13 +585,13 @@ export const TeacherManagementTab: React.FC<TeacherManagementTabProps> = ({
                     placeholder="Contoh: 013-8889999"
                     value={addPhone}
                     onChange={e => setAddPhone(e.target.value)}
-                    className="w-full border border-slate-300 rounded-xl p-2.5 text-slate-800 font-mono"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2.5 text-slate-800 dark:text-slate-100 font-mono"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="font-bold text-slate-800 block mb-1">
+                <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">
                   Alamat E-mel Rasmi DELIMa KPM (@moe-dl.edu.my)
                 </label>
                 <input
@@ -599,7 +599,7 @@ export const TeacherManagementTab: React.FC<TeacherManagementTabProps> = ({
                   placeholder="Contoh: g-12345678@moe-dl.edu.my (autogen jika kosong)"
                   value={addEmail}
                   onChange={e => setAddEmail(e.target.value)}
-                  className="w-full border border-slate-300 rounded-xl p-2.5 font-mono text-slate-800"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2.5 font-mono text-slate-800 dark:text-slate-100"
                 />
                 <span className="text-[10px] text-slate-400 mt-1 block">
                   Jika dikosongkan, e-mel DELIMa rasmi guru akan dijana secara automatik.
@@ -607,10 +607,10 @@ export const TeacherManagementTab: React.FC<TeacherManagementTabProps> = ({
               </div>
 
               <div>
-                <label className="font-bold text-slate-800 block mb-1">
+                <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">
                   Pilih Peranan Dipertanggungjawabkan (Boleh pilih lebih dari satu):
                 </label>
-                <div className="grid grid-cols-2 gap-2 p-3 bg-slate-50 border border-slate-200 rounded-xl max-h-48 overflow-y-auto">
+                <div className="grid grid-cols-2 gap-2 p-3 bg-slate-50 dark:bg-[#1b2337] border border-slate-200 dark:border-white/10 rounded-xl max-h-48 overflow-y-auto">
                   {(Object.keys(ROLE_LABELS) as UserRole[]).map(r => (
                     <label key={r} className="flex items-center gap-2 cursor-pointer text-[11px] p-1 rounded hover:bg-white">
                       <input
@@ -625,7 +625,7 @@ export const TeacherManagementTab: React.FC<TeacherManagementTabProps> = ({
                         }}
                         className="rounded accent-blue-600 w-4 h-4"
                       />
-                      <span className="font-semibold text-slate-800">{ROLE_LABELS[r].title}</span>
+                      <span className="font-semibold text-slate-800 dark:text-slate-100">{ROLE_LABELS[r].title}</span>
                     </label>
                   ))}
                 </div>
@@ -633,10 +633,10 @@ export const TeacherManagementTab: React.FC<TeacherManagementTabProps> = ({
 
               {addRoles.includes('guru_kelas') && (
                 <div>
-                  <label className="font-bold text-slate-800 block mb-1">
+                  <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">
                     Kelas Dipertanggungjawabkan (Guru Kelas):
                   </label>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 p-3 bg-blue-50/50 border border-blue-200 rounded-xl">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 p-3 bg-blue-50/50 dark:bg-sky-500/15 border border-blue-200 dark:border-sky-500/30 rounded-xl">
                     {classesList.map(c => {
                       const isAssigned = addClasses.includes(c.id);
                       return (
@@ -653,7 +653,7 @@ export const TeacherManagementTab: React.FC<TeacherManagementTabProps> = ({
                             }}
                             className="rounded accent-blue-600"
                           />
-                          <span className="font-bold text-slate-800">{c.nama}</span>
+                          <span className="font-bold text-slate-800 dark:text-slate-100">{c.nama}</span>
                         </label>
                       );
                     })}
@@ -661,11 +661,11 @@ export const TeacherManagementTab: React.FC<TeacherManagementTabProps> = ({
                 </div>
               )}
 
-              <div className="flex justify-end gap-2 pt-3 border-t border-slate-100">
+              <div className="flex justify-end gap-2 pt-3 border-t border-slate-100 dark:border-white/5">
                 <button
                   type="button"
                   onClick={() => setShowAddModal(false)}
-                  className="px-4 py-2 border border-slate-300 text-slate-700 font-bold rounded-xl"
+                  className="px-4 py-2 border border-slate-300 dark:border-white/15 text-slate-700 dark:text-slate-200 font-bold rounded-xl"
                 >
                   Batal
                 </button>
@@ -686,15 +686,15 @@ export const TeacherManagementTab: React.FC<TeacherManagementTabProps> = ({
       {/* ================= MODAL 2: SUNTING GURU ================= */}
       {showEditModal && (
         <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 z-50 animate-in fade-in">
-          <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 space-y-4 text-xs max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div className="bg-white dark:bg-[#222b42] rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 dark:border-white/10 space-y-4 text-xs max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between border-b border-slate-100 dark:border-white/5 pb-3">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center font-bold">
+                <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-sky-500/20 text-blue-700 dark:text-sky-300 flex items-center justify-center font-bold">
                   <Edit2 className="w-4 h-4" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-extrabold text-slate-900">Sunting Maklumat Guru / Pentadbir</h3>
-                  <p className="text-[11px] text-slate-500">Kemaskini peranan, nama, dan kelas yang dipertanggungjawabkan</p>
+                  <h3 className="text-sm font-extrabold text-slate-900 dark:text-white">Sunting Maklumat Guru / Pentadbir</h3>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">Kemaskini peranan, nama, dan kelas yang dipertanggungjawabkan</p>
                 </div>
               </div>
               <button
@@ -708,7 +708,7 @@ export const TeacherManagementTab: React.FC<TeacherManagementTabProps> = ({
 
             <form onSubmit={handleSaveEdit} className="space-y-4">
               <div>
-                <label className="font-bold text-slate-800 block mb-1">
+                <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">
                   Nama Penuh Guru <span className="text-rose-600">*</span>
                 </label>
                 <input
@@ -716,38 +716,38 @@ export const TeacherManagementTab: React.FC<TeacherManagementTabProps> = ({
                   required
                   value={editName}
                   onChange={e => setEditName(e.target.value)}
-                  className="w-full border border-slate-300 rounded-xl p-2.5 font-bold text-slate-900"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2.5 font-bold text-slate-900 dark:text-white"
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="font-bold text-slate-800 block mb-1">
+                  <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">
                     Jawatan Rasmi Sekolah
                   </label>
                   <input
                     type="text"
                     value={editJawatan}
                     onChange={e => setEditJawatan(e.target.value)}
-                    className="w-full border border-slate-300 rounded-xl p-2.5 text-slate-800"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2.5 text-slate-800 dark:text-slate-100"
                   />
                 </div>
 
                 <div>
-                  <label className="font-bold text-slate-800 block mb-1">
+                  <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">
                     No. Telefon / WhatsApp
                   </label>
                   <input
                     type="tel"
                     value={editPhone}
                     onChange={e => setEditPhone(e.target.value)}
-                    className="w-full border border-slate-300 rounded-xl p-2.5 text-slate-800 font-mono"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2.5 text-slate-800 dark:text-slate-100 font-mono"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="font-bold text-slate-800 block mb-1">
+                <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">
                   Alamat E-mel Rasmi
                 </label>
                 <input
@@ -755,15 +755,15 @@ export const TeacherManagementTab: React.FC<TeacherManagementTabProps> = ({
                   required
                   value={editEmail}
                   onChange={e => setEditEmail(e.target.value)}
-                  className="w-full border border-slate-300 rounded-xl p-2.5 font-mono text-slate-800"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2.5 font-mono text-slate-800 dark:text-slate-100"
                 />
               </div>
 
               <div>
-                <label className="font-bold text-slate-800 block mb-1">
+                <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">
                   Pilih Peranan Bertanggungjawab (RBAC):
                 </label>
-                <div className="grid grid-cols-2 gap-2 p-3 bg-slate-50 border border-slate-200 rounded-xl max-h-48 overflow-y-auto">
+                <div className="grid grid-cols-2 gap-2 p-3 bg-slate-50 dark:bg-[#1b2337] border border-slate-200 dark:border-white/10 rounded-xl max-h-48 overflow-y-auto">
                   {(Object.keys(ROLE_LABELS) as UserRole[]).map(r => (
                     <label key={r} className="flex items-center gap-2 cursor-pointer text-[11px] p-1 rounded hover:bg-white">
                       <input
@@ -778,7 +778,7 @@ export const TeacherManagementTab: React.FC<TeacherManagementTabProps> = ({
                         }}
                         className="rounded accent-blue-600 w-4 h-4"
                       />
-                      <span className="font-semibold text-slate-800">{ROLE_LABELS[r].title}</span>
+                      <span className="font-semibold text-slate-800 dark:text-slate-100">{ROLE_LABELS[r].title}</span>
                     </label>
                   ))}
                 </div>
@@ -786,10 +786,10 @@ export const TeacherManagementTab: React.FC<TeacherManagementTabProps> = ({
 
               {editRoles.includes('guru_kelas') && (
                 <div>
-                  <label className="font-bold text-slate-800 block mb-1">
+                  <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">
                     Kelas Dipertanggungjawabkan (Guru Kelas):
                   </label>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 p-3 bg-blue-50/50 border border-blue-200 rounded-xl">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 p-3 bg-blue-50/50 dark:bg-sky-500/15 border border-blue-200 dark:border-sky-500/30 rounded-xl">
                     {classesList.map(c => {
                       const isAssigned = editClasses.includes(c.id);
                       return (
@@ -806,7 +806,7 @@ export const TeacherManagementTab: React.FC<TeacherManagementTabProps> = ({
                             }}
                             className="rounded accent-blue-600"
                           />
-                          <span className="font-bold text-slate-800">{c.nama}</span>
+                          <span className="font-bold text-slate-800 dark:text-slate-100">{c.nama}</span>
                         </label>
                       );
                     })}
@@ -814,11 +814,11 @@ export const TeacherManagementTab: React.FC<TeacherManagementTabProps> = ({
                 </div>
               )}
 
-              <div className="flex justify-end gap-2 pt-3 border-t border-slate-100">
+              <div className="flex justify-end gap-2 pt-3 border-t border-slate-100 dark:border-white/5">
                 <button
                   type="button"
                   onClick={() => setShowEditModal(false)}
-                  className="px-4 py-2 border border-slate-300 text-slate-700 font-bold rounded-xl"
+                  className="px-4 py-2 border border-slate-300 dark:border-white/15 text-slate-700 dark:text-slate-200 font-bold rounded-xl"
                 >
                   Batal
                 </button>
@@ -839,15 +839,15 @@ export const TeacherManagementTab: React.FC<TeacherManagementTabProps> = ({
       {/* ================= MODAL 3: IMPORT PUKAL SENARAI GURU ================= */}
       {showBulkModal && (
         <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 z-50 animate-in fade-in">
-          <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 space-y-4 text-xs">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div className="bg-white dark:bg-[#222b42] rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 dark:border-white/10 space-y-4 text-xs">
+            <div className="flex items-center justify-between border-b border-slate-100 dark:border-white/5 pb-3">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold">
+                <div className="w-8 h-8 rounded-lg bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 flex items-center justify-center font-bold">
                   <FileSpreadsheet className="w-4 h-4" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-extrabold text-slate-900">Import Pukal Senarai Guru</h3>
-                  <p className="text-[11px] text-slate-500">Tampal senarai nama guru dari Excel / e-Operasi / idMe KPM</p>
+                  <h3 className="text-sm font-extrabold text-slate-900 dark:text-white">Import Pukal Senarai Guru</h3>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">Tampal senarai nama guru dari Excel / e-Operasi / idMe KPM</p>
                 </div>
               </div>
               <button
@@ -861,13 +861,13 @@ export const TeacherManagementTab: React.FC<TeacherManagementTabProps> = ({
 
             <form onSubmit={handleBulkImport} className="space-y-4">
               <div>
-                <label className="font-bold text-slate-800 block mb-1">
+                <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">
                   Peranan Asas untuk Senarai Ini:
                 </label>
                 <select
                   value={bulkDefaultRole}
                   onChange={e => setBulkDefaultRole(e.target.value as UserRole)}
-                  className="w-full border border-slate-300 rounded-xl p-2 font-bold text-slate-800 bg-slate-50"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2 font-bold text-slate-800 dark:text-slate-100 bg-slate-50 dark:bg-[#1b2337]"
                 >
                   <option value="guru_kelas">Guru Kelas</option>
                   <option value="guru_biasa">Guru Akademik / Biasa</option>
@@ -878,7 +878,7 @@ export const TeacherManagementTab: React.FC<TeacherManagementTabProps> = ({
               </div>
 
               <div>
-                <label className="font-bold text-slate-800 block mb-1">
+                <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">
                   Tampal Senarai Nama Guru (Satu baris untuk setiap guru):
                 </label>
                 <textarea
@@ -887,18 +887,18 @@ export const TeacherManagementTab: React.FC<TeacherManagementTabProps> = ({
                   placeholder={`Cikgu Ahmad Bin Ismail\nCikgu Siti Nurhaliza Binti Abdullah\nEn. Michael Tan\nPn. Dayangku Fatimah`}
                   value={bulkText}
                   onChange={e => setBulkText(e.target.value)}
-                  className="w-full border border-slate-300 rounded-xl p-3 font-mono text-xs text-slate-800 leading-relaxed"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-3 font-mono text-xs text-slate-800 dark:text-slate-100 leading-relaxed"
                 />
                 <span className="text-[10px] text-slate-400 mt-1 block">
                   Format: Cukup sekadar nama guru setiap baris. Emel rasmi sekolah akan dijana secara automatik.
                 </span>
               </div>
 
-              <div className="flex justify-end gap-2 pt-3 border-t border-slate-100">
+              <div className="flex justify-end gap-2 pt-3 border-t border-slate-100 dark:border-white/5">
                 <button
                   type="button"
                   onClick={() => setShowBulkModal(false)}
-                  className="px-4 py-2 border border-slate-300 text-slate-700 font-bold rounded-xl"
+                  className="px-4 py-2 border border-slate-300 dark:border-white/15 text-slate-700 dark:text-slate-200 font-bold rounded-xl"
                 >
                   Batal
                 </button>

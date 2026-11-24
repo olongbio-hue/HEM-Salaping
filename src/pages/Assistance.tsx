@@ -333,18 +333,18 @@ export const Assistance: React.FC = () => {
   return (
     <div className="p-3 sm:p-6 space-y-6 max-w-7xl mx-auto pb-24 lg:pb-12">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white dark:bg-[#222b42] p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-bold px-2 py-0.5 rounded bg-teal-100 text-teal-900">
+            <span className="text-xs font-bold px-2 py-0.5 rounded bg-teal-100 dark:bg-teal-500/20 text-teal-900 dark:text-teal-300">
               Unit Biasiswa & Kebajikan Murid (HEM Fasa 3)
             </span>
-            <span className="text-xs text-slate-500">Penyelaras: {school.namaPenyelarasBiasiswa || 'Penyelaras Biasiswa & Kebajikan'} • {school.nama}</span>
+            <span className="text-xs text-slate-500 dark:text-slate-400">Penyelaras: {school.namaPenyelarasBiasiswa || 'Penyelaras Biasiswa & Kebajikan'} • {school.nama}</span>
           </div>
-          <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+          <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
             Pengurusan Biasiswa & Agihan Bantuan
           </h1>
-          <p className="text-xs text-slate-500 mt-0.5">
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
             Pengesanan permohonan, kuota skim bantuan, penyerahan berakuan terima, semakan pertindihan, dan siling bajet
           </p>
         </div>
@@ -390,51 +390,51 @@ export const Assistance: React.FC = () => {
 
       {/* KPI Cards (Bajet vs Agihan & Statistik Kuota) */}
       <div className="grid grid-cols-2 lg:grid-cols-5 gap-3">
-        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
-          <span className="text-[11px] font-semibold text-slate-500 block">Penerima Unik</span>
-          <div className="text-2xl font-black text-slate-900 mt-1">{uniqueRecipients} Murid</div>
-          <p className="text-[10px] text-teal-700 mt-1 font-semibold truncate">
+        <div className="bg-white dark:bg-[#222b42] p-4 rounded-xl border border-slate-200 dark:border-white/10 shadow-xs">
+          <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block">Penerima Unik</span>
+          <div className="text-2xl font-black text-slate-900 dark:text-white mt-1">{uniqueRecipients} Murid</div>
+          <p className="text-[10px] text-teal-700 dark:text-teal-300 mt-1 font-semibold truncate">
             {overlappingStudents.length > 0 ? `⚠️ ${overlappingStudents.length} murid >1 bantuan` : 'Tiada pertindihan'}
           </p>
         </div>
 
-        <div className="bg-white p-4 rounded-xl border border-teal-200 bg-teal-50/20 shadow-xs">
-          <span className="text-[11px] font-semibold text-teal-800 block">Status Kuota Bantuan</span>
-          <div className="text-2xl font-black text-teal-900 mt-1">
-            {totalFilledQuota} / {totalQuotaAll} <span className="text-xs font-bold text-slate-500">Tempat</span>
+        <div className="bg-white dark:bg-[#222b42] p-4 rounded-xl border border-teal-200 dark:border-teal-500/30 bg-teal-50/20 dark:bg-teal-500/15 shadow-xs">
+          <span className="text-[11px] font-semibold text-teal-800 dark:text-teal-300 block">Status Kuota Bantuan</span>
+          <div className="text-2xl font-black text-teal-900 dark:text-teal-300 mt-1">
+            {totalFilledQuota} / {totalQuotaAll} <span className="text-xs font-bold text-slate-500 dark:text-slate-400">Tempat</span>
           </div>
-          <p className="text-[10px] text-teal-700 mt-1 font-bold">
+          <p className="text-[10px] text-teal-700 dark:text-teal-300 mt-1 font-bold">
             Baki: {totalRemainingQuota} kuota ({((totalFilledQuota / (totalQuotaAll || 1)) * 100).toFixed(0)}% terisi)
           </p>
         </div>
 
-        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
-          <span className="text-[11px] font-semibold text-slate-500 block">Siling Bajet Sasaran</span>
-          <div className="text-2xl font-black text-blue-900 mt-1">RM {totalDanaPeruntukan.toLocaleString()}</div>
-          <p className="text-[10px] text-slate-500 mt-1">{records.length} rekod diluluskan</p>
+        <div className="bg-white dark:bg-[#222b42] p-4 rounded-xl border border-slate-200 dark:border-white/10 shadow-xs">
+          <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block">Siling Bajet Sasaran</span>
+          <div className="text-2xl font-black text-blue-900 dark:text-sky-300 mt-1">RM {totalDanaPeruntukan.toLocaleString()}</div>
+          <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1">{records.length} rekod diluluskan</p>
         </div>
 
-        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
-          <span className="text-[11px] font-semibold text-slate-500 block">Dana Telah Diagih</span>
-          <div className="text-2xl font-black text-emerald-700 mt-1">RM {totalAgihanDone.toLocaleString()}</div>
+        <div className="bg-white dark:bg-[#222b42] p-4 rounded-xl border border-slate-200 dark:border-white/10 shadow-xs">
+          <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block">Dana Telah Diagih</span>
+          <div className="text-2xl font-black text-emerald-700 dark:text-emerald-300 mt-1">RM {totalAgihanDone.toLocaleString()}</div>
           <p className="text-[10px] text-emerald-600 mt-1 font-bold truncate">
             {totalDanaPeruntukan > 0 ? ((totalAgihanDone / totalDanaPeruntukan) * 100).toFixed(0) : 0}% telah serah akuan
           </p>
         </div>
 
-        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs col-span-2 lg:col-span-1">
-          <span className="text-[11px] font-semibold text-slate-500 block">Permohonan Semakan</span>
-          <div className="text-2xl font-black text-amber-700 mt-1">{applications.filter(a => a.status !== 'lulus' && a.status !== 'ditolak').length} Kes</div>
-          <p className="text-[10px] text-slate-500 mt-1">JBMS SMK Salaping</p>
+        <div className="bg-white dark:bg-[#222b42] p-4 rounded-xl border border-slate-200 dark:border-white/10 shadow-xs col-span-2 lg:col-span-1">
+          <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block">Permohonan Semakan</span>
+          <div className="text-2xl font-black text-amber-700 dark:text-amber-300 mt-1">{applications.filter(a => a.status !== 'lulus' && a.status !== 'ditolak').length} Kes</div>
+          <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1">JBMS SMK Salaping</p>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-2 bg-white p-1.5 rounded-2xl border border-slate-200 overflow-x-auto text-xs font-bold">
+      <div className="flex items-center gap-2 bg-white dark:bg-[#222b42] p-1.5 rounded-2xl border border-slate-200 dark:border-white/10 overflow-x-auto text-xs font-bold">
         <button
           onClick={() => setActiveTab('senarai')}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all whitespace-nowrap ${
-            activeTab === 'senarai' ? 'bg-teal-700 text-white shadow-xs' : 'text-slate-600 hover:bg-slate-100'
+            activeTab === 'senarai' ? 'bg-teal-700 text-white shadow-xs' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#2a3552]'
           }`}
         >
           <Award className="w-4 h-4" />
@@ -444,7 +444,7 @@ export const Assistance: React.FC = () => {
         <button
           onClick={() => setActiveTab('permohonan')}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all whitespace-nowrap ${
-            activeTab === 'permohonan' ? 'bg-teal-700 text-white shadow-xs' : 'text-slate-600 hover:bg-slate-100'
+            activeTab === 'permohonan' ? 'bg-teal-700 text-white shadow-xs' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#2a3552]'
           }`}
         >
           <FileText className="w-4 h-4" />
@@ -454,7 +454,7 @@ export const Assistance: React.FC = () => {
         <button
           onClick={() => setActiveTab('pertindihan')}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all whitespace-nowrap ${
-            activeTab === 'pertindihan' ? 'bg-teal-700 text-white shadow-xs' : 'text-slate-600 hover:bg-slate-100'
+            activeTab === 'pertindihan' ? 'bg-teal-700 text-white shadow-xs' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#2a3552]'
           }`}
         >
           <AlertTriangle className="w-4 h-4 text-amber-400" />
@@ -464,7 +464,7 @@ export const Assistance: React.FC = () => {
         <button
           onClick={() => setActiveTab('bajet')}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all whitespace-nowrap ${
-            activeTab === 'bajet' ? 'bg-teal-700 text-white shadow-xs' : 'text-slate-600 hover:bg-slate-100'
+            activeTab === 'bajet' ? 'bg-teal-700 text-white shadow-xs' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#2a3552]'
           }`}
         >
           <PieIcon className="w-4 h-4" />
@@ -476,7 +476,7 @@ export const Assistance: React.FC = () => {
       {activeTab === 'senarai' && (
         <div className="space-y-4">
           {/* Filter Bar */}
-          <div className="bg-white p-3.5 rounded-xl border border-slate-200 shadow-xs flex flex-wrap items-center justify-between gap-3 text-xs">
+          <div className="bg-white dark:bg-[#222b42] p-3.5 rounded-xl border border-slate-200 dark:border-white/10 shadow-xs flex flex-wrap items-center justify-between gap-3 text-xs">
             <div className="relative flex-1 max-w-sm">
               <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
               <input
@@ -484,7 +484,7 @@ export const Assistance: React.FC = () => {
                 value={searchTerm}
                 onChange={e => setSearchTerm(e.target.value)}
                 placeholder="Cari nama murid, no. murid atau kelas..."
-                className="w-full pl-9 pr-3 py-2 border border-slate-300 rounded-lg outline-hidden"
+                className="w-full pl-9 pr-3 py-2 border border-slate-300 dark:border-white/15 rounded-lg outline-hidden"
               />
             </div>
 
@@ -492,7 +492,7 @@ export const Assistance: React.FC = () => {
               <select
                 value={filterType}
                 onChange={e => setFilterType(e.target.value)}
-                className="border border-slate-300 rounded-lg p-2 font-medium bg-slate-50"
+                className="border border-slate-300 dark:border-white/15 rounded-lg p-2 font-medium bg-slate-50 dark:bg-[#1b2337]"
               >
                 <option value="semua">Semua Jenis Bantuan</option>
                 {DEFAULT_ASSISTANCE_TYPES.map(t => (
@@ -505,7 +505,7 @@ export const Assistance: React.FC = () => {
               <select
                 value={filterYear}
                 onChange={e => setFilterYear(Number(e.target.value))}
-                className="border border-slate-300 rounded-lg p-2 font-bold bg-slate-50"
+                className="border border-slate-300 dark:border-white/15 rounded-lg p-2 font-bold bg-slate-50 dark:bg-[#1b2337]"
               >
                 <option value={2026}>Tahun 2026</option>
                 <option value={2025}>Tahun 2025</option>
@@ -514,10 +514,10 @@ export const Assistance: React.FC = () => {
           </div>
 
           {/* Table */}
-          <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+          <div className="bg-white dark:bg-[#222b42] rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
-                <thead className="bg-slate-100/75 text-slate-700 font-bold border-b border-slate-200">
+                <thead className="bg-slate-100/75 dark:bg-[#161e31] text-slate-700 dark:text-slate-200 font-bold border-b border-slate-200 dark:border-white/10">
                   <tr>
                     <th className="p-3">Bil</th>
                     <th className="p-3">Murid & Tingkatan</th>
@@ -529,38 +529,38 @@ export const Assistance: React.FC = () => {
                     <th className="p-3 text-right">Tindakan</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100">
+                <tbody className="divide-y divide-slate-100 dark:divide-white/5">
                   {filteredRecords.map((r, idx) => {
                     const stu = students.find(s => s.id === r.studentId);
                     const isReceived = r.statusAgihan === 'telah_terima';
 
                     return (
-                      <tr key={r.id} className="hover:bg-slate-50">
+                      <tr key={r.id} className="hover:bg-slate-50 dark:hover:bg-[#28334e]">
                         <td className="p-3 text-slate-400 font-mono">{idx + 1}</td>
                         <td className="p-3">
-                          <div className="font-bold text-slate-900">{stu?.nama || 'Murid'}</div>
-                          <div className="text-[11px] text-slate-500 font-mono">
+                          <div className="font-bold text-slate-900 dark:text-white">{stu?.nama || 'Murid'}</div>
+                          <div className="text-[11px] text-slate-500 dark:text-slate-400 font-mono">
                             {stu?.noMurid} • Tingkatan {stu?.kelas}
                           </div>
                         </td>
-                        <td className="p-3 text-slate-600">
+                        <td className="p-3 text-slate-600 dark:text-slate-300">
                           <div>{stu?.kampung}</div>
-                          <span className="text-[10px] font-black px-1.5 py-0.2 rounded bg-slate-100 text-slate-700">
+                          <span className="text-[10px] font-black px-1.5 py-0.2 rounded bg-slate-100 dark:bg-[#161e31] text-slate-700 dark:text-slate-200">
                             {stu?.kategoriPendapatan}
                           </span>
                         </td>
                         <td className="p-3">
-                          <span className="px-2 py-0.5 rounded font-black text-[10px] bg-teal-100 text-teal-900 border border-teal-200">
+                          <span className="px-2 py-0.5 rounded font-black text-[10px] bg-teal-100 dark:bg-teal-500/20 text-teal-900 dark:text-teal-300 border border-teal-200 dark:border-teal-500/30">
                             {r.jenisBantuan}
                           </span>
                         </td>
-                        <td className="p-3 font-black text-teal-800">RM {r.jumlahBantuan}</td>
+                        <td className="p-3 font-black text-teal-800 dark:text-teal-300">RM {r.jumlahBantuan}</td>
                         <td className="p-3">
                           <span
                             className={`px-2 py-0.5 rounded-full font-bold text-[10px] uppercase border ${
                               isReceived
-                                ? 'bg-emerald-50 text-emerald-800 border-emerald-300'
-                                : 'bg-amber-50 text-amber-800 border-amber-300'
+                                ? 'bg-emerald-50 dark:bg-emerald-500/15 text-emerald-800 dark:text-emerald-300 border-emerald-300 dark:border-emerald-500/30'
+                                : 'bg-amber-50 dark:bg-amber-500/15 text-amber-800 dark:text-amber-300 border-amber-300 dark:border-amber-500/30'
                             }`}
                           >
                             {isReceived ? 'Telah Diserah' : 'Belum Diserah'}
@@ -569,7 +569,7 @@ export const Assistance: React.FC = () => {
                         <td className="p-3">
                           {isReceived ? (
                             <div className="text-[11px]">
-                              <div className="font-semibold text-slate-900 flex items-center gap-1">
+                              <div className="font-semibold text-slate-900 dark:text-white flex items-center gap-1">
                                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
                                 <span>{r.namaPenjagaPenerima || 'Penjaga'}</span>
                               </div>
@@ -584,7 +584,7 @@ export const Assistance: React.FC = () => {
                             onClick={() => handleToggleReceived(r)}
                             className={`px-2.5 py-1.5 rounded-lg text-xs font-bold transition-colors ${
                               isReceived
-                                ? 'bg-slate-100 hover:bg-slate-200 text-slate-700'
+                                ? 'bg-slate-100 dark:bg-[#161e31] hover:bg-slate-200 dark:hover:bg-[#323f61] text-slate-700 dark:text-slate-200'
                                 : 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-xs'
                             }`}
                           >
@@ -611,11 +611,11 @@ export const Assistance: React.FC = () => {
       {/* ================= TAB 2: BORANG & STATUS PERMOHONAN ================= */}
       {activeTab === 'permohonan' && (
         <div className="space-y-4">
-          <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
-            <div className="p-4 border-b border-slate-200 flex items-center justify-between">
+          <div className="bg-white dark:bg-[#222b42] rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs overflow-hidden">
+            <div className="p-4 border-b border-slate-200 dark:border-white/10 flex items-center justify-between">
               <div>
-                <h3 className="text-sm font-bold text-slate-900">Senarai Permohonan Dalaman Murid (JBMS)</h3>
-                <p className="text-xs text-slate-500">Aliran kelulusan: Baharu &rarr; Disemak &rarr; Disyorkan &rarr; Lulus / Ditolak</p>
+                <h3 className="text-sm font-bold text-slate-900 dark:text-white">Senarai Permohonan Dalaman Murid (JBMS)</h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Aliran kelulusan: Baharu &rarr; Disemak &rarr; Disyorkan &rarr; Lulus / Ditolak</p>
               </div>
               <button
                 onClick={() => setShowApplyModal(true)}
@@ -628,7 +628,7 @@ export const Assistance: React.FC = () => {
 
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
-                <thead className="bg-slate-100/75 text-slate-700 font-bold border-b border-slate-200">
+                <thead className="bg-slate-100/75 dark:bg-[#161e31] text-slate-700 dark:text-slate-200 font-bold border-b border-slate-200 dark:border-white/10">
                   <tr>
                     <th className="p-3">Murid</th>
                     <th className="p-3">Skim Bantuan</th>
@@ -638,21 +638,21 @@ export const Assistance: React.FC = () => {
                     <th className="p-3">Tindakan Kelulusan</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100">
+                <tbody className="divide-y divide-slate-100 dark:divide-white/5">
                   {applications.map(app => {
                     const stu = students.find(s => s.id === app.studentId);
                     return (
-                      <tr key={app.id} className="hover:bg-slate-50">
+                      <tr key={app.id} className="hover:bg-slate-50 dark:hover:bg-[#28334e]">
                         <td className="p-3">
-                          <div className="font-bold text-slate-900">{stu?.nama || 'Murid'}</div>
-                          <div className="text-[11px] text-slate-500">
+                          <div className="font-bold text-slate-900 dark:text-white">{stu?.nama || 'Murid'}</div>
+                          <div className="text-[11px] text-slate-500 dark:text-slate-400">
                             {stu?.kelas} • {stu?.kampung} ({stu?.kategoriPendapatan})
                           </div>
                         </td>
-                        <td className="p-3 font-semibold text-teal-800">{app.jenisBantuan}</td>
-                        <td className="p-3 text-slate-600 max-w-xs">{app.sebab}</td>
+                        <td className="p-3 font-semibold text-teal-800 dark:text-teal-300">{app.jenisBantuan}</td>
+                        <td className="p-3 text-slate-600 dark:text-slate-300 max-w-xs">{app.sebab}</td>
                         <td className="p-3">
-                          <span className="font-mono text-[10px] text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200 flex items-center gap-1 w-max">
+                          <span className="font-mono text-[10px] text-blue-700 dark:text-sky-300 bg-blue-50 dark:bg-sky-500/15 px-2 py-0.5 rounded border border-blue-200 dark:border-sky-500/30 flex items-center gap-1 w-max">
                             <FileText className="w-3 h-3" />
                             <span>{app.dokumenSokongan || 'Borang Pengesahan'}</span>
                           </span>
@@ -661,12 +661,12 @@ export const Assistance: React.FC = () => {
                           <span
                             className={`px-2 py-0.5 rounded-full font-extrabold text-[10px] uppercase ${
                               app.status === 'lulus'
-                                ? 'bg-emerald-100 text-emerald-800'
+                                ? 'bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300'
                                 : app.status === 'ditolak'
-                                ? 'bg-red-100 text-red-800'
+                                ? 'bg-red-100 dark:bg-red-500/20 text-red-800 dark:text-red-300'
                                 : app.status === 'disyorkan'
-                                ? 'bg-blue-100 text-blue-800'
-                                : 'bg-amber-100 text-amber-800'
+                                ? 'bg-blue-100 dark:bg-sky-500/20 text-blue-800 dark:text-sky-300'
+                                : 'bg-amber-100 dark:bg-amber-500/20 text-amber-800 dark:text-amber-300'
                             }`}
                           >
                             {app.status}
@@ -695,7 +695,7 @@ export const Assistance: React.FC = () => {
                               {app.status !== 'ditolak' && (
                                 <button
                                   onClick={() => handleUpdateAppStatus(app, 'ditolak')}
-                                  className="px-2 py-1 bg-red-100 hover:bg-red-200 text-red-800 rounded font-bold text-[10px]"
+                                  className="px-2 py-1 bg-red-100 dark:bg-red-500/20 hover:bg-red-200 text-red-800 dark:text-red-300 rounded font-bold text-[10px]"
                                 >
                                   Tolak
                                 </button>
@@ -718,7 +718,7 @@ export const Assistance: React.FC = () => {
       {/* ================= TAB 3: SEMAK PERTINDIHAN ================= */}
       {activeTab === 'pertindihan' && (
         <div className="space-y-4">
-          <div className="p-4 bg-amber-50 border border-amber-200 rounded-2xl flex items-start gap-3 text-xs text-amber-900">
+          <div className="p-4 bg-amber-50 dark:bg-amber-500/15 border border-amber-200 dark:border-amber-500/30 rounded-2xl flex items-start gap-3 text-xs text-amber-900 dark:text-amber-300">
             <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
             <div>
               <strong className="block text-sm font-bold">Enjin Pengesanan Pertindihan Agihan Bantuan</strong>
@@ -728,14 +728,14 @@ export const Assistance: React.FC = () => {
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
-            <div className="p-4 border-b border-slate-200">
-              <h3 className="text-sm font-bold text-slate-900">
+          <div className="bg-white dark:bg-[#222b42] rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs overflow-hidden">
+            <div className="p-4 border-b border-slate-200 dark:border-white/10">
+              <h3 className="text-sm font-bold text-slate-900 dark:text-white">
                 Murid Menerima Lebih Daripada Satu (1) Bantuan ({overlappingStudents.length} Orang)
               </h3>
             </div>
 
-            <div className="divide-y divide-slate-100">
+            <div className="divide-y divide-slate-100 dark:divide-white/5">
               {overlappingStudents.map(([studentId, recs]) => {
                 const stu = students.find(s => s.id === studentId);
                 const totalReceived = recs.reduce((a, b) => a + b.jumlahBantuan, 0);
@@ -743,8 +743,8 @@ export const Assistance: React.FC = () => {
                 return (
                   <div key={studentId} className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
                     <div>
-                      <div className="font-extrabold text-sm text-slate-900">{stu?.nama}</div>
-                      <div className="text-slate-500 text-[11px]">
+                      <div className="font-extrabold text-sm text-slate-900 dark:text-white">{stu?.nama}</div>
+                      <div className="text-slate-500 dark:text-slate-400 text-[11px]">
                         Tingkatan {stu?.kelas} • {stu?.kampung} • Kategori: <strong>{stu?.kategoriPendapatan}</strong>
                       </div>
 
@@ -752,7 +752,7 @@ export const Assistance: React.FC = () => {
                         {recs.map(r => (
                           <span
                             key={r.id}
-                            className="px-2 py-0.5 rounded font-bold text-[10px] bg-teal-100 text-teal-900 border border-teal-300"
+                            className="px-2 py-0.5 rounded font-bold text-[10px] bg-teal-100 dark:bg-teal-500/20 text-teal-900 dark:text-teal-300 border border-teal-300 dark:border-teal-500/30"
                           >
                             {r.jenisBantuan} (RM{r.jumlahBantuan})
                           </span>
@@ -761,15 +761,15 @@ export const Assistance: React.FC = () => {
                     </div>
 
                     <div className="text-right shrink-0">
-                      <span className="text-slate-500 text-[10px] block">Jumlah Terkumpul:</span>
-                      <span className="text-base font-black text-teal-800">RM {totalReceived}</span>
+                      <span className="text-slate-500 dark:text-slate-400 text-[10px] block">Jumlah Terkumpul:</span>
+                      <span className="text-base font-black text-teal-800 dark:text-teal-300">RM {totalReceived}</span>
                     </div>
                   </div>
                 );
               })}
 
               {overlappingStudents.length === 0 && (
-                <div className="p-8 text-center text-slate-500 text-xs">
+                <div className="p-8 text-center text-slate-500 dark:text-slate-400 text-xs">
                   Tiada pertindihan agihan dikesan. Semua murid menerima maksimum 1 bantuan.
                 </div>
               )}
@@ -834,19 +834,19 @@ export const Assistance: React.FC = () => {
               return (
                 <div
                   key={type}
-                  className={`bg-white p-5 rounded-2xl border transition-all space-y-3.5 text-xs shadow-xs hover:shadow-md ${
+                  className={`bg-white dark:bg-[#222b42] p-5 rounded-2xl border transition-all space-y-3.5 text-xs shadow-xs hover:shadow-md ${
                     isQuotaExceeded
-                      ? 'border-red-300 ring-1 ring-red-200'
+                      ? 'border-red-300 dark:border-red-500/30 ring-1 ring-red-200'
                       : isQuotaFull
-                      ? 'border-amber-300'
-                      : 'border-slate-200'
+                      ? 'border-amber-300 dark:border-amber-500/30'
+                      : 'border-slate-200 dark:border-white/10'
                   }`}
                 >
                   {/* Card Header */}
                   <div className="flex items-start justify-between gap-2">
                     <div className="space-y-0.5">
-                      <h4 className="font-extrabold text-slate-900 text-sm leading-tight">{type}</h4>
-                      <span className="text-[10px] font-semibold text-slate-500 block">
+                      <h4 className="font-extrabold text-slate-900 dark:text-white text-sm leading-tight">{type}</h4>
+                      <span className="text-[10px] font-semibold text-slate-500 dark:text-slate-400 block">
                         Sumber: {bConfig.sumber || 'KPM'}
                       </span>
                     </div>
@@ -855,12 +855,12 @@ export const Assistance: React.FC = () => {
                     <span
                       className={`px-2.5 py-1 rounded-full font-black text-[10px] shrink-0 border ${
                         isQuotaExceeded
-                          ? 'bg-red-100 text-red-800 border-red-300'
+                          ? 'bg-red-100 dark:bg-red-500/20 text-red-800 dark:text-red-300 border-red-300 dark:border-red-500/30'
                           : isQuotaFull
-                          ? 'bg-amber-100 text-amber-800 border-amber-300'
+                          ? 'bg-amber-100 dark:bg-amber-500/20 text-amber-800 dark:text-amber-300 border-amber-300 dark:border-amber-500/30'
                           : isNearQuota
                           ? 'bg-yellow-100 text-yellow-800 border-yellow-300'
-                          : 'bg-emerald-100 text-emerald-800 border-emerald-300'
+                          : 'bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 border-emerald-300 dark:border-emerald-500/30'
                       }`}
                     >
                       {isQuotaExceeded
@@ -874,18 +874,18 @@ export const Assistance: React.FC = () => {
                   </div>
 
                   {/* Quota Gauge (Murid) */}
-                  <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 space-y-1.5">
+                  <div className="p-3 rounded-xl bg-slate-50 dark:bg-[#1b2337] border border-slate-100 dark:border-white/5 space-y-1.5">
                     <div className="flex items-center justify-between text-[11px]">
-                      <span className="font-semibold text-slate-600 flex items-center gap-1">
-                        <Users className="w-3.5 h-3.5 text-teal-700" />
+                      <span className="font-semibold text-slate-600 dark:text-slate-300 flex items-center gap-1">
+                        <Users className="w-3.5 h-3.5 text-teal-700 dark:text-teal-300" />
                         <span>Pengisian Kuota Murid:</span>
                       </span>
-                      <span className="font-black text-slate-900">
+                      <span className="font-black text-slate-900 dark:text-white">
                         {filled} / {kuota} Murid ({((filled / kuota) * 100).toFixed(0)}%)
                       </span>
                     </div>
 
-                    <div className="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
+                    <div className="w-full bg-slate-200 dark:bg-[#2a3552] h-2.5 rounded-full overflow-hidden">
                       <div
                         className={`h-full rounded-full transition-all ${
                           isQuotaExceeded
@@ -900,9 +900,9 @@ export const Assistance: React.FC = () => {
                       />
                     </div>
 
-                    <div className="flex items-center justify-between text-[10px] text-slate-500 pt-0.5">
+                    <div className="flex items-center justify-between text-[10px] text-slate-500 dark:text-slate-400 pt-0.5">
                       <span>{filled} penerima berdaftar</span>
-                      <span className={remainingQuota <= 0 ? 'font-bold text-red-600' : 'text-emerald-700 font-semibold'}>
+                      <span className={remainingQuota <= 0 ? 'font-bold text-red-600' : 'text-emerald-700 dark:text-emerald-300 font-semibold'}>
                         {remainingQuota > 0 ? `${remainingQuota} kekosongan kuota` : 'Tiada baki kuota'}
                       </span>
                     </div>
@@ -910,20 +910,20 @@ export const Assistance: React.FC = () => {
 
                   {/* Financial & Siling Bajet */}
                   <div className="space-y-1.5 pt-1">
-                    <div className="flex justify-between text-slate-500 text-[11px]">
+                    <div className="flex justify-between text-slate-500 dark:text-slate-400 text-[11px]">
                       <span>Kadar Bantuan:</span>
-                      <span className="font-bold text-slate-800">
+                      <span className="font-bold text-slate-800 dark:text-slate-100">
                         {bConfig.perMurid > 0 ? `RM ${bConfig.perMurid} / murid` : 'Bukan Tunai (Buku)'}
                       </span>
                     </div>
-                    <div className="flex justify-between text-slate-500 text-[11px]">
+                    <div className="flex justify-between text-slate-500 dark:text-slate-400 text-[11px]">
                       <span>Dana Diagihkan:</span>
-                      <span className="font-black text-teal-800">RM {totalUsed.toLocaleString()}</span>
+                      <span className="font-black text-teal-800 dark:text-teal-300">RM {totalUsed.toLocaleString()}</span>
                     </div>
                     {bConfig.peruntukanSekolah > 0 && (
-                      <div className="flex justify-between text-slate-500 text-[11px]">
+                      <div className="flex justify-between text-slate-500 dark:text-slate-400 text-[11px]">
                         <span>Siling Peruntukan:</span>
-                        <span className="font-bold text-slate-800">RM {bConfig.peruntukanSekolah.toLocaleString()}</span>
+                        <span className="font-bold text-slate-800 dark:text-slate-100">RM {bConfig.peruntukanSekolah.toLocaleString()}</span>
                       </div>
                     )}
                   </div>
@@ -931,13 +931,13 @@ export const Assistance: React.FC = () => {
                   {/* Financial Bar */}
                   {bConfig.peruntukanSekolah > 0 && (
                     <div>
-                      <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                      <div className="w-full bg-slate-100 dark:bg-[#161e31] h-1.5 rounded-full overflow-hidden">
                         <div
                           className="bg-emerald-600 h-full rounded-full transition-all"
                           style={{ width: `${Math.min(percentUsed, 100)}%` }}
                         />
                       </div>
-                      <span className="text-[10px] text-slate-500 mt-1 block text-right font-medium">
+                      <span className="text-[10px] text-slate-500 dark:text-slate-400 mt-1 block text-right font-medium">
                         {percentUsed.toFixed(1)}% daripada siling dana
                       </span>
                     </div>
@@ -945,10 +945,10 @@ export const Assistance: React.FC = () => {
 
                   {/* Action button */}
                   {canManageAssistance && (
-                    <div className="pt-2 border-t border-slate-100 flex justify-end">
+                    <div className="pt-2 border-t border-slate-100 dark:border-white/5 flex justify-end">
                       <button
                         onClick={() => openEditQuotaModal(type)}
-                        className="flex items-center gap-1 text-[11px] font-bold text-teal-800 hover:text-teal-950 hover:underline"
+                        className="flex items-center gap-1 text-[11px] font-bold text-teal-800 dark:text-teal-300 hover:text-teal-950 hover:underline"
                       >
                         <Edit2 className="w-3.5 h-3.5" />
                         <span>Selaras Kuota & Siling</span>
@@ -965,9 +965,9 @@ export const Assistance: React.FC = () => {
       {/* ================= MODAL PERMOHONAN BAHARU ================= */}
       {showApplyModal && (
         <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4 z-50 animate-in fade-in">
-          <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 space-y-4 text-xs">
+          <div className="bg-white dark:bg-[#222b42] rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 dark:border-white/10 space-y-4 text-xs">
             <div className="flex items-center justify-between border-b pb-3">
-              <h3 className="text-base font-extrabold text-slate-900">Borang Permohonan Bantuan Dalaman</h3>
+              <h3 className="text-base font-extrabold text-slate-900 dark:text-white">Borang Permohonan Bantuan Dalaman</h3>
               <button onClick={() => setShowApplyModal(false)} className="p-1 text-slate-400 hover:text-slate-600">
                 <X className="w-5 h-5" />
               </button>
@@ -975,11 +975,11 @@ export const Assistance: React.FC = () => {
 
             <form onSubmit={handleCreateApplication} className="space-y-3.5">
               <div>
-                <label className="font-bold text-slate-800 block mb-1">Pilih Murid Pemohon:</label>
+                <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">Pilih Murid Pemohon:</label>
                 <select
                   value={applyStudentId}
                   onChange={e => setApplyStudentId(e.target.value)}
-                  className="w-full border border-slate-300 rounded-lg p-2 font-medium"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-medium"
                 >
                   {students.map(s => (
                     <option key={s.id} value={s.id}>
@@ -990,11 +990,11 @@ export const Assistance: React.FC = () => {
               </div>
 
               <div>
-                <label className="font-bold text-slate-800 block mb-1">Jenis Bantuan:</label>
+                <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">Jenis Bantuan:</label>
                 <select
                   value={applyJenis}
                   onChange={e => setApplyJenis(e.target.value)}
-                  className="w-full border border-slate-300 rounded-lg p-2 font-medium"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-medium"
                 >
                   {DEFAULT_ASSISTANCE_TYPES.map(t => (
                     <option key={t} value={t}>
@@ -1011,14 +1011,14 @@ export const Assistance: React.FC = () => {
                 const rem = (bConfig.kuotaMurid || 30) - filled;
                 const isFull = rem <= 0;
                 return (
-                  <div className={`p-3 rounded-xl border flex items-center justify-between ${isFull ? 'bg-red-50 border-red-200 text-red-900' : 'bg-teal-50 border-teal-200 text-teal-900'}`}>
+                  <div className={`p-3 rounded-xl border flex items-center justify-between ${isFull ? 'bg-red-50 dark:bg-red-500/15 border-red-200 dark:border-red-500/30 text-red-900 dark:text-red-300' : 'bg-teal-50 dark:bg-teal-500/15 border-teal-200 dark:border-teal-500/30 text-teal-900 dark:text-teal-300'}`}>
                     <div>
                       <span className="font-bold text-[11px] block">Status Kuota {applyJenis}:</span>
-                      <span className="text-[10px] text-slate-600">
+                      <span className="text-[10px] text-slate-600 dark:text-slate-300">
                         {filled} / {bConfig.kuotaMurid} murid terisi • Kadar: RM{bConfig.perMurid}
                       </span>
                     </div>
-                    <span className={`px-2 py-0.5 rounded font-black text-[10px] ${isFull ? 'bg-red-200 text-red-800' : 'bg-teal-200 text-teal-800'}`}>
+                    <span className={`px-2 py-0.5 rounded font-black text-[10px] ${isFull ? 'bg-red-200 text-red-800 dark:text-red-300' : 'bg-teal-200 text-teal-800 dark:text-teal-300'}`}>
                       {isFull ? 'KUOTA PENUH' : `Baki ${rem} Kuota`}
                     </span>
                   </div>
@@ -1026,24 +1026,24 @@ export const Assistance: React.FC = () => {
               })()}
 
               <div>
-                <label className="font-bold text-slate-800 block mb-1">Justifikasi / Sebab Permohonan:</label>
+                <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">Justifikasi / Sebab Permohonan:</label>
                 <textarea
                   rows={3}
                   required
                   value={applySebab}
                   onChange={e => setApplySebab(e.target.value)}
                   placeholder="Contoh: Bapa kehilangan punca pendapatan, tanggungan 6 anak bersekolah, kediaman pedalaman..."
-                  className="w-full border border-slate-300 rounded-lg p-2 font-medium"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-medium"
                 />
               </div>
 
               <div>
-                <label className="font-bold text-slate-800 block mb-1">Nama Fail / Dokumen Sokongan:</label>
+                <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">Nama Fail / Dokumen Sokongan:</label>
                 <input
                   type="text"
                   value={applyDocName}
                   onChange={e => setApplyDocName(e.target.value)}
-                  className="w-full border border-slate-300 rounded-lg p-2 font-mono text-[11px]"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-mono text-[11px]"
                 />
               </div>
 
@@ -1051,7 +1051,7 @@ export const Assistance: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setShowApplyModal(false)}
-                  className="px-4 py-2 border border-slate-300 text-slate-700 font-bold rounded-xl"
+                  className="px-4 py-2 border border-slate-300 dark:border-white/15 text-slate-700 dark:text-slate-200 font-bold rounded-xl"
                 >
                   Batal
                 </button>
@@ -1070,9 +1070,9 @@ export const Assistance: React.FC = () => {
       {/* ================= MODAL TAMBAH PENERIMA DIRECT ================= */}
       {showAddRecipientModal && (
         <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4 z-50 animate-in fade-in">
-          <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 space-y-4 text-xs">
+          <div className="bg-white dark:bg-[#222b42] rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 dark:border-white/10 space-y-4 text-xs">
             <div className="flex items-center justify-between border-b pb-3">
-              <h3 className="text-base font-extrabold text-slate-900">Daftar Penerima Bantuan Terus</h3>
+              <h3 className="text-base font-extrabold text-slate-900 dark:text-white">Daftar Penerima Bantuan Terus</h3>
               <button onClick={() => setShowAddRecipientModal(false)} className="p-1 text-slate-400 hover:text-slate-600">
                 <X className="w-5 h-5" />
               </button>
@@ -1080,11 +1080,11 @@ export const Assistance: React.FC = () => {
 
             <form onSubmit={handleAddDirectRecipient} className="space-y-3.5">
               <div>
-                <label className="font-bold text-slate-800 block mb-1">Pilih Murid:</label>
+                <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">Pilih Murid:</label>
                 <select
                   value={recStudentId}
                   onChange={e => setRecStudentId(e.target.value)}
-                  className="w-full border border-slate-300 rounded-lg p-2 font-medium"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-medium"
                 >
                   {students.map(s => (
                     <option key={s.id} value={s.id}>
@@ -1095,7 +1095,7 @@ export const Assistance: React.FC = () => {
               </div>
 
               <div>
-                <label className="font-bold text-slate-800 block mb-1">Jenis Bantuan:</label>
+                <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">Jenis Bantuan:</label>
                 <select
                   value={recJenis}
                   onChange={e => {
@@ -1104,7 +1104,7 @@ export const Assistance: React.FC = () => {
                     const b = budgets[t] || DEFAULT_ASSISTANCE_BUDGETS[t];
                     if (b) setRecJumlah(b.perMurid);
                   }}
-                  className="w-full border border-slate-300 rounded-lg p-2 font-medium"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-medium"
                 >
                   {DEFAULT_ASSISTANCE_TYPES.map(t => (
                     <option key={t} value={t}>
@@ -1121,14 +1121,14 @@ export const Assistance: React.FC = () => {
                 const rem = (bConfig.kuotaMurid || 30) - filled;
                 const isFull = rem <= 0;
                 return (
-                  <div className={`p-3 rounded-xl border flex items-center justify-between ${isFull ? 'bg-red-50 border-red-200 text-red-900' : 'bg-teal-50 border-teal-200 text-teal-900'}`}>
+                  <div className={`p-3 rounded-xl border flex items-center justify-between ${isFull ? 'bg-red-50 dark:bg-red-500/15 border-red-200 dark:border-red-500/30 text-red-900 dark:text-red-300' : 'bg-teal-50 dark:bg-teal-500/15 border-teal-200 dark:border-teal-500/30 text-teal-900 dark:text-teal-300'}`}>
                     <div>
                       <span className="font-bold text-[11px] block">Status Kuota {recJenis}:</span>
-                      <span className="text-[10px] text-slate-600">
+                      <span className="text-[10px] text-slate-600 dark:text-slate-300">
                         {filled} / {bConfig.kuotaMurid} murid terisi ({((filled / (bConfig.kuotaMurid || 1)) * 100).toFixed(0)}%)
                       </span>
                     </div>
-                    <span className={`px-2 py-0.5 rounded font-black text-[10px] ${isFull ? 'bg-red-200 text-red-800' : 'bg-teal-200 text-teal-800'}`}>
+                    <span className={`px-2 py-0.5 rounded font-black text-[10px] ${isFull ? 'bg-red-200 text-red-800 dark:text-red-300' : 'bg-teal-200 text-teal-800 dark:text-teal-300'}`}>
                       {isFull ? 'KUOTA PENUH' : `Baki ${rem} Kuota`}
                     </span>
                   </div>
@@ -1136,13 +1136,13 @@ export const Assistance: React.FC = () => {
               })()}
 
               <div>
-                <label className="font-bold text-slate-800 block mb-1">Kadar Amaun (RM):</label>
+                <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">Kadar Amaun (RM):</label>
                 <input
                   type="number"
                   required
                   value={recJumlah}
                   onChange={e => setRecJumlah(Number(e.target.value))}
-                  className="w-full border border-slate-300 rounded-lg p-2 font-black text-slate-900"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-black text-slate-900 dark:text-white"
                 />
               </div>
 
@@ -1150,7 +1150,7 @@ export const Assistance: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setShowAddRecipientModal(false)}
-                  className="px-4 py-2 border border-slate-300 text-slate-700 font-bold rounded-xl"
+                  className="px-4 py-2 border border-slate-300 dark:border-white/15 text-slate-700 dark:text-slate-200 font-bold rounded-xl"
                 >
                   Batal
                 </button>
@@ -1169,11 +1169,11 @@ export const Assistance: React.FC = () => {
       {/* ================= MODAL SELARAS KUOTA & SILING BAJET ================= */}
       {showQuotaModal && (
         <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4 z-50 animate-in fade-in">
-          <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 space-y-4 text-xs">
+          <div className="bg-white dark:bg-[#222b42] rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 dark:border-white/10 space-y-4 text-xs">
             <div className="flex items-center justify-between border-b pb-3">
               <div className="flex items-center gap-2">
-                <Sliders className="w-5 h-5 text-teal-700" />
-                <h3 className="text-base font-extrabold text-slate-900">Selaras Kuota & Siling Skim Bantuan</h3>
+                <Sliders className="w-5 h-5 text-teal-700 dark:text-teal-300" />
+                <h3 className="text-base font-extrabold text-slate-900 dark:text-white">Selaras Kuota & Siling Skim Bantuan</h3>
               </div>
               <button onClick={() => setShowQuotaModal(false)} className="p-1 text-slate-400 hover:text-slate-600">
                 <X className="w-5 h-5" />
@@ -1182,7 +1182,7 @@ export const Assistance: React.FC = () => {
 
             <form onSubmit={handleSaveQuota} className="space-y-3.5">
               <div>
-                <label className="font-bold text-slate-800 block mb-1">Pilih Jenis Skim Bantuan:</label>
+                <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">Pilih Jenis Skim Bantuan:</label>
                 <select
                   value={editingType}
                   onChange={e => {
@@ -1196,7 +1196,7 @@ export const Assistance: React.FC = () => {
                       setEditSumber(b.sumber || 'KPM');
                     }
                   }}
-                  className="w-full border border-slate-300 rounded-lg p-2 font-bold text-slate-900 bg-slate-50"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-bold text-slate-900 dark:text-white bg-slate-50 dark:bg-[#1b2337]"
                 >
                   {DEFAULT_ASSISTANCE_TYPES.map(t => (
                     <option key={t} value={t}>
@@ -1208,7 +1208,7 @@ export const Assistance: React.FC = () => {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="font-bold text-slate-800 block mb-1">
+                  <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">
                     Had Kuota Murid (Orang):
                   </label>
                   <input
@@ -1221,15 +1221,15 @@ export const Assistance: React.FC = () => {
                       setEditKuota(k);
                       if (editKadar > 0) setEditSiling(k * editKadar);
                     }}
-                    className="w-full border border-slate-300 rounded-lg p-2 font-black text-slate-900"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-black text-slate-900 dark:text-white"
                   />
-                  <span className="text-[10px] text-slate-500 mt-0.5 block">
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 block">
                     Kapasiti penerima diluluskan
                   </span>
                 </div>
 
                 <div>
-                  <label className="font-bold text-slate-800 block mb-1">
+                  <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">
                     Kadar Per Murid (RM):
                   </label>
                   <input
@@ -1242,16 +1242,16 @@ export const Assistance: React.FC = () => {
                       setEditKadar(r);
                       if (editKuota > 0) setEditSiling(editKuota * r);
                     }}
-                    className="w-full border border-slate-300 rounded-lg p-2 font-black text-slate-900"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-black text-slate-900 dark:text-white"
                   />
-                  <span className="text-[10px] text-slate-500 mt-0.5 block">
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 block">
                     Kadar peruntukan seorang murid
                   </span>
                 </div>
               </div>
 
               <div>
-                <label className="font-bold text-slate-800 block mb-1">
+                <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">
                   Siling Peruntukan Dana Sekolah (RM):
                 </label>
                 <input
@@ -1260,15 +1260,15 @@ export const Assistance: React.FC = () => {
                   required
                   value={editSiling}
                   onChange={e => setEditSiling(Number(e.target.value))}
-                  className="w-full border border-slate-300 rounded-lg p-2 font-black text-slate-900"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-black text-slate-900 dark:text-white"
                 />
-                <span className="text-[10px] text-slate-500 mt-0.5 block">
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 block">
                   Jumlah dana siling keseluruhan bagi skim ini
                 </span>
               </div>
 
               <div>
-                <label className="font-bold text-slate-800 block mb-1">
+                <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">
                   Sumber Pembiayaan / Agensi Penyalur:
                 </label>
                 <input
@@ -1277,11 +1277,11 @@ export const Assistance: React.FC = () => {
                   value={editSumber}
                   onChange={e => setEditSumber(e.target.value)}
                   placeholder="Contoh: KPM / Kerajaan Negeri Sabah / Tabung PIBG / MUIS"
-                  className="w-full border border-slate-300 rounded-lg p-2 font-medium text-slate-900"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-medium text-slate-900 dark:text-white"
                 />
               </div>
 
-              <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-amber-900 text-[11px] space-y-1">
+              <div className="p-3 bg-amber-50 dark:bg-amber-500/15 border border-amber-200 dark:border-amber-500/30 rounded-xl text-amber-900 dark:text-amber-300 text-[11px] space-y-1">
                 <span className="font-bold flex items-center gap-1">
                   <AlertTriangle className="w-3.5 h-3.5 text-amber-600" />
                   Nota Penyelarasan Kuota:
@@ -1295,7 +1295,7 @@ export const Assistance: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setShowQuotaModal(false)}
-                  className="px-4 py-2 border border-slate-300 text-slate-700 font-bold rounded-xl"
+                  className="px-4 py-2 border border-slate-300 dark:border-white/15 text-slate-700 dark:text-slate-200 font-bold rounded-xl"
                 >
                   Batal
                 </button>

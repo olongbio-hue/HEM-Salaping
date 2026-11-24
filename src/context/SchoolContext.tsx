@@ -17,6 +17,8 @@ interface SchoolContextType {
   dashboardSettings: DashboardSettings;
   loading: boolean;
   isOnline: boolean;
+  theme: 'dark' | 'light';
+  toggleTheme: () => void;
   lowDataMode: boolean;
   toggleLowDataMode: () => void;
   updateSchool: (newSettings: Partial<SchoolSettings>) => Promise<void>;
@@ -35,10 +37,30 @@ export const SchoolProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const [dashboardSettings, setDashboardSettings] = useState<DashboardSettings>(DEFAULT_DASHBOARD_SETTINGS);
   const [loading, setLoading] = useState(true);
   const [isOnline, setIsOnline] = useState(navigator.onLine);
+  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+    const saved = localStorage.getItem('hem_theme');
+    return saved === 'light' ? 'light' : 'dark';
+  });
   const [lowDataMode, setLowDataMode] = useState<boolean>(() => {
     return localStorage.getItem('hem_low_data_mode') === 'true';
   });
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' | 'info' } | null>(null);
+
+  const toggleTheme = () => {
+    setTheme(prev => {
+      const next = prev === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('hem_theme', next);
+      return next;
+    });
+  };
+
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [theme]);
 
   const toggleLowDataMode = () => {
     setLowDataMode(prev => {
@@ -162,6 +184,8 @@ export const SchoolProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         dashboardSettings,
         loading,
         isOnline,
+        theme,
+        toggleTheme,
         lowDataMode,
         toggleLowDataMode,
         updateSchool,

@@ -223,18 +223,18 @@ export const HealthSafety3K: React.FC = () => {
   return (
     <div className="p-3 sm:p-6 space-y-6 max-w-7xl mx-auto pb-24 lg:pb-12">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white dark:bg-[#222b42] p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-900">
+            <span className="text-xs font-bold px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-500/20 text-emerald-900 dark:text-emerald-300">
               Unit Kesihatan, Keselamatan & Kebersihan (3K)
             </span>
-            <span className="text-xs text-slate-500">HEM Fasa 3 • SMK Salaping</span>
+            <span className="text-xs text-slate-500 dark:text-slate-400">HEM Fasa 3 • SMK Salaping</span>
           </div>
-          <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+          <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
             Kesihatan, Keselamatan & 3K
           </h1>
-          <p className="text-xs text-slate-500 mt-0.5">
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
             Log bilik sakit, penarafan audit 3K kawasan, talian kecemasan komuniti, dan latihan kebakaran
           </p>
         </div>
@@ -260,17 +260,17 @@ export const HealthSafety3K: React.FC = () => {
 
       {/* KPI Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
-          <span className="text-[11px] font-semibold text-slate-500 block">Kemasukan Bilik Sakit</span>
-          <div className="text-2xl font-black text-rose-800 mt-1">{sickBay.length} Kes</div>
-          <p className="text-[10px] text-slate-500 mt-1">
+        <div className="bg-white dark:bg-[#222b42] p-4 rounded-xl border border-slate-200 dark:border-white/10 shadow-xs">
+          <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block">Kemasukan Bilik Sakit</span>
+          <div className="text-2xl font-black text-rose-800 dark:text-rose-300 mt-1">{sickBay.length} Kes</div>
+          <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1">
             {sickBay.filter(s => s.dihantarHospital).length} kes dirujuk klinik/hospital
           </p>
         </div>
 
-        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
-          <span className="text-[11px] font-semibold text-slate-500 block">Purata Skor 3K Sekolah</span>
-          <div className="text-2xl font-black text-emerald-800 mt-1">
+        <div className="bg-white dark:bg-[#222b42] p-4 rounded-xl border border-slate-200 dark:border-white/10 shadow-xs">
+          <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block">Purata Skor 3K Sekolah</span>
+          <div className="text-2xl font-black text-emerald-800 dark:text-emerald-300 mt-1">
             {inspections3K.length > 0
               ? (inspections3K.reduce((a, b) => a + b.skor, 0) / inspections3K.length).toFixed(0)
               : 88}
@@ -279,25 +279,25 @@ export const HealthSafety3K: React.FC = () => {
           <p className="text-[10px] text-emerald-600 mt-1 font-bold">Tahap Kebersihan Cemerlang</p>
         </div>
 
-        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
-          <span className="text-[11px] font-semibold text-slate-500 block">Murid Keperluan Khas/Kesihatan</span>
-          <div className="text-2xl font-black text-purple-900 mt-1">{specialNeedsStudents.length} Murid</div>
-          <p className="text-[10px] text-slate-500 mt-1">Asma, alahan makanan & OKU</p>
+        <div className="bg-white dark:bg-[#222b42] p-4 rounded-xl border border-slate-200 dark:border-white/10 shadow-xs">
+          <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block">Murid Keperluan Khas/Kesihatan</span>
+          <div className="text-2xl font-black text-purple-900 dark:text-purple-300 mt-1">{specialNeedsStudents.length} Murid</div>
+          <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1">Asma, alahan makanan & OKU</p>
         </div>
 
-        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
-          <span className="text-[11px] font-semibold text-slate-500 block">Rekod Latihan Kebakaran</span>
-          <div className="text-2xl font-black text-amber-800 mt-1">{fireDrills.length} Sesi</div>
-          <p className="text-[10px] text-slate-500 mt-1">BBP Kota Marudu</p>
+        <div className="bg-white dark:bg-[#222b42] p-4 rounded-xl border border-slate-200 dark:border-white/10 shadow-xs">
+          <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block">Rekod Latihan Kebakaran</span>
+          <div className="text-2xl font-black text-amber-800 dark:text-amber-300 mt-1">{fireDrills.length} Sesi</div>
+          <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1">BBP Kota Marudu</p>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-2 bg-white p-1.5 rounded-2xl border border-slate-200 overflow-x-auto text-xs font-bold">
+      <div className="flex items-center gap-2 bg-white dark:bg-[#222b42] p-1.5 rounded-2xl border border-slate-200 dark:border-white/10 overflow-x-auto text-xs font-bold">
         <button
           onClick={() => setActiveTab('bilik_sakit')}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all whitespace-nowrap ${
-            activeTab === 'bilik_sakit' ? 'bg-rose-700 text-white shadow-xs' : 'text-slate-600 hover:bg-slate-100'
+            activeTab === 'bilik_sakit' ? 'bg-rose-700 text-white shadow-xs' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#2a3552]'
           }`}
         >
           <HeartPulse className="w-4 h-4" />
@@ -307,7 +307,7 @@ export const HealthSafety3K: React.FC = () => {
         <button
           onClick={() => setActiveTab('audit_3k')}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all whitespace-nowrap ${
-            activeTab === 'audit_3k' ? 'bg-emerald-700 text-white shadow-xs' : 'text-slate-600 hover:bg-slate-100'
+            activeTab === 'audit_3k' ? 'bg-emerald-700 text-white shadow-xs' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#2a3552]'
           }`}
         >
           <ShieldCheck className="w-4 h-4" />
@@ -317,7 +317,7 @@ export const HealthSafety3K: React.FC = () => {
         <button
           onClick={() => setActiveTab('kecemasan')}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all whitespace-nowrap ${
-            activeTab === 'kecemasan' ? 'bg-blue-700 text-white shadow-xs' : 'text-slate-600 hover:bg-slate-100'
+            activeTab === 'kecemasan' ? 'bg-blue-700 text-white shadow-xs' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#2a3552]'
           }`}
         >
           <PhoneCall className="w-4 h-4" />
@@ -327,7 +327,7 @@ export const HealthSafety3K: React.FC = () => {
         <button
           onClick={() => setActiveTab('kebakaran')}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all whitespace-nowrap ${
-            activeTab === 'kebakaran' ? 'bg-amber-700 text-white shadow-xs' : 'text-slate-600 hover:bg-slate-100'
+            activeTab === 'kebakaran' ? 'bg-amber-700 text-white shadow-xs' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#2a3552]'
           }`}
         >
           <Flame className="w-4 h-4" />
@@ -337,7 +337,7 @@ export const HealthSafety3K: React.FC = () => {
         <button
           onClick={() => setActiveTab('keperluan_khas')}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all whitespace-nowrap ${
-            activeTab === 'keperluan_khas' ? 'bg-purple-700 text-white shadow-xs' : 'text-slate-600 hover:bg-slate-100'
+            activeTab === 'keperluan_khas' ? 'bg-purple-700 text-white shadow-xs' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#2a3552]'
           }`}
         >
           <AlertCircle className="w-4 h-4" />
@@ -347,11 +347,11 @@ export const HealthSafety3K: React.FC = () => {
 
       {/* ================= TAB 1: BILIK SAKIT ================= */}
       {activeTab === 'bilik_sakit' && (
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
-          <div className="p-4 border-b border-slate-200 flex items-center justify-between">
+        <div className="bg-white dark:bg-[#222b42] rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs overflow-hidden">
+          <div className="p-4 border-b border-slate-200 dark:border-white/10 flex items-center justify-between">
             <div>
-              <h3 className="text-sm font-bold text-slate-900">Buku Rekod Bilik Kesihatan / Sakit</h3>
-              <p className="text-xs text-slate-500">Merekod simptom, rawatan awal, dan status makluman ibu bapa</p>
+              <h3 className="text-sm font-bold text-slate-900 dark:text-white">Buku Rekod Bilik Kesihatan / Sakit</h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Merekod simptom, rawatan awal, dan status makluman ibu bapa</p>
             </div>
             <button
               onClick={() => setShowAddSickModal(true)}
@@ -364,7 +364,7 @@ export const HealthSafety3K: React.FC = () => {
 
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead className="bg-slate-100/75 text-slate-700 font-bold border-b border-slate-200">
+              <thead className="bg-slate-100/75 dark:bg-[#161e31] text-slate-700 dark:text-slate-200 font-bold border-b border-slate-200 dark:border-white/10">
                 <tr>
                   <th className="p-3">Murid</th>
                   <th className="p-3">Tarikh / Masa</th>
@@ -375,23 +375,23 @@ export const HealthSafety3K: React.FC = () => {
                   <th className="p-3">Guru Bertugas</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-slate-100 dark:divide-white/5">
                 {sickBay.map(sb => {
                   const stu = students.find(s => s.id === sb.studentId);
                   return (
-                    <tr key={sb.id} className="hover:bg-slate-50">
-                      <td className="p-3 font-bold text-slate-900">
+                    <tr key={sb.id} className="hover:bg-slate-50 dark:hover:bg-[#28334e]">
+                      <td className="p-3 font-bold text-slate-900 dark:text-white">
                         <div>{stu?.nama || 'Murid'}</div>
-                        <div className="text-[11px] text-slate-500 font-normal">Tingkatan {stu?.kelas}</div>
+                        <div className="text-[11px] text-slate-500 dark:text-slate-400 font-normal">Tingkatan {stu?.kelas}</div>
                       </td>
-                      <td className="p-3 text-slate-600">
+                      <td className="p-3 text-slate-600 dark:text-slate-300">
                         {sb.tarikh} ({sb.masaMasuk})
                       </td>
-                      <td className="p-3 text-slate-700 max-w-xs">{sb.simptom}</td>
-                      <td className="p-3 text-slate-600 max-w-xs">{sb.tindakan}</td>
+                      <td className="p-3 text-slate-700 dark:text-slate-200 max-w-xs">{sb.simptom}</td>
+                      <td className="p-3 text-slate-600 dark:text-slate-300 max-w-xs">{sb.tindakan}</td>
                       <td className="p-3">
                         {sb.dihantarHospital ? (
-                          <span className="px-2 py-0.5 rounded font-black text-[10px] bg-rose-100 text-rose-800">
+                          <span className="px-2 py-0.5 rounded font-black text-[10px] bg-rose-100 dark:bg-rose-500/20 text-rose-800 dark:text-rose-300">
                             {sb.namaKlinikHospital || 'Hospital Kota Marudu'}
                           </span>
                         ) : (
@@ -399,12 +399,12 @@ export const HealthSafety3K: React.FC = () => {
                         )}
                       </td>
                       <td className="p-3">
-                        <span className="flex items-center gap-1 text-emerald-700 font-semibold text-[11px]">
+                        <span className="flex items-center gap-1 text-emerald-700 dark:text-emerald-300 font-semibold text-[11px]">
                           <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
                           <span>Dimaklumkan</span>
                         </span>
                       </td>
-                      <td className="p-3 text-slate-600 font-medium">{sb.namaGuruBertugas}</td>
+                      <td className="p-3 text-slate-600 dark:text-slate-300 font-medium">{sb.namaGuruBertugas}</td>
                     </tr>
                   );
                 })}
@@ -419,16 +419,16 @@ export const HealthSafety3K: React.FC = () => {
         <div className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {inspections3K.map(insp => (
-              <div key={insp.id} className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-2 text-xs">
+              <div key={insp.id} className="bg-white dark:bg-[#222b42] p-5 rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs space-y-2 text-xs">
                 <div className="flex items-start justify-between gap-2 border-b pb-2">
-                  <h4 className="font-extrabold text-slate-900 text-sm leading-tight">{insp.kawasan}</h4>
+                  <h4 className="font-extrabold text-slate-900 dark:text-white text-sm leading-tight">{insp.kawasan}</h4>
                   <span
                     className={`px-2 py-0.5 rounded-full font-black text-[10px] uppercase ${
                       insp.status === 'cemerlang'
-                        ? 'bg-emerald-100 text-emerald-800'
+                        ? 'bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300'
                         : insp.status === 'memuaskan'
-                        ? 'bg-blue-100 text-blue-800'
-                        : 'bg-rose-100 text-rose-800'
+                        ? 'bg-blue-100 dark:bg-sky-500/20 text-blue-800 dark:text-sky-300'
+                        : 'bg-rose-100 dark:bg-rose-500/20 text-rose-800 dark:text-rose-300'
                     }`}
                   >
                     {insp.status.replace('_', ' ')}
@@ -436,11 +436,11 @@ export const HealthSafety3K: React.FC = () => {
                 </div>
 
                 <div className="flex justify-between items-center text-[11px]">
-                  <span className="text-slate-500 capitalize">Aspek: {insp.aspek}</span>
-                  <span className="text-base font-black text-emerald-800">{insp.skor}%</span>
+                  <span className="text-slate-500 dark:text-slate-400 capitalize">Aspek: {insp.aspek}</span>
+                  <span className="text-base font-black text-emerald-800 dark:text-emerald-300">{insp.skor}%</span>
                 </div>
 
-                <p className="text-slate-600 text-[11px] leading-relaxed pt-1">{insp.catatan}</p>
+                <p className="text-slate-600 dark:text-slate-300 text-[11px] leading-relaxed pt-1">{insp.catatan}</p>
 
                 <div className="text-[10px] text-slate-400 pt-2 border-t flex justify-between">
                   <span>Pemeriksa: {insp.pemeriksa}</span>
@@ -455,19 +455,19 @@ export const HealthSafety3K: React.FC = () => {
       {/* ================= TAB 3: PELAN KECEMASAN & TALIAN PENTING ================= */}
       {activeTab === 'kecemasan' && (
         <div className="space-y-4">
-          <div className="p-4 bg-blue-50 border border-blue-200 rounded-2xl flex items-center justify-between text-xs text-blue-900">
+          <div className="p-4 bg-blue-50 dark:bg-sky-500/15 border border-blue-200 dark:border-sky-500/30 rounded-2xl flex items-center justify-between text-xs text-blue-900 dark:text-sky-300">
             <div className="flex items-center gap-3">
               <PhoneCall className="w-5 h-5 text-blue-600 shrink-0" />
               <div>
                 <strong className="block text-sm font-bold">Direktori Talian Kecemasan SMK Salaping</strong>
-                <p className="text-slate-600 mt-0.5">Senarai nombor talian kecemasan boleh dicetak untuk dilekatkan di setiap fail kelas dan papan kenyataan blok.</p>
+                <p className="text-slate-600 dark:text-slate-300 mt-0.5">Senarai nombor talian kecemasan boleh dicetak untuk dilekatkan di setiap fail kelas dan papan kenyataan blok.</p>
               </div>
             </div>
 
             <div className="flex items-center gap-2">
               <button
                 onClick={() => window.print()}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-blue-300 text-blue-900 rounded-xl font-bold shadow-xs hover:bg-blue-50"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-[#222b42] border border-blue-300 dark:border-sky-500/30 text-blue-900 dark:text-sky-300 rounded-xl font-bold shadow-xs hover:bg-blue-50"
               >
                 <Printer className="w-4 h-4" />
                 <span>Cetak Lembaran</span>
@@ -484,22 +484,22 @@ export const HealthSafety3K: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {contacts.map(ct => (
-              <div key={ct.id} className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-2 text-xs">
-                <div className="flex items-center gap-2 text-blue-900 font-extrabold text-sm">
+              <div key={ct.id} className="bg-white dark:bg-[#222b42] p-5 rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs space-y-2 text-xs">
+                <div className="flex items-center gap-2 text-blue-900 dark:text-sky-300 font-extrabold text-sm">
                   <Hospital className="w-4 h-4 text-rose-600" />
                   <span>{ct.agensi}</span>
                 </div>
 
-                <div className="flex items-center gap-2 text-base font-black text-slate-900 font-mono py-1">
+                <div className="flex items-center gap-2 text-base font-black text-slate-900 dark:text-white font-mono py-1">
                   <Phone className="w-4 h-4 text-emerald-600" />
                   <span>{ct.noTel}</span>
                 </div>
 
-                <div className="text-slate-500 text-[11px]">
-                  <span className="font-semibold text-slate-700">Alamat:</span> {ct.alamat}
+                <div className="text-slate-500 dark:text-slate-400 text-[11px]">
+                  <span className="font-semibold text-slate-700 dark:text-slate-200">Alamat:</span> {ct.alamat}
                 </div>
                 {ct.pegawaiHubungan && (
-                  <div className="text-[10px] text-blue-700 bg-blue-50 p-1.5 rounded">
+                  <div className="text-[10px] text-blue-700 dark:text-sky-300 bg-blue-50 dark:bg-sky-500/15 p-1.5 rounded">
                     Unit: {ct.pegawaiHubungan}
                   </div>
                 )}
@@ -512,11 +512,11 @@ export const HealthSafety3K: React.FC = () => {
       {/* ================= TAB 4: LATIHAN KEBAKARAN ================= */}
       {activeTab === 'kebakaran' && (
         <div className="space-y-4">
-          <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
-            <div className="p-4 border-b border-slate-200 flex items-center justify-between">
+          <div className="bg-white dark:bg-[#222b42] rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs overflow-hidden">
+            <div className="p-4 border-b border-slate-200 dark:border-white/10 flex items-center justify-between">
               <div>
-                <h3 className="text-sm font-bold text-slate-900">Rekod Latihan Pengosongan Bangunan & Simulasi Kebakaran</h3>
-                <p className="text-xs text-slate-500">Pematuhan Piawaian Keselamatan Kebakaran Sekolah KPM & Jabatan Bomba</p>
+                <h3 className="text-sm font-bold text-slate-900 dark:text-white">Rekod Latihan Pengosongan Bangunan & Simulasi Kebakaran</h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Pematuhan Piawaian Keselamatan Kebakaran Sekolah KPM & Jabatan Bomba</p>
               </div>
               <button
                 onClick={() => setShowAddDrillModal(true)}
@@ -527,20 +527,20 @@ export const HealthSafety3K: React.FC = () => {
               </button>
             </div>
 
-            <div className="divide-y divide-slate-100">
+            <div className="divide-y divide-slate-100 dark:divide-white/5">
               {fireDrills.map(fd => (
                 <div key={fd.id} className="p-5 space-y-2 text-xs">
                   <div className="flex items-center justify-between">
-                    <div className="font-extrabold text-sm text-slate-900 flex items-center gap-2">
+                    <div className="font-extrabold text-sm text-slate-900 dark:text-white flex items-center gap-2">
                       <Flame className="w-4 h-4 text-amber-600" />
                       <span>Latihan Pengosongan Bangunan ({fd.tarikh})</span>
                     </div>
-                    <span className="px-2 py-0.5 rounded-full font-black text-[10px] bg-emerald-100 text-emerald-800">
+                    <span className="px-2 py-0.5 rounded-full font-black text-[10px] bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300">
                       {fd.penilaian}
                     </span>
                   </div>
 
-                  <div className="grid grid-cols-3 gap-2 text-slate-600 text-[11px] pt-1">
+                  <div className="grid grid-cols-3 gap-2 text-slate-600 dark:text-slate-300 text-[11px] pt-1">
                     <div>
                       <strong>Masa Evakuasi:</strong> {fd.tempohEvakuasiMinit} Minit
                     </div>
@@ -552,7 +552,7 @@ export const HealthSafety3K: React.FC = () => {
                     </div>
                   </div>
 
-                  <p className="text-slate-700 text-[11px] leading-relaxed pt-1">
+                  <p className="text-slate-700 dark:text-slate-200 text-[11px] leading-relaxed pt-1">
                     <strong>Ulasan Pegawai Bomba:</strong> {fd.catatanPenambahbaikan}
                   </p>
                 </div>
@@ -565,19 +565,19 @@ export const HealthSafety3K: React.FC = () => {
       {/* ================= TAB 5: KEPERLUAN KHAS ================= */}
       {activeTab === 'keperluan_khas' && (
         <div className="space-y-4">
-          <div className="p-4 bg-purple-50 border border-purple-200 rounded-2xl flex items-center gap-3 text-xs text-purple-900">
-            <AlertCircle className="w-5 h-5 text-purple-700 shrink-0" />
+          <div className="p-4 bg-purple-50 dark:bg-purple-500/15 border border-purple-200 dark:border-purple-500/30 rounded-2xl flex items-center gap-3 text-xs text-purple-900 dark:text-purple-300">
+            <AlertCircle className="w-5 h-5 text-purple-700 dark:text-purple-300 shrink-0" />
             <div>
               <strong className="block text-sm font-bold">Maklumat Sulit Kesihatan Khas Murid</strong>
-              <p className="text-slate-600 mt-0.5">
+              <p className="text-slate-600 dark:text-slate-300 mt-0.5">
                 Senarai ini bertujuan untuk tindakan pantas guru kelas, guru bertugas dan warden sekiranya berlaku kecemasan (alahan teruk, asma kronik, atau murid OKU).
               </p>
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+          <div className="bg-white dark:bg-[#222b42] rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs overflow-hidden">
             <table className="w-full text-left text-xs">
-              <thead className="bg-slate-100/75 text-slate-700 font-bold border-b border-slate-200">
+              <thead className="bg-slate-100/75 dark:bg-[#161e31] text-slate-700 dark:text-slate-200 font-bold border-b border-slate-200 dark:border-white/10">
                 <tr>
                   <th className="p-3">Nama Murid</th>
                   <th className="p-3">Kelas</th>
@@ -586,22 +586,22 @@ export const HealthSafety3K: React.FC = () => {
                   <th className="p-3">Tindakan Kecemasan Disyorkan</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-slate-100 dark:divide-white/5">
                 {specialNeedsStudents.map(stu => (
-                  <tr key={stu.id} className="hover:bg-slate-50">
-                    <td className="p-3 font-bold text-slate-900">{stu.nama}</td>
-                    <td className="p-3 font-semibold text-slate-600">{stu.kelas}</td>
+                  <tr key={stu.id} className="hover:bg-slate-50 dark:hover:bg-[#28334e]">
+                    <td className="p-3 font-bold text-slate-900 dark:text-white">{stu.nama}</td>
+                    <td className="p-3 font-semibold text-slate-600 dark:text-slate-300">{stu.kelas}</td>
                     <td className="p-3">
                       {stu.oku?.status ? (
-                        <span className="px-2 py-0.5 rounded font-black text-[10px] bg-purple-100 text-purple-800">
+                        <span className="px-2 py-0.5 rounded font-black text-[10px] bg-purple-100 dark:bg-purple-500/20 text-purple-800 dark:text-purple-300">
                           OKU: {stu.oku.jenis || 'Fizikal'}
                         </span>
                       ) : (
                         <span className="text-slate-400">Bukan OKU</span>
                       )}
                     </td>
-                    <td className="p-3 font-medium text-rose-800">{stu.catatanKesihatan || 'Tiada alahan direkod'}</td>
-                    <td className="p-3 text-slate-600">
+                    <td className="p-3 font-medium text-rose-800 dark:text-rose-300">{stu.catatanKesihatan || 'Tiada alahan direkod'}</td>
+                    <td className="p-3 text-slate-600 dark:text-slate-300">
                       Sedia ubat inhaler / elakkan makanan berunsur kekacang & hubungi penjaga serta-merta.
                     </td>
                   </tr>
@@ -615,9 +615,9 @@ export const HealthSafety3K: React.FC = () => {
       {/* ================= MODAL BILIK SAKIT ================= */}
       {showAddSickModal && (
         <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 space-y-4 text-xs">
+          <div className="bg-white dark:bg-[#222b42] rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 dark:border-white/10 space-y-4 text-xs">
             <div className="flex items-center justify-between border-b pb-3">
-              <h3 className="text-base font-extrabold text-slate-900">Daftar Kemasukan Bilik Kesihatan</h3>
+              <h3 className="text-base font-extrabold text-slate-900 dark:text-white">Daftar Kemasukan Bilik Kesihatan</h3>
               <button onClick={() => setShowAddSickModal(false)} className="p-1 text-slate-400 hover:text-slate-600">
                 <X className="w-5 h-5" />
               </button>
@@ -625,11 +625,11 @@ export const HealthSafety3K: React.FC = () => {
 
             <form onSubmit={handleSaveSickBay} className="space-y-3.5">
               <div>
-                <label className="font-bold text-slate-800 block mb-1">Pilih Murid:</label>
+                <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">Pilih Murid:</label>
                 <select
                   value={sbStudentId}
                   onChange={e => setSbStudentId(e.target.value)}
-                  className="w-full border border-slate-300 rounded-lg p-2 font-medium"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-medium"
                 >
                   {students.map(s => (
                     <option key={s.id} value={s.id}>
@@ -640,30 +640,30 @@ export const HealthSafety3K: React.FC = () => {
               </div>
 
               <div>
-                <label className="font-bold text-slate-800 block mb-1">Simptom / Gejala Sakit:</label>
+                <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">Simptom / Gejala Sakit:</label>
                 <textarea
                   rows={2}
                   required
                   value={sbSimptom}
                   onChange={e => setSbSimptom(e.target.value)}
                   placeholder="Contoh: Demam panas, cirit-birit, pening kepala, gastrik..."
-                  className="w-full border border-slate-300 rounded-lg p-2"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2"
                 />
               </div>
 
               <div>
-                <label className="font-bold text-slate-800 block mb-1">Tindakan Rawatan Diberikan:</label>
+                <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">Tindakan Rawatan Diberikan:</label>
                 <textarea
                   rows={2}
                   value={sbTindakan}
                   onChange={e => setSbTindakan(e.target.value)}
                   placeholder="Contoh: Berehat di katil bilik sakit, tuaman ais, ubat paracetamol..."
-                  className="w-full border border-slate-300 rounded-lg p-2"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2"
                 />
               </div>
 
-              <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
-                <label className="flex items-center gap-2 font-bold text-slate-800 cursor-pointer">
+              <div className="p-3 bg-slate-50 dark:bg-[#1b2337] border border-slate-200 dark:border-white/10 rounded-xl space-y-2">
+                <label className="flex items-center gap-2 font-bold text-slate-800 dark:text-slate-100 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={sbHospital}
@@ -677,7 +677,7 @@ export const HealthSafety3K: React.FC = () => {
                     type="text"
                     value={sbHospitalName}
                     onChange={e => setSbHospitalName(e.target.value)}
-                    className="w-full border border-rose-300 rounded-lg p-2 text-rose-900 font-bold"
+                    className="w-full border border-rose-300 dark:border-rose-500/30 rounded-lg p-2 text-rose-900 dark:text-rose-300 font-bold"
                   />
                 )}
               </div>
@@ -686,7 +686,7 @@ export const HealthSafety3K: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setShowAddSickModal(false)}
-                  className="px-4 py-2 border border-slate-300 text-slate-700 font-bold rounded-xl"
+                  className="px-4 py-2 border border-slate-300 dark:border-white/15 text-slate-700 dark:text-slate-200 font-bold rounded-xl"
                 >
                   Batal
                 </button>
@@ -705,9 +705,9 @@ export const HealthSafety3K: React.FC = () => {
       {/* ================= MODAL AUDIT 3K ================= */}
       {showAdd3KModal && (
         <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 space-y-4 text-xs">
+          <div className="bg-white dark:bg-[#222b42] rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 dark:border-white/10 space-y-4 text-xs">
             <div className="flex items-center justify-between border-b pb-3">
-              <h3 className="text-base font-extrabold text-slate-900">Rekod Audit Kebersihan & 3K Kawasan</h3>
+              <h3 className="text-base font-extrabold text-slate-900 dark:text-white">Rekod Audit Kebersihan & 3K Kawasan</h3>
               <button onClick={() => setShowAdd3KModal(false)} className="p-1 text-slate-400 hover:text-slate-600">
                 <X className="w-5 h-5" />
               </button>
@@ -715,11 +715,11 @@ export const HealthSafety3K: React.FC = () => {
 
             <form onSubmit={handleSave3K} className="space-y-3.5">
               <div>
-                <label className="font-bold text-slate-800 block mb-1">Pilih Kawasan Sekolah:</label>
+                <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">Pilih Kawasan Sekolah:</label>
                 <select
                   value={auditKawasan}
                   onChange={e => setAuditKawasan(e.target.value)}
-                  className="w-full border border-slate-300 rounded-lg p-2 font-medium"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-medium"
                 >
                   {DEFAULT_3K_AREAS.map(a => (
                     <option key={a} value={a}>
@@ -731,11 +731,11 @@ export const HealthSafety3K: React.FC = () => {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="font-bold text-slate-800 block mb-1">Aspek Dinilai:</label>
+                  <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">Aspek Dinilai:</label>
                   <select
                     value={auditAspek}
                     onChange={e => setAuditAspek(e.target.value as any)}
-                    className="w-full border border-slate-300 rounded-lg p-2 font-medium"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-medium"
                   >
                     <option value="kebersihan">Kebersihan</option>
                     <option value="kesihatan">Kesihatan</option>
@@ -745,26 +745,26 @@ export const HealthSafety3K: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="font-bold text-slate-800 block mb-1">Skor (0 - 100%):</label>
+                  <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">Skor (0 - 100%):</label>
                   <input
                     type="number"
                     min={0}
                     max={100}
                     value={auditSkor}
                     onChange={e => setAuditSkor(Number(e.target.value))}
-                    className="w-full border border-slate-300 rounded-lg p-2 font-black text-emerald-800"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-black text-emerald-800 dark:text-emerald-300"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="font-bold text-slate-800 block mb-1">Catatan & Penemuan Audit:</label>
+                <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">Catatan & Penemuan Audit:</label>
                 <textarea
                   rows={2}
                   value={auditCatatan}
                   onChange={e => setAuditCatatan(e.target.value)}
                   placeholder="Contoh: Tandas bersih, bekalan sabun lengkap, pili air berfungsi..."
-                  className="w-full border border-slate-300 rounded-lg p-2"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2"
                 />
               </div>
 
@@ -772,7 +772,7 @@ export const HealthSafety3K: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setShowAdd3KModal(false)}
-                  className="px-4 py-2 border border-slate-300 text-slate-700 font-bold rounded-xl"
+                  className="px-4 py-2 border border-slate-300 dark:border-white/15 text-slate-700 dark:text-slate-200 font-bold rounded-xl"
                 >
                   Batal
                 </button>
@@ -791,9 +791,9 @@ export const HealthSafety3K: React.FC = () => {
       {/* ================= MODAL TAMBAH TALIAN KECEMASAN ================= */}
       {showAddContactModal && (
         <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-4 text-xs">
+          <div className="bg-white dark:bg-[#222b42] rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-white/10 space-y-4 text-xs">
             <div className="flex items-center justify-between border-b pb-3">
-              <h3 className="text-base font-extrabold text-slate-900">Tambah Talian Kecemasan Baharu</h3>
+              <h3 className="text-base font-extrabold text-slate-900 dark:text-white">Tambah Talian Kecemasan Baharu</h3>
               <button onClick={() => setShowAddContactModal(false)} className="p-1 text-slate-400 hover:text-slate-600">
                 <X className="w-5 h-5" />
               </button>
@@ -801,36 +801,36 @@ export const HealthSafety3K: React.FC = () => {
 
             <form onSubmit={handleSaveContact} className="space-y-3.5">
               <div>
-                <label className="font-bold text-slate-800 block mb-1">Nama Agensi / Pusat Rawatan:</label>
+                <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">Nama Agensi / Pusat Rawatan:</label>
                 <input
                   type="text"
                   required
                   placeholder="Contoh: Balai Polis Tandek..."
                   value={contactAgensi}
                   onChange={e => setContactAgensi(e.target.value)}
-                  className="w-full border border-slate-300 rounded-lg p-2 font-bold"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-bold"
                 />
               </div>
 
               <div>
-                <label className="font-bold text-slate-800 block mb-1">Nombor Telefon (Kecemasan):</label>
+                <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">Nombor Telefon (Kecemasan):</label>
                 <input
                   type="text"
                   required
                   placeholder="Contoh: 088-661xxx..."
                   value={contactTel}
                   onChange={e => setContactTel(e.target.value)}
-                  className="w-full border border-slate-300 rounded-lg p-2 font-mono"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-mono"
                 />
               </div>
 
               <div>
-                <label className="font-bold text-slate-800 block mb-1">Alamat / Lokasi:</label>
+                <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">Alamat / Lokasi:</label>
                 <input
                   type="text"
                   value={contactAlamat}
                   onChange={e => setContactAlamat(e.target.value)}
-                  className="w-full border border-slate-300 rounded-lg p-2"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2"
                 />
               </div>
 
@@ -838,7 +838,7 @@ export const HealthSafety3K: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setShowAddContactModal(false)}
-                  className="px-4 py-2 border border-slate-300 text-slate-700 font-bold rounded-xl"
+                  className="px-4 py-2 border border-slate-300 dark:border-white/15 text-slate-700 dark:text-slate-200 font-bold rounded-xl"
                 >
                   Batal
                 </button>
@@ -857,9 +857,9 @@ export const HealthSafety3K: React.FC = () => {
       {/* ================= MODAL LATIHAN KEBAKARAN ================= */}
       {showAddDrillModal && (
         <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 space-y-4 text-xs">
+          <div className="bg-white dark:bg-[#222b42] rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 dark:border-white/10 space-y-4 text-xs">
             <div className="flex items-center justify-between border-b pb-3">
-              <h3 className="text-base font-extrabold text-slate-900">Rekod Simulasi Pengosongan Bangunan</h3>
+              <h3 className="text-base font-extrabold text-slate-900 dark:text-white">Rekod Simulasi Pengosongan Bangunan</h3>
               <button onClick={() => setShowAddDrillModal(false)} className="p-1 text-slate-400 hover:text-slate-600">
                 <X className="w-5 h-5" />
               </button>
@@ -868,42 +868,42 @@ export const HealthSafety3K: React.FC = () => {
             <form onSubmit={handleSaveDrill} className="space-y-3.5">
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="font-bold text-slate-800 block mb-1">Tarikh Latihan:</label>
+                  <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">Tarikh Latihan:</label>
                   <input
                     type="date"
                     value={drillTarikh}
                     onChange={e => setDrillTarikh(e.target.value)}
-                    className="w-full border border-slate-300 rounded-lg p-2"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2"
                   />
                 </div>
                 <div>
-                  <label className="font-bold text-slate-800 block mb-1">Masa Pengosongan (Minit):</label>
+                  <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">Masa Pengosongan (Minit):</label>
                   <input
                     type="number"
                     value={drillMinit}
                     onChange={e => setDrillMinit(Number(e.target.value))}
-                    className="w-full border border-slate-300 rounded-lg p-2 font-bold text-amber-900"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-bold text-amber-900 dark:text-amber-300"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="font-bold text-slate-800 block mb-1">Agensi Kolaborasi:</label>
+                <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">Agensi Kolaborasi:</label>
                 <input
                   type="text"
                   value={drillAgensi}
                   onChange={e => setDrillAgensi(e.target.value)}
-                  className="w-full border border-slate-300 rounded-lg p-2"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2"
                 />
               </div>
 
               <div>
-                <label className="font-bold text-slate-800 block mb-1">Ulasan & Refleksi Pegawai Bomba:</label>
+                <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">Ulasan & Refleksi Pegawai Bomba:</label>
                 <textarea
                   rows={2}
                   value={drillUlasan}
                   onChange={e => setDrillUlasan(e.target.value)}
-                  className="w-full border border-slate-300 rounded-lg p-2"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2"
                 />
               </div>
 
@@ -911,7 +911,7 @@ export const HealthSafety3K: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setShowAddDrillModal(false)}
-                  className="px-4 py-2 border border-slate-300 text-slate-700 font-bold rounded-xl"
+                  className="px-4 py-2 border border-slate-300 dark:border-white/15 text-slate-700 dark:text-slate-200 font-bold rounded-xl"
                 >
                   Batal
                 </button>

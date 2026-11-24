@@ -59,7 +59,7 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center text-xs text-slate-500 font-medium">
+      <div className="min-h-screen bg-slate-50 dark:bg-[#151c2e] flex items-center justify-center text-xs text-slate-500 dark:text-slate-400 font-medium">
         Memuatkan sesi pengguna...
       </div>
     );
@@ -92,7 +92,7 @@ const AppLayout: React.FC = () => {
   }, [showToast]);
 
   return (
-    <div className="min-h-screen bg-slate-100 flex flex-col antialiased">
+    <div className="min-h-screen bg-slate-100 dark:bg-[#151c2e] text-slate-900 dark:text-slate-100 flex flex-col antialiased transition-colors">
       <Navbar
         onToggleSidebar={() => setSidebarOpen(prev => !prev)}
         onOpenResetModal={() => setResetModalOpen(true)}
@@ -123,6 +123,8 @@ const AppLayout: React.FC = () => {
             <Route path="/program-mesyuarat" element={<HemProgramsMeetings />} />
             <Route path="/audit" element={<AuditLog />} />
             <Route path="/tetapan" element={<Settings onOpenResetModal={() => setResetModalOpen(true)} />} />
+            <Route path="/manual" element={<HelpManual />} />
+            <Route path="/privasi" element={<DataPrivacy />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>

@@ -8,7 +8,8 @@ import {
   DisciplineCase,
   CounselingSession,
   AssistanceRecord,
-  HemMeeting
+  HemMeeting,
+  ClassInfo
 } from '../types';
 import {
   getStudents,
@@ -23,32 +24,21 @@ import { evaluateAllStudentsRisk, StudentRiskAssessment } from '../services/drop
 import {
   Users,
   CalendarCheck,
-  UserX,
   AlertTriangle,
-  ShieldAlert,
-  HeartHandshake,
-  Award,
-  Home,
   TrendingUp,
-  ArrowRight,
+  ArrowUpRight,
   Filter,
-  CheckCircle2,
-  Clock,
-  ChevronRight,
-  Sparkles,
-  HeartPulse,
   CalendarDays,
-  CheckSquare,
-  FileText,
-  Trophy,
-  GraduationCap,
   UserPlus,
-  Settings,
-  Megaphone,
-  Info
+  MoreVertical,
+  Plus,
+  Play,
+  ArrowUp
 } from 'lucide-react';
 import {
   ResponsiveContainer,
+  AreaChart,
+  Area,
   LineChart,
   Line,
   XAxis,
@@ -57,15 +47,18 @@ import {
   CartesianGrid,
   BarChart,
   Bar,
-  Legend
+  Cell,
+  PieChart,
+  Pie
 } from 'recharts';
 import { SkeletonCard, SkeletonTable } from '../components/SkeletonLoader';
-import { SchoolLogo } from '../components/SchoolLogo';
 import defaultBannerImg from '../assets/images/salaping_student_banner_1791731561584.jpg';
 
+const FORM_BAR_COLORS = ['#0ea5e9', '#7c3aed', '#34d399', '#ff3e6c', '#ffc107'];
+
 export const Dashboard: React.FC = () => {
-  const { currentUser, isPengetuaOrGpkHem } = useAuth();
-  const { school, rules, dashboardSettings } = useSchool();
+  const { currentUser } = useAuth();
+  const { school, rules, dashboardSettings, theme } = useSchool();
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
@@ -75,9 +68,9 @@ export const Dashboard: React.FC = () => {
   const [counseling, setCounseling] = useState<CounselingSession[]>([]);
   const [assistance, setAssistance] = useState<AssistanceRecord[]>([]);
   const [meetings, setMeetings] = useState<HemMeeting[]>([]);
+  const [classesList, setClassesList] = useState<ClassInfo[]>([]);
   const [riskList, setRiskList] = useState<StudentRiskAssessment[]>([]);
 
-  // Filters
   const [filterTingkatan, setFilterTingkatan] = useState<string>('semua');
   const [filterKelas, setFilterKelas] = useState<string>('semua');
 
@@ -85,13 +78,14 @@ export const Dashboard: React.FC = () => {
     async function loadDashboardData() {
       try {
         setLoading(true);
-        const [stList, atList, dpList, csList, asList, mtList] = await Promise.all([
+        const [stList, atList, dpList, csList, asList, mtList, clsList] = await Promise.all([
           getStudents(),
           getAttendanceList(),
           getDisciplineCases(),
           getCounselingSessions(),
           getAssistanceRecords(),
-          getHemMeetings()
+          getHemMeetings(),
+          getClassesList()
         ]);
 
         setStudents(stList);
@@ -100,6 +94,7 @@ export const Dashboard: React.FC = () => {
         setCounseling(csList);
         setAssistance(asList);
         setMeetings(mtList);
+        setClassesList(clsList);
 
         const evaluatedRisks = evaluateAllStudentsRisk(stList, atList, rules);
         setRiskList(evaluatedRisks);
@@ -115,17 +110,12 @@ export const Dashboard: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="p-4 sm:p-6 space-y-6">
+      <div className="p-4 sm:p-6 space-y-6 max-w-7xl mx-auto">
         <SkeletonCard count={4} />
         <SkeletonTable rows={4} />
       </div>
     );
   }
-
-  // Filter students if class teacher has specific class
-  const isClassTeacher = currentUser?.peranan.includes('guru_kelas') && !isPengetuaOrGpkHem;
-  const teacherClassId = currentUser?.kelasDiajar?.[0]; // e.g. "3-marikh"
-  const teacherClassName = teacherClassId === '3-marikh' ? '3 Marikh' : undefined;
 
   const relevantStudents = students.filter(s => {
     if (filterTingkatan !== 'semua' && s.tingkatan !== Number(filterTingkatan)) return false;
@@ -133,22 +123,18 @@ export const Dashboard: React.FC = () => {
     return true;
   });
 
-  // Calculate Metrics
   const totalEnrolment = relevantStudents.length;
   const totalLelaki = relevantStudents.filter(s => s.jantina === 'lelaki').length;
   const totalPerempuan = relevantStudents.filter(s => s.jantina === 'perempuan').length;
   const totalHostel = relevantStudents.filter(s => s.penghuniAsrama).length;
   const totalAssistance = assistance.filter(a => relevantStudents.some(s => s.id === a.studentId)).length;
 
-  // Today's attendance calculation
-  // Find latest date in attendance records
   const uniqueDates = Array.from(new Set(attendance.map(a => a.tarikh))).sort();
-  const latestDate = uniqueDates[uniqueDates.length - 1] || '2026-10-09';
+  const latestDate = uniqueDates[uniqueDates.length - 1] || new Date().toISOString().split('T')[0];
   const latestAttendanceRecords = attendance.filter(a => a.tarikh === latestDate);
 
   let todayPresent = 0;
   let todayTotal = 0;
-  let todayAbsentStudents: Student[] = [];
 
   latestAttendanceRecords.forEach(rec => {
     Object.entries(rec.rekod).forEach(([stuId, item]) => {
@@ -157,8 +143,6 @@ export const Dashboard: React.FC = () => {
         todayTotal++;
         if (item.status === 'hadir' || item.status === 'lewat' || item.status === 'urusan_rasmi') {
           todayPresent++;
-        } else if (item.status === 'tidak_hadir') {
-          todayAbsentStudents.push(matchStu);
         }
       }
     });
@@ -168,9 +152,14 @@ export const Dashboard: React.FC = () => {
   const criticalRiskStudents = riskList.filter(r => r.riskTier === 'amaran3' || r.riskTier === 'amaran2');
   const openDisciplineCases = discipline.filter(d => d.statusKes !== 'selesai');
   const openCounselingCases = counseling.filter(c => c.status === 'aktif');
+  const pendingMeetingTasks = meetings.flatMap(m =>
+    m.tindakanSusulan
+      .filter(fu => fu.status !== 'selesai')
+      .map(fu => ({ ...fu, bil: m.bilangan, tajuk: m.tajuk }))
+  );
 
-  // 30 Days Trend Data for Recharts
-  const trendData = uniqueDates.slice(-30).map(d => {
+  // Trend Data 14/30 days
+  const trendData = uniqueDates.slice(-15).map(d => {
     const dayRecords = attendance.filter(a => a.tarikh === d);
     let hadir = 0;
     let total = 0;
@@ -179,14 +168,24 @@ export const Dashboard: React.FC = () => {
       total += r.jumlahMurid;
     });
     const peratus = total > 0 ? Number(((hadir / total) * 100).toFixed(1)) : 0;
-    // format date as DD/MM
     const parts = d.split('-');
-    const label = `${parts[2]}/${parts[1]}`;
-    return { tarikh: label, peratus, sasaran: rules.sasaranKehadiranSekolah };
+    return {
+      tarikh: `${parts[2]}/${parts[1]}`,
+      peratus,
+      sasaran: rules.sasaranKehadiranSekolah
+    };
   });
 
-  // Attendance by Form (Tingkatan 1 to 5)
-  const formStats = [1, 2, 3, 4, 5].map(t => {
+  const safeTrendData =
+    trendData.length > 0
+      ? trendData
+      : [
+          { tarikh: 'Isnin', peratus: 0, sasaran: rules.sasaranKehadiranSekolah },
+          { tarikh: 'Selasa', peratus: 0, sasaran: rules.sasaranKehadiranSekolah }
+        ];
+
+  // Attendance by Form (Tingkatan 1 - 5)
+  const formStats = [1, 2, 3, 4, 5].map((t, idx) => {
     const tStudents = students.filter(s => s.tingkatan === t);
     const tAttendance = attendance.filter(a => a.tingkatan === t && a.tarikh === latestDate);
     let hadir = 0;
@@ -195,154 +194,173 @@ export const Dashboard: React.FC = () => {
       hadir += a.jumlahHadir;
       total += a.jumlahMurid;
     });
-    const peratus = total > 0 ? Number(((hadir / total) * 100).toFixed(1)) : 92.0;
+    const peratus = total > 0 ? Number(((hadir / total) * 100).toFixed(1)) : 0;
     return {
-      tingkatan: `Ting. ${t}`,
+      tingkatan: `T${t}`,
+      namaPenuh: `Tingkatan ${t}`,
       peratus,
       jumlah: tStudents.length,
-      lelaki: tStudents.filter(s => s.jantina === 'lelaki').length,
-      perempuan: tStudents.filter(s => s.jantina === 'perempuan').length
+      color: FORM_BAR_COLORS[idx]
     };
   });
 
-  // 5 Lowest Attendance Classes this week
+  // Donut Chart Data
+  const donutValue = todayTotal > 0 ? todayPercentage : 0;
+  const donutData = [
+    { name: 'Hadir', value: donutValue > 0 ? donutValue : 0.1 },
+    { name: 'Tidak Hadir', value: Math.max(0, Number((100 - donutValue).toFixed(1))) }
+  ];
+
+  // Lowest attendance classes
   const classAvgMap = new Map<string, { totalHadir: number; totalMurid: number }>();
   const recentWeekDates = uniqueDates.slice(-5);
-  attendance.filter(a => recentWeekDates.includes(a.tarikh)).forEach(a => {
-    const current = classAvgMap.get(a.kelasId) || { totalHadir: 0, totalMurid: 0 };
-    classAvgMap.set(a.kelasId, {
-      totalHadir: current.totalHadir + a.jumlahHadir,
-      totalMurid: current.totalMurid + a.jumlahMurid
+  attendance
+    .filter(a => recentWeekDates.includes(a.tarikh))
+    .forEach(a => {
+      const current = classAvgMap.get(a.kelasId) || { totalHadir: 0, totalMurid: 0 };
+      classAvgMap.set(a.kelasId, {
+        totalHadir: current.totalHadir + a.jumlahHadir,
+        totalMurid: current.totalMurid + a.jumlahMurid
+      });
     });
-  });
 
   const lowestClasses = Array.from(classAvgMap.entries())
     .map(([kelasId, val]) => ({
       kelas: kelasId.replace('-', ' ').toUpperCase(),
-      peratus: val.totalMurid > 0 ? Number(((val.totalHadir / val.totalMurid) * 100).toFixed(1)) : 90
+      peratus: val.totalMurid > 0 ? Number(((val.totalHadir / val.totalMurid) * 100).toFixed(1)) : 0
     }))
     .sort((a, b) => a.peratus - b.peratus)
-    .slice(0, 5);
+    .slice(0, 4);
+
+  // Chart theme tokens
+  const isDark = theme === 'dark';
+  const gridColor = isDark ? '#2e3959' : '#e2e8f0';
+  const tickColor = isDark ? '#94a3b8' : '#64748b';
+  const tooltipStyle = {
+    backgroundColor: isDark ? '#1c2337' : '#ffffff',
+    borderColor: isDark ? 'rgba(255,255,255,0.1)' : '#e2e8f0',
+    borderRadius: '12px',
+    color: isDark ? '#f8fafc' : '#0f172a',
+    fontSize: '12px'
+  };
+
+  const modulTeras = [
+    {
+      code: 'K',
+      title: 'Kehadiran & Kelas',
+      subtitle: `${todayPresent} / ${todayTotal || totalEnrolment} Rekod Hadir`,
+      actionLabel: 'Rekod',
+      badgeBg: 'bg-[#ffc107] text-slate-950',
+      btnClass: 'bg-amber-100 text-amber-900 hover:bg-amber-200 dark:bg-[#fef3c7] dark:text-amber-900',
+      to: '/kehadiran'
+    },
+    {
+      code: 'D',
+      title: 'Disiplin & Buli',
+      subtitle: `${openDisciplineCases.length} Kes Aktif Dipantau`,
+      actionLabel: 'Semak',
+      badgeBg: 'bg-[#ff3e6c] text-white',
+      btnClass: 'bg-rose-100 text-rose-800 hover:bg-rose-200 dark:bg-[#ffe4e6] dark:text-rose-800',
+      to: '/disiplin'
+    },
+    {
+      code: 'B',
+      title: 'Biasiswa & Bantuan',
+      subtitle: `${totalAssistance} Murid Penerima`,
+      actionLabel: 'Lihat',
+      badgeBg: 'bg-[#34d399] text-slate-950',
+      btnClass: 'bg-emerald-100 text-emerald-900 hover:bg-emerald-200 dark:bg-[#d1fae5] dark:text-emerald-900',
+      to: '/bantuan'
+    },
+    {
+      code: 'A',
+      title: 'Asrama & 3K',
+      subtitle: `${totalHostel} Penghuni Asrama`,
+      actionLabel: 'Urus',
+      badgeBg: 'bg-[#0ea5e9] text-white',
+      btnClass: 'bg-sky-100 text-sky-900 hover:bg-sky-200 dark:bg-[#e0f2fe] dark:text-sky-900',
+      to: '/asrama'
+    }
+  ];
+
+  const availableClasses = Array.from(
+    new Set([
+      ...classesList
+        .filter(c => filterTingkatan === 'semua' || c.tingkatan === Number(filterTingkatan))
+        .map(c => c.nama),
+      ...students
+        .filter(s => filterTingkatan === 'semua' || s.tingkatan === Number(filterTingkatan))
+        .map(s => s.kelas)
+    ])
+  ).sort();
 
   return (
-    <div className="p-3 sm:p-6 space-y-6 max-w-7xl mx-auto pb-20 lg:pb-8">
-      {/* Header Utama: Ilustrasi Pelajar & Kecemerlangan HEM */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-blue-950 to-indigo-950 text-white shadow-2xl border border-blue-900/40">
-        {/* Glow ambient background effects */}
-        <div className="absolute -top-24 -left-24 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute top-1/2 -right-24 w-96 h-96 bg-amber-500/15 rounded-full blur-3xl pointer-events-none" />
+    <div className="p-3.5 sm:p-6 space-y-5 max-w-[1440px] mx-auto pb-24 lg:pb-8">
+      {/* BARIS 1: Hero Banner Mint-Teal + Panel Tindakan Pantas Kanan */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+        {/* Hero Banner (8/9 cols) */}
+        <div className="lg:col-span-8 xl:col-span-9 rounded-2xl bg-gradient-to-r from-[#4bcbb1] via-[#3bc0a6] to-[#2eb197] text-white p-5 sm:p-7 relative overflow-hidden shadow-lg flex flex-col sm:flex-row items-center justify-between gap-6">
+          {/* Dekorasi latar lembut */}
+          <div className="absolute -right-12 -bottom-16 w-64 h-64 rounded-full bg-white/10 pointer-events-none" />
+          <div className="absolute right-32 -top-12 w-36 h-36 rounded-full bg-white/10 pointer-events-none" />
 
-        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center p-5 sm:p-7 lg:p-8">
-          {/* Kolum Kiri: Informasi, Ucapan & Metrik Kecemerlangan Modal Insan */}
-          <div className="lg:col-span-7 space-y-4">
-            {/* Lencana Sesi & Kemenjadian */}
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 text-[11px] font-extrabold px-3 py-1 rounded-full bg-blue-800/80 text-amber-300 border border-blue-700/80 shadow-xs">
-                <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-                <span>Sesi {school.sesi} • Tahun {school.tahunSemasa}</span>
-              </span>
-              <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold px-3 py-1 rounded-full bg-white/10 text-emerald-300 border border-white/10">
-                <Trophy className="w-3.5 h-3.5 text-emerald-400" />
-                <span>Kecemerlangan & Kemenjadian Murid</span>
-              </span>
-              <span className="text-xs text-blue-200/80 hidden sm:inline">
-                {new Date().toLocaleDateString('ms-MY', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' })}
-              </span>
+          <div className="relative z-10 space-y-4 flex-1 min-w-0">
+            <div className="space-y-1.5">
+              <h1 className="text-xl sm:text-2xl lg:text-[26px] font-extrabold tracking-tight text-white leading-snug">
+                Selamat Bertugas, {currentUser?.nama || 'Warga Pendidik'}!
+              </h1>
+              <p className="text-xs sm:text-sm text-white/90 font-medium max-w-xl">
+                {school.nama} ({school.kodSekolah}) • Sesi {school.sesi} Tahun {school.tahunSemasa}. Sasaran kehadiran sekolah ditetapkan pada{' '}
+                <strong className="font-extrabold text-white">{rules.sasaranKehadiranSekolah}%</strong>.
+              </p>
             </div>
 
-            {/* Ucapan Pengguna & Identiti Sekolah */}
-            <div className="flex items-start gap-3.5 sm:gap-4">
-              <div className="shrink-0 p-1.5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 shadow-lg">
-                <SchoolLogo size="lg" className="drop-shadow-md hover:scale-105 transition-transform" />
-              </div>
-              <div className="space-y-1">
-                <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-white leading-tight">
-                  Selamat Bertugas, <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-200 to-amber-400">{currentUser?.nama || 'Warga Pendidik'}</span>
-                </h1>
-                <p className="text-xs sm:text-sm text-blue-100/90 leading-relaxed max-w-xl">
-                  {school.nama} ({school.kodSekolah}) • {school.bandar}, Sabah.
-                  <span className="block text-blue-200/85 mt-0.5">
-                    Moto: <em>"{school.motoSekolah || 'Ilmuan Gemilang'}"</em> • Sasaran Kehadiran Sekolah: <strong className="text-amber-300">{rules.sasaranKehadiranSekolah}%</strong>
+            {/* 2 Lencana Bulat Pink & Kuning seperti rekaan rujukan */}
+            <div className="flex flex-wrap items-center gap-5 pt-1">
+              <button
+                onClick={() => navigate('/murid')}
+                className="flex items-center gap-3 group text-left"
+              >
+                <div className="w-11 h-11 rounded-full bg-[#ff3e6c] text-white flex items-center justify-center shadow-md group-hover:scale-105 transition-transform shrink-0">
+                  <Users className="w-5 h-5" />
+                </div>
+                <div>
+                  <span className="text-xs font-medium text-white/85 block">Enrolmen Murid</span>
+                  <span className="text-base sm:text-lg font-extrabold text-white tabular-nums">
+                    {totalEnrolment} Aktif
                   </span>
-                </p>
-              </div>
-            </div>
+                </div>
+              </button>
 
-            {/* Metrik Pantas Kemenjadian & Kesejahteraan Murid */}
-            <div className="grid grid-cols-3 gap-2 sm:gap-3 pt-1">
-              <div className="bg-white/5 hover:bg-white/10 transition-colors border border-white/10 rounded-xl p-2.5 backdrop-blur-xs">
-                <div className="flex items-center gap-1.5 text-amber-300 text-[11px] font-extrabold">
-                  <Award className="w-3.5 h-3.5" />
-                  <span>Sahsiah & Disiplin</span>
-                </div>
-                <div className="text-xs sm:text-sm font-black text-white mt-1">
-                  {totalEnrolment - openDisciplineCases.length} / {totalEnrolment}
-                </div>
-                <span className="text-[10px] text-blue-200/70 block truncate">Bebas tindakan kes</span>
-              </div>
-
-              <div className="bg-white/5 hover:bg-white/10 transition-colors border border-white/10 rounded-xl p-2.5 backdrop-blur-xs">
-                <div className="flex items-center gap-1.5 text-emerald-300 text-[11px] font-extrabold">
-                  <TrendingUp className="w-3.5 h-3.5" />
-                  <span>Kehadiran Hari Ini</span>
-                </div>
-                <div className="text-xs sm:text-sm font-black text-white mt-1">
-                  {todayPercentage}%
-                </div>
-                <span className="text-[10px] text-blue-200/70 block truncate">{todayPresent} hadir ke sekolah</span>
-              </div>
-
-              <div className="bg-white/5 hover:bg-white/10 transition-colors border border-white/10 rounded-xl p-2.5 backdrop-blur-xs">
-                <div className="flex items-center gap-1.5 text-teal-300 text-[11px] font-extrabold">
-                  <HeartHandshake className="w-3.5 h-3.5" />
-                  <span>Kebajikan & Bantuan</span>
-                </div>
-                <div className="text-xs sm:text-sm font-black text-white mt-1">
-                  {totalAssistance} Penerima
-                </div>
-                <span className="text-[10px] text-blue-200/70 block truncate">Biasiswa & agihan</span>
-              </div>
-            </div>
-
-            {/* Butang Tindakan Pantas */}
-            <div className="flex flex-wrap items-center gap-2.5 pt-1">
               <button
                 onClick={() => navigate('/kehadiran')}
-                className="px-4 py-2.5 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-950 font-black text-xs sm:text-sm rounded-xl shadow-lg hover:shadow-amber-500/25 transition-all flex items-center gap-2"
+                className="flex items-center gap-3 group text-left"
               >
-                <CalendarCheck className="w-4 h-4" />
-                <span>Rekod Kehadiran Hari Ini</span>
-              </button>
-
-              <button
-                onClick={() => navigate('/program-mesyuarat')}
-                className="px-3.5 py-2.5 bg-white/10 hover:bg-white/20 text-white font-bold text-xs rounded-xl border border-white/15 transition-all flex items-center gap-2 backdrop-blur-xs"
-              >
-                <CalendarDays className="w-4 h-4 text-blue-300" />
-                <span>Kalendar & Program HEM</span>
-              </button>
-
-              <button
-                onClick={() => navigate('/bantuan')}
-                className="px-3.5 py-2.5 bg-white/10 hover:bg-white/20 text-white font-bold text-xs rounded-xl border border-white/15 transition-all flex items-center gap-2 backdrop-blur-xs"
-              >
-                <Award className="w-4 h-4 text-amber-300" />
-                <span>Skim Bantuan</span>
+                <div className="w-11 h-11 rounded-full bg-[#ffc107] text-slate-900 flex items-center justify-center shadow-md group-hover:scale-105 transition-transform shrink-0">
+                  <TrendingUp className="w-5 h-5" />
+                </div>
+                <div>
+                  <span className="text-xs font-medium text-white/85 block">Kehadiran Terkini</span>
+                  <span className="text-base sm:text-lg font-extrabold text-white tabular-nums">
+                    {todayPercentage}% ({todayPresent})
+                  </span>
+                </div>
               </button>
             </div>
           </div>
 
-          {/* Kolum Kanan: Ilustrasi Bergambar Pelajar & Kecemerlangan */}
-          <div className="lg:col-span-5 relative">
-            <div className="relative rounded-2xl overflow-hidden border-2 border-white/15 shadow-2xl group bg-slate-950">
+          {/* Ilustrasi Pelajar Kanan */}
+          <div className="relative z-10 hidden sm:block shrink-0">
+            <div className="w-48 md:w-56 lg:w-64 h-36 md:h-40 rounded-2xl overflow-hidden border-2 border-white/30 shadow-xl bg-teal-900/20">
               <img
                 src={
-                  (dashboardSettings?.gambarBannerUrl && !dashboardSettings.gambarBannerUrl.startsWith('/src/assets/images/'))
+                  dashboardSettings?.gambarBannerUrl &&
+                  !dashboardSettings.gambarBannerUrl.startsWith('/src/assets/images/')
                     ? dashboardSettings.gambarBannerUrl
-                    : (defaultBannerImg || '/banner.jpg')
+                    : defaultBannerImg || '/banner.jpg'
                 }
-                alt="Ilustrasi Kecemerlangan & Kemenjadian Murid SMK Salaping"
-                onError={(e) => {
+                alt="Kecemerlangan Murid SMK Salaping"
+                onError={e => {
                   const target = e.currentTarget;
                   if (defaultBannerImg && target.src !== defaultBannerImg) {
                     target.src = defaultBannerImg;
@@ -350,116 +368,124 @@ export const Dashboard: React.FC = () => {
                     target.src = '/banner.jpg';
                   }
                 }}
-                className="w-full h-56 sm:h-64 lg:h-72 object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                className="w-full h-full object-cover object-top"
               />
-              {/* Lapisan Bayangan Gradien */}
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent pointer-events-none" />
-
-              {/* Lencana Atas Ilustrasi */}
-              <div className="absolute top-3 right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-950/80 backdrop-blur-md border border-amber-400/40 text-[10px] font-extrabold text-amber-300 shadow-md">
-                <Trophy className="w-3.5 h-3.5 text-amber-400" />
-                <span>Kemenjadian Murid Salaping</span>
-              </div>
-
-              {/* Kapsul Penerangan Bawah Ilustrasi */}
-              <div className="absolute bottom-3 left-3 right-3 p-2.5 rounded-xl bg-slate-900/90 backdrop-blur-md border border-white/10 text-white">
-                <div className="flex items-center justify-between">
-                  <div className="space-y-0.5">
-                    <span className="text-[10px] font-extrabold uppercase tracking-wider text-amber-300 block">
-                      Aspirasi Murid Salaping • Modal Insan
-                    </span>
-                    <h3 className="text-xs font-bold text-slate-100">
-                      Kepimpinan • Kejayaan Akademik • Keunggulan Sahsiah
-                    </h3>
-                  </div>
-                  <span className="shrink-0 w-7 h-7 rounded-lg bg-amber-500/20 text-amber-300 flex items-center justify-center font-black text-xs border border-amber-500/30">
-                    ★
-                  </span>
-                </div>
-              </div>
             </div>
+          </div>
+        </div>
+
+        {/* Panel Tindakan Kanan (3/4 cols) */}
+        <div className="lg:col-span-4 xl:col-span-3 flex flex-col justify-between gap-3.5">
+          <div className="text-center space-y-2.5">
+            <h2 className="text-sm font-bold text-slate-800 dark:text-white leading-snug">
+              Urus Rekod Kehadiran Harian?
+            </h2>
+            <button
+              onClick={() => navigate('/kehadiran')}
+              className="w-full py-2.5 px-4 rounded-xl bg-[#0ea5e9] hover:bg-[#0284c7] text-white font-bold text-xs sm:text-sm shadow-md shadow-sky-500/20 flex items-center justify-center gap-2 transition-colors cursor-pointer"
+            >
+              <Plus className="w-4 h-4 stroke-[2.5]" />
+              <span>Rekod Kehadiran Hari Ini</span>
+            </button>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3 flex-1">
+            {/* Kaunter 1: Risiko Cicir */}
+            <button
+              onClick={() => navigate('/risiko-cicir')}
+              className="rounded-xl overflow-hidden bg-white dark:bg-[#222b42] border border-slate-200 dark:border-white/5 shadow-xs hover:border-[#0ea5e9] transition-colors flex flex-col text-center"
+            >
+              <div className="w-full bg-[#bae6fd] dark:bg-[#bfe3ff] text-[#0369a1] dark:text-[#0c4a6e] text-[11px] font-bold py-1.5 px-2 truncate">
+                Risiko Cicir (1:3:7)
+              </div>
+              <div className="flex-1 flex items-center justify-center py-3 px-2">
+                <span className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tabular-nums">
+                  {criticalRiskStudents.length}
+                </span>
+              </div>
+            </button>
+
+            {/* Kaunter 2: Kes Disiplin */}
+            <button
+              onClick={() => navigate('/disiplin')}
+              className="rounded-xl overflow-hidden bg-white dark:bg-[#222b42] border border-slate-200 dark:border-white/5 shadow-xs hover:border-[#0ea5e9] transition-colors flex flex-col text-center"
+            >
+              <div className="w-full bg-[#bae6fd] dark:bg-[#bfe3ff] text-[#0369a1] dark:text-[#0c4a6e] text-[11px] font-bold py-1.5 px-2 truncate">
+                Kes Disiplin Aktif
+              </div>
+              <div className="flex-1 flex items-center justify-center py-3 px-2">
+                <span className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tabular-nums">
+                  {openDisciplineCases.length}
+                </span>
+              </div>
+            </button>
           </div>
         </div>
       </div>
 
-      {/* Onboarding Banner untuk Mod Data Sebenar */}
+      {/* Onboarding Banner bila pangkalan data murid kosong */}
       {totalEnrolment === 0 && (
-        <div className="p-4 sm:p-5 rounded-2xl border-2 border-dashed border-blue-300 bg-blue-50/70 flex flex-col sm:flex-row sm:items-center justify-between gap-4 animate-in fade-in">
+        <div className="p-4 sm:p-5 rounded-2xl border border-dashed border-sky-400/50 bg-sky-50/70 dark:bg-[#222b42] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-start gap-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-700 text-white flex items-center justify-center shrink-0 shadow-md">
+            <div className="w-10 h-10 rounded-xl bg-[#0ea5e9] text-white flex items-center justify-center shrink-0">
               <UserPlus className="w-5 h-5" />
             </div>
             <div className="space-y-0.5">
-              <h3 className="font-extrabold text-sm text-blue-950">
-                Pangkalan Data Murid Bersih (Sedia untuk Data Sekolah Sebenar)
+              <h3 className="font-bold text-sm text-slate-900 dark:text-white">
+                Pangkalan Data Murid Bersih (Sedia untuk Data Sebenar)
               </h3>
-              <p className="text-xs text-blue-900/80 leading-relaxed max-w-2xl">
-                Data demo fiktif telah dipadamkan sepenuhnya. Mulakan kemasukan rekod murid sebenar SMK Salaping melalui pendaftaran senarai sekelas, pendaftaran individu, atau import fail dari Sistem Pengurusan Murid (idMe KPM / MOEIS).
+              <p className="text-xs text-slate-600 dark:text-slate-300 max-w-2xl">
+                Mulakan kemasukan rekod murid sebenar SMK Salaping melalui pendaftaran senarai sekelas, muat naik Excel, atau penyegerakan dari idMe KPM / MOEIS.
               </p>
             </div>
           </div>
           <div className="flex items-center gap-2 shrink-0">
             <button
               onClick={() => navigate('/murid')}
-              className="px-4 py-2 bg-blue-700 hover:bg-blue-800 text-white font-extrabold text-xs rounded-xl shadow-xs transition-colors flex items-center gap-1.5"
+              className="px-4 py-2 bg-[#0ea5e9] hover:bg-[#0284c7] text-white font-bold text-xs rounded-xl transition-colors flex items-center gap-1.5"
             >
               <UserPlus className="w-4 h-4" />
               <span>Daftar / Import Murid</span>
-            </button>
-            <button
-              onClick={() => navigate('/tetapan')}
-              className="px-3 py-2 bg-white hover:bg-slate-100 text-slate-800 border border-slate-300 font-bold text-xs rounded-xl transition-colors"
-            >
-              <span>Tetapan Sekolah</span>
             </button>
           </div>
         </div>
       )}
 
-      {/* Filter Bar */}
-      <div className="bg-white p-3.5 rounded-xl border border-slate-200 shadow-xs flex flex-wrap items-center justify-between gap-3 text-xs">
-        <div className="flex items-center gap-2 font-semibold text-slate-700">
-          <Filter className="w-4 h-4 text-blue-700" />
-          <span>Tapis Paparan Dashboard:</span>
-        </div>
-        <div className="flex flex-wrap items-center gap-2">
-          <div>
-            <label className="text-slate-500 mr-1.5 font-medium">Tingkatan:</label>
-            <select
-              value={filterTingkatan}
-              onChange={(e) => {
-                setFilterTingkatan(e.target.value);
-                setFilterKelas('semua');
-              }}
-              className="border border-slate-300 rounded-lg px-2.5 py-1.5 bg-slate-50 text-slate-800 font-medium focus:ring-1 focus:ring-blue-600"
-            >
-              <option value="semua">Semua Tingkatan</option>
-              <option value="1">Tingkatan 1</option>
-              <option value="2">Tingkatan 2</option>
-              <option value="3">Tingkatan 3</option>
-              <option value="4">Tingkatan 4</option>
-              <option value="5">Tingkatan 5</option>
-            </select>
+      {/* Bar Tapis & Pintasan Pantas */}
+      <div className="bg-white dark:bg-[#222b42] px-4 py-3 rounded-2xl border border-slate-200 dark:border-white/5 flex flex-wrap items-center justify-between gap-3 text-xs">
+        <div className="flex flex-wrap items-center gap-2.5">
+          <div className="flex items-center gap-1.5 font-bold text-slate-700 dark:text-slate-200 mr-1">
+            <Filter className="w-3.5 h-3.5 text-[#0ea5e9]" />
+            <span>Tapis:</span>
           </div>
+          <select
+            value={filterTingkatan}
+            onChange={e => {
+              setFilterTingkatan(e.target.value);
+              setFilterKelas('semua');
+            }}
+            className="border border-slate-200 dark:border-white/10 rounded-xl px-2.5 py-1.5 bg-slate-50 dark:bg-[#161e31] text-slate-800 dark:text-slate-100 font-medium focus:outline-hidden focus:border-[#0ea5e9]"
+          >
+            <option value="semua">Semua Tingkatan</option>
+            <option value="1">Tingkatan 1</option>
+            <option value="2">Tingkatan 2</option>
+            <option value="3">Tingkatan 3</option>
+            <option value="4">Tingkatan 4</option>
+            <option value="5">Tingkatan 5</option>
+          </select>
 
-          <div>
-            <label className="text-slate-500 mr-1.5 font-medium">Kelas:</label>
-            <select
-              value={filterKelas}
-              onChange={(e) => setFilterKelas(e.target.value)}
-              className="border border-slate-300 rounded-lg px-2.5 py-1.5 bg-slate-50 text-slate-800 font-medium focus:ring-1 focus:ring-blue-600"
-            >
-              <option value="semua">Semua Kelas</option>
-              <option value="1 Arif">1 Arif</option>
-              <option value="1 Bestari">1 Bestari</option>
-              <option value="2 Arif">2 Arif</option>
-              <option value="2 Bestari">2 Bestari</option>
-              <option value="3 Arif">3 Arif</option>
-              <option value="3 Marikh">3 Marikh</option>
-              <option value="4 Sains">4 Sains</option>
-              <option value="5 Sains">5 Sains</option>
-            </select>
-          </div>
+          <select
+            value={filterKelas}
+            onChange={e => setFilterKelas(e.target.value)}
+            className="border border-slate-200 dark:border-white/10 rounded-xl px-2.5 py-1.5 bg-slate-50 dark:bg-[#161e31] text-slate-800 dark:text-slate-100 font-medium focus:outline-hidden focus:border-[#0ea5e9]"
+          >
+            <option value="semua">Semua Kelas</option>
+            {availableClasses.map(cls => (
+              <option key={cls} value={cls}>
+                {cls}
+              </option>
+            ))}
+          </select>
 
           {(filterTingkatan !== 'semua' || filterKelas !== 'semua') && (
             <button
@@ -467,511 +493,408 @@ export const Dashboard: React.FC = () => {
                 setFilterTingkatan('semua');
                 setFilterKelas('semua');
               }}
-              className="text-blue-700 hover:underline font-semibold ml-2"
+              className="text-[#0ea5e9] hover:underline font-semibold"
             >
               Set Semula
             </button>
           )}
         </div>
-      </div>
 
-      {/* KPI Cards Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-        {/* KPI 1: Enrolmen */}
-        <div
-          onClick={() => navigate('/murid')}
-          className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs hover:border-blue-400 cursor-pointer transition-all group"
-        >
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-semibold text-slate-500">Jumlah Enrolmen</span>
-            <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-700 flex items-center justify-center">
-              <Users className="w-4 h-4" />
-            </div>
-          </div>
-          <div className="text-2xl font-extrabold text-slate-900">{totalEnrolment}</div>
-          <p className="text-[11px] text-slate-500 mt-1">
-            Lelaki: <strong className="text-slate-700">{totalLelaki}</strong> • Perempuan:{' '}
-            <strong className="text-slate-700">{totalPerempuan}</strong>
-          </p>
-        </div>
-
-        {/* KPI 2: Peratus Kehadiran Hari Ini */}
-        <div
-          onClick={() => navigate('/kehadiran')}
-          className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs hover:border-emerald-400 cursor-pointer transition-all group"
-        >
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-semibold text-slate-500">Kehadiran Hari Ini</span>
-            <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center">
-              <TrendingUp className="w-4 h-4" />
-            </div>
-          </div>
-          <div className="flex items-baseline gap-1.5">
-            <span className="text-2xl font-extrabold text-emerald-700">{todayPercentage}%</span>
-            <span className="text-[10px] text-slate-400">
-              (Sasaran: {rules.sasaranKehadiranSekolah}%)
-            </span>
-          </div>
-          <p className="text-[11px] text-slate-500 mt-1">
-            Hadir: <strong className="text-emerald-700">{todayPresent}</strong> / {todayTotal} murid
-          </p>
-        </div>
-
-        {/* KPI 3: Tidak Hadir Hari Ini */}
-        <div
-          onClick={() => navigate('/kehadiran')}
-          className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs hover:border-rose-400 cursor-pointer transition-all group"
-        >
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-semibold text-slate-500">Tidak Hadir Hari Ini</span>
-            <div className="w-8 h-8 rounded-lg bg-rose-50 text-rose-700 flex items-center justify-center">
-              <UserX className="w-4 h-4" />
-            </div>
-          </div>
-          <div className="text-2xl font-extrabold text-rose-600">{todayAbsentStudents.length}</div>
-          <p className="text-[11px] text-slate-500 mt-1 truncate">
-            {todayAbsentStudents.length > 0 ? 'Perlu tindakan semakan sebab' : 'Semua hadir'}
-          </p>
-        </div>
-
-        {/* KPI 4: Berisiko Cicir (SOP 1:3:7) */}
-        <div
-          onClick={() => navigate('/risiko-cicir')}
-          className="bg-white p-4 rounded-xl border border-amber-300 shadow-xs bg-amber-50/40 hover:border-amber-400 cursor-pointer transition-all group"
-        >
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-bold text-amber-900">Murid Berisiko Cicir</span>
-            <div className="w-8 h-8 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center">
-              <AlertTriangle className="w-4 h-4" />
-            </div>
-          </div>
-          <div className="text-2xl font-extrabold text-amber-700">{criticalRiskStudents.length}</div>
-          <p className="text-[11px] text-amber-900 font-medium mt-1">
-            Melepasi ambang Amaran 2 & 3
-          </p>
-        </div>
-
-        {/* KPI 5: Kes Disiplin Bulan Ini */}
-        <div
-          onClick={() => navigate('/disiplin')}
-          className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs hover:border-red-400 cursor-pointer transition-all"
-        >
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-semibold text-slate-500">Kes Disiplin Terbuka</span>
-            <div className="w-8 h-8 rounded-lg bg-red-50 text-red-700 flex items-center justify-center">
-              <ShieldAlert className="w-4 h-4" />
-            </div>
-          </div>
-          <div className="text-2xl font-extrabold text-slate-900">{openDisciplineCases.length}</div>
-          <p className="text-[11px] text-slate-500 mt-1">
-            Jumlah kes dilaporkan: {discipline.length}
-          </p>
-        </div>
-
-        {/* KPI 6: Kaunseling Terbuka */}
-        <div
-          onClick={() => navigate('/kaunseling')}
-          className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs hover:border-purple-400 cursor-pointer transition-all"
-        >
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-semibold text-slate-500">Kaunseling Aktif</span>
-            <div className="w-8 h-8 rounded-lg bg-purple-50 text-purple-700 flex items-center justify-center">
-              <HeartHandshake className="w-4 h-4" />
-            </div>
-          </div>
-          <div className="text-2xl font-extrabold text-purple-700">{openCounselingCases.length}</div>
-          <p className="text-[11px] text-slate-500 mt-1">
-            Bimbingan berfokus GBK
-          </p>
-        </div>
-
-        {/* KPI 7: Penerima Bantuan */}
-        <div
-          onClick={() => navigate('/bantuan')}
-          className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs hover:border-teal-400 cursor-pointer transition-all"
-        >
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-semibold text-slate-500">Penerima Bantuan</span>
-            <div className="w-8 h-8 rounded-lg bg-teal-50 text-teal-700 flex items-center justify-center">
-              <Award className="w-4 h-4" />
-            </div>
-          </div>
-          <div className="text-2xl font-extrabold text-teal-800">{totalAssistance}</div>
-          <p className="text-[11px] text-teal-700 font-semibold mt-1">
-            Pantau Kuota & Agihan Skim
-          </p>
-        </div>
-
-        {/* KPI 8: Penghuni Asrama */}
-        <div
-          onClick={() => navigate('/asrama')}
-          className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs hover:border-indigo-400 cursor-pointer transition-all"
-        >
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-semibold text-slate-500">Penghuni Asrama Desa</span>
-            <div className="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-700 flex items-center justify-center">
-              <Home className="w-4 h-4" />
-            </div>
-          </div>
-          <div className="text-2xl font-extrabold text-indigo-800">{totalHostel} <span className="text-xs font-medium text-slate-500">/ 60</span></div>
-          <p className="text-[11px] text-indigo-700 font-semibold mt-1">
-            Kapasiti & Kuota Katil Asrama
-          </p>
-        </div>
-      </div>
-
-      {/* Panel "Perlukan Tindakan Segera" (Action Required) */}
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
-        <div className="p-4 sm:p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-amber-500 text-slate-950 flex items-center justify-center font-bold">
-              <AlertTriangle className="w-4 h-4" />
-            </div>
-            <div>
-              <h2 className="text-sm sm:text-base font-bold text-slate-900">
-                Panel Tindakan Segera (Intervensi HEM)
-              </h2>
-              <p className="text-xs text-slate-500">
-                Murid melepasi ambang amaran ketidakhadiran & kes belum selesai
-              </p>
-            </div>
-          </div>
+        {/* Pautan pantas ke modul tambahan (3K, Pengawas, Takwim) */}
+        <div className="flex flex-wrap items-center gap-2">
           <button
-            onClick={() => navigate('/risiko-cicir')}
-            className="text-xs font-semibold text-blue-700 hover:text-blue-900 flex items-center gap-1"
+            onClick={() => navigate('/3k')}
+            className="px-2.5 py-1.5 rounded-lg bg-slate-100 dark:bg-[#161e31] hover:bg-slate-200 dark:hover:bg-[#2a3654] text-slate-700 dark:text-slate-300 font-semibold transition-colors"
           >
-            <span>Semua Tindakan</span>
-            <ChevronRight className="w-4 h-4" />
+            Kesihatan &amp; 3K
           </button>
-        </div>
-
-        <div className="divide-y divide-slate-100">
-          {criticalRiskStudents.slice(0, 4).map((risk) => (
-            <div
-              key={risk.student.id}
-              onClick={() => navigate(`/risiko-cicir`)}
-              className="p-4 hover:bg-slate-50 transition-colors cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-3"
-            >
-              <div className="flex items-start gap-3">
-                <div
-                  className={`w-9 h-9 rounded-full flex items-center justify-center font-bold text-xs shrink-0 ${
-                    risk.riskTier === 'amaran3'
-                      ? 'bg-red-100 text-red-800 border border-red-300'
-                      : 'bg-amber-100 text-amber-800 border border-amber-300'
-                  }`}
-                >
-                  {risk.consecutiveAbsences}H
-                </div>
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="font-bold text-sm text-slate-900">{risk.student.nama}</span>
-                    <span className="text-xs font-medium px-2 py-0.5 rounded bg-slate-100 text-slate-700">
-                      {risk.student.kelas}
-                    </span>
-                    <span
-                      className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                        risk.riskTier === 'amaran3'
-                          ? 'bg-red-600 text-white'
-                          : 'bg-amber-500 text-slate-950'
-                      }`}
-                    >
-                      {risk.riskTier === 'amaran3' ? 'Amaran 3 (Kritikal)' : 'Amaran 2 (Tinggi)'}
-                    </span>
-                  </div>
-                  <p className="text-xs text-slate-500 mt-0.5">
-                    {risk.student.kampung} • {risk.consecutiveAbsences} hari berturut-turut tidak hadir ({risk.attendancePercentage}% keseluruhan)
-                  </p>
-                  <p className="text-xs text-amber-900 font-medium mt-1">
-                    Cadangan: {risk.cadanganTindakan}
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2 shrink-0 self-end sm:self-center">
-                <span className="text-xs font-semibold px-3 py-1.5 bg-blue-50 text-blue-700 border border-blue-200 rounded-lg hover:bg-blue-100 transition-colors flex items-center gap-1.5">
-                  <span>Jana Surat / WhatsApp</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </span>
-              </div>
-            </div>
-          ))}
-
-          {criticalRiskStudents.length === 0 && (
-            <div className="p-6 text-center text-xs text-slate-500">
-              Tiada murid yang melepasi ambang kritikal pada masa ini.
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Panel Tugasan Tertunggak Mesyuarat HEM (Fasa 3) */}
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
-        <div className="p-4 sm:p-5 border-b border-slate-100 flex items-center justify-between bg-emerald-50/40">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-emerald-700 text-white flex items-center justify-center font-bold">
-              <CheckSquare className="w-4 h-4" />
-            </div>
-            <div>
-              <h2 className="text-sm sm:text-base font-bold text-slate-900">
-                Tindakan Susulan & Amanah Mesyuarat HEM ({meetings.flatMap(m => m.tindakanSusulan.filter(f => f.status !== 'selesai')).length} Tertunggak)
-              </h2>
-              <p className="text-xs text-slate-500">
-                Keputusan mesyuarat jawatankuasa yang memerlukan pelaksanaan oleh pegawai berkaitan
-              </p>
-            </div>
-          </div>
+          <button
+            onClick={() => navigate('/pengawas')}
+            className="px-2.5 py-1.5 rounded-lg bg-slate-100 dark:bg-[#161e31] hover:bg-slate-200 dark:hover:bg-[#2a3654] text-slate-700 dark:text-slate-300 font-semibold transition-colors"
+          >
+            Badan Pengawas
+          </button>
           <button
             onClick={() => navigate('/program-mesyuarat')}
-            className="text-xs font-semibold text-emerald-800 hover:text-emerald-950 flex items-center gap-1"
+            className="px-2.5 py-1.5 rounded-lg bg-slate-100 dark:bg-[#161e31] hover:bg-slate-200 dark:hover:bg-[#2a3654] text-slate-700 dark:text-slate-300 font-semibold transition-colors"
           >
-            <span>Semua Minit</span>
-            <ChevronRight className="w-4 h-4" />
+            Takwim &amp; Mesyuarat
           </button>
         </div>
+      </div>
 
-        <div className="divide-y divide-slate-100">
-          {meetings.flatMap(m =>
-            m.tindakanSusulan
-              .filter(fu => fu.status !== 'selesai')
-              .map(fu => ({ ...fu, bil: m.bilangan, tajuk: m.tajuk }))
-          ).slice(0, 4).map(task => (
-            <div
-              key={task.id}
-              onClick={() => navigate('/program-mesyuarat')}
-              className="p-4 hover:bg-slate-50 transition-colors cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs"
+      {/* BARIS 2: 3 Kolum Utama (Modul Teras | Aktiviti Semasa + 2 Kad Warna | Intervensi Murid) */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+        {/* Kolum Kiri: Modul Teras HEM (4 kad padat seperti Popular Courses) */}
+        <div className="lg:col-span-4 space-y-3">
+          <div className="flex items-center justify-between">
+            <h2 className="text-base font-bold text-slate-900 dark:text-white">Modul Teras HEM</h2>
+            <button
+              onClick={() => navigate('/murid')}
+              className="text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-[#0ea5e9]"
             >
-              <div className="space-y-1">
-                <div className="flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-full bg-amber-500 shrink-0" />
-                  <span className="font-bold text-slate-900 text-sm">{task.perkara}</span>
-                  <span className="text-[10px] font-extrabold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800">
-                    {task.bil}
-                  </span>
-                </div>
-                <div className="text-slate-500 flex items-center gap-2 pl-4.5 text-[11px]">
-                  <span>Pegawai: <strong className="text-slate-800">{task.namaTindakanOleh}</strong></span>
-                  <span>•</span>
-                  <span>Tarikh Akhir: <strong className="text-red-700">{task.tarikhAkhir}</strong></span>
-                </div>
-              </div>
-
-              <div className="shrink-0 self-end sm:self-center pl-4.5 sm:pl-0">
-                <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-200">
-                  {task.status === 'dalam_tindakan' ? 'DALAM TINDAKAN' : 'BELUM SELESAI'}
-                </span>
-              </div>
-            </div>
-          ))}
-
-          {meetings.flatMap(m => m.tindakanSusulan.filter(f => f.status !== 'selesai')).length === 0 && (
-            <div className="p-6 text-center text-xs text-slate-500">
-              Semua tindakan susulan mesyuarat HEM telah diselesaikan dengan jayanya.
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Baris Pintas Pantas Modul HEM (3K, Pengawas, Program) */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-        <div
-          onClick={() => navigate('/3k')}
-          className="p-4 rounded-2xl border border-slate-200 bg-white shadow-xs hover:border-red-300 cursor-pointer flex items-center justify-between group transition-all"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-red-50 text-red-700 flex items-center justify-center font-bold">
-              <HeartPulse className="w-5 h-5" />
-            </div>
-            <div>
-              <h4 className="font-bold text-slate-900 text-xs group-hover:text-red-700 transition-colors">
-                Kesihatan, Keselamatan & 3K
-              </h4>
-              <p className="text-[11px] text-slate-500">Bilik sakit, audit kawasan & talian kecemasan</p>
-            </div>
+              Semua Modul
+            </button>
           </div>
-          <ChevronRight className="w-4 h-4 text-slate-400 group-hover:translate-x-1 transition-transform" />
-        </div>
-
-        <div
-          onClick={() => navigate('/pengawas')}
-          className="p-4 rounded-2xl border border-slate-200 bg-white shadow-xs hover:border-indigo-300 cursor-pointer flex items-center justify-between group transition-all"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-700 flex items-center justify-center font-bold">
-              <Award className="w-5 h-5" />
-            </div>
-            <div>
-              <h4 className="font-bold text-slate-900 text-xs group-hover:text-indigo-700 transition-colors">
-                Badan Pengawas Sekolah
-              </h4>
-              <p className="text-[11px] text-slate-500">Senarai exco & jadual tugas harian</p>
-            </div>
-          </div>
-          <ChevronRight className="w-4 h-4 text-slate-400 group-hover:translate-x-1 transition-transform" />
-        </div>
-
-        <div
-          onClick={() => navigate('/program-mesyuarat')}
-          className="p-4 rounded-2xl border border-slate-200 bg-white shadow-xs hover:border-blue-300 cursor-pointer flex items-center justify-between group transition-all"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center font-bold">
-              <CalendarDays className="w-5 h-5" />
-            </div>
-            <div>
-              <h4 className="font-bold text-slate-900 text-xs group-hover:text-blue-700 transition-colors">
-                Takwim HEM & Mesyuarat
-              </h4>
-              <p className="text-[11px] text-slate-500">Program tahunan, perhimpunan & minit</p>
-            </div>
-          </div>
-          <ChevronRight className="w-4 h-4 text-slate-400 group-hover:translate-x-1 transition-transform" />
-        </div>
-      </div>
-
-      {/* Charts Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Carta 1: Trend Kehadiran 30 Hari */}
-        <div className="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-xs">
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <h3 className="text-sm font-bold text-slate-900">Trend Kehadiran Sekolah (30 Hari)</h3>
-              <p className="text-xs text-slate-500">Peratus kehadiran harian berbanding sasaran 90%</p>
-            </div>
-            <span className="text-xs font-semibold px-2 py-1 bg-blue-50 text-blue-700 rounded-md">
-              Purata: 91.5%
-            </span>
-          </div>
-
-          <div className="h-64 w-full">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={trendData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-                <XAxis dataKey="tarikh" tick={{ fontSize: 10, fill: '#64748b' }} />
-                <YAxis domain={[75, 100]} tick={{ fontSize: 10, fill: '#64748b' }} unit="%" />
-                <Tooltip
-                  formatter={(val: any) => [`${val}%`, 'Peratus']}
-                  contentStyle={{ backgroundColor: '#ffffff', borderRadius: '8px', fontSize: '12px' }}
-                />
-                <Legend wrapperStyle={{ fontSize: '11px' }} />
-                <Line
-                  type="monotone"
-                  dataKey="peratus"
-                  name="Kehadiran Sebenar"
-                  stroke="#1d4ed8"
-                  strokeWidth={2.5}
-                  dot={{ r: 2 }}
-                  activeDot={{ r: 5 }}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="sasaran"
-                  name="Sasaran KPM"
-                  stroke="#f59e0b"
-                  strokeDasharray="4 4"
-                  strokeWidth={1.5}
-                  dot={false}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-
-        {/* Carta 2: Kehadiran Mengikut Tingkatan */}
-        <div className="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-xs">
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <h3 className="text-sm font-bold text-slate-900">Kehadiran Mengikut Tingkatan</h3>
-              <p className="text-xs text-slate-500">Perbandingan Tingkatan 1 hingga 5</p>
-            </div>
-            <span className="text-xs font-semibold text-slate-600">Hari ini</span>
-          </div>
-
-          <div className="h-64 w-full">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={formStats}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-                <XAxis dataKey="tingkatan" tick={{ fontSize: 11, fill: '#64748b' }} />
-                <YAxis domain={[80, 100]} tick={{ fontSize: 10, fill: '#64748b' }} unit="%" />
-                <Tooltip
-                  formatter={(val: any) => [`${val}%`, 'Peratus Hadir']}
-                  contentStyle={{ backgroundColor: '#ffffff', borderRadius: '8px', fontSize: '12px' }}
-                />
-                <Bar dataKey="peratus" name="% Kehadiran" fill="#2563eb" radius={[6, 6, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-      </div>
-
-      {/* Row: Taburan Jantina & 5 Kelas Kehadiran Terendah */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Taburan Enrolmen & Jantina */}
-        <div className="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-xs">
-          <h3 className="text-sm font-bold text-slate-900 mb-1">Taburan Enrolmen Mengikut Tingkatan</h3>
-          <p className="text-xs text-slate-500 mb-4">Pecahan bilangan murid lelaki dan perempuan</p>
 
           <div className="space-y-3">
-            {formStats.map((item) => (
-              <div key={item.tingkatan} className="space-y-1">
-                <div className="flex justify-between text-xs font-semibold text-slate-700">
-                  <span>{item.tingkatan} ({item.jumlah} Murid)</span>
-                  <span className="text-slate-500">
-                    L: {item.lelaki} | P: {item.perempuan}
-                  </span>
+            {modulTeras.map(mod => (
+              <div
+                key={mod.code}
+                onClick={() => navigate(mod.to)}
+                className="bg-white dark:bg-[#222b42] rounded-2xl p-3.5 border border-slate-200 dark:border-white/5 hover:border-[#0ea5e9]/40 transition-all cursor-pointer flex items-center justify-between gap-3"
+              >
+                <div className="flex items-center gap-3 min-w-0">
+                  <div
+                    className={`w-10 h-10 rounded-xl flex items-center justify-center font-extrabold text-sm shrink-0 ${mod.badgeBg}`}
+                  >
+                    {mod.code}
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-sm font-bold text-slate-900 dark:text-white truncate">{mod.title}</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 truncate tabular-nums">
+                      {mod.subtitle}
+                    </p>
+                  </div>
                 </div>
-                <div className="h-2.5 bg-slate-100 rounded-full overflow-hidden flex">
-                  <div
-                    style={{ width: `${(item.lelaki / item.jumlah) * 100}%` }}
-                    className="bg-blue-600 h-full"
-                    title={`Lelaki: ${item.lelaki}`}
-                  />
-                  <div
-                    style={{ width: `${(item.perempuan / item.jumlah) * 100}%` }}
-                    className="bg-pink-500 h-full"
-                    title={`Perempuan: ${item.perempuan}`}
-                  />
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <span className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${mod.btnClass}`}>
+                    {mod.actionLabel}
+                  </span>
+                  <MoreVertical className="w-4 h-4 text-slate-400 dark:text-slate-500 hidden sm:block" />
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* 5 Kelas Kehadiran Terendah Minggu Ini */}
-        <div className="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-xs">
-          <div className="flex items-center justify-between mb-1">
-            <h3 className="text-sm font-bold text-slate-900">5 Kelas Kehadiran Terendah (Minggu Ini)</h3>
-            <span className="text-[10px] font-bold px-2 py-0.5 bg-amber-100 text-amber-800 rounded">
-              PERLU PERHATIAN
-            </span>
+        {/* Kolum Tengah: Aktiviti Semasa (Carta Area + Kad Kuning & Pink) */}
+        <div className="lg:col-span-4 space-y-3 flex flex-col">
+          <div className="flex items-center justify-between">
+            <h2 className="text-base font-bold text-slate-900 dark:text-white">Aktiviti Semasa</h2>
+            <span className="text-xs font-medium text-slate-500 dark:text-slate-400">30 Hari Terkini</span>
           </div>
-          <p className="text-xs text-slate-500 mb-4">Kelas yang memerlukan pemantauan intensif guru kelas</p>
+
+          <div className="bg-white dark:bg-[#222b42] rounded-2xl p-4 border border-slate-200 dark:border-white/5 flex-1 flex flex-col justify-between">
+            <div className="flex items-start justify-between gap-2 mb-2">
+              <div>
+                <h3 className="text-sm font-bold text-slate-900 dark:text-white">Trend Kehadiran</h3>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                  Prestasi harian berbanding sasaran {rules.sasaranKehadiranSekolah}%
+                </p>
+              </div>
+              <button
+                onClick={() => navigate('/kehadiran')}
+                className="w-9 h-9 rounded-full bg-sky-50 dark:bg-white text-[#0ea5e9] flex items-center justify-center shrink-0 hover:scale-105 transition-transform shadow-xs"
+                title="Buka Rekod Kehadiran"
+              >
+                <CalendarDays className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="h-36 w-full mt-1">
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={safeTrendData} margin={{ top: 6, right: 6, left: -24, bottom: 0 }}>
+                  <defs>
+                    <linearGradient id="hemAreaFill" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#0ea5e9" stopOpacity={0.65} />
+                      <stop offset="95%" stopColor="#0ea5e9" stopOpacity={0.02} />
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" stroke={gridColor} vertical={false} />
+                  <XAxis dataKey="tarikh" tick={{ fontSize: 10, fill: tickColor }} axisLine={false} tickLine={false} />
+                  <YAxis domain={[0, 100]} tick={{ fontSize: 10, fill: tickColor }} axisLine={false} tickLine={false} unit="%" />
+                  <Tooltip formatter={(val: any) => [`${val}%`, 'Kehadiran']} contentStyle={tooltipStyle} />
+                  <Area
+                    type="monotone"
+                    dataKey="peratus"
+                    stroke="#0ea5e9"
+                    strokeWidth={2.5}
+                    fillOpacity={1}
+                    fill="url(#hemAreaFill)"
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+
+          {/* 2 Kad KPI Warna Cerah (Kuning & Merah Jambu seperti rujukan) */}
+          <div className="grid grid-cols-2 gap-3.5">
+            <button
+              onClick={() => navigate('/kaunseling')}
+              className="rounded-2xl bg-[#ffc107] hover:bg-[#f5b800] text-slate-950 p-4 text-left flex flex-col justify-between min-h-[116px] transition-transform hover:-translate-y-0.5 shadow-sm"
+            >
+              <div>
+                <div className="text-2xl font-extrabold tabular-nums leading-tight">
+                  {openCounselingCases.length} Sesi
+                </div>
+                <div className="text-xs font-bold text-slate-900/85 mt-0.5">Kaunseling Aktif</div>
+              </div>
+              <div className="flex items-end justify-between gap-2 mt-3">
+                <span className="text-[11px] font-semibold text-slate-900/75 leading-tight">
+                  Bimbingan Berfokus
+                </span>
+                <span className="w-8 h-8 rounded-full bg-white text-amber-600 flex items-center justify-center shrink-0 shadow-xs">
+                  <ArrowUpRight className="w-4 h-4" />
+                </span>
+              </div>
+            </button>
+
+            <button
+              onClick={() => navigate('/program-mesyuarat')}
+              className="rounded-2xl bg-[#ff3e6c] hover:bg-[#f02f5e] text-white p-4 text-left flex flex-col justify-between min-h-[116px] transition-transform hover:-translate-y-0.5 shadow-sm"
+            >
+              <div>
+                <div className="text-2xl font-extrabold tabular-nums leading-tight">
+                  {pendingMeetingTasks.length} Tugasan
+                </div>
+                <div className="text-xs font-bold text-white/90 mt-0.5">Amanah Mesyuarat</div>
+              </div>
+              <div className="flex items-end justify-between gap-2 mt-3">
+                <span className="text-[11px] font-medium text-white/80 leading-tight">
+                  Susulan Jawatankuasa
+                </span>
+                <span className="w-8 h-8 rounded-full bg-white text-[#ff3e6c] flex items-center justify-center shrink-0 shadow-xs">
+                  <Play className="w-3.5 h-3.5 fill-current ml-0.5" />
+                </span>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        {/* Kolum Kanan: Intervensi Murid / Tindakan Segera (4 kad seperti Best Instructors) */}
+        <div className="lg:col-span-4 space-y-3">
+          <div className="flex items-center justify-between">
+            <h2 className="text-base font-bold text-slate-900 dark:text-white">Intervensi Segera</h2>
+            <button
+              onClick={() => navigate('/risiko-cicir')}
+              className="text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-[#0ea5e9]"
+            >
+              Lihat Semua
+            </button>
+          </div>
 
           <div className="space-y-3">
-            {lowestClasses.map((item, idx) => {
-              const isBelowTarget = item.peratus < rules.sasaranKehadiranSekolah;
-              return (
+            {criticalRiskStudents.length > 0 ? (
+              criticalRiskStudents.slice(0, 4).map(risk => {
+                const isCritical = risk.riskTier === 'amaran3';
+                return (
+                  <div
+                    key={risk.student.id}
+                    onClick={() => navigate('/risiko-cicir')}
+                    className="bg-white dark:bg-[#222b42] rounded-2xl p-3.5 border border-slate-200 dark:border-white/5 hover:border-[#0ea5e9]/40 transition-all cursor-pointer flex items-center justify-between gap-3"
+                  >
+                    <div className="flex items-center gap-3 min-w-0">
+                      <div
+                        className={`w-10 h-10 rounded-full flex items-center justify-center font-extrabold text-xs shrink-0 ${
+                          isCritical
+                            ? 'bg-rose-100 text-rose-700 dark:bg-rose-500/20 dark:text-rose-300'
+                            : 'bg-amber-100 text-amber-800 dark:bg-amber-500/20 dark:text-amber-300'
+                        }`}
+                      >
+                        {risk.student.nama.slice(0, 2).toUpperCase()}
+                      </div>
+                      <div className="min-w-0">
+                        <p className="text-sm font-bold text-slate-900 dark:text-white truncate">
+                          {risk.student.nama}
+                        </p>
+                        <p className="text-xs text-slate-500 dark:text-slate-400 truncate tabular-nums">
+                          {risk.student.kelas} • {risk.consecutiveAbsences}H Tidak Hadir
+                        </p>
+                      </div>
+                    </div>
+                    <span className="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-[#13192b] hover:bg-[#0ea5e9] hover:text-white text-slate-700 dark:text-slate-200 text-xs font-semibold transition-colors shrink-0">
+                      Tindakan
+                    </span>
+                  </div>
+                );
+              })
+            ) : pendingMeetingTasks.length > 0 ? (
+              pendingMeetingTasks.slice(0, 4).map(task => (
                 <div
-                  key={item.kelas}
-                  className="flex items-center justify-between p-2.5 rounded-xl border border-slate-100 bg-slate-50/60"
+                  key={task.id}
+                  onClick={() => navigate('/program-mesyuarat')}
+                  className="bg-white dark:bg-[#222b42] rounded-2xl p-3.5 border border-slate-200 dark:border-white/5 hover:border-[#0ea5e9]/40 transition-all cursor-pointer flex items-center justify-between gap-3"
                 >
-                  <div className="flex items-center gap-3">
-                    <span className="w-6 h-6 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center text-xs font-bold">
-                      {idx + 1}
-                    </span>
-                    <span className="font-bold text-xs text-slate-800">{item.kelas}</span>
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div className="w-10 h-10 rounded-full bg-sky-100 dark:bg-sky-500/20 text-sky-700 dark:text-sky-300 flex items-center justify-center font-extrabold text-xs shrink-0">
+                      {task.namaTindakanOleh.slice(0, 2).toUpperCase()}
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-sm font-bold text-slate-900 dark:text-white truncate">{task.perkara}</p>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 truncate">
+                        {task.namaTindakanOleh} • {task.tarikhAkhir}
+                      </p>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <span
-                      className={`text-xs font-extrabold px-2.5 py-0.5 rounded-full ${
-                        isBelowTarget ? 'bg-red-100 text-red-700' : 'bg-emerald-100 text-emerald-700'
-                      }`}
-                    >
-                      {item.peratus}%
-                    </span>
-                  </div>
+                  <span className="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-[#13192b] text-slate-700 dark:text-slate-200 text-xs font-semibold shrink-0">
+                    Semak
+                  </span>
                 </div>
-              );
-            })}
+              ))
+            ) : (
+              <div className="bg-white dark:bg-[#222b42] rounded-2xl p-6 border border-slate-200 dark:border-white/5 text-center space-y-2">
+                <div className="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 mx-auto flex items-center justify-center">
+                  <AlertTriangle className="w-5 h-5" />
+                </div>
+                <p className="text-xs font-bold text-slate-900 dark:text-white">Tiada Kes Cicir Kritikal</p>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                  Semua murid berada di bawah ambang amaran ketidakhadiran semasa.
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* BARIS 3: 3 Kad Analitik & Carta Bawah */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+        {/* Carta 1: Prestasi Kehadiran Tingkatan 1-5 (Multi-Color BarChart) */}
+        <div className="lg:col-span-5 bg-white dark:bg-[#222b42] rounded-2xl p-5 border border-slate-200 dark:border-white/5 flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-base font-bold text-slate-900 dark:text-white">
+                Prestasi Kehadiran Tingkatan
+              </h3>
+              <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">Terkini</span>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-3 mb-3">
+              {formStats.map(f => (
+                <div key={f.tingkatan} className="flex items-center gap-1.5 text-[11px] text-slate-600 dark:text-slate-300">
+                  <span className="w-2.5 h-2.5 rounded-xs shrink-0" style={{ backgroundColor: f.color }} />
+                  <span>{f.namaPenuh}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="h-52 w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={formStats} margin={{ top: 8, right: 8, left: -20, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke={gridColor} vertical={false} />
+                <XAxis dataKey="tingkatan" tick={{ fontSize: 11, fill: tickColor }} axisLine={false} tickLine={false} />
+                <YAxis domain={[0, 100]} tick={{ fontSize: 10, fill: tickColor }} axisLine={false} tickLine={false} unit="%" />
+                <Tooltip
+                  formatter={(val: any) => [`${val}%`, 'Kehadiran']}
+                  contentStyle={tooltipStyle}
+                  cursor={{ fill: isDark ? 'rgba(255,255,255,0.03)' : 'rgba(15,23,42,0.03)' }}
+                />
+                <Bar dataKey="peratus" radius={[6, 6, 0, 0]} maxBarSize={34}>
+                  {formStats.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        {/* Carta 2: Peratus Kehadiran Keseluruhan (Donut PieChart) */}
+        <div className="lg:col-span-3 bg-white dark:bg-[#222b42] rounded-2xl p-5 border border-slate-200 dark:border-white/5 flex flex-col justify-between">
+          <div>
+            <h3 className="text-base font-bold text-slate-900 dark:text-white leading-snug">
+              Peratus Kehadiran Keseluruhan
+            </h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+              Sasaran KPM: {rules.sasaranKehadiranSekolah}%
+            </p>
+          </div>
+
+          <div className="relative h-44 w-full flex items-center justify-center my-2">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={donutData}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={50}
+                  outerRadius={70}
+                  startAngle={90}
+                  endAngle={-270}
+                  dataKey="value"
+                  stroke="none"
+                >
+                  <Cell fill="#0ea5e9" />
+                  <Cell fill="#7c3aed" />
+                </Pie>
+                <Tooltip formatter={(val: any) => [`${val}%`, 'Peratus']} contentStyle={tooltipStyle} />
+              </PieChart>
+            </ResponsiveContainer>
+            <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+              <span className="text-xl font-extrabold text-slate-900 dark:text-white tabular-nums">
+                {todayPercentage}%
+              </span>
+              <span className="text-[10px] font-semibold text-slate-500 dark:text-slate-400">Hadir</span>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between text-xs pt-2 border-t border-slate-100 dark:border-white/5">
+            <span className="text-slate-500 dark:text-slate-400">Jumlah Rekod:</span>
+            <span className="font-bold text-slate-900 dark:text-white tabular-nums">
+              {todayPresent} / {todayTotal} murid
+            </span>
+          </div>
+        </div>
+
+        {/* Carta 3: Pemantauan Kelas & Enrolmen (Dotted LineChart + Kelas Perhatian) */}
+        <div className="lg:col-span-4 bg-white dark:bg-[#222b42] rounded-2xl p-5 border border-slate-200 dark:border-white/5 flex flex-col justify-between relative">
+          <div>
+            <div className="flex items-center justify-between">
+              <h3 className="text-base font-bold text-slate-900 dark:text-white">Pemantauan Kelas</h3>
+              <button
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                className="w-8 h-8 rounded-lg bg-[#ffc107] text-slate-950 flex items-center justify-center shadow-xs hover:bg-[#f5b800] transition-colors"
+                title="Kembali ke atas"
+                aria-label="Kembali ke atas"
+              >
+                <ArrowUp className="w-4 h-4" />
+              </button>
+            </div>
+            <p className="text-xs font-semibold text-[#0ea5e9] mt-1 tabular-nums">
+              Enrolmen: {totalLelaki} Lelaki • {totalPerempuan} Perempuan
+            </p>
+          </div>
+
+          <div className="h-28 w-full my-2">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={safeTrendData} margin={{ top: 8, right: 8, left: 8, bottom: 0 }}>
+                <Tooltip formatter={(val: any) => [`${val}%`, 'Kehadiran']} contentStyle={tooltipStyle} />
+                <Line
+                  type="monotone"
+                  dataKey="peratus"
+                  stroke="#0ea5e9"
+                  strokeWidth={2}
+                  dot={{ r: 3.5, fill: '#ffffff', stroke: '#0ea5e9', strokeWidth: 2 }}
+                  activeDot={{ r: 5 }}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+
+          <div className="space-y-1.5 pt-2 border-t border-slate-100 dark:border-white/5">
+            <div className="flex items-center justify-between text-[11px] font-bold text-slate-500 dark:text-slate-400">
+              <span>Kelas Perlu Perhatian</span>
+              <span>Kehadiran</span>
+            </div>
+            {lowestClasses.length > 0 ? (
+              lowestClasses.slice(0, 3).map(cls => (
+                <div key={cls.kelas} className="flex items-center justify-between text-xs">
+                  <span className="font-semibold text-slate-700 dark:text-slate-200 truncate">{cls.kelas}</span>
+                  <span
+                    className={`font-bold tabular-nums ${
+                      cls.peratus < rules.sasaranKehadiranSekolah ? 'text-[#ff3e6c]' : 'text-[#34d399]'
+                    }`}
+                  >
+                    {cls.peratus}%
+                  </span>
+                </div>
+              ))
+            ) : (
+              <p className="text-xs text-slate-500 dark:text-slate-400">
+                Belum ada rekod kehadiran mingguan direkodkan.
+              </p>
+            )}
           </div>
         </div>
       </div>

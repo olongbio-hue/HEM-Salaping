@@ -193,50 +193,49 @@ export const Login: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-100 via-blue-50/40 to-slate-100 flex flex-col justify-center py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-slate-100 dark:bg-[#151c2e] flex flex-col justify-center py-8 px-4 sm:px-6 lg:px-8 transition-colors">
       {/* Header Institusi */}
-      <div className="sm:mx-auto sm:w-full sm:max-w-xl text-center space-y-2">
+      <div className="sm:mx-auto sm:w-full sm:max-w-xl text-center space-y-2.5">
         <div className="flex justify-center mb-1">
-          <div className="p-3 rounded-2xl bg-white shadow-xl border border-blue-100 ring-4 ring-blue-900/5">
+          <div className="p-3 rounded-2xl bg-white dark:bg-[#222b42] shadow-xl border border-slate-200 dark:border-white/10">
             <SchoolLogo size="xl" className="drop-shadow-sm hover:scale-105 transition-transform" />
           </div>
         </div>
         <div>
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-900 text-white font-extrabold text-[11px] uppercase tracking-wider shadow-xs">
-            <Shield className="w-3.5 h-3.5 text-amber-300" />
-            <span>Gerbang Keselamatan & Log Masuk</span>
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#0ea5e9]/15 text-[#0284c7] dark:text-[#49ccb1] border border-[#0ea5e9]/30 font-extrabold text-[11px] uppercase tracking-wider">
+            <Shield className="w-3.5 h-3.5" />
+            <span>Gerbang Keselamatan &amp; Log Masuk</span>
           </span>
-          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight mt-1">
+          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight mt-1.5">
             HEM Digital
           </h1>
-          <p className="text-xs sm:text-sm text-slate-700 font-bold">
+          <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-200 font-bold">
             {school.nama} ({school.kodSekolah}) • Kota Marudu, Sabah
           </p>
-          <p className="text-[11px] text-slate-500 italic">
+          <p className="text-[11px] text-slate-500 dark:text-slate-400 italic">
             "{school.motoSekolah}"
           </p>
         </div>
       </div>
 
       {/* Kotak Utama Pengesahan */}
-      <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-xl">
-        <div className="bg-white py-6 px-5 sm:px-8 shadow-2xl rounded-3xl border border-slate-200">
-          
+      <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-xl">
+        <div className="bg-white dark:bg-[#222b42] py-6 px-5 sm:px-8 shadow-2xl rounded-3xl border border-slate-200 dark:border-white/5">
           {/* Tab Utama: DELIMa vs Pentadbir Khas vs Daftar Guru */}
-          <div className="grid grid-cols-3 p-1 bg-slate-100 rounded-2xl mb-5 text-[11px] font-bold">
+          <div className="grid grid-cols-3 p-1 bg-slate-100 dark:bg-[#161e31] rounded-2xl mb-5 text-[11px] font-bold">
             <button
               type="button"
               onClick={() => {
                 setActiveTab('delima');
                 setLoginError('');
               }}
-              className={`py-2.5 rounded-xl transition-all flex items-center justify-center gap-1 text-center ${
+              className={`py-2.5 rounded-xl transition-all flex items-center justify-center gap-1.5 text-center ${
                 activeTab === 'delima'
-                  ? 'bg-white text-blue-900 shadow-sm'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-white dark:bg-[#0ea5e9] text-[#0284c7] dark:text-white shadow-sm'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
-              <LogIn className="w-3.5 h-3.5 text-blue-700 shrink-0" />
+              <LogIn className="w-3.5 h-3.5 shrink-0" />
               <span>DELIMa Guru</span>
             </button>
 
@@ -246,13 +245,13 @@ export const Login: React.FC = () => {
                 setActiveTab('pentadbir');
                 setAdminError('');
               }}
-              className={`py-2.5 rounded-xl transition-all flex items-center justify-center gap-1 text-center ${
+              className={`py-2.5 rounded-xl transition-all flex items-center justify-center gap-1.5 text-center ${
                 activeTab === 'pentadbir'
-                  ? 'bg-amber-600 text-white shadow-sm font-extrabold'
-                  : 'text-amber-900 hover:text-amber-950 font-bold'
+                  ? 'bg-[#ffc107] text-slate-950 shadow-sm font-extrabold'
+                  : 'text-amber-700 dark:text-[#ffc107] hover:opacity-90 font-bold'
               }`}
             >
-              <Crown className="w-3.5 h-3.5 text-amber-200 shrink-0" />
+              <Crown className="w-3.5 h-3.5 shrink-0" />
               <span>Pentadbir Khas</span>
             </button>
 
@@ -262,13 +261,13 @@ export const Login: React.FC = () => {
                 setActiveTab('register');
                 setRegError('');
               }}
-              className={`py-2.5 rounded-xl transition-all flex items-center justify-center gap-1 text-center ${
+              className={`py-2.5 rounded-xl transition-all flex items-center justify-center gap-1.5 text-center ${
                 activeTab === 'register'
-                  ? 'bg-white text-blue-900 shadow-sm'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-white dark:bg-[#49ccb1] text-emerald-700 dark:text-slate-950 shadow-sm font-extrabold'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
-              <UserPlus className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+              <UserPlus className="w-3.5 h-3.5 shrink-0" />
               <span>Daftar Guru</span>
             </button>
           </div>
@@ -276,36 +275,35 @@ export const Login: React.FC = () => {
           {/* ================= TAB 1: LOG MASUK DELIMA GURU ================= */}
           {activeTab === 'delima' && (
             <div className="space-y-4 text-xs">
-              {/* Notis DELIMa */}
-              <div className="p-3 rounded-xl bg-gradient-to-r from-blue-900 to-indigo-950 text-white flex items-center justify-between text-xs">
+              <div className="p-3.5 rounded-2xl bg-gradient-to-r from-[#4bcbb1] to-[#2eb197] text-white flex items-center justify-between text-xs shadow-sm">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-7 h-7 rounded-lg bg-amber-400 text-blue-950 flex items-center justify-center font-black text-xs shrink-0">
+                  <div className="w-8 h-8 rounded-xl bg-[#ffc107] text-slate-950 flex items-center justify-center font-black text-xs shrink-0 shadow-xs">
                     DL
                   </div>
                   <div>
-                    <span className="font-extrabold block text-amber-300 text-[11px] uppercase tracking-wide">
+                    <span className="font-extrabold block text-white text-[11px] uppercase tracking-wide">
                       Akaun Rasmi DELIMa KPM
                     </span>
-                    <span className="text-[11px] text-slate-200">
+                    <span className="text-[11px] text-white/90">
                       Warga guru menggunakan e-mel <strong>@moe-dl.edu.my</strong>
                     </span>
                   </div>
                 </div>
-                <span className="text-[10px] px-2 py-0.5 rounded-md bg-white/20 font-bold uppercase shrink-0">
+                <span className="text-[10px] px-2.5 py-1 rounded-lg bg-white/20 font-bold uppercase shrink-0">
                   Guru Salaping
                 </span>
               </div>
 
               {loginError && (
-                <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-red-800 flex items-start gap-2 animate-in fade-in">
-                  <AlertCircle className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
+                <div className="p-3 bg-rose-50 dark:bg-rose-500/15 border border-rose-200 dark:border-rose-500/30 rounded-xl text-rose-800 dark:text-rose-200 flex items-start gap-2">
+                  <AlertCircle className="w-4 h-4 text-rose-500 shrink-0 mt-0.5" />
                   <span className="leading-relaxed">{loginError}</span>
                 </div>
               )}
 
               <form onSubmit={handleDelimaLoginSubmit} className="space-y-4">
                 <div>
-                  <label className="block font-bold text-slate-700 mb-1">
+                  <label className="block font-bold text-slate-700 dark:text-slate-200 mb-1">
                     Alamat E-mel DELIMa Guru (@moe-dl.edu.my)
                   </label>
                   <div className="relative">
@@ -316,23 +314,23 @@ export const Login: React.FC = () => {
                       value={loginEmail}
                       onChange={(e) => setLoginEmail(e.target.value)}
                       placeholder="g-12345678@moe-dl.edu.my"
-                      className="w-full pl-9 pr-3 py-2.5 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-600 outline-hidden font-medium"
+                      className="w-full pl-9 pr-3 py-2.5 text-xs bg-slate-50 dark:bg-[#161e31] text-slate-900 dark:text-white border border-slate-300 dark:border-white/10 rounded-xl focus:border-[#0ea5e9] outline-hidden font-medium"
                     />
                   </div>
-                  <span className="text-[10px] text-slate-500 mt-1 block">
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400 mt-1 block">
                     Format: <code>g-xxxxxxxx@moe-dl.edu.my</code>
                   </span>
                 </div>
 
                 <div>
                   <div className="flex items-center justify-between mb-1">
-                    <label className="block font-bold text-slate-700">
+                    <label className="block font-bold text-slate-700 dark:text-slate-200">
                       Kata Laluan
                     </label>
                     <button
                       type="button"
                       onClick={() => setShowForgotModal(true)}
-                      className="text-[11px] font-bold text-blue-700 hover:text-blue-800"
+                      className="text-[11px] font-bold text-[#0ea5e9] hover:underline"
                     >
                       Lupa kata laluan?
                     </button>
@@ -345,7 +343,7 @@ export const Login: React.FC = () => {
                       value={loginPassword}
                       onChange={(e) => setLoginPassword(e.target.value)}
                       placeholder="••••••••"
-                      className="w-full pl-9 pr-3 py-2.5 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-600 outline-hidden"
+                      className="w-full pl-9 pr-3 py-2.5 text-xs bg-slate-50 dark:bg-[#161e31] text-slate-900 dark:text-white border border-slate-300 dark:border-white/10 rounded-xl focus:border-[#0ea5e9] outline-hidden"
                     />
                   </div>
                 </div>
@@ -353,7 +351,7 @@ export const Login: React.FC = () => {
                 <button
                   type="submit"
                   disabled={loginLoading}
-                  className="w-full mt-2 py-3 px-4 bg-blue-900 hover:bg-blue-950 text-white font-extrabold text-xs rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full mt-2 py-3 px-4 bg-[#0ea5e9] hover:bg-[#0284c7] text-white font-extrabold text-xs rounded-xl shadow-md shadow-sky-500/20 transition-all flex items-center justify-center gap-2 cursor-pointer"
                 >
                   {loginLoading ? (
                     <span>Mengesahkan Identiti DELIMa...</span>
@@ -371,45 +369,45 @@ export const Login: React.FC = () => {
           {/* ================= TAB 2: LOG MASUK PENTADBIRAN KHAS (TANPA DELIMA) ================= */}
           {activeTab === 'pentadbir' && (
             <div className="space-y-4 text-xs">
-              <div className="p-3.5 rounded-2xl bg-gradient-to-r from-amber-700 via-amber-800 to-amber-900 text-white space-y-1 shadow-sm">
+              <div className="p-3.5 rounded-2xl bg-[#ffc107] text-slate-950 space-y-1 shadow-sm">
                 <div className="flex items-center gap-2">
-                  <Crown className="w-4 h-4 text-amber-200" />
+                  <Crown className="w-4 h-4 text-slate-900" />
                   <span className="font-extrabold text-xs tracking-wide uppercase">
-                    Akses Khas Kepimpinan Sekolah (Bypass DELIMa)
+                    Akses Khas Kepimpinan Sekolah (Tanpa DELIMa)
                   </span>
                 </div>
-                <p className="text-[11px] text-amber-100 leading-relaxed">
-                  Laluan khas terus tanpa melalui akaun DELIMa untuk <strong>Admin Sistem</strong>, <strong>Pengetua</strong>, dan <strong>GPK HEM</strong>.
+                <p className="text-[11px] text-slate-900/85 leading-relaxed font-medium">
+                  Laluan khas terus untuk <strong>Admin Sistem</strong>, <strong>Pengetua</strong>, dan <strong>GPK HEM</strong>.
                 </p>
               </div>
 
               {adminError && (
-                <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-red-800 flex items-start gap-2 animate-in fade-in">
-                  <AlertCircle className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
+                <div className="p-3 bg-rose-50 dark:bg-rose-500/15 border border-rose-200 dark:border-rose-500/30 rounded-xl text-rose-800 dark:text-rose-200 flex items-start gap-2">
+                  <AlertCircle className="w-4 h-4 text-rose-500 shrink-0 mt-0.5" />
                   <span className="leading-relaxed">{adminError}</span>
                 </div>
               )}
 
               <form onSubmit={handleAdminLoginSubmit} className="space-y-3.5">
                 <div>
-                  <label className="block font-bold text-slate-800 mb-1">
+                  <label className="block font-bold text-slate-800 dark:text-slate-200 mb-1">
                     ID Pengguna Pentadbir Khas
                   </label>
                   <div className="relative">
-                    <Shield className="w-4 h-4 text-amber-600 absolute left-3 top-3" />
+                    <Shield className="w-4 h-4 text-[#ffc107] absolute left-3 top-3" />
                     <input
                       type="text"
                       required
                       value={adminId}
                       onChange={(e) => setAdminId(e.target.value)}
                       placeholder="cth: admin_salaping / pengetua_salaping / gpkhem_salaping"
-                      className="w-full pl-9 pr-3 py-2.5 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500 outline-hidden font-mono font-bold text-slate-900"
+                      className="w-full pl-9 pr-3 py-2.5 text-xs bg-slate-50 dark:bg-[#161e31] border border-slate-300 dark:border-white/10 rounded-xl focus:border-[#ffc107] outline-hidden font-mono font-bold text-slate-900 dark:text-white"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block font-bold text-slate-800 mb-1">
+                  <label className="block font-bold text-slate-800 dark:text-slate-200 mb-1">
                     Kata Laluan Khas Pentadbir
                   </label>
                   <div className="relative">
@@ -420,7 +418,7 @@ export const Login: React.FC = () => {
                       value={adminPassword}
                       onChange={(e) => setAdminPassword(e.target.value)}
                       placeholder="••••••••"
-                      className="w-full pl-9 pr-3 py-2.5 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500 outline-hidden"
+                      className="w-full pl-9 pr-3 py-2.5 text-xs bg-slate-50 dark:bg-[#161e31] text-slate-900 dark:text-white border border-slate-300 dark:border-white/10 rounded-xl focus:border-[#ffc107] outline-hidden"
                     />
                   </div>
                 </div>
@@ -428,7 +426,7 @@ export const Login: React.FC = () => {
                 <button
                   type="submit"
                   disabled={adminLoading}
-                  className="w-full py-3 px-4 bg-amber-700 hover:bg-amber-800 text-white font-extrabold text-xs rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full py-3 px-4 bg-[#ffc107] hover:bg-[#f5b800] text-slate-950 font-extrabold text-xs rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
                 >
                   {adminLoading ? (
                     <span>Mengesahkan Akses Pentadbiran...</span>
@@ -441,34 +439,34 @@ export const Login: React.FC = () => {
                 </button>
               </form>
 
-              {/* Kad Pilihan Pantas 3 Pentadbir Khas */}
-              <div className="pt-3 border-t border-slate-200">
-                <span className="text-[11px] font-bold text-slate-600 block mb-2">
-                  Ketik untuk Isi ID & Log Masuk Pantas:
+              <div className="pt-3 border-t border-slate-200 dark:border-white/10">
+                <span className="text-[11px] font-bold text-slate-600 dark:text-slate-400 block mb-2">
+                  Ketik untuk Isi ID &amp; Log Masuk Pantas:
                 </span>
                 <div className="space-y-2">
                   {SPECIAL_ADMIN_ACCOUNTS.map((acc) => (
                     <div
                       key={acc.uid}
                       onClick={() => handleSelectSpecialAdmin(acc)}
-                      className="p-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-amber-50/70 hover:border-amber-300 transition-all cursor-pointer flex items-center justify-between group"
+                      className="p-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#161e31] hover:border-[#ffc107] transition-all cursor-pointer flex items-center justify-between group"
                     >
                       <div>
-                        <div className="flex items-center gap-1.5 font-bold text-slate-900 group-hover:text-amber-950">
+                        <div className="flex items-center gap-1.5 font-bold text-slate-900 dark:text-white">
                           {acc.peranan.includes('pengetua') && !acc.peranan.includes('admin_sistem') ? (
-                            <Crown className="w-3.5 h-3.5 text-amber-600" />
+                            <Crown className="w-3.5 h-3.5 text-[#ffc107]" />
                           ) : acc.peranan.includes('gpk_hem') && !acc.peranan.includes('admin_sistem') ? (
-                            <Shield className="w-3.5 h-3.5 text-blue-600" />
+                            <Shield className="w-3.5 h-3.5 text-[#0ea5e9]" />
                           ) : (
-                            <SlidersHorizontal className="w-3.5 h-3.5 text-purple-600" />
+                            <SlidersHorizontal className="w-3.5 h-3.5 text-[#49ccb1]" />
                           )}
                           <span>{acc.nama}</span>
                         </div>
-                        <p className="text-[10px] text-slate-500 font-mono mt-0.5">
-                          ID: <strong className="text-slate-800">{acc.idPengguna}</strong> • Kata Laluan: <code className="text-amber-700">{acc.kataLaluan}</code>
+                        <p className="text-[10px] text-slate-500 dark:text-slate-400 font-mono mt-0.5">
+                          ID: <strong className="text-slate-800 dark:text-slate-200">{acc.idPengguna}</strong> • Kata Laluan:{' '}
+                          <code className="text-amber-700 dark:text-[#ffc107]">{acc.kataLaluan}</code>
                         </p>
                       </div>
-                      <span className="text-[10px] font-extrabold px-2 py-1 rounded-lg bg-white border border-slate-200 group-hover:bg-amber-600 group-hover:text-white transition-colors">
+                      <span className="text-[10px] font-extrabold px-2.5 py-1 rounded-lg bg-white dark:bg-[#222b42] border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-200 group-hover:bg-[#ffc107] group-hover:text-slate-950 transition-colors">
                         Pilih
                       </span>
                     </div>
@@ -482,19 +480,19 @@ export const Login: React.FC = () => {
           {activeTab === 'register' && (
             <form onSubmit={handleRegisterSubmit} className="space-y-3.5 text-xs">
               {regError && (
-                <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-red-800 flex items-start gap-2 animate-in fade-in">
-                  <AlertCircle className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
+                <div className="p-3 bg-rose-50 dark:bg-rose-500/15 border border-rose-200 dark:border-rose-500/30 rounded-xl text-rose-800 dark:text-rose-200 flex items-start gap-2">
+                  <AlertCircle className="w-4 h-4 text-rose-500 shrink-0 mt-0.5" />
                   <span className="leading-relaxed">{regError}</span>
                 </div>
               )}
 
-              <div className="p-2.5 bg-emerald-50 rounded-xl border border-emerald-200 text-emerald-900 text-[11px] flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
+              <div className="p-2.5 bg-emerald-50 dark:bg-[#49ccb1]/15 rounded-xl border border-emerald-200 dark:border-[#49ccb1]/30 text-emerald-900 dark:text-[#49ccb1] text-[11px] flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 shrink-0" />
                 <span>Pendaftaran guru terbuka untuk semua warga pendidik SMK Salaping yang memiliki e-mel DELIMa.</span>
               </div>
 
               <div>
-                <label className="block font-bold text-slate-700 mb-1">
+                <label className="block font-bold text-slate-700 dark:text-slate-200 mb-1">
                   Nama Penuh Guru
                 </label>
                 <input
@@ -503,12 +501,12 @@ export const Login: React.FC = () => {
                   value={regName}
                   onChange={(e) => setRegName(e.target.value)}
                   placeholder="Contoh: Cikgu Suzana Binti Majanil"
-                  className="w-full p-2.5 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-600 outline-hidden"
+                  className="w-full p-2.5 text-xs bg-slate-50 dark:bg-[#161e31] text-slate-900 dark:text-white border border-slate-300 dark:border-white/10 rounded-xl focus:border-[#49ccb1] outline-hidden"
                 />
               </div>
 
               <div>
-                <label className="block font-bold text-slate-700 mb-1">
+                <label className="block font-bold text-slate-700 dark:text-slate-200 mb-1">
                   Alamat E-mel DELIMa KPM Guru
                 </label>
                 <div className="relative">
@@ -519,23 +517,23 @@ export const Login: React.FC = () => {
                     value={regEmail}
                     onChange={(e) => setRegEmail(e.target.value)}
                     placeholder="g-12345678@moe-dl.edu.my"
-                    className="w-full pl-9 pr-3 py-2.5 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-600 outline-hidden font-medium"
+                    className="w-full pl-9 pr-3 py-2.5 text-xs bg-slate-50 dark:bg-[#161e31] text-slate-900 dark:text-white border border-slate-300 dark:border-white/10 rounded-xl focus:border-[#49ccb1] outline-hidden font-medium"
                   />
                 </div>
-                <span className="text-[10px] text-slate-500 mt-1 block">
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 mt-1 block">
                   Wajib menggunakan domain <strong>@moe-dl.edu.my</strong> atau <strong>@moe.gov.my</strong>
                 </span>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                 <div>
-                  <label className="block font-bold text-slate-700 mb-1">
+                  <label className="block font-bold text-slate-700 dark:text-slate-200 mb-1">
                     Jawatan / Peranan Utama
                   </label>
                   <select
                     value={regRole}
                     onChange={(e) => setRegRole(e.target.value as UserRole)}
-                    className="w-full p-2.5 text-xs border border-slate-300 rounded-xl bg-white font-medium"
+                    className="w-full p-2.5 text-xs bg-slate-50 dark:bg-[#161e31] text-slate-900 dark:text-white border border-slate-300 dark:border-white/10 rounded-xl font-medium"
                   >
                     <option value="guru_kelas">Guru Kelas</option>
                     <option value="guru_disiplin">Guru Disiplin</option>
@@ -547,7 +545,7 @@ export const Login: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block font-bold text-slate-700 mb-1">
+                  <label className="block font-bold text-slate-700 dark:text-slate-200 mb-1">
                     No. Telefon (WhatsApp)
                   </label>
                   <div className="relative">
@@ -557,22 +555,21 @@ export const Login: React.FC = () => {
                       value={regPhone}
                       onChange={(e) => setRegPhone(e.target.value)}
                       placeholder="019-8765432"
-                      className="w-full pl-9 pr-3 py-2.5 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-600 outline-hidden font-mono"
+                      className="w-full pl-9 pr-3 py-2.5 text-xs bg-slate-50 dark:bg-[#161e31] text-slate-900 dark:text-white border border-slate-300 dark:border-white/10 rounded-xl focus:border-[#49ccb1] outline-hidden font-mono"
                     />
                   </div>
                 </div>
               </div>
 
-              {/* Jika peranan Guru Kelas, pilih kelas yang dipertanggungjawabkan */}
               {regRole === 'guru_kelas' && (
-                <div className="p-3 bg-blue-50/70 border border-blue-200 rounded-xl">
-                  <label className="block font-bold text-blue-950 mb-1">
+                <div className="p-3 bg-sky-50 dark:bg-[#161e31] border border-sky-200 dark:border-[#0ea5e9]/30 rounded-xl">
+                  <label className="block font-bold text-slate-900 dark:text-white mb-1">
                     Pilih Kelas Dipertanggungjawabkan:
                   </label>
                   <select
                     value={regClass}
                     onChange={(e) => setRegClass(e.target.value)}
-                    className="w-full p-2 text-xs border border-blue-300 rounded-lg bg-white font-bold text-slate-900"
+                    className="w-full p-2 text-xs border border-slate-300 dark:border-white/10 rounded-lg bg-white dark:bg-[#222b42] font-bold text-slate-900 dark:text-white"
                   >
                     {classesList.map(c => (
                       <option key={c.id} value={c.id}>
@@ -580,7 +577,7 @@ export const Login: React.FC = () => {
                       </option>
                     ))}
                   </select>
-                  <span className="text-[10px] text-blue-800 mt-1 block">
+                  <span className="text-[10px] text-slate-600 dark:text-slate-400 mt-1 block">
                     Guru kelas ini akan mempunyai hak penuh merekod e-kehadiran harian bagi kelas berkenaan.
                   </span>
                 </div>
@@ -588,7 +585,7 @@ export const Login: React.FC = () => {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                 <div>
-                  <label className="block font-bold text-slate-700 mb-1">
+                  <label className="block font-bold text-slate-700 dark:text-slate-200 mb-1">
                     Kata Laluan
                   </label>
                   <input
@@ -597,12 +594,12 @@ export const Login: React.FC = () => {
                     value={regPassword}
                     onChange={(e) => setRegPassword(e.target.value)}
                     placeholder="Min. 6 aksara"
-                    className="w-full p-2.5 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-600 outline-hidden"
+                    className="w-full p-2.5 text-xs bg-slate-50 dark:bg-[#161e31] text-slate-900 dark:text-white border border-slate-300 dark:border-white/10 rounded-xl focus:border-[#49ccb1] outline-hidden"
                   />
                 </div>
 
                 <div>
-                  <label className="block font-bold text-slate-700 mb-1">
+                  <label className="block font-bold text-slate-700 dark:text-slate-200 mb-1">
                     Sahkan Kata Laluan
                   </label>
                   <input
@@ -611,7 +608,7 @@ export const Login: React.FC = () => {
                     value={regConfirmPassword}
                     onChange={(e) => setRegConfirmPassword(e.target.value)}
                     placeholder="Ulang kata laluan"
-                    className="w-full p-2.5 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-600 outline-hidden"
+                    className="w-full p-2.5 text-xs bg-slate-50 dark:bg-[#161e31] text-slate-900 dark:text-white border border-slate-300 dark:border-white/10 rounded-xl focus:border-[#49ccb1] outline-hidden"
                   />
                 </div>
               </div>
@@ -619,7 +616,7 @@ export const Login: React.FC = () => {
               <button
                 type="submit"
                 disabled={regLoading}
-                className="w-full mt-2 py-3 px-4 bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold text-xs rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full mt-2 py-3 px-4 bg-[#49ccb1] hover:bg-[#3ab99f] text-slate-950 font-extrabold text-xs rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 {regLoading ? (
                   <span>Mendaftarkan Guru...</span>
@@ -632,21 +629,20 @@ export const Login: React.FC = () => {
               </button>
             </form>
           )}
-
         </div>
       </div>
 
       {/* Modal Lupa Kata Laluan */}
       {showForgotModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-xs">
-          <div className="bg-white rounded-2xl max-w-sm w-full p-5 shadow-2xl border border-slate-200 animate-in fade-in text-xs space-y-3">
-            <h3 className="text-sm font-bold text-slate-900">Set Semula Kata Laluan</h3>
-            <p className="text-slate-500 text-[11px] leading-relaxed">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-xs">
+          <div className="bg-white dark:bg-[#222b42] rounded-2xl max-w-sm w-full p-5 shadow-2xl border border-slate-200 dark:border-white/10 text-xs space-y-3">
+            <h3 className="text-sm font-bold text-slate-900 dark:text-white">Set Semula Kata Laluan</h3>
+            <p className="text-slate-500 dark:text-slate-400 text-[11px] leading-relaxed">
               Sila masukkan e-mel rasmi berdaftar anda untuk menerima pautan pengesahan.
             </p>
 
             {forgotSuccess ? (
-              <div className="p-3 bg-emerald-50 text-emerald-800 text-[11px] rounded-xl border border-emerald-200">
+              <div className="p-3 bg-emerald-50 dark:bg-emerald-500/15 text-emerald-800 dark:text-emerald-200 text-[11px] rounded-xl border border-emerald-200 dark:border-emerald-500/30">
                 Pautan pengesahan telah disimulasikan. Kata laluan lalai sistem ialah <code className="font-bold">salaping123</code>.
               </div>
             ) : (
@@ -656,24 +652,24 @@ export const Login: React.FC = () => {
                   value={forgotEmail}
                   onChange={(e) => setForgotEmail(e.target.value)}
                   placeholder="e-mel anda"
-                  className="w-full px-3 py-2 border border-slate-300 rounded-xl outline-hidden"
+                  className="w-full px-3 py-2 bg-slate-50 dark:bg-[#161e31] text-slate-900 dark:text-white border border-slate-300 dark:border-white/10 rounded-xl outline-hidden"
                 />
                 <button
                   onClick={() => setForgotSuccess(true)}
-                  className="w-full py-2 bg-blue-900 text-white rounded-xl font-bold hover:bg-blue-950 transition-colors"
+                  className="w-full py-2 bg-[#0ea5e9] text-white rounded-xl font-bold hover:bg-[#0284c7] transition-colors"
                 >
                   Hantar Pautan
                 </button>
               </div>
             )}
 
-            <div className="pt-2 border-t border-slate-100 text-right">
+            <div className="pt-2 border-t border-slate-100 dark:border-white/10 text-right">
               <button
                 onClick={() => {
                   setShowForgotModal(false);
                   setForgotSuccess(false);
                 }}
-                className="px-3 py-1 text-slate-600 hover:bg-slate-100 rounded-lg font-bold"
+                className="px-3 py-1 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#2c3856] rounded-lg font-bold"
               >
                 Tutup
               </button>
@@ -684,3 +680,4 @@ export const Login: React.FC = () => {
     </div>
   );
 };
+

@@ -262,8 +262,8 @@ export const Hostel: React.FC = () => {
     return (
       <div className="p-6 max-w-4xl mx-auto text-center space-y-4 pt-16">
         <Home className="w-16 h-16 text-slate-300 mx-auto" />
-        <h2 className="text-xl font-extrabold text-slate-800">Modul Asrama Desa Dimatikan</h2>
-        <p className="text-xs text-slate-500 max-w-md mx-auto">
+        <h2 className="text-xl font-extrabold text-slate-800 dark:text-slate-100">Modul Asrama Desa Dimatikan</h2>
+        <p className="text-xs text-slate-500 dark:text-slate-400 max-w-md mx-auto">
           Modul Asrama Desa telah dinyahaktifkan oleh Pentadbir Sekolah dalam menu Tetapan Sekolah.
         </p>
       </div>
@@ -287,18 +287,18 @@ export const Hostel: React.FC = () => {
   return (
     <div className="p-3 sm:p-6 space-y-6 max-w-7xl mx-auto pb-24 lg:pb-12">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white dark:bg-[#222b42] p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-bold px-2 py-0.5 rounded bg-indigo-100 text-indigo-900">
+            <span className="text-xs font-bold px-2 py-0.5 rounded bg-indigo-100 dark:bg-indigo-500/20 text-indigo-900 dark:text-indigo-300">
               Pengurusan Asrama Desa (HEM Fasa 3)
             </span>
-            <span className="text-xs text-slate-500">Ketua Warden: {school.namaKetuaWarden || 'Warden Asrama'} • {school.nama}</span>
+            <span className="text-xs text-slate-500 dark:text-slate-400">Ketua Warden: {school.namaKetuaWarden || 'Warden Asrama'} • {school.nama}</span>
           </div>
-          <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+          <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
             Asrama Desa SMK Salaping
           </h1>
-          <p className="text-xs text-slate-500 mt-0.5">
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
             Pengurusan penempatan murid pedalaman, permit pergerakan, roll call malam, dan spot-check disiplin
           </p>
         </div>
@@ -332,47 +332,47 @@ export const Hostel: React.FC = () => {
 
       {/* KPI Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
-          <span className="text-[11px] font-semibold text-slate-500 block">Jumlah Penghuni Berdaftar</span>
-          <div className="text-2xl font-black text-indigo-900 mt-1">{students.length} Murid</div>
-          <p className="text-[10px] text-slate-600 mt-1 font-medium">
-            Kuota Asrama: <span className="font-bold text-slate-800">{students.length} / {totalCapacity || 60} Katil</span> (Baki Kuota: <span className="font-bold text-indigo-700">{(totalCapacity || 60) - students.length}</span>)
+        <div className="bg-white dark:bg-[#222b42] p-4 rounded-xl border border-slate-200 dark:border-white/10 shadow-xs">
+          <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block">Jumlah Penghuni Berdaftar</span>
+          <div className="text-2xl font-black text-indigo-900 dark:text-indigo-300 mt-1">{students.length} Murid</div>
+          <p className="text-[10px] text-slate-600 dark:text-slate-300 mt-1 font-medium">
+            Kuota Asrama: <span className="font-bold text-slate-800 dark:text-slate-100">{students.length} / {totalCapacity || 60} Katil</span> (Baki Kuota: <span className="font-bold text-indigo-700 dark:text-indigo-300">{(totalCapacity || 60) - students.length}</span>)
           </p>
         </div>
 
-        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
-          <span className="text-[11px] font-semibold text-slate-500 block">Penghuni Putera & Puteri</span>
-          <div className="text-2xl font-black text-slate-900 mt-1">
+        <div className="bg-white dark:bg-[#222b42] p-4 rounded-xl border border-slate-200 dark:border-white/10 shadow-xs">
+          <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block">Penghuni Putera & Puteri</span>
+          <div className="text-2xl font-black text-slate-900 dark:text-white mt-1">
             {totalBoys}L / {totalGirls}P
           </div>
-          <p className="text-[10px] text-slate-500 mt-1">Blok A (Putera) & Blok B (Puteri)</p>
+          <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1">Blok A (Putera) & Blok B (Puteri)</p>
         </div>
 
-        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
-          <span className="text-[11px] font-semibold text-slate-500 block">Keluar / Bermalam Minggu Ini</span>
-          <div className="text-2xl font-black text-purple-700 mt-1">
+        <div className="bg-white dark:bg-[#222b42] p-4 rounded-xl border border-slate-200 dark:border-white/10 shadow-xs">
+          <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block">Keluar / Bermalam Minggu Ini</span>
+          <div className="text-2xl font-black text-purple-700 dark:text-purple-300 mt-1">
             {movements.filter(m => m.statusKelulusan === 'diluluskan').length} Murid
           </div>
           <p className="text-[10px] text-emerald-600 mt-1 font-bold">Semua permit disahkan warden</p>
         </div>
 
-        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
-          <span className="text-[11px] font-semibold text-slate-500 block">Pemeriksaan Kamar & Disiplin</span>
-          <div className="text-2xl font-black text-amber-700 mt-1">
+        <div className="bg-white dark:bg-[#222b42] p-4 rounded-xl border border-slate-200 dark:border-white/10 shadow-xs">
+          <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block">Pemeriksaan Kamar & Disiplin</span>
+          <div className="text-2xl font-black text-amber-700 dark:text-amber-300 mt-1">
             {inspections.length} Sesi
           </div>
-          <p className="text-[10px] text-slate-500 mt-1">
+          <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1">
             {inspections.filter(i => i.barangLaranganDitemui).length} rampasan barang larangan
           </p>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-2 bg-white p-1.5 rounded-2xl border border-slate-200 overflow-x-auto text-xs font-bold">
+      <div className="flex items-center gap-2 bg-white dark:bg-[#222b42] p-1.5 rounded-2xl border border-slate-200 dark:border-white/10 overflow-x-auto text-xs font-bold">
         <button
           onClick={() => setActiveTab('penghuni')}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all whitespace-nowrap ${
-            activeTab === 'penghuni' ? 'bg-indigo-700 text-white shadow-xs' : 'text-slate-600 hover:bg-slate-100'
+            activeTab === 'penghuni' ? 'bg-indigo-700 text-white shadow-xs' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#2a3552]'
           }`}
         >
           <Users className="w-4 h-4" />
@@ -382,7 +382,7 @@ export const Hostel: React.FC = () => {
         <button
           onClick={() => setActiveTab('pergerakan')}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all whitespace-nowrap ${
-            activeTab === 'pergerakan' ? 'bg-indigo-700 text-white shadow-xs' : 'text-slate-600 hover:bg-slate-100'
+            activeTab === 'pergerakan' ? 'bg-indigo-700 text-white shadow-xs' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#2a3552]'
           }`}
         >
           <DoorOpen className="w-4 h-4" />
@@ -392,7 +392,7 @@ export const Hostel: React.FC = () => {
         <button
           onClick={() => setActiveTab('rollcall')}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all whitespace-nowrap ${
-            activeTab === 'rollcall' ? 'bg-indigo-700 text-white shadow-xs' : 'text-slate-600 hover:bg-slate-100'
+            activeTab === 'rollcall' ? 'bg-indigo-700 text-white shadow-xs' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#2a3552]'
           }`}
         >
           <Moon className="w-4 h-4" />
@@ -402,7 +402,7 @@ export const Hostel: React.FC = () => {
         <button
           onClick={() => setActiveTab('pemeriksaan')}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all whitespace-nowrap ${
-            activeTab === 'pemeriksaan' ? 'bg-indigo-700 text-white shadow-xs' : 'text-slate-600 hover:bg-slate-100'
+            activeTab === 'pemeriksaan' ? 'bg-indigo-700 text-white shadow-xs' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#2a3552]'
           }`}
         >
           <ClipboardList className="w-4 h-4" />
@@ -412,7 +412,7 @@ export const Hostel: React.FC = () => {
         <button
           onClick={() => setActiveTab('disiplin')}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all whitespace-nowrap ${
-            activeTab === 'disiplin' ? 'bg-indigo-700 text-white shadow-xs' : 'text-slate-600 hover:bg-slate-100'
+            activeTab === 'disiplin' ? 'bg-indigo-700 text-white shadow-xs' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#2a3552]'
           }`}
         >
           <ShieldAlert className="w-4 h-4 text-rose-400" />
@@ -426,12 +426,12 @@ export const Hostel: React.FC = () => {
           {/* Kamar Summary Cards */}
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
             {rooms.map(room => (
-              <div key={room.id} className="bg-white p-3.5 rounded-xl border border-slate-200 shadow-xs space-y-1.5 text-xs">
-                <span className="text-[10px] font-black uppercase text-indigo-700">{room.blok}</span>
-                <div className="font-extrabold text-slate-900 leading-tight">{room.namaKamar}</div>
-                <div className="flex justify-between text-[11px] text-slate-500 pt-1 border-t border-slate-100">
+              <div key={room.id} className="bg-white dark:bg-[#222b42] p-3.5 rounded-xl border border-slate-200 dark:border-white/10 shadow-xs space-y-1.5 text-xs">
+                <span className="text-[10px] font-black uppercase text-indigo-700 dark:text-indigo-300">{room.blok}</span>
+                <div className="font-extrabold text-slate-900 dark:text-white leading-tight">{room.namaKamar}</div>
+                <div className="flex justify-between text-[11px] text-slate-500 dark:text-slate-400 pt-1 border-t border-slate-100 dark:border-white/5">
                   <span>Penghuni:</span>
-                  <span className="font-bold text-slate-900">
+                  <span className="font-bold text-slate-900 dark:text-white">
                     {room.penghuniIds.length} / {room.kapasiti}
                   </span>
                 </div>
@@ -440,7 +440,7 @@ export const Hostel: React.FC = () => {
           </div>
 
           {/* Filter Bar */}
-          <div className="bg-white p-3.5 rounded-xl border border-slate-200 shadow-xs flex flex-wrap items-center justify-between gap-3 text-xs">
+          <div className="bg-white dark:bg-[#222b42] p-3.5 rounded-xl border border-slate-200 dark:border-white/10 shadow-xs flex flex-wrap items-center justify-between gap-3 text-xs">
             <div className="relative flex-1 max-w-sm">
               <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
               <input
@@ -448,7 +448,7 @@ export const Hostel: React.FC = () => {
                 value={searchTerm}
                 onChange={e => setSearchTerm(e.target.value)}
                 placeholder="Cari penghuni atau kampung..."
-                className="w-full pl-9 pr-3 py-2 border border-slate-300 rounded-lg outline-hidden"
+                className="w-full pl-9 pr-3 py-2 border border-slate-300 dark:border-white/15 rounded-lg outline-hidden"
               />
             </div>
 
@@ -456,7 +456,7 @@ export const Hostel: React.FC = () => {
               <select
                 value={filterBlok}
                 onChange={e => setFilterBlok(e.target.value)}
-                className="border border-slate-300 rounded-lg p-2 font-medium bg-slate-50"
+                className="border border-slate-300 dark:border-white/15 rounded-lg p-2 font-medium bg-slate-50 dark:bg-[#1b2337]"
               >
                 <option value="semua">Semua Blok</option>
                 <option value="putera">Blok Putera Sahaja</option>
@@ -466,10 +466,10 @@ export const Hostel: React.FC = () => {
           </div>
 
           {/* Table */}
-          <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+          <div className="bg-white dark:bg-[#222b42] rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
-                <thead className="bg-slate-100/75 text-slate-700 font-bold border-b border-slate-200">
+                <thead className="bg-slate-100/75 dark:bg-[#161e31] text-slate-700 dark:text-slate-200 font-bold border-b border-slate-200 dark:border-white/10">
                   <tr>
                     <th className="p-3">Nama Penghuni</th>
                     <th className="p-3">Kelas & Jantina</th>
@@ -479,27 +479,27 @@ export const Hostel: React.FC = () => {
                     <th className="p-3 text-right">Tindakan</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100">
+                <tbody className="divide-y divide-slate-100 dark:divide-white/5">
                   {filteredStudents.map(s => {
                     const assignedRoom = rooms.find(r => r.penghuniIds.includes(s.id));
                     return (
-                      <tr key={s.id} className="hover:bg-slate-50">
-                        <td className="p-3 font-bold text-slate-900">{s.nama}</td>
-                        <td className="p-3 text-slate-600 font-medium">
+                      <tr key={s.id} className="hover:bg-slate-50 dark:hover:bg-[#28334e]">
+                        <td className="p-3 font-bold text-slate-900 dark:text-white">{s.nama}</td>
+                        <td className="p-3 text-slate-600 dark:text-slate-300 font-medium">
                           {s.kelas} • <span className="capitalize">{s.jantina}</span>
                         </td>
-                        <td className="p-3 text-slate-600">
+                        <td className="p-3 text-slate-600 dark:text-slate-300">
                           <span className="flex items-center gap-1">
                             <MapPin className="w-3 h-3 text-slate-400" />
                             <span>{s.kampung}</span>
                           </span>
                         </td>
                         <td className="p-3">
-                          <span className="px-2 py-0.5 rounded font-black text-[10px] bg-indigo-50 text-indigo-900 border border-indigo-200">
+                          <span className="px-2 py-0.5 rounded font-black text-[10px] bg-indigo-50 dark:bg-indigo-500/15 text-indigo-900 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-500/30">
                             {assignedRoom?.namaKamar || s.kamarAsrama || 'Kamar Kinabalu 1'}
                           </span>
                         </td>
-                        <td className="p-3 text-slate-600">
+                        <td className="p-3 text-slate-600 dark:text-slate-300">
                           {s.penjaga[0]?.nama} ({s.penjaga[0]?.noTel})
                         </td>
                         <td className="p-3 text-right">
@@ -508,7 +508,7 @@ export const Hostel: React.FC = () => {
                               setSelectedStudentForMove(s);
                               setShowMoveModal(true);
                             }}
-                            className="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded font-bold text-[11px] flex items-center gap-1 ml-auto"
+                            className="px-2.5 py-1 bg-slate-100 dark:bg-[#161e31] hover:bg-slate-200 dark:hover:bg-[#323f61] text-slate-700 dark:text-slate-200 rounded font-bold text-[11px] flex items-center gap-1 ml-auto"
                           >
                             <ArrowRightLeft className="w-3 h-3" />
                             <span>Tukar Bilik</span>
@@ -527,11 +527,11 @@ export const Hostel: React.FC = () => {
       {/* ================= TAB 2: PERGERAKAN / PERMIT ================= */}
       {activeTab === 'pergerakan' && (
         <div className="space-y-4">
-          <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
-            <div className="p-4 border-b border-slate-200 flex items-center justify-between">
+          <div className="bg-white dark:bg-[#222b42] rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs overflow-hidden">
+            <div className="p-4 border-b border-slate-200 dark:border-white/10 flex items-center justify-between">
               <div>
-                <h3 className="text-sm font-bold text-slate-900">Rekod Pergerakan & Permit Keluar Masuk Asrama</h3>
-                <p className="text-xs text-slate-500">Kebenaran rasmi pulang bermalam, urusan kecemasan, atau keluar ke pekan</p>
+                <h3 className="text-sm font-bold text-slate-900 dark:text-white">Rekod Pergerakan & Permit Keluar Masuk Asrama</h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Kebenaran rasmi pulang bermalam, urusan kecemasan, atau keluar ke pekan</p>
               </div>
               <button
                 onClick={() => setShowPermitModal(true)}
@@ -544,7 +544,7 @@ export const Hostel: React.FC = () => {
 
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
-                <thead className="bg-slate-100/75 text-slate-700 font-bold border-b border-slate-200">
+                <thead className="bg-slate-100/75 dark:bg-[#161e31] text-slate-700 dark:text-slate-200 font-bold border-b border-slate-200 dark:border-white/10">
                   <tr>
                     <th className="p-3">Penghuni</th>
                     <th className="p-3">Jenis Permit</th>
@@ -556,28 +556,28 @@ export const Hostel: React.FC = () => {
                     <th className="p-3 text-right">Tindakan</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100">
+                <tbody className="divide-y divide-slate-100 dark:divide-white/5">
                   {movements.map(m => {
                     const stu = students.find(s => s.id === m.studentId);
                     const isReturned = m.statusKelulusan === 'telah_pulang';
                     return (
-                      <tr key={m.id} className="hover:bg-slate-50">
-                        <td className="p-3 font-bold text-slate-900">{stu?.nama || 'Murid'}</td>
+                      <tr key={m.id} className="hover:bg-slate-50 dark:hover:bg-[#28334e]">
+                        <td className="p-3 font-bold text-slate-900 dark:text-white">{stu?.nama || 'Murid'}</td>
                         <td className="p-3">
-                          <span className="capitalize px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-800">
+                          <span className="capitalize px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 dark:bg-[#161e31] text-slate-800 dark:text-slate-100">
                             {m.jenis.replace('_', ' ')}
                           </span>
                         </td>
-                        <td className="p-3 text-slate-600">
+                        <td className="p-3 text-slate-600 dark:text-slate-300">
                           {m.tarikhKeluar} ({m.masaKeluar})
                         </td>
-                        <td className="p-3 text-slate-600 font-medium">{m.tarikhJangkaPulang}</td>
-                        <td className="p-3 text-slate-600 max-w-xs">{m.tujuan}</td>
-                        <td className="p-3 text-slate-600 font-semibold">{m.namaWarden}</td>
+                        <td className="p-3 text-slate-600 dark:text-slate-300 font-medium">{m.tarikhJangkaPulang}</td>
+                        <td className="p-3 text-slate-600 dark:text-slate-300 max-w-xs">{m.tujuan}</td>
+                        <td className="p-3 text-slate-600 dark:text-slate-300 font-semibold">{m.namaWarden}</td>
                         <td className="p-3">
                           <span
                             className={`px-2 py-0.5 rounded-full font-bold text-[10px] uppercase ${
-                              isReturned ? 'bg-emerald-100 text-emerald-800' : 'bg-purple-100 text-purple-800'
+                              isReturned ? 'bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300' : 'bg-purple-100 dark:bg-purple-500/20 text-purple-800 dark:text-purple-300'
                             }`}
                           >
                             {isReturned ? 'Telah Pulang' : 'Sedang Keluar'}
@@ -606,7 +606,7 @@ export const Hostel: React.FC = () => {
       {/* ================= TAB 3: ROLL CALL & LAPORAN HARIAN ================= */}
       {activeTab === 'rollcall' && (
         <div className="space-y-4">
-          <div className="p-4 bg-purple-50 border border-purple-200 rounded-2xl flex items-start gap-3 text-xs text-purple-900">
+          <div className="p-4 bg-purple-50 dark:bg-purple-500/15 border border-purple-200 dark:border-purple-500/30 rounded-2xl flex items-start gap-3 text-xs text-purple-900 dark:text-purple-300">
             <Moon className="w-5 h-5 text-purple-600 shrink-0 mt-0.5" />
             <div>
               <strong className="block text-sm font-bold">Peringatan Pengurusan Kiraan Murid (Roll Call) Malam</strong>
@@ -618,39 +618,39 @@ export const Hostel: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {dailyReports.map(hdr => (
-              <div key={hdr.id} className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-3 text-xs">
+              <div key={hdr.id} className="bg-white dark:bg-[#222b42] p-5 rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs space-y-3 text-xs">
                 <div className="flex items-center justify-between border-b pb-2">
-                  <span className="font-extrabold text-sm text-slate-900">{hdr.tarikh}</span>
-                  <span className="font-semibold text-slate-500">Warden: {hdr.wardenBertugas}</span>
+                  <span className="font-extrabold text-sm text-slate-900 dark:text-white">{hdr.tarikh}</span>
+                  <span className="font-semibold text-slate-500 dark:text-slate-400">Warden: {hdr.wardenBertugas}</span>
                 </div>
 
                 <div className="grid grid-cols-4 gap-2 text-center">
-                  <div className="p-2 bg-emerald-50 rounded-lg">
-                    <span className="text-[10px] text-emerald-700 font-bold block">Hadir</span>
-                    <span className="text-base font-black text-emerald-900">{hdr.kiraanMuridMalam.hadir}</span>
+                  <div className="p-2 bg-emerald-50 dark:bg-emerald-500/15 rounded-lg">
+                    <span className="text-[10px] text-emerald-700 dark:text-emerald-300 font-bold block">Hadir</span>
+                    <span className="text-base font-black text-emerald-900 dark:text-emerald-300">{hdr.kiraanMuridMalam.hadir}</span>
                   </div>
-                  <div className="p-2 bg-blue-50 rounded-lg">
-                    <span className="text-[10px] text-blue-700 font-bold block">Bermalam</span>
-                    <span className="text-base font-black text-blue-900">{hdr.kiraanMuridMalam.pulangBermalam}</span>
+                  <div className="p-2 bg-blue-50 dark:bg-sky-500/15 rounded-lg">
+                    <span className="text-[10px] text-blue-700 dark:text-sky-300 font-bold block">Bermalam</span>
+                    <span className="text-base font-black text-blue-900 dark:text-sky-300">{hdr.kiraanMuridMalam.pulangBermalam}</span>
                   </div>
-                  <div className="p-2 bg-amber-50 rounded-lg">
-                    <span className="text-[10px] text-amber-700 font-bold block">Sakit</span>
-                    <span className="text-base font-black text-amber-900">{hdr.kiraanMuridMalam.sakit}</span>
+                  <div className="p-2 bg-amber-50 dark:bg-amber-500/15 rounded-lg">
+                    <span className="text-[10px] text-amber-700 dark:text-amber-300 font-bold block">Sakit</span>
+                    <span className="text-base font-black text-amber-900 dark:text-amber-300">{hdr.kiraanMuridMalam.sakit}</span>
                   </div>
-                  <div className="p-2 bg-red-50 rounded-lg">
-                    <span className="text-[10px] text-red-700 font-bold block">Tanpa Izin</span>
-                    <span className="text-base font-black text-red-900">{hdr.kiraanMuridMalam.tiadaKebenaran}</span>
+                  <div className="p-2 bg-red-50 dark:bg-red-500/15 rounded-lg">
+                    <span className="text-[10px] text-red-700 dark:text-red-300 font-bold block">Tanpa Izin</span>
+                    <span className="text-base font-black text-red-900 dark:text-red-300">{hdr.kiraanMuridMalam.tiadaKebenaran}</span>
                   </div>
                 </div>
 
                 <div>
-                  <strong className="text-slate-800 block text-[11px]">Kebajikan & Kesihatan:</strong>
-                  <p className="text-slate-600 mt-0.5">{hdr.isuKebajikan}</p>
+                  <strong className="text-slate-800 dark:text-slate-100 block text-[11px]">Kebajikan & Kesihatan:</strong>
+                  <p className="text-slate-600 dark:text-slate-300 mt-0.5">{hdr.isuKebajikan}</p>
                 </div>
 
                 <div>
-                  <strong className="text-slate-800 block text-[11px]">Catatan Warden:</strong>
-                  <p className="text-slate-600 mt-0.5">{hdr.catatan}</p>
+                  <strong className="text-slate-800 dark:text-slate-100 block text-[11px]">Catatan Warden:</strong>
+                  <p className="text-slate-600 dark:text-slate-300 mt-0.5">{hdr.catatan}</p>
                 </div>
               </div>
             ))}
@@ -661,11 +661,11 @@ export const Hostel: React.FC = () => {
       {/* ================= TAB 4: PEMERIKSAAN BILIK & SPOT-CHECK ================= */}
       {activeTab === 'pemeriksaan' && (
         <div className="space-y-4">
-          <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
-            <div className="p-4 border-b border-slate-200 flex items-center justify-between">
+          <div className="bg-white dark:bg-[#222b42] rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs overflow-hidden">
+            <div className="p-4 border-b border-slate-200 dark:border-white/10 flex items-center justify-between">
               <div>
-                <h3 className="text-sm font-bold text-slate-900">Rekod Spot-Check & Pemeriksaan Kamar</h3>
-                <p className="text-xs text-slate-500">Pemeriksaan kebersihan, keselamatan elektrik, dan penyitaan barang larangan</p>
+                <h3 className="text-sm font-bold text-slate-900 dark:text-white">Rekod Spot-Check & Pemeriksaan Kamar</h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Pemeriksaan kebersihan, keselamatan elektrik, dan penyitaan barang larangan</p>
               </div>
               <button
                 onClick={() => setShowInspectionModal(true)}
@@ -678,7 +678,7 @@ export const Hostel: React.FC = () => {
 
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
-                <thead className="bg-slate-100/75 text-slate-700 font-bold border-b border-slate-200">
+                <thead className="bg-slate-100/75 dark:bg-[#161e31] text-slate-700 dark:text-slate-200 font-bold border-b border-slate-200 dark:border-white/10">
                   <tr>
                     <th className="p-3">Tarikh</th>
                     <th className="p-3">Kamar / Blok</th>
@@ -688,27 +688,27 @@ export const Hostel: React.FC = () => {
                     <th className="p-3">Pemeriksa</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100">
+                <tbody className="divide-y divide-slate-100 dark:divide-white/5">
                   {inspections.map(ins => (
-                    <tr key={ins.id} className="hover:bg-slate-50">
-                      <td className="p-3 font-semibold text-slate-700">{ins.tarikh}</td>
-                      <td className="p-3 font-bold text-slate-900">{ins.kamar} ({ins.blok})</td>
+                    <tr key={ins.id} className="hover:bg-slate-50 dark:hover:bg-[#28334e]">
+                      <td className="p-3 font-semibold text-slate-700 dark:text-slate-200">{ins.tarikh}</td>
+                      <td className="p-3 font-bold text-slate-900 dark:text-white">{ins.kamar} ({ins.blok})</td>
                       <td className="p-3">
-                        <span className="font-black text-indigo-800 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-200">
+                        <span className="font-black text-indigo-800 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-500/15 px-2 py-0.5 rounded border border-indigo-200 dark:border-indigo-500/30">
                           {ins.skorKebersihan} / 10
                         </span>
                       </td>
                       <td className="p-3">
                         {ins.barangLaranganDitemui ? (
-                          <div className="text-red-700 font-bold">
-                            ⚠️ ADA: <span className="font-normal text-slate-800">{ins.perincianBarangLarangan}</span>
+                          <div className="text-red-700 dark:text-red-300 font-bold">
+                            ⚠️ ADA: <span className="font-normal text-slate-800 dark:text-slate-100">{ins.perincianBarangLarangan}</span>
                           </div>
                         ) : (
-                          <span className="text-emerald-700 font-semibold">Tiada (Bersih)</span>
+                          <span className="text-emerald-700 dark:text-emerald-300 font-semibold">Tiada (Bersih)</span>
                         )}
                       </td>
-                      <td className="p-3 text-slate-600">{ins.tindakan || '-'}</td>
-                      <td className="p-3 text-slate-700 font-medium">{ins.wardenBertugas}</td>
+                      <td className="p-3 text-slate-600 dark:text-slate-300">{ins.tindakan || '-'}</td>
+                      <td className="p-3 text-slate-700 dark:text-slate-200 font-medium">{ins.wardenBertugas}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -721,37 +721,37 @@ export const Hostel: React.FC = () => {
       {/* ================= TAB 5: DISIPLIN ASRAMA ================= */}
       {activeTab === 'disiplin' && (
         <div className="space-y-4">
-          <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
-            <div className="p-4 border-b border-slate-200">
-              <h3 className="text-sm font-bold text-slate-900">Salah Laku Berkaitan Asrama (Penyelarasan SSDM)</h3>
-              <p className="text-xs text-slate-500">Menggunakan aliran piawai modul Disiplin dengan tag lokasi 'Asrama'</p>
+          <div className="bg-white dark:bg-[#222b42] rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs overflow-hidden">
+            <div className="p-4 border-b border-slate-200 dark:border-white/10">
+              <h3 className="text-sm font-bold text-slate-900 dark:text-white">Salah Laku Berkaitan Asrama (Penyelarasan SSDM)</h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Menggunakan aliran piawai modul Disiplin dengan tag lokasi 'Asrama'</p>
             </div>
 
-            <div className="divide-y divide-slate-100">
+            <div className="divide-y divide-slate-100 dark:divide-white/5">
               {disciplineCases.map(c => {
                 const stu = students.find(s => s.id === c.studentId);
                 return (
                   <div key={c.id} className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
                     <div>
-                      <div className="font-bold text-sm text-slate-900">{stu?.nama || 'Murid Asrama'}</div>
-                      <div className="text-slate-500 text-[11px]">
+                      <div className="font-bold text-sm text-slate-900 dark:text-white">{stu?.nama || 'Murid Asrama'}</div>
+                      <div className="text-slate-500 dark:text-slate-400 text-[11px]">
                         {c.noRujukan} • {c.tarikhKejadian} • Lokasi: <strong>{c.lokasi}</strong>
                       </div>
-                      <p className="mt-1 text-slate-700">{c.perincianKes}</p>
+                      <p className="mt-1 text-slate-700 dark:text-slate-200">{c.perincianKes}</p>
                     </div>
 
                     <div className="shrink-0 text-right">
-                      <span className="px-2 py-0.5 rounded font-black text-[10px] uppercase bg-rose-100 text-rose-800">
+                      <span className="px-2 py-0.5 rounded font-black text-[10px] uppercase bg-rose-100 dark:bg-rose-500/20 text-rose-800 dark:text-rose-300">
                         {c.tahap}
                       </span>
-                      <div className="text-[11px] font-semibold text-slate-800 mt-1">{c.tindakanDiambil}</div>
+                      <div className="text-[11px] font-semibold text-slate-800 dark:text-slate-100 mt-1">{c.tindakanDiambil}</div>
                     </div>
                   </div>
                 );
               })}
 
               {disciplineCases.length === 0 && (
-                <div className="p-8 text-center text-slate-500 text-xs">
+                <div className="p-8 text-center text-slate-500 dark:text-slate-400 text-xs">
                   Tiada kes disiplin asrama aktif direkodkan.
                 </div>
               )}
@@ -763,9 +763,9 @@ export const Hostel: React.FC = () => {
       {/* ================= MODAL TUKAR BILIK ================= */}
       {showMoveModal && selectedStudentForMove && (
         <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-4 text-xs">
+          <div className="bg-white dark:bg-[#222b42] rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-white/10 space-y-4 text-xs">
             <div className="flex items-center justify-between border-b pb-3">
-              <h3 className="text-base font-extrabold text-slate-900">Pertukaran Kamar Asrama</h3>
+              <h3 className="text-base font-extrabold text-slate-900 dark:text-white">Pertukaran Kamar Asrama</h3>
               <button onClick={() => setShowMoveModal(false)} className="p-1 text-slate-400 hover:text-slate-600">
                 <X className="w-5 h-5" />
               </button>
@@ -773,17 +773,17 @@ export const Hostel: React.FC = () => {
 
             <form onSubmit={handleTransferRoom} className="space-y-3.5">
               <div>
-                <span className="font-bold text-slate-700 block mb-1">Nama Murid:</span>
-                <p className="font-extrabold text-slate-900 text-sm">{selectedStudentForMove.nama}</p>
-                <p className="text-[11px] text-slate-500">Tingkatan {selectedStudentForMove.kelas} • {selectedStudentForMove.jantina}</p>
+                <span className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Nama Murid:</span>
+                <p className="font-extrabold text-slate-900 dark:text-white text-sm">{selectedStudentForMove.nama}</p>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400">Tingkatan {selectedStudentForMove.kelas} • {selectedStudentForMove.jantina}</p>
               </div>
 
               <div>
-                <label className="font-bold text-slate-800 block mb-1">Pilih Kamar Sasaran:</label>
+                <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">Pilih Kamar Sasaran:</label>
                 <select
                   value={targetRoomId}
                   onChange={e => setTargetRoomId(e.target.value)}
-                  className="w-full border border-slate-300 rounded-lg p-2 font-medium"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-medium"
                 >
                   {rooms
                     .filter(r =>
@@ -801,7 +801,7 @@ export const Hostel: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setShowMoveModal(false)}
-                  className="px-4 py-2 border border-slate-300 text-slate-700 font-bold rounded-xl"
+                  className="px-4 py-2 border border-slate-300 dark:border-white/15 text-slate-700 dark:text-slate-200 font-bold rounded-xl"
                 >
                   Batal
                 </button>
@@ -820,9 +820,9 @@ export const Hostel: React.FC = () => {
       {/* ================= MODAL KELUARKAN PERMIT ================= */}
       {showPermitModal && (
         <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 space-y-4 text-xs">
+          <div className="bg-white dark:bg-[#222b42] rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 dark:border-white/10 space-y-4 text-xs">
             <div className="flex items-center justify-between border-b pb-3">
-              <h3 className="text-base font-extrabold text-slate-900">Keluarkan Permit Keluar / Balik Asrama</h3>
+              <h3 className="text-base font-extrabold text-slate-900 dark:text-white">Keluarkan Permit Keluar / Balik Asrama</h3>
               <button onClick={() => setShowPermitModal(false)} className="p-1 text-slate-400 hover:text-slate-600">
                 <X className="w-5 h-5" />
               </button>
@@ -830,11 +830,11 @@ export const Hostel: React.FC = () => {
 
             <form onSubmit={handleCreatePermit} className="space-y-3.5">
               <div>
-                <label className="font-bold text-slate-800 block mb-1">Pilih Penghuni:</label>
+                <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">Pilih Penghuni:</label>
                 <select
                   value={permitStudentId}
                   onChange={e => setPermitStudentId(e.target.value)}
-                  className="w-full border border-slate-300 rounded-lg p-2 font-medium"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-medium"
                 >
                   {students.map(s => (
                     <option key={s.id} value={s.id}>
@@ -845,11 +845,11 @@ export const Hostel: React.FC = () => {
               </div>
 
               <div>
-                <label className="font-bold text-slate-800 block mb-1">Jenis Pergerakan:</label>
+                <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">Jenis Pergerakan:</label>
                 <select
                   value={permitJenis}
                   onChange={e => setPermitJenis(e.target.value as any)}
-                  className="w-full border border-slate-300 rounded-lg p-2 font-medium"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-medium"
                 >
                   <option value="pulang_bermalam">Pulang Bermalam Hujung Minggu</option>
                   <option value="urusan_keluar">Urusan Keluar ke Pekan Kota Marudu</option>
@@ -858,25 +858,25 @@ export const Hostel: React.FC = () => {
               </div>
 
               <div>
-                <label className="font-bold text-slate-800 block mb-1">Tarikh Jangka Pulang ke Asrama:</label>
+                <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">Tarikh Jangka Pulang ke Asrama:</label>
                 <input
                   type="date"
                   required
                   value={permitTarikhJangka}
                   onChange={e => setPermitTarikhJangka(e.target.value)}
-                  className="w-full border border-slate-300 rounded-lg p-2"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2"
                 />
               </div>
 
               <div>
-                <label className="font-bold text-slate-800 block mb-1">Tujuan / Catatan:</label>
+                <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">Tujuan / Catatan:</label>
                 <textarea
                   rows={2}
                   required
                   value={permitTujuan}
                   onChange={e => setPermitTujuan(e.target.value)}
                   placeholder="Contoh: Mengikuti aktiviti keluarga dan membeli kelengkapan belajar..."
-                  className="w-full border border-slate-300 rounded-lg p-2 font-medium"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-medium"
                 />
               </div>
 
@@ -884,7 +884,7 @@ export const Hostel: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setShowPermitModal(false)}
-                  className="px-4 py-2 border border-slate-300 text-slate-700 font-bold rounded-xl"
+                  className="px-4 py-2 border border-slate-300 dark:border-white/15 text-slate-700 dark:text-slate-200 font-bold rounded-xl"
                 >
                   Batal
                 </button>
@@ -903,9 +903,9 @@ export const Hostel: React.FC = () => {
       {/* ================= MODAL ROLL CALL ================= */}
       {showRollCallModal && (
         <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 space-y-4 text-xs">
+          <div className="bg-white dark:bg-[#222b42] rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 dark:border-white/10 space-y-4 text-xs">
             <div className="flex items-center justify-between border-b pb-3">
-              <h3 className="text-base font-extrabold text-slate-900">Rekod Kiraan Roll Call Malam</h3>
+              <h3 className="text-base font-extrabold text-slate-900 dark:text-white">Rekod Kiraan Roll Call Malam</h3>
               <button onClick={() => setShowRollCallModal(false)} className="p-1 text-slate-400 hover:text-slate-600">
                 <X className="w-5 h-5" />
               </button>
@@ -914,51 +914,51 @@ export const Hostel: React.FC = () => {
             <form onSubmit={handleAddRollCall} className="space-y-3.5">
               <div className="grid grid-cols-3 gap-3">
                 <div>
-                  <label className="font-bold text-slate-800 block mb-1">Hadir:</label>
+                  <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">Hadir:</label>
                   <input
                     type="number"
                     value={rcHadir}
                     onChange={e => setRcHadir(Number(e.target.value))}
-                    className="w-full border border-slate-300 rounded-lg p-2 font-black text-emerald-800"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-black text-emerald-800 dark:text-emerald-300"
                   />
                 </div>
                 <div>
-                  <label className="font-bold text-slate-800 block mb-1">Bermalam:</label>
+                  <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">Bermalam:</label>
                   <input
                     type="number"
                     value={rcBermalam}
                     onChange={e => setRcBermalam(Number(e.target.value))}
-                    className="w-full border border-slate-300 rounded-lg p-2 font-black text-blue-800"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-black text-blue-800 dark:text-sky-300"
                   />
                 </div>
                 <div>
-                  <label className="font-bold text-slate-800 block mb-1">Sakit:</label>
+                  <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">Sakit:</label>
                   <input
                     type="number"
                     value={rcSakit}
                     onChange={e => setRcSakit(Number(e.target.value))}
-                    className="w-full border border-slate-300 rounded-lg p-2 font-black text-amber-800"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-black text-amber-800 dark:text-amber-300"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="font-bold text-slate-800 block mb-1">Isu Kebajikan Penghuni:</label>
+                <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">Isu Kebajikan Penghuni:</label>
                 <textarea
                   rows={2}
                   value={rcKebajikan}
                   onChange={e => setRcKebajikan(e.target.value)}
-                  className="w-full border border-slate-300 rounded-lg p-2"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2"
                 />
               </div>
 
               <div>
-                <label className="font-bold text-slate-800 block mb-1">Catatan Keseluruhan:</label>
+                <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">Catatan Keseluruhan:</label>
                 <textarea
                   rows={2}
                   value={rcCatatan}
                   onChange={e => setRcCatatan(e.target.value)}
-                  className="w-full border border-slate-300 rounded-lg p-2"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2"
                 />
               </div>
 
@@ -966,7 +966,7 @@ export const Hostel: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setShowRollCallModal(false)}
-                  className="px-4 py-2 border border-slate-300 text-slate-700 font-bold rounded-xl"
+                  className="px-4 py-2 border border-slate-300 dark:border-white/15 text-slate-700 dark:text-slate-200 font-bold rounded-xl"
                 >
                   Batal
                 </button>
@@ -985,9 +985,9 @@ export const Hostel: React.FC = () => {
       {/* ================= MODAL SPOT-CHECK ================= */}
       {showInspectionModal && (
         <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 space-y-4 text-xs">
+          <div className="bg-white dark:bg-[#222b42] rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 dark:border-white/10 space-y-4 text-xs">
             <div className="flex items-center justify-between border-b pb-3">
-              <h3 className="text-base font-extrabold text-slate-900">Borang Pemeriksaan Kamar / Spot-Check</h3>
+              <h3 className="text-base font-extrabold text-slate-900 dark:text-white">Borang Pemeriksaan Kamar / Spot-Check</h3>
               <button onClick={() => setShowInspectionModal(false)} className="p-1 text-slate-400 hover:text-slate-600">
                 <X className="w-5 h-5" />
               </button>
@@ -996,11 +996,11 @@ export const Hostel: React.FC = () => {
             <form onSubmit={handleAddInspection} className="space-y-3.5">
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="font-bold text-slate-800 block mb-1">Blok:</label>
+                  <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">Blok:</label>
                   <select
                     value={inspBlok}
                     onChange={e => setInspBlok(e.target.value)}
-                    className="w-full border border-slate-300 rounded-lg p-2"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2"
                   >
                     <option value="Blok A (Putera)">Blok A (Putera)</option>
                     <option value="Blok B (Puteri)">Blok B (Puteri)</option>
@@ -1008,30 +1008,30 @@ export const Hostel: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="font-bold text-slate-800 block mb-1">Kamar:</label>
+                  <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">Kamar:</label>
                   <input
                     type="text"
                     value={inspKamar}
                     onChange={e => setInspKamar(e.target.value)}
-                    className="w-full border border-slate-300 rounded-lg p-2 font-bold"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-bold"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="font-bold text-slate-800 block mb-1">Skor Kebersihan & Kekemasan (1 - 10):</label>
+                <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">Skor Kebersihan & Kekemasan (1 - 10):</label>
                 <input
                   type="number"
                   min={1}
                   max={10}
                   value={inspSkor}
                   onChange={e => setInspSkor(Number(e.target.value))}
-                  className="w-full border border-slate-300 rounded-lg p-2 font-bold text-indigo-900"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-bold text-indigo-900 dark:text-indigo-300"
                 />
               </div>
 
-              <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
-                <label className="flex items-center gap-2 font-bold text-slate-800 cursor-pointer">
+              <div className="p-3 bg-slate-50 dark:bg-[#1b2337] border border-slate-200 dark:border-white/10 rounded-xl space-y-2">
+                <label className="flex items-center gap-2 font-bold text-slate-800 dark:text-slate-100 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={inspBarang}
@@ -1046,18 +1046,18 @@ export const Hostel: React.FC = () => {
                     placeholder="Nyatakan barang (cth. pemanas air, rokok, gajet haram)..."
                     value={inspBarangNote}
                     onChange={e => setInspBarangNote(e.target.value)}
-                    className="w-full border border-rose-300 rounded-lg p-2 text-rose-900 font-medium"
+                    className="w-full border border-rose-300 dark:border-rose-500/30 rounded-lg p-2 text-rose-900 dark:text-rose-300 font-medium"
                   />
                 )}
               </div>
 
               <div>
-                <label className="font-bold text-slate-800 block mb-1">Tindakan / Ulasan Warden:</label>
+                <label className="font-bold text-slate-800 dark:text-slate-100 block mb-1">Tindakan / Ulasan Warden:</label>
                 <textarea
                   rows={2}
                   value={inspTindakan}
                   onChange={e => setInspTindakan(e.target.value)}
-                  className="w-full border border-slate-300 rounded-lg p-2"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2"
                 />
               </div>
 
@@ -1065,7 +1065,7 @@ export const Hostel: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setShowInspectionModal(false)}
-                  className="px-4 py-2 border border-slate-300 text-slate-700 font-bold rounded-xl"
+                  className="px-4 py-2 border border-slate-300 dark:border-white/15 text-slate-700 dark:text-slate-200 font-bold rounded-xl"
                 >
                   Batal
                 </button>

@@ -57,61 +57,61 @@ export const ResetDemoModal: React.FC<ResetDemoModalProps> = ({ isOpen, onClose,
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
-      <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 animate-in fade-in zoom-in-95 space-y-4">
-        <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-          <div className="flex items-center gap-2 text-slate-900 font-extrabold text-base">
-            <Database className="w-5 h-5 text-blue-700" />
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-xs">
+      <div className="bg-white dark:bg-[#222b42] rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 dark:border-white/10 space-y-4">
+        <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-white/10">
+          <div className="flex items-center gap-2 text-slate-900 dark:text-white font-extrabold text-base">
+            <Database className="w-5 h-5 text-[#0ea5e9]" />
             <span>Pengurusan Data: Demo vs Data Sebenar</span>
           </div>
           <button
             onClick={onClose}
-            className="p-1 text-slate-400 hover:text-slate-600 rounded-lg"
+            className="p-1 text-slate-400 hover:text-slate-600 dark:hover:text-white rounded-lg"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Pilihan 1: Kosongkan Data Demo & Sedia Data Sebenar (Disyorkan) */}
-        <div className="p-4 rounded-xl border-2 border-emerald-500 bg-emerald-50/60 space-y-2">
+        <div className="p-4 rounded-xl border-2 border-[#49ccb1] bg-emerald-50/60 dark:bg-[#49ccb1]/10 space-y-2">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 text-emerald-950 font-black text-sm">
-              <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
+            <div className="flex items-center gap-2 text-emerald-950 dark:text-[#49ccb1] font-black text-sm">
+              <CheckCircle2 className="w-5 h-5 shrink-0" />
               <span>Sedia Data Sebenar (Padam Semua Demo)</span>
             </div>
-            <span className="px-2 py-0.5 rounded-full bg-emerald-200 text-emerald-900 font-extrabold text-[10px]">
+            <span className="px-2 py-0.5 rounded-full bg-emerald-200 dark:bg-[#49ccb1] text-emerald-900 dark:text-slate-950 font-extrabold text-[10px]">
               DISYORKAN
             </span>
           </div>
-          <p className="text-xs text-slate-700 leading-relaxed">
+          <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
             Memadamkan semua rekod murid fiktif, kehadiran demo, kes disiplin demo, dan bantuan demo. Mengekalkan profil rasmi sekolah, tetapan ambang SOP, dan peranan pengguna untuk kemasukan murid sebenar.
           </p>
           <div className="pt-2">
             <button
               onClick={handleClearDemoForRealData}
               disabled={loading}
-              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold text-xs rounded-xl shadow-xs transition-colors"
+              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-[#49ccb1] hover:bg-[#3ab99f] text-slate-950 font-extrabold text-xs rounded-xl shadow-xs transition-colors"
             >
               <Trash2 className="w-4 h-4" />
-              <span>Kosongkan Data Demo & Aktifkan Mod Data Sebenar</span>
+              <span>Kosongkan Data Demo &amp; Aktifkan Mod Data Sebenar</span>
             </button>
           </div>
         </div>
 
         {/* Pilihan 2: Muat Semula Data Demo (Untuk Ujian) */}
-        <div className="p-3.5 rounded-xl border border-slate-200 bg-slate-50 space-y-2 text-xs">
-          <div className="flex items-center gap-1.5 text-slate-700 font-bold">
-            <RefreshCw className="w-4 h-4 text-slate-500" />
+        <div className="p-3.5 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#161e31] space-y-2 text-xs">
+          <div className="flex items-center gap-1.5 text-slate-700 dark:text-slate-200 font-bold">
+            <RefreshCw className="w-4 h-4 text-slate-500 dark:text-slate-400" />
             <span>Muat Semula Data Demo Latihan (Pilihan Ujian)</span>
           </div>
-          <p className="text-slate-500 text-[11px] leading-relaxed">
+          <p className="text-slate-500 dark:text-slate-400 text-[11px] leading-relaxed">
             Gunakan pilihan ini hanya jika anda ingin menjalankan simulasi atau latihan guru menggunakan data fiktif 240 murid SMK Salaping.
           </p>
           <div className="pt-1 flex justify-end">
             <button
               onClick={handleResetToDemo}
               disabled={loading}
-              className="px-3 py-1.5 border border-slate-300 text-slate-700 hover:bg-slate-200 font-bold text-[11px] rounded-lg transition-colors flex items-center gap-1.5"
+              className="px-3 py-1.5 border border-slate-300 dark:border-white/15 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-[#2a3552] font-bold text-[11px] rounded-lg transition-colors flex items-center gap-1.5"
             >
               <RefreshCw className="w-3.5 h-3.5" />
               <span>Muat Semula Demo</span>
@@ -119,11 +119,11 @@ export const ResetDemoModal: React.FC<ResetDemoModalProps> = ({ isOpen, onClose,
           </div>
         </div>
 
-        <div className="flex items-center justify-end pt-2 border-t border-slate-100">
+        <div className="flex items-center justify-end pt-2 border-t border-slate-100 dark:border-white/10">
           <button
             onClick={onClose}
             disabled={loading}
-            className="px-4 py-2 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-xl transition-colors"
+            className="px-4 py-2 text-xs font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#2a3552] rounded-xl transition-colors"
           >
             Tutup
           </button>

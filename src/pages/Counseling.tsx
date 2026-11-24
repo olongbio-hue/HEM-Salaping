@@ -230,10 +230,10 @@ export const Counseling: React.FC = () => {
   if (!canViewCounseling) {
     return (
       <div className="p-6 max-w-4xl mx-auto">
-        <div className="bg-red-50 border border-red-200 rounded-2xl p-8 text-center space-y-3">
+        <div className="bg-red-50 dark:bg-red-500/15 border border-red-200 dark:border-red-500/30 rounded-2xl p-8 text-center space-y-3">
           <Lock className="w-12 h-12 text-red-600 mx-auto" />
-          <h2 className="text-xl font-black text-red-900">Akses Terhad (Kerahsiaan Kaunselor)</h2>
-          <p className="text-xs text-red-700 max-w-md mx-auto leading-relaxed">
+          <h2 className="text-xl font-black text-red-900 dark:text-red-300">Akses Terhad (Kerahsiaan Kaunselor)</h2>
+          <p className="text-xs text-red-700 dark:text-red-300 max-w-md mx-auto leading-relaxed">
             Hanya Guru Bimbingan & Kaunseling (GBK) berdaftar, Pengetua, dan GPK HEM dibenarkan mengakses modul ini. Kandungan nota sesi dilindungi di bawah Akta Kaunselor 1998.
           </p>
         </div>
@@ -304,9 +304,9 @@ export const Counseling: React.FC = () => {
       </div>
 
       {/* Mandatory Disclaimer Banner */}
-      <div className="p-3 bg-purple-50 border border-purple-300 rounded-2xl text-purple-950 text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
+      <div className="p-3 bg-purple-50 dark:bg-purple-500/15 border border-purple-300 dark:border-purple-500/30 rounded-2xl text-purple-950 dark:text-purple-300 text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
         <div className="flex items-center gap-2.5">
-          <ShieldCheck className="w-5 h-5 text-purple-700 shrink-0" />
+          <ShieldCheck className="w-5 h-5 text-purple-700 dark:text-purple-300 shrink-0" />
           <span>
             <strong>Penafian Etika Sulit:</strong> Maklumat dalam modul ini adalah sulit dan dilindungi di bawah Akta Kaunselor 1998. Setiap akses, tontonan atau ubah suai direkodkan dalam Log Audit Keselamatan.
           </span>
@@ -316,7 +316,7 @@ export const Counseling: React.FC = () => {
         {isGBK && (
           <div className="flex items-center gap-2 shrink-0">
             {isUnlocked ? (
-              <span className="flex items-center gap-1 font-bold text-emerald-800 bg-emerald-100 px-3 py-1 rounded-xl">
+              <span className="flex items-center gap-1 font-bold text-emerald-800 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-500/20 px-3 py-1 rounded-xl">
                 <Unlock className="w-3.5 h-3.5" />
                 <span>Nota Terbuka (Nyahsulit Aktif)</span>
               </span>
@@ -334,11 +334,11 @@ export const Counseling: React.FC = () => {
       </div>
 
       {/* Navigation Tabs */}
-      <div className="flex items-center gap-2 bg-white p-1.5 rounded-2xl border border-slate-200 overflow-x-auto text-xs font-bold">
+      <div className="flex items-center gap-2 bg-white dark:bg-[#222b42] p-1.5 rounded-2xl border border-slate-200 dark:border-white/10 overflow-x-auto text-xs font-bold">
         <button
           onClick={() => setActiveTab('sesi')}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all whitespace-nowrap ${
-            activeTab === 'sesi' ? 'bg-purple-700 text-white shadow-xs' : 'text-slate-600 hover:bg-slate-100'
+            activeTab === 'sesi' ? 'bg-purple-700 text-white shadow-xs' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#2a3552]'
           }`}
         >
           <HeartHandshake className="w-4 h-4" />
@@ -348,7 +348,7 @@ export const Counseling: React.FC = () => {
         <button
           onClick={() => setActiveTab('saringan')}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all whitespace-nowrap ${
-            activeTab === 'saringan' ? 'bg-purple-700 text-white shadow-xs' : 'text-slate-600 hover:bg-slate-100'
+            activeTab === 'saringan' ? 'bg-purple-700 text-white shadow-xs' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#2a3552]'
           }`}
         >
           <Activity className="w-4 h-4" />
@@ -358,7 +358,7 @@ export const Counseling: React.FC = () => {
         <button
           onClick={() => setActiveTab('mentor')}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all whitespace-nowrap ${
-            activeTab === 'mentor' ? 'bg-purple-700 text-white shadow-xs' : 'text-slate-600 hover:bg-slate-100'
+            activeTab === 'mentor' ? 'bg-purple-700 text-white shadow-xs' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#2a3552]'
           }`}
         >
           <Users2 className="w-4 h-4" />
@@ -368,7 +368,7 @@ export const Counseling: React.FC = () => {
         <button
           onClick={() => setActiveTab('kerjaya')}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all whitespace-nowrap ${
-            activeTab === 'kerjaya' ? 'bg-purple-700 text-white shadow-xs' : 'text-slate-600 hover:bg-slate-100'
+            activeTab === 'kerjaya' ? 'bg-purple-700 text-white shadow-xs' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#2a3552]'
           }`}
         >
           <Compass className="w-4 h-4" />
@@ -378,7 +378,7 @@ export const Counseling: React.FC = () => {
         <button
           onClick={() => setActiveTab('dashboard')}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all whitespace-nowrap ${
-            activeTab === 'dashboard' ? 'bg-purple-700 text-white shadow-xs' : 'text-slate-600 hover:bg-slate-100'
+            activeTab === 'dashboard' ? 'bg-purple-700 text-white shadow-xs' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#2a3552]'
           }`}
         >
           <BarChart3 className="w-4 h-4" />
@@ -390,7 +390,7 @@ export const Counseling: React.FC = () => {
       {activeTab === 'sesi' && (
         <div className="space-y-4">
           {/* Filter Bar */}
-          <div className="bg-white p-3.5 rounded-xl border border-slate-200 shadow-xs flex flex-wrap items-center justify-between gap-3 text-xs">
+          <div className="bg-white dark:bg-[#222b42] p-3.5 rounded-xl border border-slate-200 dark:border-white/10 shadow-xs flex flex-wrap items-center justify-between gap-3 text-xs">
             <div className="relative flex-1 max-w-sm">
               <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
               <input
@@ -398,7 +398,7 @@ export const Counseling: React.FC = () => {
                 value={searchTerm}
                 onChange={e => setSearchTerm(e.target.value)}
                 placeholder="Cari isu atau murid..."
-                className="w-full pl-9 pr-3 py-2 border border-slate-300 rounded-lg outline-hidden"
+                className="w-full pl-9 pr-3 py-2 border border-slate-300 dark:border-white/15 rounded-lg outline-hidden"
               />
             </div>
 
@@ -406,7 +406,7 @@ export const Counseling: React.FC = () => {
               <select
                 value={filterJenis}
                 onChange={e => setFilterJenis(e.target.value)}
-                className="border border-slate-300 rounded-lg p-2 font-medium bg-slate-50"
+                className="border border-slate-300 dark:border-white/15 rounded-lg p-2 font-medium bg-slate-50 dark:bg-[#1b2337]"
               >
                 <option value="semua">Semua Jenis Sesi</option>
                 <option value="individu">Sesi Individu</option>
@@ -419,7 +419,7 @@ export const Counseling: React.FC = () => {
               <select
                 value={filterRujukan}
                 onChange={e => setFilterRujukan(e.target.value)}
-                className="border border-slate-300 rounded-lg p-2 font-medium bg-slate-50"
+                className="border border-slate-300 dark:border-white/15 rounded-lg p-2 font-medium bg-slate-50 dark:bg-[#1b2337]"
               >
                 <option value="semua">Semua Punca Rujukan</option>
                 <option value="guru">Rujukan Guru</option>
@@ -440,24 +440,24 @@ export const Counseling: React.FC = () => {
               return (
                 <div
                   key={s.id}
-                  className="bg-white p-4 sm:p-5 rounded-2xl border border-purple-200 shadow-xs space-y-3"
+                  className="bg-white dark:bg-[#222b42] p-4 sm:p-5 rounded-2xl border border-purple-200 dark:border-purple-500/30 shadow-xs space-y-3"
                 >
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="font-black text-sm text-slate-900">
+                      <span className="font-black text-sm text-slate-900 dark:text-white">
                         {isPengetuaOrGpkHem && !isGBK ? `Kes Murid (${stu?.kelas})` : stu?.nama || 'Murid'}
                       </span>
-                      <span className="px-2 py-0.5 rounded bg-blue-100 text-blue-900 font-bold text-xs">
+                      <span className="px-2 py-0.5 rounded bg-blue-100 dark:bg-sky-500/20 text-blue-900 dark:text-sky-300 font-bold text-xs">
                         {stu?.kelas}
                       </span>
-                      <span className="px-2 py-0.5 rounded-full bg-purple-100 text-purple-900 font-bold text-[10px] uppercase">
+                      <span className="px-2 py-0.5 rounded-full bg-purple-100 dark:bg-purple-500/20 text-purple-900 dark:text-purple-300 font-bold text-[10px] uppercase">
                         Sesi {s.jenisSesi}
                       </span>
-                      <span className="px-2 py-0.5 rounded font-bold text-[10px] uppercase bg-slate-100 text-slate-700">
+                      <span className="px-2 py-0.5 rounded font-bold text-[10px] uppercase bg-slate-100 dark:bg-[#161e31] text-slate-700 dark:text-slate-200">
                         Rujukan: {s.rujukanDari || 'guru'}
                       </span>
                       {s.tahapKeutamaan === 'tinggi' && (
-                        <span className="px-2 py-0.5 rounded-full font-bold text-[10px] uppercase bg-red-100 text-red-800">
+                        <span className="px-2 py-0.5 rounded-full font-bold text-[10px] uppercase bg-red-100 dark:bg-red-500/20 text-red-800 dark:text-red-300">
                           Keutamaan Tinggi
                         </span>
                       )}
@@ -465,42 +465,42 @@ export const Counseling: React.FC = () => {
 
                     <div className="flex items-center gap-2 text-xs">
                       <span className="text-slate-400 font-medium">Tarikh: {s.tarikh} ({s.tempohMinit || 45} min)</span>
-                      <span className="px-2.5 py-0.5 rounded-full font-extrabold text-[10px] uppercase bg-emerald-100 text-emerald-800">
+                      <span className="px-2.5 py-0.5 rounded-full font-extrabold text-[10px] uppercase bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300">
                         {s.status.toUpperCase()}
                       </span>
                     </div>
                   </div>
 
                   <div className="text-xs space-y-1.5">
-                    <p className="font-extrabold text-purple-950">
+                    <p className="font-extrabold text-purple-950 dark:text-purple-300">
                       Isu Utama: {s.isuUtama}
                     </p>
 
                     {/* Catatan Sesi: Hanya GBK Boleh Baca Kandungan Sebenar */}
                     {isGBK ? (
-                      <div className="p-3 bg-purple-50/50 rounded-xl border border-purple-100 space-y-1">
-                        <div className="flex items-center justify-between font-bold text-purple-900">
+                      <div className="p-3 bg-purple-50/50 dark:bg-purple-500/15 rounded-xl border border-purple-100 space-y-1">
+                        <div className="flex items-center justify-between font-bold text-purple-900 dark:text-purple-300">
                           <span>Catatan Sesi Kaunselor (Sulit AES-GCM):</span>
                           {isUnlocked ? <Unlock className="w-3.5 h-3.5 text-emerald-600" /> : <Lock className="w-3.5 h-3.5 text-purple-600" />}
                         </div>
-                        <p className="text-slate-700 whitespace-pre-wrap leading-relaxed font-sans">
+                        <p className="text-slate-700 dark:text-slate-200 whitespace-pre-wrap leading-relaxed font-sans">
                           {noteText}
                         </p>
                       </div>
                     ) : (
-                      <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-slate-500 italic text-[11px] flex items-center gap-2">
+                      <div className="p-3 bg-slate-50 dark:bg-[#1b2337] rounded-xl border border-slate-200 dark:border-white/10 text-slate-500 dark:text-slate-400 italic text-[11px] flex items-center gap-2">
                         <Lock className="w-4 h-4 text-slate-400 shrink-0" />
                         <span>Kandungan sesi ini dilindungi kerahsiaan etika GBK. Hanya ringkasan status dan tindakan susulan dipaparkan kepada pihak pentadbir.</span>
                       </div>
                     )}
 
-                    <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-200 text-slate-700">
-                      <span className="font-bold text-slate-900">Pelan Tindakan Susulan: </span>
+                    <div className="p-2.5 bg-slate-50 dark:bg-[#1b2337] rounded-xl border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-200">
+                      <span className="font-bold text-slate-900 dark:text-white">Pelan Tindakan Susulan: </span>
                       {s.tindakanSusulan}
                     </div>
                   </div>
 
-                  <div className="pt-2 border-t border-slate-100 flex justify-between text-[11px] text-slate-400">
+                  <div className="pt-2 border-t border-slate-100 dark:border-white/5 flex justify-between text-[11px] text-slate-400">
                     <span>Kaunselor: <strong>{s.namaGbk}</strong></span>
                     <span>Status: {s.status.toUpperCase()}</span>
                   </div>
@@ -522,10 +522,10 @@ export const Counseling: React.FC = () => {
       {activeTab === 'saringan' && (
         <div className="space-y-4 text-xs">
           {/* Header Strip & Disclaimer */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-4 rounded-xl border border-slate-200">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white dark:bg-[#222b42] p-4 rounded-xl border border-slate-200 dark:border-white/10">
             <div>
-              <h3 className="font-extrabold text-sm text-slate-900">Saringan Kesejahteraan Minda Sihat (Skala DASS-21)</h3>
-              <p className="text-slate-500">Alat pengesanan awal tahap stres, keresahan, dan kemurungan murid</p>
+              <h3 className="font-extrabold text-sm text-slate-900 dark:text-white">Saringan Kesejahteraan Minda Sihat (Skala DASS-21)</h3>
+              <p className="text-slate-500 dark:text-slate-400">Alat pengesanan awal tahap stres, keresahan, dan kemurungan murid</p>
             </div>
             {isGBK && (
               <button
@@ -538,8 +538,8 @@ export const Counseling: React.FC = () => {
             )}
           </div>
 
-          <div className="p-3 bg-amber-50 border border-amber-300 rounded-xl text-amber-950 flex items-start gap-2">
-            <AlertCircle className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
+          <div className="p-3 bg-amber-50 dark:bg-amber-500/15 border border-amber-300 dark:border-amber-500/30 rounded-xl text-amber-950 dark:text-amber-300 flex items-start gap-2">
+            <AlertCircle className="w-4 h-4 text-amber-700 dark:text-amber-300 shrink-0 mt-0.5" />
             <p className="text-[11px] leading-relaxed">
               <strong>PERINGATAN PERUBATAN:</strong> Borang saringan berskala ini adalah instrumen pengesanan awal kesejahteraan emosi dan <strong>BUKAN ALAT DIAGNOSIS PERUBATAN/PSIKIATRI</strong>. Murid yang mendapat skor tahap teruk wajib dirujuk kepada Pegawai Perubatan Klinik Kesihatan / Hospital Kota Marudu untuk penilaian klinikal rasmi.
             </p>
@@ -549,14 +549,14 @@ export const Counseling: React.FC = () => {
             {screenings.map(sc => {
               const stu = students.find(s => s.id === sc.studentId);
               return (
-                <div key={sc.id} className="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-xs space-y-3">
+                <div key={sc.id} className="bg-white dark:bg-[#222b42] p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs space-y-3">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                     <div className="flex items-center gap-2">
-                      <span className="font-extrabold text-sm text-slate-900">{stu?.nama || 'Murid'}</span>
-                      <span className="px-2 py-0.5 rounded bg-blue-100 text-blue-900 font-bold text-xs">{stu?.kelas}</span>
+                      <span className="font-extrabold text-sm text-slate-900 dark:text-white">{stu?.nama || 'Murid'}</span>
+                      <span className="px-2 py-0.5 rounded bg-blue-100 dark:bg-sky-500/20 text-blue-900 dark:text-sky-300 font-bold text-xs">{stu?.kelas}</span>
                       <span className={`px-2.5 py-0.5 rounded-full font-black text-[10px] uppercase ${
-                        sc.tahapKeseluruhan === 'teruk' ? 'bg-red-100 text-red-800 border border-red-300' :
-                        sc.tahapKeseluruhan === 'sederhana' ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-800'
+                        sc.tahapKeseluruhan === 'teruk' ? 'bg-red-100 dark:bg-red-500/20 text-red-800 dark:text-red-300 border border-red-300 dark:border-red-500/30' :
+                        sc.tahapKeseluruhan === 'sederhana' ? 'bg-amber-100 dark:bg-amber-500/20 text-amber-800 dark:text-amber-300' : 'bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300'
                       }`}>
                         Tahap: {sc.tahapKeseluruhan}
                       </span>
@@ -565,26 +565,26 @@ export const Counseling: React.FC = () => {
                   </div>
 
                   <div className="grid grid-cols-3 gap-2 text-center">
-                    <div className="p-2 rounded-xl bg-slate-50 border border-slate-100">
-                      <span className="text-slate-500 font-semibold block text-[10px]">Skor Stres</span>
-                      <strong className="text-base text-slate-900">{sc.skorStres}</strong>
+                    <div className="p-2 rounded-xl bg-slate-50 dark:bg-[#1b2337] border border-slate-100 dark:border-white/5">
+                      <span className="text-slate-500 dark:text-slate-400 font-semibold block text-[10px]">Skor Stres</span>
+                      <strong className="text-base text-slate-900 dark:text-white">{sc.skorStres}</strong>
                     </div>
-                    <div className="p-2 rounded-xl bg-slate-50 border border-slate-100">
-                      <span className="text-slate-500 font-semibold block text-[10px]">Skor Keresahan</span>
-                      <strong className="text-base text-slate-900">{sc.skorKeresahan}</strong>
+                    <div className="p-2 rounded-xl bg-slate-50 dark:bg-[#1b2337] border border-slate-100 dark:border-white/5">
+                      <span className="text-slate-500 dark:text-slate-400 font-semibold block text-[10px]">Skor Keresahan</span>
+                      <strong className="text-base text-slate-900 dark:text-white">{sc.skorKeresahan}</strong>
                     </div>
-                    <div className="p-2 rounded-xl bg-slate-50 border border-slate-100">
-                      <span className="text-slate-500 font-semibold block text-[10px]">Skor Kemurungan</span>
-                      <strong className="text-base text-slate-900">{sc.skorKemurungan}</strong>
+                    <div className="p-2 rounded-xl bg-slate-50 dark:bg-[#1b2337] border border-slate-100 dark:border-white/5">
+                      <span className="text-slate-500 dark:text-slate-400 font-semibold block text-[10px]">Skor Kemurungan</span>
+                      <strong className="text-base text-slate-900 dark:text-white">{sc.skorKemurungan}</strong>
                     </div>
                   </div>
 
-                  <p className="text-slate-700 bg-slate-50 p-2.5 rounded-xl border border-slate-100">
+                  <p className="text-slate-700 dark:text-slate-200 bg-slate-50 dark:bg-[#1b2337] p-2.5 rounded-xl border border-slate-100 dark:border-white/5">
                     {sc.catatanGbk}
                   </p>
 
                   {sc.perluRujukanKKM && (
-                    <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-red-950 flex items-center justify-between">
+                    <div className="p-3 bg-red-50 dark:bg-red-500/15 border border-red-200 dark:border-red-500/30 rounded-xl text-red-950 dark:text-red-300 flex items-center justify-between">
                       <div>
                         <strong>Dirujuk kepada Fasiliti Kesihatan KKM:</strong>
                         <p className="text-[11px]">{sc.namaKlinikHospital || 'Hospital Kota Marudu / Klinik Kesihatan Tandek'}</p>
@@ -603,37 +603,37 @@ export const Counseling: React.FC = () => {
 
       {/* ================= TAB 3: PROGRAM MENTOR-MENTEE ================= */}
       {activeTab === 'mentor' && (
-        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-4 text-xs">
+        <div className="bg-white dark:bg-[#222b42] p-5 rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs space-y-4 text-xs">
           <div>
-            <h3 className="font-extrabold text-sm text-slate-900">Program Mentor-Mentee SMK Salaping 2026</h3>
-            <p className="text-slate-500">Pemadanan guru mentor bagi bimbingan sahsiah dan motivasi berterusan murid</p>
+            <h3 className="font-extrabold text-sm text-slate-900 dark:text-white">Program Mentor-Mentee SMK Salaping 2026</h3>
+            <p className="text-slate-500 dark:text-slate-400">Pemadanan guru mentor bagi bimbingan sahsiah dan motivasi berterusan murid</p>
           </div>
 
           <div className="space-y-3">
             {mentorMentees.map(mm => (
-              <div key={mm.id} className="p-4 rounded-xl border border-slate-200 bg-slate-50/50 space-y-2.5">
+              <div key={mm.id} className="p-4 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50/50 dark:bg-[#1b2337] space-y-2.5">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <span className="font-black text-sm text-slate-900">Mentee: {mm.namaMentee}</span>
-                    <span className="px-2 py-0.5 rounded bg-blue-100 text-blue-900 font-bold">{mm.kelasMentee}</span>
+                    <span className="font-black text-sm text-slate-900 dark:text-white">Mentee: {mm.namaMentee}</span>
+                    <span className="px-2 py-0.5 rounded bg-blue-100 dark:bg-sky-500/20 text-blue-900 dark:text-sky-300 font-bold">{mm.kelasMentee}</span>
                   </div>
-                  <span className="font-bold text-purple-900 bg-purple-100 px-2.5 py-1 rounded-lg">
+                  <span className="font-bold text-purple-900 dark:text-purple-300 bg-purple-100 dark:bg-purple-500/20 px-2.5 py-1 rounded-lg">
                     Mentor: {mm.namaMentor}
                   </span>
                 </div>
 
-                <p className="text-slate-600">
+                <p className="text-slate-600 dark:text-slate-300">
                   Fokus Bimbingan: <strong>{mm.fokusBimbingan}</strong>
                 </p>
 
                 <div className="space-y-1.5 pt-1">
-                  <span className="font-bold text-slate-800 block text-[11px]">Log Pertemuan Mentor-Mentee:</span>
+                  <span className="font-bold text-slate-800 dark:text-slate-100 block text-[11px]">Log Pertemuan Mentor-Mentee:</span>
                   {mm.logPertemuan.map(l => (
-                    <div key={l.id} className="p-2 bg-white rounded-lg border border-slate-200 flex items-start gap-2">
-                      <span className="font-mono font-bold text-slate-500 shrink-0">[{l.tarikh}]</span>
+                    <div key={l.id} className="p-2 bg-white dark:bg-[#222b42] rounded-lg border border-slate-200 dark:border-white/10 flex items-start gap-2">
+                      <span className="font-mono font-bold text-slate-500 dark:text-slate-400 shrink-0">[{l.tarikh}]</span>
                       <div>
-                        <strong className="text-slate-900">{l.topik}: </strong>
-                        <span className="text-slate-600">{l.catatan}</span>
+                        <strong className="text-slate-900 dark:text-white">{l.topik}: </strong>
+                        <span className="text-slate-600 dark:text-slate-300">{l.catatan}</span>
                       </div>
                     </div>
                   ))}
@@ -646,32 +646,32 @@ export const Counseling: React.FC = () => {
 
       {/* ================= TAB 4: KAUNSELING KERJAYA ================= */}
       {activeTab === 'kerjaya' && (
-        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-4 text-xs">
+        <div className="bg-white dark:bg-[#222b42] p-5 rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs space-y-4 text-xs">
           <div>
-            <h3 className="font-extrabold text-sm text-slate-900">Bimbingan Kerjaya & Hala Tuju Pasca-SPM</h3>
-            <p className="text-slate-500">Inventori minat kerjaya (RIASEC), laluan TVET Sabah, dan permohonan biasiswa pengajian tinggi</p>
+            <h3 className="font-extrabold text-sm text-slate-900 dark:text-white">Bimbingan Kerjaya & Hala Tuju Pasca-SPM</h3>
+            <p className="text-slate-500 dark:text-slate-400">Inventori minat kerjaya (RIASEC), laluan TVET Sabah, dan permohonan biasiswa pengajian tinggi</p>
           </div>
 
           <div className="space-y-3">
             {careerProfiles.map(cp => {
               const stu = students.find(s => s.id === cp.studentId);
               return (
-                <div key={cp.id} className="p-4 rounded-xl border border-slate-200 bg-slate-50/50 space-y-2">
+                <div key={cp.id} className="p-4 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50/50 dark:bg-[#1b2337] space-y-2">
                   <div className="flex items-center justify-between">
                     <div>
-                      <span className="font-black text-sm text-slate-900">{stu?.nama || 'Murid'}</span>
-                      <span className="text-slate-500 ml-2">({stu?.kelas})</span>
+                      <span className="font-black text-sm text-slate-900 dark:text-white">{stu?.nama || 'Murid'}</span>
+                      <span className="text-slate-500 dark:text-slate-400 ml-2">({stu?.kelas})</span>
                     </div>
-                    <span className="px-2 py-0.5 rounded font-bold bg-indigo-100 text-indigo-900">
+                    <span className="px-2 py-0.5 rounded font-bold bg-indigo-100 dark:bg-indigo-500/20 text-indigo-900 dark:text-indigo-300">
                       {cp.minatRIASEC}
                     </span>
                   </div>
 
                   <div>
-                    <span className="font-bold text-slate-800">Pilihan Institusi / Kursus Sasaran:</span>
+                    <span className="font-bold text-slate-800 dark:text-slate-100">Pilihan Institusi / Kursus Sasaran:</span>
                     <div className="flex flex-wrap gap-1.5 mt-1">
                       {cp.pilihanPascaSPM.map((opt, i) => (
-                        <span key={i} className="px-2 py-0.5 bg-white border border-slate-300 rounded-md font-semibold text-slate-800">
+                        <span key={i} className="px-2 py-0.5 bg-white dark:bg-[#222b42] border border-slate-300 dark:border-white/15 rounded-md font-semibold text-slate-800 dark:text-slate-100">
                           {opt}
                         </span>
                       ))}
@@ -680,7 +680,7 @@ export const Counseling: React.FC = () => {
 
                   <div className="pt-1">
                     {cp.rekodBimbingan.map((rb, idx) => (
-                      <div key={idx} className="p-2 bg-white rounded-lg border border-slate-200 text-slate-600 text-[11px]">
+                      <div key={idx} className="p-2 bg-white dark:bg-[#222b42] rounded-lg border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-300 text-[11px]">
                         <strong>{rb.tarikh} - {rb.halaTuju}:</strong> {rb.catatan}
                       </div>
                     ))}
@@ -697,28 +697,28 @@ export const Counseling: React.FC = () => {
         <div className="space-y-6 text-xs">
           {/* Aggregate KPI */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
-              <span className="text-slate-500 font-semibold">Jumlah Sesi Kaunseling</span>
-              <div className="text-2xl font-black text-purple-900 mt-1">{sessions.length}</div>
+            <div className="bg-white dark:bg-[#222b42] p-4 rounded-xl border border-slate-200 dark:border-white/10 shadow-xs">
+              <span className="text-slate-500 dark:text-slate-400 font-semibold">Jumlah Sesi Kaunseling</span>
+              <div className="text-2xl font-black text-purple-900 dark:text-purple-300 mt-1">{sessions.length}</div>
             </div>
 
-            <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
-              <span className="text-slate-500 font-semibold">Sesi Bulan Semasa</span>
-              <div className="text-2xl font-black text-blue-900 mt-1">
+            <div className="bg-white dark:bg-[#222b42] p-4 rounded-xl border border-slate-200 dark:border-white/10 shadow-xs">
+              <span className="text-slate-500 dark:text-slate-400 font-semibold">Sesi Bulan Semasa</span>
+              <div className="text-2xl font-black text-blue-900 dark:text-sky-300 mt-1">
                 {sessions.filter(s => s.tarikh.startsWith('2026-09') || s.tarikh.startsWith('2026-10')).length}
               </div>
             </div>
 
-            <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
-              <span className="text-slate-500 font-semibold">Kes Diselesaikan</span>
-              <div className="text-2xl font-black text-emerald-700 mt-1">
+            <div className="bg-white dark:bg-[#222b42] p-4 rounded-xl border border-slate-200 dark:border-white/10 shadow-xs">
+              <span className="text-slate-500 dark:text-slate-400 font-semibold">Kes Diselesaikan</span>
+              <div className="text-2xl font-black text-emerald-700 dark:text-emerald-300 mt-1">
                 {sessions.filter(s => s.status === 'selesai').length}
               </div>
             </div>
 
-            <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
-              <span className="text-slate-500 font-semibold">Rujukan Saringan KKM</span>
-              <div className="text-2xl font-black text-red-700 mt-1">
+            <div className="bg-white dark:bg-[#222b42] p-4 rounded-xl border border-slate-200 dark:border-white/10 shadow-xs">
+              <span className="text-slate-500 dark:text-slate-400 font-semibold">Rujukan Saringan KKM</span>
+              <div className="text-2xl font-black text-red-700 dark:text-red-300 mt-1">
                 {screenings.filter(sc => sc.perluRujukanKKM).length}
               </div>
             </div>
@@ -726,9 +726,9 @@ export const Counseling: React.FC = () => {
 
           {/* Charts (Without revealing individual identities) */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
-              <h4 className="font-extrabold text-sm text-slate-900 mb-1">Taburan Isu Kaunseling (Agregat)</h4>
-              <p className="text-slate-500 mb-4">Statistik kategori isu tanpa mendedahkan identiti peribadi murid</p>
+            <div className="bg-white dark:bg-[#222b42] p-5 rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs">
+              <h4 className="font-extrabold text-sm text-slate-900 dark:text-white mb-1">Taburan Isu Kaunseling (Agregat)</h4>
+              <p className="text-slate-500 dark:text-slate-400 mb-4">Statistik kategori isu tanpa mendedahkan identiti peribadi murid</p>
 
               <div className="h-60 w-full flex items-center justify-center">
                 <ResponsiveContainer width="100%" height="100%">
@@ -744,9 +744,9 @@ export const Counseling: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
-              <h4 className="font-extrabold text-sm text-slate-900 mb-1">Punca Rujukan Masuk</h4>
-              <p className="text-slate-500 mb-4">Saluran rujukan murid ke perkhidmatan kaunseling</p>
+            <div className="bg-white dark:bg-[#222b42] p-5 rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs">
+              <h4 className="font-extrabold text-sm text-slate-900 dark:text-white mb-1">Punca Rujukan Masuk</h4>
+              <p className="text-slate-500 dark:text-slate-400 mb-4">Saluran rujukan murid ke perkhidmatan kaunseling</p>
 
               <div className="h-60 w-full">
                 <ResponsiveContainer width="100%" height="100%">
@@ -772,9 +772,9 @@ export const Counseling: React.FC = () => {
       {/* Modal Buka Sesi Kaunseling */}
       {showAddSession && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs overflow-y-auto">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 my-8 text-xs">
-            <h3 className="text-base font-bold text-slate-900 mb-1">Buka Sesi Kaunseling & Intervensi</h3>
-            <p className="text-slate-500 mb-3">Unit Bimbingan & Kaunseling SMK Salaping</p>
+          <div className="bg-white dark:bg-[#222b42] rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-white/10 my-8 text-xs">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white mb-1">Buka Sesi Kaunseling & Intervensi</h3>
+            <p className="text-slate-500 dark:text-slate-400 mb-3">Unit Bimbingan & Kaunseling SMK Salaping</p>
 
             <form onSubmit={handleSaveSession} className="space-y-3">
               <div>
@@ -782,7 +782,7 @@ export const Counseling: React.FC = () => {
                 <select
                   value={selectedStudentId}
                   onChange={e => setSelectedStudentId(e.target.value)}
-                  className="w-full border border-slate-300 rounded-lg p-2 font-bold"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-bold"
                 >
                   {students.map(s => (
                     <option key={s.id} value={s.id}>{s.nama} ({s.kelas})</option>
@@ -796,7 +796,7 @@ export const Counseling: React.FC = () => {
                   <select
                     value={jenisSesi}
                     onChange={e => setJenisSesi(e.target.value as any)}
-                    className="w-full border border-slate-300 rounded-lg p-2"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2"
                   >
                     <option value="individu">Sesi Individu</option>
                     <option value="kelompok">Sesi Kelompok</option>
@@ -811,7 +811,7 @@ export const Counseling: React.FC = () => {
                   <select
                     value={rujukanDari}
                     onChange={e => setRujukanDari(e.target.value as any)}
-                    className="w-full border border-slate-300 rounded-lg p-2"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2"
                   >
                     <option value="guru">Guru Mata Pelajaran</option>
                     <option value="disiplin">Rujukan Disiplin</option>
@@ -830,14 +830,14 @@ export const Counseling: React.FC = () => {
                   value={isuUtama}
                   onChange={e => setIsuUtama(e.target.value)}
                   placeholder="Contoh: Bimbingan emosi / Masalah penyesuaian diri"
-                  className="w-full border border-slate-300 rounded-lg p-2"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2"
                 />
               </div>
 
               <div>
                 <label className="font-bold block mb-1 flex items-center justify-between">
                   <span>Catatan Sesi Kaunselor (Akan disulitkan dengan AES-GCM) *</span>
-                  <Lock className="w-3.5 h-3.5 text-purple-700" />
+                  <Lock className="w-3.5 h-3.5 text-purple-700 dark:text-purple-300" />
                 </label>
                 <textarea
                   rows={4}
@@ -845,7 +845,7 @@ export const Counseling: React.FC = () => {
                   value={catatanSesi}
                   onChange={e => setCatatanSesi(e.target.value)}
                   placeholder="Perincian luahan klien, dinamika sesi, dan intervensi psikososial..."
-                  className="w-full border border-slate-300 rounded-lg p-2"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2"
                 />
               </div>
 
@@ -856,15 +856,15 @@ export const Counseling: React.FC = () => {
                   value={tindakanSusulan}
                   onChange={e => setTindakanSusulan(e.target.value)}
                   placeholder="Contoh: Sesi ulangan dalam tempoh 14 hari"
-                  className="w-full border border-slate-300 rounded-lg p-2"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2"
                 />
               </div>
 
-              <div className="flex justify-end gap-2 pt-3 border-t border-slate-100">
+              <div className="flex justify-end gap-2 pt-3 border-t border-slate-100 dark:border-white/5">
                 <button
                   type="button"
                   onClick={() => setShowAddSession(false)}
-                  className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg"
+                  className="px-4 py-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#2a3552] rounded-lg"
                 >
                   Batal
                 </button>
@@ -883,9 +883,9 @@ export const Counseling: React.FC = () => {
       {/* Modal Rekod Saringan Minda Sihat */}
       {showAddScreening && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs overflow-y-auto">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 my-8 text-xs">
-            <h3 className="text-base font-bold text-slate-900 mb-1">Rekod Saringan Minda Sihat (DASS)</h3>
-            <p className="text-slate-500 mb-3">Unit Bimbingan & Kaunseling SMK Salaping</p>
+          <div className="bg-white dark:bg-[#222b42] rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-white/10 my-8 text-xs">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white mb-1">Rekod Saringan Minda Sihat (DASS)</h3>
+            <p className="text-slate-500 dark:text-slate-400 mb-3">Unit Bimbingan & Kaunseling SMK Salaping</p>
 
             <form onSubmit={handleSaveScreening} className="space-y-3">
               <div>
@@ -893,7 +893,7 @@ export const Counseling: React.FC = () => {
                 <select
                   value={screenStudentId}
                   onChange={e => setScreenStudentId(e.target.value)}
-                  className="w-full border border-slate-300 rounded-lg p-2 font-bold"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-bold"
                 >
                   {students.map(s => (
                     <option key={s.id} value={s.id}>{s.nama} ({s.kelas})</option>
@@ -903,30 +903,30 @@ export const Counseling: React.FC = () => {
 
               <div className="grid grid-cols-3 gap-2">
                 <div>
-                  <label className="font-bold text-slate-700 block mb-1">Skor Stres (0-42)</label>
+                  <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Skor Stres (0-42)</label>
                   <input
                     type="number"
                     value={skorStres}
                     onChange={e => setSkorStres(Number(e.target.value))}
-                    className="w-full border border-slate-300 rounded-lg p-2 font-black"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-black"
                   />
                 </div>
                 <div>
-                  <label className="font-bold text-slate-700 block mb-1">Keresahan (0-42)</label>
+                  <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Keresahan (0-42)</label>
                   <input
                     type="number"
                     value={skorKeresahan}
                     onChange={e => setSkorKeresahan(Number(e.target.value))}
-                    className="w-full border border-slate-300 rounded-lg p-2 font-black"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-black"
                   />
                 </div>
                 <div>
-                  <label className="font-bold text-slate-700 block mb-1">Kemurungan (0-42)</label>
+                  <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Kemurungan (0-42)</label>
                   <input
                     type="number"
                     value={skorKemurungan}
                     onChange={e => setSkorKemurungan(Number(e.target.value))}
-                    className="w-full border border-slate-300 rounded-lg p-2 font-black"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-black"
                   />
                 </div>
               </div>
@@ -938,12 +938,12 @@ export const Counseling: React.FC = () => {
                   value={screenCatatan}
                   onChange={e => setScreenCatatan(e.target.value)}
                   placeholder="Keterangan keadaan murid dan respons saringan..."
-                  className="w-full border border-slate-300 rounded-lg p-2"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2"
                 />
               </div>
 
               {(skorStres >= 20 || skorKeresahan >= 20 || skorKemurungan >= 20) && (
-                <div className="p-3 bg-red-50 border border-red-300 rounded-xl space-y-1 text-red-950">
+                <div className="p-3 bg-red-50 dark:bg-red-500/15 border border-red-300 dark:border-red-500/30 rounded-xl space-y-1 text-red-950 dark:text-red-300">
                   <strong className="block">Perhatian Rujukan KKM Diperlukan:</strong>
                   <p className="text-[11px]">Skor melepasi ambang tinggi. Masukkan fasiliti kesihatan rujukan:</p>
                   <input
@@ -951,16 +951,16 @@ export const Counseling: React.FC = () => {
                     value={screenHospital}
                     onChange={e => setScreenHospital(e.target.value)}
                     placeholder="Contoh: Hospital Kota Marudu / Klinik Kesihatan Tandek"
-                    className="w-full border border-red-300 rounded-lg p-1.5 text-xs bg-white mt-1"
+                    className="w-full border border-red-300 dark:border-red-500/30 rounded-lg p-1.5 text-xs bg-white dark:bg-[#222b42] mt-1"
                   />
                 </div>
               )}
 
-              <div className="flex justify-end gap-2 pt-3 border-t border-slate-100">
+              <div className="flex justify-end gap-2 pt-3 border-t border-slate-100 dark:border-white/5">
                 <button
                   type="button"
                   onClick={() => setShowAddScreening(false)}
-                  className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg"
+                  className="px-4 py-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#2a3552] rounded-lg"
                 >
                   Batal
                 </button>

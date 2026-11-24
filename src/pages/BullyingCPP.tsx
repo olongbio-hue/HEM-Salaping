@@ -205,16 +205,16 @@ export const BullyingCPP: React.FC = () => {
 
       {/* Alert Banner: Kes Tiada Kemas Kini Lebih 7 Hari */}
       {staleReports.length > 0 && (
-        <div className="p-4 bg-amber-50 border border-amber-300 rounded-2xl shadow-xs text-amber-950 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+        <div className="p-4 bg-amber-50 dark:bg-amber-500/15 border border-amber-300 dark:border-amber-500/30 rounded-2xl shadow-xs text-amber-950 dark:text-amber-300 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-amber-200 text-amber-900 flex items-center justify-center font-bold shrink-0">
-              <Clock className="w-5 h-5 text-amber-800" />
+            <div className="w-10 h-10 rounded-xl bg-amber-200 text-amber-900 dark:text-amber-300 flex items-center justify-center font-bold shrink-0">
+              <Clock className="w-5 h-5 text-amber-800 dark:text-amber-300" />
             </div>
             <div>
-              <span className="font-extrabold text-sm text-amber-900 block">
+              <span className="font-extrabold text-sm text-amber-900 dark:text-amber-300 block">
                 Peringatan Automatik: {staleReports.length} Kes Buli Tiada Kemas Kini &gt; 7 Hari
               </span>
-              <p className="text-amber-800 text-[11px] mt-0.5">
+              <p className="text-amber-800 dark:text-amber-300 text-[11px] mt-0.5">
                 Mengikut SOP CPP KPM, setiap kes aktif wajib disemak dan dikemas kini sekurang-kurangnya sekali seminggu.
               </p>
             </div>
@@ -228,7 +228,7 @@ export const BullyingCPP: React.FC = () => {
                   setActionStatus(sr.status);
                   setActionNotes(sr.catatanTindakan || '');
                 }}
-                className="px-2.5 py-1 bg-white border border-amber-400 rounded-lg font-bold text-amber-950 hover:bg-amber-100"
+                className="px-2.5 py-1 bg-white dark:bg-[#222b42] border border-amber-400 rounded-lg font-bold text-amber-950 dark:text-amber-300 hover:bg-amber-100"
               >
                 {sr.noAduan} (Mangsa: {sr.mangsaNama})
               </button>
@@ -238,11 +238,11 @@ export const BullyingCPP: React.FC = () => {
       )}
 
       {/* Tabs 4 Aspek KPM */}
-      <div className="flex items-center gap-2 bg-white p-1.5 rounded-2xl border border-slate-200 overflow-x-auto text-xs font-bold">
+      <div className="flex items-center gap-2 bg-white dark:bg-[#222b42] p-1.5 rounded-2xl border border-slate-200 dark:border-white/10 overflow-x-auto text-xs font-bold">
         <button
           onClick={() => setActiveTab('pelaporan')}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all whitespace-nowrap ${
-            activeTab === 'pelaporan' ? 'bg-rose-700 text-white shadow-xs' : 'text-slate-600 hover:bg-slate-100'
+            activeTab === 'pelaporan' ? 'bg-rose-700 text-white shadow-xs' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#2a3552]'
           }`}
         >
           <ShieldAlert className="w-4 h-4" />
@@ -252,7 +252,7 @@ export const BullyingCPP: React.FC = () => {
         <button
           onClick={() => setActiveTab('pemantauan')}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all whitespace-nowrap ${
-            activeTab === 'pemantauan' ? 'bg-rose-700 text-white shadow-xs' : 'text-slate-600 hover:bg-slate-100'
+            activeTab === 'pemantauan' ? 'bg-rose-700 text-white shadow-xs' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#2a3552]'
           }`}
         >
           <Clock className="w-4 h-4" />
@@ -262,7 +262,7 @@ export const BullyingCPP: React.FC = () => {
         <button
           onClick={() => setActiveTab('penyedaran')}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all whitespace-nowrap ${
-            activeTab === 'penyedaran' ? 'bg-rose-700 text-white shadow-xs' : 'text-slate-600 hover:bg-slate-100'
+            activeTab === 'penyedaran' ? 'bg-rose-700 text-white shadow-xs' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#2a3552]'
           }`}
         >
           <BookOpen className="w-4 h-4" />
@@ -272,7 +272,7 @@ export const BullyingCPP: React.FC = () => {
         <button
           onClick={() => setActiveTab('panduan')}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all whitespace-nowrap ${
-            activeTab === 'panduan' ? 'bg-rose-700 text-white shadow-xs' : 'text-slate-600 hover:bg-slate-100'
+            activeTab === 'panduan' ? 'bg-rose-700 text-white shadow-xs' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#2a3552]'
           }`}
         >
           <Building className="w-4 h-4" />
@@ -284,7 +284,7 @@ export const BullyingCPP: React.FC = () => {
       {activeTab === 'pelaporan' && (
         <div className="space-y-4">
           {/* Filter Strip */}
-          <div className="bg-white p-3.5 rounded-xl border border-slate-200 shadow-xs flex flex-wrap items-center justify-between gap-3 text-xs">
+          <div className="bg-white dark:bg-[#222b42] p-3.5 rounded-xl border border-slate-200 dark:border-white/10 shadow-xs flex flex-wrap items-center justify-between gap-3 text-xs">
             <div className="relative flex-1 max-w-sm">
               <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
               <input
@@ -292,7 +292,7 @@ export const BullyingCPP: React.FC = () => {
                 value={searchTerm}
                 onChange={e => setSearchTerm(e.target.value)}
                 placeholder="Cari nombor aduan, nama mangsa..."
-                className="w-full pl-9 pr-3 py-2 border border-slate-300 rounded-lg outline-hidden"
+                className="w-full pl-9 pr-3 py-2 border border-slate-300 dark:border-white/15 rounded-lg outline-hidden"
               />
             </div>
 
@@ -300,7 +300,7 @@ export const BullyingCPP: React.FC = () => {
               <select
                 value={filterKategori}
                 onChange={e => setFilterKategori(e.target.value)}
-                className="border border-slate-300 rounded-lg p-2 font-medium bg-slate-50"
+                className="border border-slate-300 dark:border-white/15 rounded-lg p-2 font-medium bg-slate-50 dark:bg-[#1b2337]"
               >
                 <option value="semua">Semua Kategori Buli</option>
                 <option value="fizikal">Buli Fizikal</option>
@@ -313,7 +313,7 @@ export const BullyingCPP: React.FC = () => {
               <select
                 value={filterStatus}
                 onChange={e => setFilterStatus(e.target.value)}
-                className="border border-slate-300 rounded-lg p-2 font-medium bg-slate-50"
+                className="border border-slate-300 dark:border-white/15 rounded-lg p-2 font-medium bg-slate-50 dark:bg-[#1b2337]"
               >
                 <option value="semua">Semua Status</option>
                 <option value="baru">Aduan Baharu</option>
@@ -331,14 +331,14 @@ export const BullyingCPP: React.FC = () => {
               return (
                 <div
                   key={r.id}
-                  className={`bg-white p-4 sm:p-5 rounded-2xl border shadow-xs transition-all space-y-3 ${
-                    stale ? 'border-amber-400 bg-amber-50/20' : 'border-slate-200'
+                  className={`bg-white dark:bg-[#222b42] p-4 sm:p-5 rounded-2xl border shadow-xs transition-all space-y-3 ${
+                    stale ? 'border-amber-400 bg-amber-50/20 dark:bg-amber-500/15' : 'border-slate-200 dark:border-white/10'
                   }`}
                 >
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="font-black text-sm text-slate-900">{r.noAduan}</span>
-                      <span className="px-2 py-0.5 rounded-full font-bold text-[10px] uppercase bg-rose-100 text-rose-800">
+                      <span className="font-black text-sm text-slate-900 dark:text-white">{r.noAduan}</span>
+                      <span className="px-2 py-0.5 rounded-full font-bold text-[10px] uppercase bg-rose-100 dark:bg-rose-500/20 text-rose-800 dark:text-rose-300">
                         Buli {r.kategoriBuli}
                       </span>
                       <span
@@ -347,13 +347,13 @@ export const BullyingCPP: React.FC = () => {
                             ? 'bg-red-600 text-white'
                             : r.tahapSegera === 'tinggi'
                             ? 'bg-amber-500 text-slate-950'
-                            : 'bg-slate-100 text-slate-700'
+                            : 'bg-slate-100 dark:bg-[#161e31] text-slate-700 dark:text-slate-200'
                         }`}
                       >
                         Tahap: {r.tahapSegera.replace('_', ' ')}
                       </span>
                       {r.aduanAnonim && (
-                        <span className="px-2 py-0.5 rounded font-bold text-[10px] bg-slate-100 text-slate-700">
+                        <span className="px-2 py-0.5 rounded font-bold text-[10px] bg-slate-100 dark:bg-[#161e31] text-slate-700 dark:text-slate-200">
                           Anonim (Rahsia)
                         </span>
                       )}
@@ -364,8 +364,8 @@ export const BullyingCPP: React.FC = () => {
                       <span
                         className={`px-2.5 py-0.5 rounded-full font-extrabold text-[10px] uppercase ${
                           r.status === 'selesai'
-                            ? 'bg-emerald-100 text-emerald-800'
-                            : 'bg-rose-100 text-rose-800'
+                            ? 'bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300'
+                            : 'bg-rose-100 dark:bg-rose-500/20 text-rose-800 dark:text-rose-300'
                         }`}
                       >
                         {r.status.toUpperCase()}
@@ -374,26 +374,26 @@ export const BullyingCPP: React.FC = () => {
                   </div>
 
                   <div className="text-xs space-y-1">
-                    <p className="font-bold text-slate-900">
-                      Mangsa: <span className="text-blue-900">{r.mangsaNama}</span> ({r.mangsaKelas}) • Lokasi: {r.lokasi}
+                    <p className="font-bold text-slate-900 dark:text-white">
+                      Mangsa: <span className="text-blue-900 dark:text-sky-300">{r.mangsaNama}</span> ({r.mangsaKelas}) • Lokasi: {r.lokasi}
                     </p>
-                    <p className="text-slate-600 font-medium">
-                      Pihak Terlibat / Pelaku: <span className="text-rose-800">{r.pihakTerlibat}</span>
+                    <p className="text-slate-600 dark:text-slate-300 font-medium">
+                      Pihak Terlibat / Pelaku: <span className="text-rose-800 dark:text-rose-300">{r.pihakTerlibat}</span>
                     </p>
-                    <p className="text-slate-700 mt-1 leading-relaxed bg-slate-50 p-2.5 rounded-xl border border-slate-100">
+                    <p className="text-slate-700 dark:text-slate-200 mt-1 leading-relaxed bg-slate-50 dark:bg-[#1b2337] p-2.5 rounded-xl border border-slate-100 dark:border-white/5">
                       {r.keterangan}
                     </p>
                   </div>
 
                   {r.catatanTindakan && (
-                    <div className="p-2.5 bg-rose-50/50 rounded-xl text-xs text-rose-900 border border-rose-100">
+                    <div className="p-2.5 bg-rose-50/50 dark:bg-rose-500/15 rounded-xl text-xs text-rose-900 dark:text-rose-300 border border-rose-100">
                       <strong>Tindakan Jawatankuasa:</strong> {r.catatanTindakan}
                     </div>
                   )}
 
-                  <div className="pt-2 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-xs">
+                  <div className="pt-2 border-t border-slate-100 dark:border-white/5 flex flex-wrap items-center justify-between gap-2 text-xs">
                     <span className="text-slate-400">
-                      Tarikh Kemaskini: <strong>{r.tarikhKemaskini}</strong> {stale && <span className="text-amber-700 font-bold ml-1">(Tiada kemaskini &gt; 7 hari)</span>}
+                      Tarikh Kemaskini: <strong>{r.tarikhKemaskini}</strong> {stale && <span className="text-amber-700 dark:text-amber-300 font-bold ml-1">(Tiada kemaskini &gt; 7 hari)</span>}
                     </span>
 
                     <button
@@ -425,25 +425,25 @@ export const BullyingCPP: React.FC = () => {
 
       {/* ================= TAB 2: PEMANTAUAN MANGSA ================= */}
       {activeTab === 'pemantauan' && (
-        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-4 text-xs">
+        <div className="bg-white dark:bg-[#222b42] p-5 rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs space-y-4 text-xs">
           <div>
-            <h3 className="font-extrabold text-sm text-slate-900">
+            <h3 className="font-extrabold text-sm text-slate-900 dark:text-white">
               Penjejakan Kesan Kepada Mangsa (Semakan 1 Minggu & 1 Bulan)
             </h3>
-            <p className="text-slate-500 mt-0.5">
+            <p className="text-slate-500 dark:text-slate-400 mt-0.5">
               Setiap mangsa buli dipantau secara berjadual bagi memastikan pemulihan emosi, fizikal, dan keyakinan diri di sekolah.
             </p>
           </div>
 
           <div className="space-y-3">
             {reports.map(r => (
-              <div key={r.id} className="p-4 rounded-xl border border-slate-200 bg-slate-50/50 space-y-2">
+              <div key={r.id} className="p-4 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50/50 dark:bg-[#1b2337] space-y-2">
                 <div className="flex items-center justify-between">
                   <div>
-                    <span className="font-bold text-slate-900 text-sm">{r.mangsaNama} ({r.mangsaKelas})</span>
-                    <span className="text-slate-500 ml-2">No. Aduan: {r.noAduan}</span>
+                    <span className="font-bold text-slate-900 dark:text-white text-sm">{r.mangsaNama} ({r.mangsaKelas})</span>
+                    <span className="text-slate-500 dark:text-slate-400 ml-2">No. Aduan: {r.noAduan}</span>
                   </div>
-                  <span className="px-2 py-0.5 rounded font-bold uppercase text-[10px] bg-blue-100 text-blue-800">
+                  <span className="px-2 py-0.5 rounded font-bold uppercase text-[10px] bg-blue-100 dark:bg-sky-500/20 text-blue-800 dark:text-sky-300">
                     Buli {r.kategoriBuli}
                   </span>
                 </div>
@@ -452,8 +452,8 @@ export const BullyingCPP: React.FC = () => {
                   {/* Semakan 1 Minggu */}
                   <div className={`p-3 rounded-xl border ${
                     r.semakan1Minggu?.selesai
-                      ? 'bg-emerald-50 border-emerald-200 text-emerald-900'
-                      : 'bg-amber-50 border-amber-200 text-amber-900'
+                      ? 'bg-emerald-50 dark:bg-emerald-500/15 border-emerald-200 dark:border-emerald-500/30 text-emerald-900 dark:text-emerald-300'
+                      : 'bg-amber-50 dark:bg-amber-500/15 border-amber-200 dark:border-amber-500/30 text-amber-900 dark:text-amber-300'
                   }`}>
                     <div className="flex items-center justify-between font-bold mb-1">
                       <span>Semakan 1 Minggu Pasca-Insiden</span>
@@ -464,26 +464,26 @@ export const BullyingCPP: React.FC = () => {
                         {r.semakan1Minggu.catatan} (Pegawai: {r.semakan1Minggu.pegawaiNama} • {r.semakan1Minggu.tarikh})
                       </p>
                     ) : (
-                      <p className="text-[11px] italic text-amber-800">Belum disemak. Sila jadualkan sesi bersama mangsa.</p>
+                      <p className="text-[11px] italic text-amber-800 dark:text-amber-300">Belum disemak. Sila jadualkan sesi bersama mangsa.</p>
                     )}
                   </div>
 
                   {/* Semakan 1 Bulan */}
                   <div className={`p-3 rounded-xl border ${
                     r.semakan1Bulan?.selesai
-                      ? 'bg-emerald-50 border-emerald-200 text-emerald-900'
-                      : 'bg-slate-100 border-slate-200 text-slate-700'
+                      ? 'bg-emerald-50 dark:bg-emerald-500/15 border-emerald-200 dark:border-emerald-500/30 text-emerald-900 dark:text-emerald-300'
+                      : 'bg-slate-100 dark:bg-[#161e31] border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-200'
                   }`}>
                     <div className="flex items-center justify-between font-bold mb-1">
                       <span>Semakan 1 Bulan Pasca-Insiden</span>
-                      {r.semakan1Bulan?.selesai ? <CheckCircle2 className="w-4 h-4 text-emerald-600" /> : <Clock className="w-4 h-4 text-slate-500" />}
+                      {r.semakan1Bulan?.selesai ? <CheckCircle2 className="w-4 h-4 text-emerald-600" /> : <Clock className="w-4 h-4 text-slate-500 dark:text-slate-400" />}
                     </div>
                     {r.semakan1Bulan?.selesai ? (
                       <p className="text-[11px] leading-relaxed">
                         {r.semakan1Bulan.catatan} (Pegawai: {r.semakan1Bulan.pegawaiNama} • {r.semakan1Bulan.tarikh})
                       </p>
                     ) : (
-                      <p className="text-[11px] italic text-slate-500">
+                      <p className="text-[11px] italic text-slate-500 dark:text-slate-400">
                         {r.semakan1Bulan ? r.semakan1Bulan.catatan : 'Dalam jadual giliran pemantauan.'}
                       </p>
                     )}
@@ -497,13 +497,13 @@ export const BullyingCPP: React.FC = () => {
 
       {/* ================= TAB 3: PENYEDARAN & KEMPEN ================= */}
       {activeTab === 'penyedaran' && (
-        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-4 text-xs">
-          <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div className="bg-white dark:bg-[#222b42] p-5 rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs space-y-4 text-xs">
+          <div className="flex items-center justify-between border-b border-slate-100 dark:border-white/5 pb-3">
             <div>
-              <h3 className="font-extrabold text-sm text-slate-900">
+              <h3 className="font-extrabold text-sm text-slate-900 dark:text-white">
                 Log Program Kesedaran Anti-Buli & Perlindungan Kanak-Kanak
               </h3>
-              <p className="text-slate-500">Aktiviti pencegahan awal peringkat SMK Salaping</p>
+              <p className="text-slate-500 dark:text-slate-400">Aktiviti pencegahan awal peringkat SMK Salaping</p>
             </div>
             <button
               onClick={() => setShowAddProgram(true)}
@@ -516,15 +516,15 @@ export const BullyingCPP: React.FC = () => {
 
           <div className="space-y-3">
             {programs.map(p => (
-              <div key={p.id} className="p-4 rounded-xl border border-slate-200 bg-slate-50/50 space-y-1.5">
+              <div key={p.id} className="p-4 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50/50 dark:bg-[#1b2337] space-y-1.5">
                 <div className="flex items-center justify-between">
-                  <span className="font-extrabold text-sm text-slate-900">{p.namaProgram}</span>
-                  <span className="font-mono text-slate-500 text-[11px]">{p.tarikh}</span>
+                  <span className="font-extrabold text-sm text-slate-900 dark:text-white">{p.namaProgram}</span>
+                  <span className="font-mono text-slate-500 dark:text-slate-400 text-[11px]">{p.tarikh}</span>
                 </div>
-                <p className="text-slate-600">
+                <p className="text-slate-600 dark:text-slate-300">
                   Sasaran: <strong>{p.sasaran}</strong> • Penceramah: <strong>{p.penceramah}</strong>
                 </p>
-                <p className="text-slate-700 bg-white p-2.5 rounded-lg border border-slate-200 mt-1">
+                <p className="text-slate-700 dark:text-slate-200 bg-white dark:bg-[#222b42] p-2.5 rounded-lg border border-slate-200 dark:border-white/10 mt-1">
                   {p.catatan}
                 </p>
               </div>
@@ -535,21 +535,21 @@ export const BullyingCPP: React.FC = () => {
 
       {/* ================= TAB 4: PANDUAN RUJUKAN PIHAK LUAR ================= */}
       {activeTab === 'panduan' && (
-        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-4 text-xs">
+        <div className="bg-white dark:bg-[#222b42] p-5 rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs space-y-4 text-xs">
           <div>
-            <h3 className="font-extrabold text-sm text-slate-900">
+            <h3 className="font-extrabold text-sm text-slate-900 dark:text-white">
               Panduan Pantas Rujukan Agensi Luar (SOP KPM & Undang-Undang)
             </h3>
-            <p className="text-slate-500 mt-0.5">
+            <p className="text-slate-500 dark:text-slate-400 mt-0.5">
               Ketetapan bila kes mesti dirujuk kepada Polis Diraja Malaysia, JKM atau Pejabat Pendidikan Daerah.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Rujukan Polis */}
-            <div className="p-4 rounded-2xl bg-blue-50 border border-blue-200 space-y-2 text-blue-950">
-              <div className="flex items-center gap-2 font-black text-sm text-blue-900">
-                <Building className="w-4 h-4 text-blue-700" />
+            <div className="p-4 rounded-2xl bg-blue-50 dark:bg-sky-500/15 border border-blue-200 dark:border-sky-500/30 space-y-2 text-blue-950 dark:text-sky-300">
+              <div className="flex items-center gap-2 font-black text-sm text-blue-900 dark:text-sky-300">
+                <Building className="w-4 h-4 text-blue-700 dark:text-sky-300" />
                 <span>1. Polis Diraja Malaysia (PDRM)</span>
               </div>
               <p className="text-[11px] leading-relaxed">
@@ -561,9 +561,9 @@ export const BullyingCPP: React.FC = () => {
             </div>
 
             {/* Rujukan JKM */}
-            <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 space-y-2 text-amber-950">
-              <div className="flex items-center gap-2 font-black text-sm text-amber-900">
-                <Info className="w-4 h-4 text-amber-700" />
+            <div className="p-4 rounded-2xl bg-amber-50 dark:bg-amber-500/15 border border-amber-200 dark:border-amber-500/30 space-y-2 text-amber-950 dark:text-amber-300">
+              <div className="flex items-center gap-2 font-black text-sm text-amber-900 dark:text-amber-300">
+                <Info className="w-4 h-4 text-amber-700 dark:text-amber-300" />
                 <span>2. Jabatan Kebajikan Masyarakat (JKM)</span>
               </div>
               <p className="text-[11px] leading-relaxed">
@@ -575,9 +575,9 @@ export const BullyingCPP: React.FC = () => {
             </div>
 
             {/* Rujukan PPD */}
-            <div className="p-4 rounded-2xl bg-rose-50 border border-rose-200 space-y-2 text-rose-950">
-              <div className="flex items-center gap-2 font-black text-sm text-rose-900">
-                <AlertTriangle className="w-4 h-4 text-rose-700" />
+            <div className="p-4 rounded-2xl bg-rose-50 dark:bg-rose-500/15 border border-rose-200 dark:border-rose-500/30 space-y-2 text-rose-950 dark:text-rose-300">
+              <div className="flex items-center gap-2 font-black text-sm text-rose-900 dark:text-rose-300">
+                <AlertTriangle className="w-4 h-4 text-rose-700 dark:text-rose-300" />
                 <span>3. Pejabat Pendidikan Daerah (PPD)</span>
               </div>
               <p className="text-[11px] leading-relaxed">
@@ -594,11 +594,11 @@ export const BullyingCPP: React.FC = () => {
       {/* Modal Tindakan / Siasatan Aduan */}
       {selectedReport && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs overflow-y-auto">
-          <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 my-8 text-xs">
-            <h3 className="text-base font-bold text-slate-900 mb-1">
+          <div className="bg-white dark:bg-[#222b42] rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 dark:border-white/10 my-8 text-xs">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white mb-1">
               Tindakan & Siasatan Aduan: {selectedReport.noAduan}
             </h3>
-            <p className="text-slate-500 mb-3">
+            <p className="text-slate-500 dark:text-slate-400 mb-3">
               Mangsa: <strong>{selectedReport.mangsaNama}</strong> ({selectedReport.mangsaKelas}) • Pelaku: {selectedReport.pihakTerlibat}
             </p>
 
@@ -608,7 +608,7 @@ export const BullyingCPP: React.FC = () => {
                 <select
                   value={actionStatus}
                   onChange={e => setActionStatus(e.target.value as any)}
-                  className="w-full border border-slate-300 rounded-lg p-2 font-bold"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2 font-bold"
                 >
                   <option value="baru">Aduan Baharu</option>
                   <option value="siasatan">Dalam Siasatan (Temu Duga Saksi/Pelaku)</option>
@@ -625,39 +625,39 @@ export const BullyingCPP: React.FC = () => {
                   value={actionNotes}
                   onChange={e => setActionNotes(e.target.value)}
                   placeholder="Keterangan tindakan tatatertib, perjumpaan penjaga, atau khidmat kaunseling..."
-                  className="w-full border border-slate-300 rounded-lg p-2"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2"
                 />
               </div>
 
-              <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
-                <span className="font-bold text-slate-800 block">Semakan Pasca-Insiden (Kebajikan Mangsa):</span>
+              <div className="p-3 bg-slate-50 dark:bg-[#1b2337] border border-slate-200 dark:border-white/10 rounded-xl space-y-2">
+                <span className="font-bold text-slate-800 dark:text-slate-100 block">Semakan Pasca-Insiden (Kebajikan Mangsa):</span>
                 <div>
-                  <label className="text-[11px] font-semibold text-slate-600 block mb-0.5">Semakan 1 Minggu</label>
+                  <label className="text-[11px] font-semibold text-slate-600 dark:text-slate-300 block mb-0.5">Semakan 1 Minggu</label>
                   <input
                     type="text"
                     value={semakan1MingguNote}
                     onChange={e => setSemakan1MingguNote(e.target.value)}
                     placeholder="Contoh: Mangsa tenang dan hadir ke sekolah tanpa ancaman."
-                    className="w-full border border-slate-300 rounded-lg p-1.5 text-xs bg-white"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-1.5 text-xs bg-white dark:bg-[#222b42]"
                   />
                 </div>
                 <div>
-                  <label className="text-[11px] font-semibold text-slate-600 block mb-0.5">Semakan 1 Bulan</label>
+                  <label className="text-[11px] font-semibold text-slate-600 dark:text-slate-300 block mb-0.5">Semakan 1 Bulan</label>
                   <input
                     type="text"
                     value={semakan1BulanNote}
                     onChange={e => setSemakan1BulanNote(e.target.value)}
                     placeholder="Contoh: Pemantauan UBK mendapati mangsa ceria dan pulih sepenuhnya."
-                    className="w-full border border-slate-300 rounded-lg p-1.5 text-xs bg-white"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-1.5 text-xs bg-white dark:bg-[#222b42]"
                   />
                 </div>
               </div>
             </div>
 
-            <div className="flex justify-end gap-2 mt-5 pt-3 border-t border-slate-100">
+            <div className="flex justify-end gap-2 mt-5 pt-3 border-t border-slate-100 dark:border-white/5">
               <button
                 onClick={() => setSelectedReport(null)}
-                className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg"
+                className="px-4 py-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#2a3552] rounded-lg"
               >
                 Batal
               </button>
@@ -675,9 +675,9 @@ export const BullyingCPP: React.FC = () => {
       {/* Modal Tambah Program Kesedaran */}
       {showAddProgram && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 text-xs">
-            <h3 className="text-base font-bold text-slate-900 mb-1">Tambah Program Kesedaran Anti-Buli</h3>
-            <p className="text-slate-500 mb-4">Aktiviti Pencegahan Murid SMK Salaping</p>
+          <div className="bg-white dark:bg-[#222b42] rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-white/10 text-xs">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white mb-1">Tambah Program Kesedaran Anti-Buli</h3>
+            <p className="text-slate-500 dark:text-slate-400 mb-4">Aktiviti Pencegahan Murid SMK Salaping</p>
 
             <form onSubmit={handleSaveProgram} className="space-y-3">
               <div>
@@ -688,7 +688,7 @@ export const BullyingCPP: React.FC = () => {
                   value={progNama}
                   onChange={e => setProgNama(e.target.value)}
                   placeholder="Contoh: Ceramah Hentikan Buli & Hargai Diri"
-                  className="w-full border border-slate-300 rounded-lg p-2"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2"
                 />
               </div>
 
@@ -698,7 +698,7 @@ export const BullyingCPP: React.FC = () => {
                   type="date"
                   value={progTarikh}
                   onChange={e => setProgTarikh(e.target.value)}
-                  className="w-full border border-slate-300 rounded-lg p-2"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2"
                 />
               </div>
 
@@ -708,7 +708,7 @@ export const BullyingCPP: React.FC = () => {
                   type="text"
                   value={progSasaran}
                   onChange={e => setProgSasaran(e.target.value)}
-                  className="w-full border border-slate-300 rounded-lg p-2"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2"
                 />
               </div>
 
@@ -718,7 +718,7 @@ export const BullyingCPP: React.FC = () => {
                   type="text"
                   value={progPenceramah}
                   onChange={e => setProgPenceramah(e.target.value)}
-                  className="w-full border border-slate-300 rounded-lg p-2"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2"
                 />
               </div>
 
@@ -729,15 +729,15 @@ export const BullyingCPP: React.FC = () => {
                   value={progCatatan}
                   onChange={e => setProgCatatan(e.target.value)}
                   placeholder="Catatan pelaksanaan..."
-                  className="w-full border border-slate-300 rounded-lg p-2"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-lg p-2"
                 />
               </div>
 
-              <div className="flex justify-end gap-2 pt-4 border-t border-slate-100">
+              <div className="flex justify-end gap-2 pt-4 border-t border-slate-100 dark:border-white/5">
                 <button
                   type="button"
                   onClick={() => setShowAddProgram(false)}
-                  className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg"
+                  className="px-4 py-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#2a3552] rounded-lg"
                 >
                   Batal
                 </button>

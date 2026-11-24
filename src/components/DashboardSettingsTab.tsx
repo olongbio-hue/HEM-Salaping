@@ -89,77 +89,77 @@ export const DashboardSettingsTab: React.FC<DashboardSettingsTabProps> = ({
       label: 'Jumlah Enrolmen Murid',
       desc: 'Pecahan bilangan murid lelaki & perempuan semasa',
       icon: Users,
-      color: 'text-blue-700 bg-blue-50 border-blue-200'
+      color: 'text-blue-700 dark:text-sky-300 bg-blue-50 dark:bg-sky-500/15 border-blue-200 dark:border-sky-500/30'
     },
     {
       key: 'kehadiran' as const,
       label: 'Peratus Kehadiran Hari Ini',
       desc: 'Peratusan murid hadir berbanding sasaran sekolah',
       icon: TrendingUp,
-      color: 'text-emerald-700 bg-emerald-50 border-emerald-200'
+      color: 'text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-500/15 border-emerald-200 dark:border-emerald-500/30'
     },
     {
       key: 'ketidakhadiran' as const,
       label: 'Murid Tidak Hadir Hari Ini',
       desc: 'Bilangan murid yang belum atau tidak hadir',
       icon: UserX,
-      color: 'text-rose-700 bg-rose-50 border-rose-200'
+      color: 'text-rose-700 dark:text-rose-300 bg-rose-50 dark:bg-rose-500/15 border-rose-200 dark:border-rose-500/30'
     },
     {
       key: 'risikoCicir' as const,
       label: 'Murid Berisiko Cicir (SOP 1:3:7)',
       desc: 'Murid yang melepasi ambang amaran ketidakhadiran',
       icon: AlertTriangle,
-      color: 'text-amber-700 bg-amber-50 border-amber-300'
+      color: 'text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-500/15 border-amber-300 dark:border-amber-500/30'
     },
     {
       key: 'disiplin' as const,
       label: 'Kes Disiplin Terbuka',
       desc: 'Kes sahsiah yang masih dalam siasatan / tindakan',
       icon: ShieldAlert,
-      color: 'text-red-700 bg-red-50 border-red-200'
+      color: 'text-red-700 dark:text-red-300 bg-red-50 dark:bg-red-500/15 border-red-200 dark:border-red-500/30'
     },
     {
       key: 'kaunseling' as const,
       label: 'Sesi Kaunseling Aktif',
       desc: 'Bimbingan berfokus murid oleh Guru Kaunseling (GBK)',
       icon: HeartHandshake,
-      color: 'text-purple-700 bg-purple-50 border-purple-200'
+      color: 'text-purple-700 dark:text-purple-300 bg-purple-50 dark:bg-purple-500/15 border-purple-200 dark:border-purple-500/30'
     },
     {
       key: 'bantuan' as const,
       label: 'Penerima Skim Bantuan Kebajikan',
       desc: 'Pemantauan kuota dan agihan biasiswa murid',
       icon: Award,
-      color: 'text-teal-700 bg-teal-50 border-teal-200'
+      color: 'text-teal-700 dark:text-teal-300 bg-teal-50 dark:bg-teal-500/15 border-teal-200 dark:border-teal-500/30'
     },
     {
       key: 'asrama' as const,
       label: 'Penghuni Asrama Desa',
       desc: 'Kapasiti katil dan penghuni Blok Putera/Puteri',
       icon: Home,
-      color: 'text-indigo-700 bg-indigo-50 border-indigo-200'
+      color: 'text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-500/15 border-indigo-200 dark:border-indigo-500/30'
     }
   ];
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Header Pengurusan Dashboard */}
-      <div className="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="bg-white dark:bg-[#222b42] p-5 sm:p-6 rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-900 font-extrabold text-[11px] flex items-center gap-1.5">
-              <LayoutDashboard className="w-3.5 h-3.5 text-blue-700" />
+            <span className="px-2.5 py-0.5 rounded-full bg-blue-100 dark:bg-sky-500/20 text-blue-900 dark:text-sky-300 font-extrabold text-[11px] flex items-center gap-1.5">
+              <LayoutDashboard className="w-3.5 h-3.5 text-blue-700 dark:text-sky-300" />
               <span>Pengurusan Penuh Dashboard HEM</span>
             </span>
-            <span className="text-xs text-slate-500 font-medium hidden sm:inline">
+            <span className="text-xs text-slate-500 dark:text-slate-400 font-medium hidden sm:inline">
               Segerak Masa Nyata
             </span>
           </div>
-          <h2 className="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight">
+          <h2 className="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight">
             Konfigurasi Kandungan & Paparan Dashboard Utama
           </h2>
-          <p className="text-xs text-slate-500 max-w-2xl">
+          <p className="text-xs text-slate-500 dark:text-slate-400 max-w-2xl">
             Urus semua butiran banner, teks ucapan, hebahan pentadbiran, keterlihatan kad KPI, had senarai, dan carta statistik dengan mudah tanpa perlu ubah kod sistem.
           </p>
         </div>
@@ -168,20 +168,20 @@ export const DashboardSettingsTab: React.FC<DashboardSettingsTabProps> = ({
           <button
             type="button"
             onClick={handleResetToDefaults}
-            className="px-3.5 py-2.5 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-100 text-xs font-bold transition-colors flex items-center gap-1.5"
+            className="px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-white/15 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#2a3552] text-xs font-bold transition-colors flex items-center gap-1.5"
             title="Kembalikan semua nilai ke lalai"
           >
-            <RotateCcw className="w-4 h-4 text-slate-500" />
+            <RotateCcw className="w-4 h-4 text-slate-500 dark:text-slate-400" />
             <span>Set Semula Lalai</span>
           </button>
 
           <button
             type="button"
             onClick={() => navigate('/')}
-            className="px-3.5 py-2.5 rounded-xl border border-blue-200 text-blue-800 bg-blue-50 hover:bg-blue-100 text-xs font-bold transition-colors flex items-center gap-1.5"
+            className="px-3.5 py-2.5 rounded-xl border border-blue-200 dark:border-sky-500/30 text-blue-800 dark:text-sky-300 bg-blue-50 dark:bg-sky-500/15 hover:bg-blue-100 text-xs font-bold transition-colors flex items-center gap-1.5"
             title="Buka paparan dashboard"
           >
-            <Eye className="w-4 h-4 text-blue-700" />
+            <Eye className="w-4 h-4 text-blue-700 dark:text-sky-300" />
             <span>Pratonton Dashboard</span>
           </button>
 
@@ -198,7 +198,7 @@ export const DashboardSettingsTab: React.FC<DashboardSettingsTabProps> = ({
 
       {/* Maklum Balas Berjaya Disimpan */}
       {saveSuccess && (
-        <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-900 flex items-center gap-3 text-xs animate-in fade-in">
+        <div className="p-4 rounded-xl bg-emerald-50 dark:bg-emerald-500/15 border border-emerald-300 dark:border-emerald-500/30 text-emerald-900 dark:text-emerald-300 flex items-center gap-3 text-xs animate-in fade-in">
           <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
           <div className="font-semibold">
             Semua konfigurasi dashboard berjaya dikemaskini dan disimpan ke storan sistem. Perubahan kini aktif di Dashboard Utama!
@@ -207,14 +207,14 @@ export const DashboardSettingsTab: React.FC<DashboardSettingsTabProps> = ({
       )}
 
       {/* Navigasi Sub-Tab Tetapan Dashboard */}
-      <div className="flex items-center gap-2 bg-slate-100/80 p-1.5 rounded-2xl overflow-x-auto text-xs font-bold border border-slate-200">
+      <div className="flex items-center gap-2 bg-slate-100/80 dark:bg-[#161e31] p-1.5 rounded-2xl overflow-x-auto text-xs font-bold border border-slate-200 dark:border-white/10">
         <button
           type="button"
           onClick={() => setActiveSection('banner')}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all whitespace-nowrap ${
             activeSection === 'banner'
-              ? 'bg-white text-blue-900 shadow-xs border border-slate-200'
-              : 'text-slate-600 hover:text-slate-900'
+              ? 'bg-white dark:bg-[#222b42] text-blue-900 dark:text-sky-300 shadow-xs border border-slate-200 dark:border-white/10'
+              : 'text-slate-600 dark:text-slate-300 hover:text-slate-900'
           }`}
         >
           <Sparkles className="w-4 h-4 text-amber-500" />
@@ -226,8 +226,8 @@ export const DashboardSettingsTab: React.FC<DashboardSettingsTabProps> = ({
           onClick={() => setActiveSection('pengumuman')}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all whitespace-nowrap ${
             activeSection === 'pengumuman'
-              ? 'bg-white text-blue-900 shadow-xs border border-slate-200'
-              : 'text-slate-600 hover:text-slate-900'
+              ? 'bg-white dark:bg-[#222b42] text-blue-900 dark:text-sky-300 shadow-xs border border-slate-200 dark:border-white/10'
+              : 'text-slate-600 dark:text-slate-300 hover:text-slate-900'
           }`}
         >
           <Megaphone className="w-4 h-4 text-blue-600" />
@@ -242,8 +242,8 @@ export const DashboardSettingsTab: React.FC<DashboardSettingsTabProps> = ({
           onClick={() => setActiveSection('kpi')}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all whitespace-nowrap ${
             activeSection === 'kpi'
-              ? 'bg-white text-blue-900 shadow-xs border border-slate-200'
-              : 'text-slate-600 hover:text-slate-900'
+              ? 'bg-white dark:bg-[#222b42] text-blue-900 dark:text-sky-300 shadow-xs border border-slate-200 dark:border-white/10'
+              : 'text-slate-600 dark:text-slate-300 hover:text-slate-900'
           }`}
         >
           <Sliders className="w-4 h-4 text-indigo-600" />
@@ -255,8 +255,8 @@ export const DashboardSettingsTab: React.FC<DashboardSettingsTabProps> = ({
           onClick={() => setActiveSection('panel')}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all whitespace-nowrap ${
             activeSection === 'panel'
-              ? 'bg-white text-blue-900 shadow-xs border border-slate-200'
-              : 'text-slate-600 hover:text-slate-900'
+              ? 'bg-white dark:bg-[#222b42] text-blue-900 dark:text-sky-300 shadow-xs border border-slate-200 dark:border-white/10'
+              : 'text-slate-600 dark:text-slate-300 hover:text-slate-900'
           }`}
         >
           <Layers className="w-4 h-4 text-emerald-600" />
@@ -268,8 +268,8 @@ export const DashboardSettingsTab: React.FC<DashboardSettingsTabProps> = ({
           onClick={() => setActiveSection('carta')}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all whitespace-nowrap ${
             activeSection === 'carta'
-              ? 'bg-white text-blue-900 shadow-xs border border-slate-200'
-              : 'text-slate-600 hover:text-slate-900'
+              ? 'bg-white dark:bg-[#222b42] text-blue-900 dark:text-sky-300 shadow-xs border border-slate-200 dark:border-white/10'
+              : 'text-slate-600 dark:text-slate-300 hover:text-slate-900'
           }`}
         >
           <BarChart3 className="w-4 h-4 text-cyan-600" />
@@ -279,20 +279,20 @@ export const DashboardSettingsTab: React.FC<DashboardSettingsTabProps> = ({
 
       {/* ================= SEKSYEN 1: BANNER & IDENTITI UTAMA ================= */}
       {activeSection === 'banner' && (
-        <div className="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-xs space-y-6 text-xs">
-          <div className="border-b border-slate-100 pb-3">
-            <h3 className="text-sm font-extrabold text-slate-900 flex items-center gap-2">
+        <div className="bg-white dark:bg-[#222b42] p-5 sm:p-6 rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs space-y-6 text-xs">
+          <div className="border-b border-slate-100 dark:border-white/5 pb-3">
+            <h3 className="text-sm font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-amber-500" />
               <span>Pengurusan Banner Header Dashboard Utama</span>
             </h3>
-            <p className="text-slate-500 text-[11px] mt-0.5">
+            <p className="text-slate-500 dark:text-slate-400 text-[11px] mt-0.5">
               Sesuaikan ucapan alu-aluan, ilustrasi visual murid, teks aspirasi sekolah, dan lencana banner.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="font-bold text-slate-700 block mb-1">
+              <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">
                 Ucapan Awalan Pengguna
               </label>
               <input
@@ -300,7 +300,7 @@ export const DashboardSettingsTab: React.FC<DashboardSettingsTabProps> = ({
                 value={form.ucapanAwalan}
                 onChange={e => setForm({ ...form, ucapanAwalan: e.target.value })}
                 placeholder="cth: Selamat Bertugas, Selamat Datang"
-                className="w-full border border-slate-300 rounded-xl p-2.5 font-medium text-slate-800 focus:ring-2 focus:ring-blue-600 focus:outline-hidden"
+                className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2.5 font-medium text-slate-800 dark:text-slate-100 focus:ring-2 focus:ring-blue-600 focus:outline-hidden"
               />
               <span className="text-[10px] text-slate-400 mt-1 block">
                 Dipaparkan di hadapan nama pengguna yang sedang log masuk.
@@ -308,7 +308,7 @@ export const DashboardSettingsTab: React.FC<DashboardSettingsTabProps> = ({
             </div>
 
             <div>
-              <label className="font-bold text-slate-700 block mb-1">
+              <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">
                 Subteks Keterangan Banner
               </label>
               <input
@@ -316,7 +316,7 @@ export const DashboardSettingsTab: React.FC<DashboardSettingsTabProps> = ({
                 value={form.subteksBanner}
                 onChange={e => setForm({ ...form, subteksBanner: e.target.value })}
                 placeholder="cth: Portal Pengurusan Hal Ehwal Murid (HEM) Bersepadu"
-                className="w-full border border-slate-300 rounded-xl p-2.5 font-medium text-slate-800 focus:ring-2 focus:ring-blue-600 focus:outline-hidden"
+                className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2.5 font-medium text-slate-800 dark:text-slate-100 focus:ring-2 focus:ring-blue-600 focus:outline-hidden"
               />
               <span className="text-[10px] text-slate-400 mt-1 block">
                 Keterangan atau slogan ringkas di bawah tajuk utama ucapan.
@@ -324,9 +324,9 @@ export const DashboardSettingsTab: React.FC<DashboardSettingsTabProps> = ({
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2 border-t border-slate-100">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2 border-t border-slate-100 dark:border-white/5">
             <div>
-              <label className="font-bold text-slate-700 block mb-1">
+              <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">
                 Teks Lencana Ilustrasi Atas
               </label>
               <input
@@ -334,12 +334,12 @@ export const DashboardSettingsTab: React.FC<DashboardSettingsTabProps> = ({
                 value={form.lencanaBannerText}
                 onChange={e => setForm({ ...form, lencanaBannerText: e.target.value })}
                 placeholder="cth: Kemenjadian Murid Salaping"
-                className="w-full border border-slate-300 rounded-xl p-2.5 font-medium text-slate-800"
+                className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2.5 font-medium text-slate-800 dark:text-slate-100"
               />
             </div>
 
             <div>
-              <label className="font-bold text-slate-700 block mb-1">
+              <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">
                 Tajuk Aspirasi Kapsul Ilustrasi
               </label>
               <input
@@ -347,12 +347,12 @@ export const DashboardSettingsTab: React.FC<DashboardSettingsTabProps> = ({
                 value={form.tajukAspirasi}
                 onChange={e => setForm({ ...form, tajukAspirasi: e.target.value })}
                 placeholder="cth: Aspirasi Murid Salaping • Modal Insan"
-                className="w-full border border-slate-300 rounded-xl p-2.5 font-medium text-slate-800"
+                className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2.5 font-medium text-slate-800 dark:text-slate-100"
               />
             </div>
 
             <div>
-              <label className="font-bold text-slate-700 block mb-1">
+              <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">
                 Subtajuk Aspirasi Ilustrasi
               </label>
               <input
@@ -360,19 +360,19 @@ export const DashboardSettingsTab: React.FC<DashboardSettingsTabProps> = ({
                 value={form.subtajukAspirasi}
                 onChange={e => setForm({ ...form, subtajukAspirasi: e.target.value })}
                 placeholder="cth: Kepimpinan • Kejayaan Akademik • Keunggulan Sahsiah"
-                className="w-full border border-slate-300 rounded-xl p-2.5 font-medium text-slate-800"
+                className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2.5 font-medium text-slate-800 dark:text-slate-100"
               />
             </div>
           </div>
 
           {/* Konfigurasi Gambar Banner & Pilihan Pantas */}
-          <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
+          <div className="p-4 rounded-xl bg-slate-50 dark:bg-[#1b2337] border border-slate-200 dark:border-white/10 space-y-3">
             <div className="flex items-center justify-between">
-              <label className="font-bold text-slate-800 flex items-center gap-2">
-                <ImageIcon className="w-4 h-4 text-blue-700" />
+              <label className="font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
+                <ImageIcon className="w-4 h-4 text-blue-700 dark:text-sky-300" />
                 <span>Pautan / Fail Gambar Ilustrasi Banner</span>
               </label>
-              <span className="text-[10px] text-slate-500 font-semibold">
+              <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">
                 Boleh guna aset tempatan atau URL gambar luar
               </span>
             </div>
@@ -383,12 +383,12 @@ export const DashboardSettingsTab: React.FC<DashboardSettingsTabProps> = ({
                 value={form.gambarBannerUrl}
                 onChange={e => setForm({ ...form, gambarBannerUrl: e.target.value })}
                 placeholder="URL atau laluan fail gambar..."
-                className="flex-1 border border-slate-300 rounded-xl p-2 font-mono text-xs text-slate-700 bg-white"
+                className="flex-1 border border-slate-300 dark:border-white/15 rounded-xl p-2 font-mono text-xs text-slate-700 dark:text-slate-200 bg-white dark:bg-[#222b42]"
               />
               <button
                 type="button"
                 onClick={() => setForm({ ...form, gambarBannerUrl: '/banner.jpg' })}
-                className="px-3 py-2 bg-slate-200 hover:bg-slate-300 text-slate-800 rounded-xl font-bold text-[11px] whitespace-nowrap transition-colors"
+                className="px-3 py-2 bg-slate-200 dark:bg-[#2a3552] hover:bg-slate-300 text-slate-800 dark:text-slate-100 rounded-xl font-bold text-[11px] whitespace-nowrap transition-colors"
               >
                 Guna Gambar Pelajar Salaping (Asal)
               </button>
@@ -396,7 +396,7 @@ export const DashboardSettingsTab: React.FC<DashboardSettingsTabProps> = ({
 
             {form.gambarBannerUrl && (
               <div className="flex items-center gap-3 pt-2">
-                <div className="w-24 h-16 rounded-lg overflow-hidden border border-slate-300 bg-slate-900 shrink-0">
+                <div className="w-24 h-16 rounded-lg overflow-hidden border border-slate-300 dark:border-white/15 bg-slate-900 shrink-0">
                   <img
                     src={form.gambarBannerUrl.startsWith('/src/assets/images/') ? '/banner.jpg' : form.gambarBannerUrl}
                     alt="Pratonton Banner"
@@ -409,8 +409,8 @@ export const DashboardSettingsTab: React.FC<DashboardSettingsTabProps> = ({
                     }}
                   />
                 </div>
-                <div className="text-[11px] text-slate-600">
-                  <span className="font-bold text-slate-800 block">Pratonton Gambar Semasa</span>
+                <div className="text-[11px] text-slate-600 dark:text-slate-300">
+                  <span className="font-bold text-slate-800 dark:text-slate-100 block">Pratonton Gambar Semasa</span>
                   Gambar dipaparkan di sebelah kanan banner dashboard utama dengan kesan bingkai kemas dan bayangan moden.
                 </div>
               </div>
@@ -418,60 +418,60 @@ export const DashboardSettingsTab: React.FC<DashboardSettingsTabProps> = ({
           </div>
 
           {/* Suis Togol Elemen Banner */}
-          <div className="pt-2 border-t border-slate-100">
-            <h4 className="font-bold text-slate-800 mb-3 text-xs">
+          <div className="pt-2 border-t border-slate-100 dark:border-white/5">
+            <h4 className="font-bold text-slate-800 dark:text-slate-100 mb-3 text-xs">
               Elemen Keterlihatan pada Banner:
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
-              <label className="flex items-center gap-3 p-3 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-slate-100/50 cursor-pointer transition-colors">
+              <label className="flex items-center gap-3 p-3 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50/50 dark:bg-[#1b2337] hover:bg-slate-100/50 dark:hover:bg-[#2a3552] cursor-pointer transition-colors">
                 <input
                   type="checkbox"
                   checked={form.tunjukLogo}
                   onChange={e => setForm({ ...form, tunjukLogo: e.target.checked })}
-                  className="w-4 h-4 text-blue-600 rounded-sm border-slate-300 focus:ring-blue-500"
+                  className="w-4 h-4 text-blue-600 rounded-sm border-slate-300 dark:border-white/15 focus:ring-blue-500"
                 />
                 <div>
-                  <span className="font-bold text-slate-800 block">Papar Logo Sekolah</span>
-                  <span className="text-[10px] text-slate-500">Logo SMK Salaping bersebelahan teks ucapan</span>
+                  <span className="font-bold text-slate-800 dark:text-slate-100 block">Papar Logo Sekolah</span>
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400">Logo SMK Salaping bersebelahan teks ucapan</span>
                 </div>
               </label>
 
-              <label className="flex items-center gap-3 p-3 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-slate-100/50 cursor-pointer transition-colors">
+              <label className="flex items-center gap-3 p-3 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50/50 dark:bg-[#1b2337] hover:bg-slate-100/50 dark:hover:bg-[#2a3552] cursor-pointer transition-colors">
                 <input
                   type="checkbox"
                   checked={form.tunjukIlustrasiBanner}
                   onChange={e => setForm({ ...form, tunjukIlustrasiBanner: e.target.checked })}
-                  className="w-4 h-4 text-blue-600 rounded-sm border-slate-300 focus:ring-blue-500"
+                  className="w-4 h-4 text-blue-600 rounded-sm border-slate-300 dark:border-white/15 focus:ring-blue-500"
                 />
                 <div>
-                  <span className="font-bold text-slate-800 block">Papar Ilustrasi Kanan</span>
-                  <span className="text-[10px] text-slate-500">Gambar murid & aspirasi di lajur kanan banner</span>
+                  <span className="font-bold text-slate-800 dark:text-slate-100 block">Papar Ilustrasi Kanan</span>
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400">Gambar murid & aspirasi di lajur kanan banner</span>
                 </div>
               </label>
 
-              <label className="flex items-center gap-3 p-3 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-slate-100/50 cursor-pointer transition-colors">
+              <label className="flex items-center gap-3 p-3 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50/50 dark:bg-[#1b2337] hover:bg-slate-100/50 dark:hover:bg-[#2a3552] cursor-pointer transition-colors">
                 <input
                   type="checkbox"
                   checked={form.tunjukMetrikModalInsan}
                   onChange={e => setForm({ ...form, tunjukMetrikModalInsan: e.target.checked })}
-                  className="w-4 h-4 text-blue-600 rounded-sm border-slate-300 focus:ring-blue-500"
+                  className="w-4 h-4 text-blue-600 rounded-sm border-slate-300 dark:border-white/15 focus:ring-blue-500"
                 />
                 <div>
-                  <span className="font-bold text-slate-800 block">Metrik Modal Insan</span>
-                  <span className="text-[10px] text-slate-500">3 kad pantas (Sahsiah, Kehadiran, Kebajikan)</span>
+                  <span className="font-bold text-slate-800 dark:text-slate-100 block">Metrik Modal Insan</span>
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400">3 kad pantas (Sahsiah, Kehadiran, Kebajikan)</span>
                 </div>
               </label>
 
-              <label className="flex items-center gap-3 p-3 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-slate-100/50 cursor-pointer transition-colors">
+              <label className="flex items-center gap-3 p-3 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50/50 dark:bg-[#1b2337] hover:bg-slate-100/50 dark:hover:bg-[#2a3552] cursor-pointer transition-colors">
                 <input
                   type="checkbox"
                   checked={form.tunjukPautanPantas}
                   onChange={e => setForm({ ...form, tunjukPautanPantas: e.target.checked })}
-                  className="w-4 h-4 text-blue-600 rounded-sm border-slate-300 focus:ring-blue-500"
+                  className="w-4 h-4 text-blue-600 rounded-sm border-slate-300 dark:border-white/15 focus:ring-blue-500"
                 />
                 <div>
-                  <span className="font-bold text-slate-800 block">Butang Tindakan Pantas</span>
-                  <span className="text-[10px] text-slate-500">Pautan pantas Kehadiran, Kalendar & Bantuan</span>
+                  <span className="font-bold text-slate-800 dark:text-slate-100 block">Butang Tindakan Pantas</span>
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400">Pautan pantas Kehadiran, Kalendar & Bantuan</span>
                 </div>
               </label>
             </div>
@@ -481,26 +481,26 @@ export const DashboardSettingsTab: React.FC<DashboardSettingsTabProps> = ({
 
       {/* ================= SEKSYEN 2: HEBAHAN & PENGUMUMAN HEM ================= */}
       {activeSection === 'pengumuman' && (
-        <div className="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-xs space-y-5 text-xs">
-          <div className="border-b border-slate-100 pb-3 flex items-center justify-between">
+        <div className="bg-white dark:bg-[#222b42] p-5 sm:p-6 rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs space-y-5 text-xs">
+          <div className="border-b border-slate-100 dark:border-white/5 pb-3 flex items-center justify-between">
             <div>
-              <h3 className="text-sm font-extrabold text-slate-900 flex items-center gap-2">
+              <h3 className="text-sm font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
                 <Megaphone className="w-4 h-4 text-blue-600" />
                 <span>Hebahan Pentadbiran & Notis Khas HEM</span>
               </h3>
-              <p className="text-slate-500 text-[11px] mt-0.5">
+              <p className="text-slate-500 dark:text-slate-400 text-[11px] mt-0.5">
                 Hebahan ini akan terpapar di bahagian atas dashboard utama untuk dibaca oleh semua guru dan staf.
               </p>
             </div>
 
-            <label className="flex items-center gap-2 cursor-pointer bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200">
+            <label className="flex items-center gap-2 cursor-pointer bg-slate-50 dark:bg-[#1b2337] px-3 py-1.5 rounded-xl border border-slate-200 dark:border-white/10">
               <input
                 type="checkbox"
                 checked={form.pengumumanAktif}
                 onChange={e => setForm({ ...form, pengumumanAktif: e.target.checked })}
-                className="w-4 h-4 text-blue-600 rounded-sm border-slate-300 focus:ring-blue-500"
+                className="w-4 h-4 text-blue-600 rounded-sm border-slate-300 dark:border-white/15 focus:ring-blue-500"
               />
-              <span className="font-bold text-slate-800">
+              <span className="font-bold text-slate-800 dark:text-slate-100">
                 {form.pengumumanAktif ? 'Hebahan Aktif' : 'Hebahan Ditutup'}
               </span>
             </label>
@@ -508,7 +508,7 @@ export const DashboardSettingsTab: React.FC<DashboardSettingsTabProps> = ({
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="font-bold text-slate-700 block mb-1">
+              <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">
                 Tajuk Hebahan Pentadbiran
               </label>
               <input
@@ -516,18 +516,18 @@ export const DashboardSettingsTab: React.FC<DashboardSettingsTabProps> = ({
                 value={form.pengumumanTajuk}
                 onChange={e => setForm({ ...form, pengumumanTajuk: e.target.value })}
                 placeholder="cth: Peringatan Pengisian Kehadiran e-Kehadiran KPM"
-                className="w-full border border-slate-300 rounded-xl p-2.5 font-bold text-slate-800"
+                className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2.5 font-bold text-slate-800 dark:text-slate-100"
               />
             </div>
 
             <div>
-              <label className="font-bold text-slate-700 block mb-1">
+              <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">
                 Kategori / Tahap Hebahan
               </label>
               <select
                 value={form.pengumumanJenis}
                 onChange={e => setForm({ ...form, pengumumanJenis: e.target.value as any })}
-                className="w-full border border-slate-300 rounded-xl p-2.5 font-semibold text-slate-800 bg-white"
+                className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2.5 font-semibold text-slate-800 dark:text-slate-100 bg-white dark:bg-[#222b42]"
               >
                 <option value="info">Makluman Am (Warna Biru / Tenang)</option>
                 <option value="amaran">Peringatan Penting (Warna Kuning / Perhatian)</option>
@@ -538,7 +538,7 @@ export const DashboardSettingsTab: React.FC<DashboardSettingsTabProps> = ({
           </div>
 
           <div>
-            <label className="font-bold text-slate-700 block mb-1">
+            <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">
               Kandungan & Mesej Penuh Hebahan
             </label>
             <textarea
@@ -546,25 +546,25 @@ export const DashboardSettingsTab: React.FC<DashboardSettingsTabProps> = ({
               value={form.pengumumanMesej}
               onChange={e => setForm({ ...form, pengumumanMesej: e.target.value })}
               placeholder="Tulis kenyataan atau arahan pentadbiran untuk semua guru..."
-              className="w-full border border-slate-300 rounded-xl p-3 text-slate-800 font-medium leading-relaxed"
+              className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-3 text-slate-800 dark:text-slate-100 font-medium leading-relaxed"
             />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
-              <label className="font-bold text-slate-700 block mb-1">
+              <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">
                 Tarikh Hebahan Dikeluarkan
               </label>
               <input
                 type="date"
                 value={form.pengumumanTarikh}
                 onChange={e => setForm({ ...form, pengumumanTarikh: e.target.value })}
-                className="w-full border border-slate-300 rounded-xl p-2 text-slate-800"
+                className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2 text-slate-800 dark:text-slate-100"
               />
             </div>
 
             <div>
-              <label className="font-bold text-slate-700 block mb-1">
+              <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">
                 Teks Butang Pautan (Pilihan)
               </label>
               <input
@@ -572,12 +572,12 @@ export const DashboardSettingsTab: React.FC<DashboardSettingsTabProps> = ({
                 value={form.teksPautanPengumuman || ''}
                 onChange={e => setForm({ ...form, teksPautanPengumuman: e.target.value })}
                 placeholder="cth: Semak Takwim / Buka Borang"
-                className="w-full border border-slate-300 rounded-xl p-2 text-slate-800 font-medium"
+                className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2 text-slate-800 dark:text-slate-100 font-medium"
               />
             </div>
 
             <div>
-              <label className="font-bold text-slate-700 block mb-1">
+              <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">
                 Pautan Destinasi (Pilihan)
               </label>
               <input
@@ -585,25 +585,25 @@ export const DashboardSettingsTab: React.FC<DashboardSettingsTabProps> = ({
                 value={form.urlPautanPengumuman || ''}
                 onChange={e => setForm({ ...form, urlPautanPengumuman: e.target.value })}
                 placeholder="cth: /program-mesyuarat atau URL luar"
-                className="w-full border border-slate-300 rounded-xl p-2 text-slate-800 font-mono text-xs"
+                className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2 text-slate-800 dark:text-slate-100 font-mono text-xs"
               />
             </div>
           </div>
 
           {/* Kotak Pratonton Hebahan */}
-          <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
-            <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-500 block">
+          <div className="p-4 rounded-xl bg-slate-50 dark:bg-[#1b2337] border border-slate-200 dark:border-white/10 space-y-2">
+            <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400 block">
               Pratonton Paparan Pengumuman Pada Dashboard:
             </span>
             <div
               className={`p-4 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
                 form.pengumumanJenis === 'amaran'
-                  ? 'bg-amber-50/90 border-amber-300 text-amber-950'
+                  ? 'bg-amber-50/90 dark:bg-amber-500/15 border-amber-300 dark:border-amber-500/30 text-amber-950 dark:text-amber-300'
                   : form.pengumumanJenis === 'penting'
-                  ? 'bg-rose-50/90 border-rose-300 text-rose-950'
+                  ? 'bg-rose-50/90 dark:bg-rose-500/15 border-rose-300 dark:border-rose-500/30 text-rose-950 dark:text-rose-300'
                   : form.pengumumanJenis === 'kejayaan'
-                  ? 'bg-emerald-50/90 border-emerald-300 text-emerald-950'
-                  : 'bg-blue-50/90 border-blue-300 text-blue-950'
+                  ? 'bg-emerald-50/90 dark:bg-emerald-500/15 border-emerald-300 dark:border-emerald-500/30 text-emerald-950 dark:text-emerald-300'
+                  : 'bg-blue-50/90 dark:bg-sky-500/15 border-blue-300 dark:border-sky-500/30 text-blue-950 dark:text-sky-300'
               }`}
             >
               <div className="flex items-start gap-3">
@@ -644,14 +644,14 @@ export const DashboardSettingsTab: React.FC<DashboardSettingsTabProps> = ({
 
       {/* ================= SEKSYEN 3: KAD KPI & KETERLIHATAN WIDGET ================= */}
       {activeSection === 'kpi' && (
-        <div className="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-xs space-y-5 text-xs">
-          <div className="border-b border-slate-100 pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="bg-white dark:bg-[#222b42] p-5 sm:p-6 rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs space-y-5 text-xs">
+          <div className="border-b border-slate-100 dark:border-white/5 pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
-              <h3 className="text-sm font-extrabold text-slate-900 flex items-center gap-2">
+              <h3 className="text-sm font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
                 <Sliders className="w-4 h-4 text-indigo-600" />
                 <span>Kawalan Keterlihatan Kad KPI (Widget Kemenjadian Murid)</span>
               </h3>
-              <p className="text-slate-500 text-[11px] mt-0.5">
+              <p className="text-slate-500 dark:text-slate-400 text-[11px] mt-0.5">
                 Togol mana-mana kad KPI mengikut keperluan dan fokus semakan pihak pentadbir sekolah.
               </p>
             </div>
@@ -660,14 +660,14 @@ export const DashboardSettingsTab: React.FC<DashboardSettingsTabProps> = ({
               <button
                 type="button"
                 onClick={() => handleToggleAllKpi(true)}
-                className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-bold text-[11px] transition-colors"
+                className="px-3 py-1.5 bg-slate-100 dark:bg-[#161e31] hover:bg-slate-200 dark:hover:bg-[#323f61] text-slate-700 dark:text-slate-200 rounded-lg font-bold text-[11px] transition-colors"
               >
                 Pilih Semua
               </button>
               <button
                 type="button"
                 onClick={() => handleToggleAllKpi(false)}
-                className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-bold text-[11px] transition-colors"
+                className="px-3 py-1.5 bg-slate-100 dark:bg-[#161e31] hover:bg-slate-200 dark:hover:bg-[#323f61] text-slate-700 dark:text-slate-200 rounded-lg font-bold text-[11px] transition-colors"
               >
                 Nyahpilih Semua
               </button>
@@ -684,8 +684,8 @@ export const DashboardSettingsTab: React.FC<DashboardSettingsTabProps> = ({
                   key={item.key}
                   className={`p-3.5 rounded-xl border flex items-center justify-between gap-3 cursor-pointer transition-all ${
                     isChecked
-                      ? 'bg-white border-blue-300 shadow-xs'
-                      : 'bg-slate-50 border-slate-200 opacity-60'
+                      ? 'bg-white dark:bg-[#222b42] border-blue-300 dark:border-sky-500/30 shadow-xs'
+                      : 'bg-slate-50 dark:bg-[#1b2337] border-slate-200 dark:border-white/10 opacity-60'
                   }`}
                 >
                   <div className="flex items-center gap-3">
@@ -693,17 +693,17 @@ export const DashboardSettingsTab: React.FC<DashboardSettingsTabProps> = ({
                       <IconComp className="w-4.5 h-4.5" />
                     </div>
                     <div>
-                      <span className="font-extrabold text-slate-900 text-xs block">
+                      <span className="font-extrabold text-slate-900 dark:text-white text-xs block">
                         {item.label}
                       </span>
-                      <span className="text-[11px] text-slate-500 leading-tight block">
+                      <span className="text-[11px] text-slate-500 dark:text-slate-400 leading-tight block">
                         {item.desc}
                       </span>
                     </div>
                   </div>
 
                   <div className="shrink-0 flex items-center gap-2">
-                    <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded ${isChecked ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-200 text-slate-600'}`}>
+                    <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded ${isChecked ? 'bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300' : 'bg-slate-200 dark:bg-[#2a3552] text-slate-600 dark:text-slate-300'}`}>
                       {isChecked ? 'DIPAPARKAN' : 'DISEMBUNYIKAN'}
                     </span>
                     <input
@@ -718,7 +718,7 @@ export const DashboardSettingsTab: React.FC<DashboardSettingsTabProps> = ({
                           }
                         });
                       }}
-                      className="w-4.5 h-4.5 text-blue-600 rounded-sm border-slate-300 focus:ring-blue-500"
+                      className="w-4.5 h-4.5 text-blue-600 rounded-sm border-slate-300 dark:border-white/15 focus:ring-blue-500"
                     />
                   </div>
                 </label>
@@ -730,22 +730,22 @@ export const DashboardSettingsTab: React.FC<DashboardSettingsTabProps> = ({
 
       {/* ================= SEKSYEN 4: PANEL INTERVENSI & TUGASAN ================= */}
       {activeSection === 'panel' && (
-        <div className="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-xs space-y-5 text-xs">
-          <div className="border-b border-slate-100 pb-3">
-            <h3 className="text-sm font-extrabold text-slate-900 flex items-center gap-2">
+        <div className="bg-white dark:bg-[#222b42] p-5 sm:p-6 rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs space-y-5 text-xs">
+          <div className="border-b border-slate-100 dark:border-white/5 pb-3">
+            <h3 className="text-sm font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
               <Layers className="w-4 h-4 text-emerald-600" />
               <span>Konfigurasi Panel Kandungan, Tindakan Segera & Jadual</span>
             </h3>
-            <p className="text-slate-500 text-[11px] mt-0.5">
+            <p className="text-slate-500 dark:text-slate-400 text-[11px] mt-0.5">
               Kawal paparan senarai murid berisiko cicir dan tindakan susulan mesyuarat jawatankuasa HEM.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="p-4 rounded-xl border border-slate-200 bg-slate-50/50 space-y-3">
-              <label className="font-bold text-slate-800 flex items-center justify-between">
+            <div className="p-4 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50/50 dark:bg-[#1b2337] space-y-3">
+              <label className="font-bold text-slate-800 dark:text-slate-100 flex items-center justify-between">
                 <span>Had Bilangan Murid dalam Panel Tindakan Segera</span>
-                <span className="text-blue-700 font-extrabold text-sm">{form.hadSenaraiTindakanSegera} Murid</span>
+                <span className="text-blue-700 dark:text-sky-300 font-extrabold text-sm">{form.hadSenaraiTindakanSegera} Murid</span>
               </label>
               <input
                 type="range"
@@ -764,42 +764,42 @@ export const DashboardSettingsTab: React.FC<DashboardSettingsTabProps> = ({
             </div>
 
             <div className="space-y-3">
-              <label className="flex items-center gap-3 p-3 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 cursor-pointer transition-colors">
+              <label className="flex items-center gap-3 p-3 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#222b42] hover:bg-slate-50 dark:hover:bg-[#28334e] cursor-pointer transition-colors">
                 <input
                   type="checkbox"
                   checked={form.paparPanelTindakanSegera !== false}
                   onChange={e => setForm({ ...form, paparPanelTindakanSegera: e.target.checked })}
-                  className="w-4 h-4 text-blue-600 rounded-sm border-slate-300"
+                  className="w-4 h-4 text-blue-600 rounded-sm border-slate-300 dark:border-white/15"
                 />
                 <div>
-                  <span className="font-bold text-slate-800 block">Papar Panel Tindakan Segera</span>
-                  <span className="text-[10px] text-slate-500">Senarai murid melepasi ambang Amaran 2 & 3 untuk intervensi pantas</span>
+                  <span className="font-bold text-slate-800 dark:text-slate-100 block">Papar Panel Tindakan Segera</span>
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400">Senarai murid melepasi ambang Amaran 2 & 3 untuk intervensi pantas</span>
                 </div>
               </label>
 
-              <label className="flex items-center gap-3 p-3 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 cursor-pointer transition-colors">
+              <label className="flex items-center gap-3 p-3 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#222b42] hover:bg-slate-50 dark:hover:bg-[#28334e] cursor-pointer transition-colors">
                 <input
                   type="checkbox"
                   checked={form.paparPanelMesyuarat !== false}
                   onChange={e => setForm({ ...form, paparPanelMesyuarat: e.target.checked })}
-                  className="w-4 h-4 text-blue-600 rounded-sm border-slate-300"
+                  className="w-4 h-4 text-blue-600 rounded-sm border-slate-300 dark:border-white/15"
                 />
                 <div>
-                  <span className="font-bold text-slate-800 block">Papar Panel Mesyuarat HEM</span>
-                  <span className="text-[10px] text-slate-500">Tindakan susulan dan amanah pegawai mesyuarat yang belum selesai</span>
+                  <span className="font-bold text-slate-800 dark:text-slate-100 block">Papar Panel Mesyuarat HEM</span>
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400">Tindakan susulan dan amanah pegawai mesyuarat yang belum selesai</span>
                 </div>
               </label>
 
-              <label className="flex items-center gap-3 p-3 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 cursor-pointer transition-colors">
+              <label className="flex items-center gap-3 p-3 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#222b42] hover:bg-slate-50 dark:hover:bg-[#28334e] cursor-pointer transition-colors">
                 <input
                   type="checkbox"
                   checked={form.paparBarisPintasPantas !== false}
                   onChange={e => setForm({ ...form, paparBarisPintasPantas: e.target.checked })}
-                  className="w-4 h-4 text-blue-600 rounded-sm border-slate-300"
+                  className="w-4 h-4 text-blue-600 rounded-sm border-slate-300 dark:border-white/15"
                 />
                 <div>
-                  <span className="font-bold text-slate-800 block">Papar Baris Modul Pantas</span>
-                  <span className="text-[10px] text-slate-500">3 kad akses modul (3K/Kesihatan, Pengawas Sekolah, Takwim HEM)</span>
+                  <span className="font-bold text-slate-800 dark:text-slate-100 block">Papar Baris Modul Pantas</span>
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400">3 kad akses modul (3K/Kesihatan, Pengawas Sekolah, Takwim HEM)</span>
                 </div>
               </label>
             </div>
@@ -809,19 +809,19 @@ export const DashboardSettingsTab: React.FC<DashboardSettingsTabProps> = ({
 
       {/* ================= SEKSYEN 5: ANALISIS & CARTA KEHADIRAN ================= */}
       {activeSection === 'carta' && (
-        <div className="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-xs space-y-5 text-xs">
-          <div className="border-b border-slate-100 pb-3">
-            <h3 className="text-sm font-extrabold text-slate-900 flex items-center gap-2">
+        <div className="bg-white dark:bg-[#222b42] p-5 sm:p-6 rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs space-y-5 text-xs">
+          <div className="border-b border-slate-100 dark:border-white/5 pb-3">
+            <h3 className="text-sm font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
               <BarChart3 className="w-4 h-4 text-cyan-600" />
               <span>Konfigurasi Analisis Statistik & Carta Dashboard</span>
             </h3>
-            <p className="text-slate-500 text-[11px] mt-0.5">
+            <p className="text-slate-500 dark:text-slate-400 text-[11px] mt-0.5">
               Pilih julat hari analisis trend dan tentukan carta visual yang ingin dipaparkan.
             </p>
           </div>
 
-          <div className="p-4 rounded-xl border border-slate-200 bg-slate-50/50 space-y-3">
-            <label className="font-bold text-slate-800 block">
+          <div className="p-4 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50/50 dark:bg-[#1b2337] space-y-3">
+            <label className="font-bold text-slate-800 dark:text-slate-100 block">
               Julat Hari Analisis Carta Trend Kehadiran:
             </label>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -836,71 +836,71 @@ export const DashboardSettingsTab: React.FC<DashboardSettingsTabProps> = ({
                   onClick={() => setForm({ ...form, julatHariGrafTrend: opt.val as any })}
                   className={`p-3 rounded-xl border text-left transition-all ${
                     form.julatHariGrafTrend === opt.val
-                      ? 'bg-blue-50 border-blue-400 text-blue-900 shadow-xs font-bold'
-                      : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
+                      ? 'bg-blue-50 dark:bg-sky-500/15 border-blue-400 text-blue-900 dark:text-sky-300 shadow-xs font-bold'
+                      : 'bg-white dark:bg-[#222b42] border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-[#28334e]'
                   }`}
                 >
                   <div className="font-extrabold text-xs">{opt.label}</div>
-                  <div className="text-[10px] text-slate-500 font-normal mt-0.5">{opt.desc}</div>
+                  <div className="text-[10px] text-slate-500 dark:text-slate-400 font-normal mt-0.5">{opt.desc}</div>
                 </button>
               ))}
             </div>
           </div>
 
-          <div className="pt-2 border-t border-slate-100">
-            <h4 className="font-bold text-slate-800 mb-3 text-xs">
+          <div className="pt-2 border-t border-slate-100 dark:border-white/5">
+            <h4 className="font-bold text-slate-800 dark:text-slate-100 mb-3 text-xs">
               Keterlihatan Komponen Carta & Analisis:
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <label className="flex items-center gap-3 p-3 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 cursor-pointer transition-colors">
+              <label className="flex items-center gap-3 p-3 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#222b42] hover:bg-slate-50 dark:hover:bg-[#28334e] cursor-pointer transition-colors">
                 <input
                   type="checkbox"
                   checked={form.paparCartaTrend !== false}
                   onChange={e => setForm({ ...form, paparCartaTrend: e.target.checked })}
-                  className="w-4 h-4 text-blue-600 rounded-sm border-slate-300"
+                  className="w-4 h-4 text-blue-600 rounded-sm border-slate-300 dark:border-white/15"
                 />
                 <div>
-                  <span className="font-bold text-slate-800 block">Carta Trend Kehadiran Sekolah</span>
-                  <span className="text-[10px] text-slate-500">Carta garis harian berbanding sasaran KPM</span>
+                  <span className="font-bold text-slate-800 dark:text-slate-100 block">Carta Trend Kehadiran Sekolah</span>
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400">Carta garis harian berbanding sasaran KPM</span>
                 </div>
               </label>
 
-              <label className="flex items-center gap-3 p-3 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 cursor-pointer transition-colors">
+              <label className="flex items-center gap-3 p-3 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#222b42] hover:bg-slate-50 dark:hover:bg-[#28334e] cursor-pointer transition-colors">
                 <input
                   type="checkbox"
                   checked={form.paparCartaTingkatan !== false}
                   onChange={e => setForm({ ...form, paparCartaTingkatan: e.target.checked })}
-                  className="w-4 h-4 text-blue-600 rounded-sm border-slate-300"
+                  className="w-4 h-4 text-blue-600 rounded-sm border-slate-300 dark:border-white/15"
                 />
                 <div>
-                  <span className="font-bold text-slate-800 block">Carta Kehadiran Mengikut Tingkatan</span>
-                  <span className="text-[10px] text-slate-500">Carta bar peratus kehadiran Tingkatan 1 hingga 5</span>
+                  <span className="font-bold text-slate-800 dark:text-slate-100 block">Carta Kehadiran Mengikut Tingkatan</span>
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400">Carta bar peratus kehadiran Tingkatan 1 hingga 5</span>
                 </div>
               </label>
 
-              <label className="flex items-center gap-3 p-3 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 cursor-pointer transition-colors">
+              <label className="flex items-center gap-3 p-3 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#222b42] hover:bg-slate-50 dark:hover:bg-[#28334e] cursor-pointer transition-colors">
                 <input
                   type="checkbox"
                   checked={form.paparTaburanJantina !== false}
                   onChange={e => setForm({ ...form, paparTaburanJantina: e.target.checked })}
-                  className="w-4 h-4 text-blue-600 rounded-sm border-slate-300"
+                  className="w-4 h-4 text-blue-600 rounded-sm border-slate-300 dark:border-white/15"
                 />
                 <div>
-                  <span className="font-bold text-slate-800 block">Taburan Enrolmen & Jantina</span>
-                  <span className="text-[10px] text-slate-500">Pecahan bilangan murid lelaki dan perempuan</span>
+                  <span className="font-bold text-slate-800 dark:text-slate-100 block">Taburan Enrolmen & Jantina</span>
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400">Pecahan bilangan murid lelaki dan perempuan</span>
                 </div>
               </label>
 
-              <label className="flex items-center gap-3 p-3 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 cursor-pointer transition-colors">
+              <label className="flex items-center gap-3 p-3 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#222b42] hover:bg-slate-50 dark:hover:bg-[#28334e] cursor-pointer transition-colors">
                 <input
                   type="checkbox"
                   checked={form.paparKelasTerendah !== false}
                   onChange={e => setForm({ ...form, paparKelasTerendah: e.target.checked })}
-                  className="w-4 h-4 text-blue-600 rounded-sm border-slate-300"
+                  className="w-4 h-4 text-blue-600 rounded-sm border-slate-300 dark:border-white/15"
                 />
                 <div>
-                  <span className="font-bold text-slate-800 block">5 Kelas Kehadiran Terendah</span>
-                  <span className="text-[10px] text-slate-500">Senarai kelas yang memerlukan tindakan intensif guru kelas</span>
+                  <span className="font-bold text-slate-800 dark:text-slate-100 block">5 Kelas Kehadiran Terendah</span>
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400">Senarai kelas yang memerlukan tindakan intensif guru kelas</span>
                 </div>
               </label>
             </div>

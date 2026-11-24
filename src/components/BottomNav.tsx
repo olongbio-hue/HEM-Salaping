@@ -8,13 +8,15 @@ interface BottomNavProps {
 
 export const BottomNav: React.FC<BottomNavProps> = ({ onOpenSidebar }) => {
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-30 bg-white border-t border-slate-200 lg:hidden shadow-lg safe-area-bottom">
+    <nav className="fixed bottom-0 left-0 right-0 z-30 bg-white dark:bg-[#1c2337] border-t border-slate-200 dark:border-white/10 lg:hidden shadow-lg safe-area-bottom">
       <div className="grid grid-cols-5 h-16">
         <NavLink
           to="/"
           className={({ isActive }) =>
             `flex flex-col items-center justify-center min-h-[48px] text-[10px] font-medium transition-colors ${
-              isActive ? 'text-blue-700 font-bold' : 'text-slate-500 hover:text-slate-900'
+              isActive
+                ? 'text-[#0ea5e9] font-bold'
+                : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`
           }
         >
@@ -26,7 +28,9 @@ export const BottomNav: React.FC<BottomNavProps> = ({ onOpenSidebar }) => {
           to="/kehadiran"
           className={({ isActive }) =>
             `flex flex-col items-center justify-center min-h-[48px] text-[10px] font-medium transition-colors ${
-              isActive ? 'text-blue-700 font-bold' : 'text-slate-500 hover:text-slate-900'
+              isActive
+                ? 'text-[#0ea5e9] font-bold'
+                : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`
           }
         >
@@ -38,7 +42,9 @@ export const BottomNav: React.FC<BottomNavProps> = ({ onOpenSidebar }) => {
           to="/risiko-cicir"
           className={({ isActive }) =>
             `flex flex-col items-center justify-center min-h-[48px] text-[10px] font-medium transition-colors ${
-              isActive ? 'text-rose-600 font-bold' : 'text-slate-500 hover:text-slate-900'
+              isActive
+                ? 'text-rose-500 font-bold'
+                : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`
           }
         >
@@ -50,7 +56,9 @@ export const BottomNav: React.FC<BottomNavProps> = ({ onOpenSidebar }) => {
           to="/murid"
           className={({ isActive }) =>
             `flex flex-col items-center justify-center min-h-[48px] text-[10px] font-medium transition-colors ${
-              isActive ? 'text-blue-700 font-bold' : 'text-slate-500 hover:text-slate-900'
+              isActive
+                ? 'text-[#0ea5e9] font-bold'
+                : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`
           }
         >
@@ -60,7 +68,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({ onOpenSidebar }) => {
 
         <button
           onClick={onOpenSidebar}
-          className="flex flex-col items-center justify-center min-h-[48px] text-[10px] font-medium text-slate-500 hover:text-slate-900 transition-colors"
+          className="flex flex-col items-center justify-center min-h-[48px] text-[10px] font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
         >
           <Menu className="w-5 h-5 mb-1" />
           <span>Lagi</span>

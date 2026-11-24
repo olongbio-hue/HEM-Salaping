@@ -299,16 +299,16 @@ export const HemProgramsMeetings: React.FC = () => {
   return (
     <div className="p-4 sm:p-6 max-w-7xl mx-auto space-y-6">
       {/* Header */}
-      <div className="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="bg-white dark:bg-[#222b42] p-5 sm:p-6 rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2 text-blue-700 font-extrabold text-xs uppercase tracking-wider mb-1">
+          <div className="flex items-center gap-2 text-blue-700 dark:text-sky-300 font-extrabold text-xs uppercase tracking-wider mb-1">
             <ClipboardList className="w-4 h-4" />
             <span>Pengurusan & Takwim HEM • {school.nama}</span>
           </div>
-          <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+          <h1 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">
             Program HEM, Perhimpunan & Mesyuarat
           </h1>
-          <p className="text-slate-500 text-xs sm:text-sm mt-0.5">
+          <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm mt-0.5">
             Kalendar aktiviti tahunan murid, jadual pemandu perhimpunan mingguan, dan pengesanan minit tindakan susulan.
           </p>
         </div>
@@ -347,13 +347,13 @@ export const HemProgramsMeetings: React.FC = () => {
       </div>
 
       {/* Main Tab Bar */}
-      <div className="flex items-center gap-2 border-b border-slate-200 overflow-x-auto pb-1 text-xs sm:text-sm">
+      <div className="flex items-center gap-2 border-b border-slate-200 dark:border-white/10 overflow-x-auto pb-1 text-xs sm:text-sm">
         <button
           onClick={() => setActiveMainTab('program_kalendar')}
           className={`flex items-center gap-2 px-4 py-2.5 font-bold rounded-xl whitespace-nowrap transition-all ${
             activeMainTab === 'program_kalendar'
               ? 'bg-blue-700 text-white shadow-xs'
-              : 'text-slate-600 hover:bg-slate-100'
+              : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#2a3552]'
           }`}
         >
           <CalendarDays className="w-4 h-4" />
@@ -365,7 +365,7 @@ export const HemProgramsMeetings: React.FC = () => {
           className={`flex items-center gap-2 px-4 py-2.5 font-bold rounded-xl whitespace-nowrap transition-all ${
             activeMainTab === 'perhimpunan'
               ? 'bg-blue-700 text-white shadow-xs'
-              : 'text-slate-600 hover:bg-slate-100'
+              : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#2a3552]'
           }`}
         >
           <Users className="w-4 h-4" />
@@ -377,7 +377,7 @@ export const HemProgramsMeetings: React.FC = () => {
           className={`flex items-center gap-2 px-4 py-2.5 font-bold rounded-xl whitespace-nowrap transition-all ${
             activeMainTab === 'mesyuarat'
               ? 'bg-blue-700 text-white shadow-xs'
-              : 'text-slate-600 hover:bg-slate-100'
+              : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#2a3552]'
           }`}
         >
           <FileText className="w-4 h-4" />
@@ -390,29 +390,29 @@ export const HemProgramsMeetings: React.FC = () => {
         <div className="space-y-6">
           {/* Ringkasan Bajet & Status Program */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
-            <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
-              <span className="text-[11px] font-semibold text-slate-500 block">Jumlah Program</span>
-              <span className="text-2xl font-black text-slate-900 mt-1 block">{programs.length}</span>
+            <div className="bg-white dark:bg-[#222b42] p-4 rounded-xl border border-slate-200 dark:border-white/10 shadow-xs">
+              <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block">Jumlah Program</span>
+              <span className="text-2xl font-black text-slate-900 dark:text-white mt-1 block">{programs.length}</span>
               <span className="text-[10px] text-blue-600 font-bold mt-1 block">Tahun {school.tahunSemasa}</span>
             </div>
 
-            <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
-              <span className="text-[11px] font-semibold text-slate-500 block">Anggaran Peruntukan</span>
-              <span className="text-2xl font-black text-slate-900 mt-1 block">RM {totalBudget.toLocaleString()}</span>
+            <div className="bg-white dark:bg-[#222b42] p-4 rounded-xl border border-slate-200 dark:border-white/10 shadow-xs">
+              <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block">Anggaran Peruntukan</span>
+              <span className="text-2xl font-black text-slate-900 dark:text-white mt-1 block">RM {totalBudget.toLocaleString()}</span>
               <span className="text-[10px] text-slate-400 font-bold mt-1 block">Pelbagai Unit HEM</span>
             </div>
 
-            <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
-              <span className="text-[11px] font-semibold text-slate-500 block">Telah Dilaksanakan</span>
-              <span className="text-2xl font-black text-emerald-700 mt-1 block">
+            <div className="bg-white dark:bg-[#222b42] p-4 rounded-xl border border-slate-200 dark:border-white/10 shadow-xs">
+              <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block">Telah Dilaksanakan</span>
+              <span className="text-2xl font-black text-emerald-700 dark:text-emerald-300 mt-1 block">
                 {programs.filter(p => p.status === 'selesai').length}
               </span>
               <span className="text-[10px] text-emerald-600 font-bold mt-1 block">RM {completedBudget.toLocaleString()} dibelanjakan</span>
             </div>
 
-            <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
-              <span className="text-[11px] font-semibold text-slate-500 block">Akan Datang / Dirancang</span>
-              <span className="text-2xl font-black text-amber-700 mt-1 block">
+            <div className="bg-white dark:bg-[#222b42] p-4 rounded-xl border border-slate-200 dark:border-white/10 shadow-xs">
+              <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block">Akan Datang / Dirancang</span>
+              <span className="text-2xl font-black text-amber-700 dark:text-amber-300 mt-1 block">
                 {programs.filter(p => p.status === 'dirancang' || p.status === 'berjalan').length}
               </span>
               <span className="text-[10px] text-amber-600 font-bold mt-1 block">Perlu penyelarasan rapi</span>
@@ -420,7 +420,7 @@ export const HemProgramsMeetings: React.FC = () => {
           </div>
 
           {/* Controls: Search, Unit Filter, View Mode */}
-          <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+          <div className="bg-white dark:bg-[#222b42] p-4 rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
             <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
               <div className="relative flex-1 sm:w-64">
                 <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
@@ -429,14 +429,14 @@ export const HemProgramsMeetings: React.FC = () => {
                   placeholder="Cari program / penyelaras..."
                   value={searchProgram}
                   onChange={e => setSearchProgram(e.target.value)}
-                  className="w-full pl-9 pr-3 py-2 border border-slate-300 rounded-xl focus:outline-blue-600 font-medium text-xs"
+                  className="w-full pl-9 pr-3 py-2 border border-slate-300 dark:border-white/15 rounded-xl focus:outline-blue-600 font-medium text-xs"
                 />
               </div>
 
               <select
                 value={selectedUnit}
                 onChange={e => setSelectedUnit(e.target.value)}
-                className="py-2 px-3 border border-slate-300 rounded-xl font-medium text-xs"
+                className="py-2 px-3 border border-slate-300 dark:border-white/15 rounded-xl font-medium text-xs"
               >
                 <option value="semua">Semua Unit HEM</option>
                 <option value="Disiplin">Unit Disiplin</option>
@@ -449,11 +449,11 @@ export const HemProgramsMeetings: React.FC = () => {
               </select>
             </div>
 
-            <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl self-end sm:self-center">
+            <div className="flex items-center gap-1 bg-slate-100 dark:bg-[#161e31] p-1 rounded-xl self-end sm:self-center">
               <button
                 onClick={() => setViewMode('senarai')}
                 className={`px-3 py-1.5 rounded-lg font-bold text-xs transition-all ${
-                  viewMode === 'senarai' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-600'
+                  viewMode === 'senarai' ? 'bg-white dark:bg-[#222b42] text-slate-900 dark:text-white shadow-xs' : 'text-slate-600 dark:text-slate-300'
                 }`}
               >
                 Senarai Kad
@@ -461,7 +461,7 @@ export const HemProgramsMeetings: React.FC = () => {
               <button
                 onClick={() => setViewMode('kalendar')}
                 className={`px-3 py-1.5 rounded-lg font-bold text-xs transition-all ${
-                  viewMode === 'kalendar' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-600'
+                  viewMode === 'kalendar' ? 'bg-white dark:bg-[#222b42] text-slate-900 dark:text-white shadow-xs' : 'text-slate-600 dark:text-slate-300'
                 }`}
               >
                 Paparan Kalendar
@@ -479,33 +479,33 @@ export const HemProgramsMeetings: React.FC = () => {
                 return (
                   <div
                     key={prog.id}
-                    className={`bg-white rounded-2xl border p-4 sm:p-5 shadow-xs flex flex-col justify-between transition-all hover:border-blue-300 ${
-                      isCompleted ? 'border-emerald-200' : isOngoing ? 'border-amber-300 bg-amber-50/20' : 'border-slate-200'
+                    className={`bg-white dark:bg-[#222b42] rounded-2xl border p-4 sm:p-5 shadow-xs flex flex-col justify-between transition-all hover:border-blue-300 ${
+                      isCompleted ? 'border-emerald-200 dark:border-emerald-500/30' : isOngoing ? 'border-amber-300 dark:border-amber-500/30 bg-amber-50/20 dark:bg-amber-500/15' : 'border-slate-200 dark:border-white/10'
                     }`}
                   >
                     <div className="space-y-2">
                       <div className="flex items-center justify-between gap-2">
-                        <span className="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-blue-100 text-blue-800">
+                        <span className="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-blue-100 dark:bg-sky-500/20 text-blue-800 dark:text-sky-300">
                           {prog.unit}
                         </span>
                         <span
                           className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
                             isCompleted
-                              ? 'bg-emerald-100 text-emerald-800'
+                              ? 'bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300'
                               : isOngoing
-                              ? 'bg-amber-100 text-amber-800'
-                              : 'bg-slate-100 text-slate-700'
+                              ? 'bg-amber-100 dark:bg-amber-500/20 text-amber-800 dark:text-amber-300'
+                              : 'bg-slate-100 dark:bg-[#161e31] text-slate-700 dark:text-slate-200'
                           }`}
                         >
                           {prog.status === 'selesai' ? 'SELESAI' : prog.status === 'berjalan' ? 'SEDANG BERJALAN' : 'DIRANCANG'}
                         </span>
                       </div>
 
-                      <h3 className="font-extrabold text-slate-900 text-sm leading-snug">
+                      <h3 className="font-extrabold text-slate-900 dark:text-white text-sm leading-snug">
                         {prog.namaProgram}
                       </h3>
 
-                      <div className="space-y-1 text-slate-600 text-xs">
+                      <div className="space-y-1 text-slate-600 dark:text-slate-300 text-xs">
                         <div className="flex items-center gap-1.5">
                           <CalendarIcon className="w-3.5 h-3.5 text-slate-400" />
                           <span>{prog.tarikh} {prog.masa && `• ${prog.masa}`}</span>
@@ -525,15 +525,15 @@ export const HemProgramsMeetings: React.FC = () => {
                       </div>
 
                       {prog.refleksi && (
-                        <div className="p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-[11px] text-slate-600 italic">
+                        <div className="p-2.5 bg-slate-50 dark:bg-[#1b2337] border border-slate-200 dark:border-white/10 rounded-xl text-[11px] text-slate-600 dark:text-slate-300 italic">
                           "{prog.refleksi}"
                         </div>
                       )}
                     </div>
 
-                    <div className="pt-3 border-t border-slate-100 mt-4 flex items-center justify-between text-[11px] text-slate-500">
+                    <div className="pt-3 border-t border-slate-100 dark:border-white/5 mt-4 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400">
                       <span>Kehadiran: <strong>{prog.kehadiranPeserta ? `${prog.kehadiranPeserta} Murid` : 'Belum Ditentukan'}</strong></span>
-                      <span className="font-bold text-blue-700">SMK Salaping</span>
+                      <span className="font-bold text-blue-700 dark:text-sky-300">SMK Salaping</span>
                     </div>
                   </div>
                 );
@@ -550,7 +550,7 @@ export const HemProgramsMeetings: React.FC = () => {
             </div>
           ) : (
             /* Month Calendar View */
-            <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-4">
+            <div className="bg-white dark:bg-[#222b42] p-5 rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs space-y-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <button
@@ -562,11 +562,11 @@ export const HemProgramsMeetings: React.FC = () => {
                         setCurrentMonth(prev => prev - 1);
                       }
                     }}
-                    className="p-1.5 rounded-lg border border-slate-200 hover:bg-slate-100"
+                    className="p-1.5 rounded-lg border border-slate-200 dark:border-white/10 hover:bg-slate-100 dark:hover:bg-[#2a3552]"
                   >
                     <ChevronLeft className="w-4 h-4" />
                   </button>
-                  <h3 className="font-bold text-sm text-slate-900">
+                  <h3 className="font-bold text-sm text-slate-900 dark:text-white">
                     {monthsMalay[currentMonth]} {currentYear}
                   </h3>
                   <button
@@ -578,40 +578,40 @@ export const HemProgramsMeetings: React.FC = () => {
                         setCurrentMonth(prev => prev + 1);
                       }
                     }}
-                    className="p-1.5 rounded-lg border border-slate-200 hover:bg-slate-100"
+                    className="p-1.5 rounded-lg border border-slate-200 dark:border-white/10 hover:bg-slate-100 dark:hover:bg-[#2a3552]"
                   >
                     <ChevronRight className="w-4 h-4" />
                   </button>
                 </div>
 
-                <span className="text-xs text-slate-500 font-medium">
+                <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
                   {programs.filter(p => new Date(p.tarikh).getMonth() === currentMonth).length} aktiviti dijadualkan
                 </span>
               </div>
 
-              <div className="divide-y divide-slate-100">
+              <div className="divide-y divide-slate-100 dark:divide-white/5">
                 {programs
                   .filter(p => new Date(p.tarikh).getMonth() === currentMonth)
                   .sort((a, b) => new Date(a.tarikh).getTime() - new Date(b.tarikh).getTime())
                   .map(p => (
                     <div key={p.id} className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                       <div className="flex items-start gap-3">
-                        <div className="w-12 text-center py-1.5 bg-blue-50 border border-blue-200 rounded-xl shrink-0">
+                        <div className="w-12 text-center py-1.5 bg-blue-50 dark:bg-sky-500/15 border border-blue-200 dark:border-sky-500/30 rounded-xl shrink-0">
                           <span className="text-[10px] uppercase font-bold text-blue-600 block">
                             {monthsMalay[new Date(p.tarikh).getMonth()].slice(0, 3)}
                           </span>
-                          <span className="text-base font-black text-blue-900 block leading-tight">
+                          <span className="text-base font-black text-blue-900 dark:text-sky-300 block leading-tight">
                             {new Date(p.tarikh).getDate()}
                           </span>
                         </div>
                         <div>
                           <div className="flex items-center gap-2">
-                            <span className="font-bold text-sm text-slate-900">{p.namaProgram}</span>
-                            <span className="text-[10px] px-2 py-0.5 rounded font-extrabold bg-blue-100 text-blue-800">
+                            <span className="font-bold text-sm text-slate-900 dark:text-white">{p.namaProgram}</span>
+                            <span className="text-[10px] px-2 py-0.5 rounded font-extrabold bg-blue-100 dark:bg-sky-500/20 text-blue-800 dark:text-sky-300">
                               {p.unit}
                             </span>
                           </div>
-                          <p className="text-xs text-slate-500 mt-0.5">
+                          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
                             {p.tempat} • Penyelaras: {p.penyelaras} • Anggaran: RM {p.bajetAnggaran.toLocaleString()}
                           </p>
                         </div>
@@ -619,7 +619,7 @@ export const HemProgramsMeetings: React.FC = () => {
 
                       <div className="shrink-0 self-end sm:self-center">
                         <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full ${
-                          p.status === 'selesai' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'
+                          p.status === 'selesai' ? 'bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300' : 'bg-amber-100 dark:bg-amber-500/20 text-amber-800 dark:text-amber-300'
                         }`}>
                           {p.status.toUpperCase()}
                         </span>
@@ -641,17 +641,17 @@ export const HemProgramsMeetings: React.FC = () => {
       {/* ================= TAB 2: PEMANDU PERHIMPUNAN MINGGUAN ================= */}
       {activeMainTab === 'perhimpunan' && (
         <div className="space-y-6">
-          <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="bg-white dark:bg-[#222b42] p-5 rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <h2 className="text-sm font-bold text-slate-900">Jadual Pemandu Perhimpunan & Guru Bertugas Mingguan</h2>
-              <p className="text-slate-500 text-xs mt-0.5">
+              <h2 className="text-sm font-bold text-slate-900 dark:text-white">Jadual Pemandu Perhimpunan & Guru Bertugas Mingguan</h2>
+              <p className="text-slate-500 dark:text-slate-400 text-xs mt-0.5">
                 Penggiliran tugas guru mingguan untuk ucapan perhimpunan, kawalan disiplin, dan pemeriksaan kekemasan.
               </p>
             </div>
 
             <button
               onClick={() => window.print()}
-              className="flex items-center gap-2 px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-xl text-xs transition-colors shrink-0"
+              className="flex items-center gap-2 px-3.5 py-2 bg-slate-100 dark:bg-[#161e31] hover:bg-slate-200 dark:hover:bg-[#323f61] text-slate-800 dark:text-slate-100 font-bold rounded-xl text-xs transition-colors shrink-0"
             >
               <Printer className="w-4 h-4" />
               <span>Cetak Jadual Bertugas</span>
@@ -662,10 +662,10 @@ export const HemProgramsMeetings: React.FC = () => {
             {assemblyDuties.map(duty => (
               <div
                 key={duty.id}
-                className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-3 relative overflow-hidden"
+                className="bg-white dark:bg-[#222b42] p-5 rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs space-y-3 relative overflow-hidden"
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-black px-2.5 py-1 rounded-lg bg-indigo-50 text-indigo-700 border border-indigo-200">
+                  <span className="text-xs font-black px-2.5 py-1 rounded-lg bg-indigo-50 dark:bg-indigo-500/15 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-500/30">
                     MINGGU {duty.minggu}
                   </span>
                   <span className="text-xs font-semibold text-slate-400 flex items-center gap-1">
@@ -675,14 +675,14 @@ export const HemProgramsMeetings: React.FC = () => {
                 </div>
 
                 <div>
-                  <h3 className="font-extrabold text-slate-900 text-base">
+                  <h3 className="font-extrabold text-slate-900 dark:text-white text-base">
                     Tema: "{duty.temaPerhimpunan}"
                   </h3>
                   <div className="mt-2 space-y-1">
-                    <span className="text-[11px] font-bold text-slate-500 block">Guru Bertugas Mingguan:</span>
+                    <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400 block">Guru Bertugas Mingguan:</span>
                     <div className="flex flex-wrap gap-1.5">
                       {duty.guruBertugas.map((guru, idx) => (
-                        <span key={idx} className="text-xs font-medium px-2 py-0.5 bg-slate-100 text-slate-800 rounded-lg border border-slate-200">
+                        <span key={idx} className="text-xs font-medium px-2 py-0.5 bg-slate-100 dark:bg-[#161e31] text-slate-800 dark:text-slate-100 rounded-lg border border-slate-200 dark:border-white/10">
                           {guru}
                         </span>
                       ))}
@@ -691,7 +691,7 @@ export const HemProgramsMeetings: React.FC = () => {
                 </div>
 
                 {duty.peringatanTindakan && (
-                  <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-900 flex items-start gap-2">
+                  <div className="p-3 bg-amber-50 dark:bg-amber-500/15 border border-amber-200 dark:border-amber-500/30 rounded-xl text-xs text-amber-900 dark:text-amber-300 flex items-start gap-2">
                     <AlertCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
                     <div>
                       <strong className="block">Fokus Peringatan Minggu Ini:</strong>
@@ -710,9 +710,9 @@ export const HemProgramsMeetings: React.FC = () => {
         <div className="space-y-6">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* List of Meetings */}
-            <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-3">
-              <h3 className="font-extrabold text-sm text-slate-900 flex items-center gap-2">
-                <FileText className="w-4 h-4 text-emerald-700" />
+            <div className="bg-white dark:bg-[#222b42] p-5 rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs space-y-3">
+              <h3 className="font-extrabold text-sm text-slate-900 dark:text-white flex items-center gap-2">
+                <FileText className="w-4 h-4 text-emerald-700 dark:text-emerald-300" />
                 <span>Senarai Sidang Mesyuarat</span>
               </h3>
 
@@ -727,19 +727,19 @@ export const HemProgramsMeetings: React.FC = () => {
                       onClick={() => setSelectedMeeting(meet)}
                       className={`p-3.5 rounded-xl border cursor-pointer transition-all ${
                         isSelected
-                          ? 'border-emerald-600 bg-emerald-50/60 shadow-xs'
-                          : 'border-slate-200 hover:bg-slate-50'
+                          ? 'border-emerald-600 bg-emerald-50/60 dark:bg-emerald-500/15 shadow-xs'
+                          : 'border-slate-200 dark:border-white/10 hover:bg-slate-50 dark:hover:bg-[#28334e]'
                       }`}
                     >
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-black text-emerald-800">{meet.bilangan}</span>
+                        <span className="text-xs font-black text-emerald-800 dark:text-emerald-300">{meet.bilangan}</span>
                         <span className="text-[10px] text-slate-400 font-medium">{meet.tarikh}</span>
                       </div>
-                      <h4 className="font-bold text-xs text-slate-900 mt-1 line-clamp-1">{meet.tajuk}</h4>
-                      <p className="text-[11px] text-slate-500 mt-0.5">Pengerusi: {meet.pengerusi}</p>
+                      <h4 className="font-bold text-xs text-slate-900 dark:text-white mt-1 line-clamp-1">{meet.tajuk}</h4>
+                      <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Pengerusi: {meet.pengerusi}</p>
                       
                       {pendingFollowUps > 0 && (
-                        <div className="mt-2 flex items-center gap-1 text-[10px] font-bold text-amber-700">
+                        <div className="mt-2 flex items-center gap-1 text-[10px] font-bold text-amber-700 dark:text-amber-300">
                           <AlertTriangle className="w-3 h-3" />
                           <span>{pendingFollowUps} tugasan susulan belum selesai</span>
                         </div>
@@ -756,19 +756,19 @@ export const HemProgramsMeetings: React.FC = () => {
 
             {/* Selected Meeting Details & Follow-Ups */}
             {selectedMeeting ? (
-              <div className="lg:col-span-2 bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-xs space-y-6">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+              <div className="lg:col-span-2 bg-white dark:bg-[#222b42] p-5 sm:p-6 rounded-2xl border border-slate-200 dark:border-white/10 shadow-xs space-y-6">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 dark:border-white/5 pb-4">
                   <div>
                     <div className="flex items-center gap-2">
-                      <span className="text-xs font-black px-2.5 py-0.5 rounded bg-emerald-100 text-emerald-800">
+                      <span className="text-xs font-black px-2.5 py-0.5 rounded bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300">
                         {selectedMeeting.bilangan}
                       </span>
                       <span className="text-xs text-slate-400">{selectedMeeting.tarikh} • {selectedMeeting.masa}</span>
                     </div>
-                    <h2 className="text-base sm:text-lg font-black text-slate-900 mt-1">
+                    <h2 className="text-base sm:text-lg font-black text-slate-900 dark:text-white mt-1">
                       {selectedMeeting.tajuk}
                     </h2>
-                    <p className="text-xs text-slate-500 mt-0.5">
+                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
                       Tempat: {selectedMeeting.tempat} | Pengerusi: <strong>{selectedMeeting.pengerusi}</strong>
                     </p>
                   </div>
@@ -784,8 +784,8 @@ export const HemProgramsMeetings: React.FC = () => {
 
                 {/* Agenda */}
                 <div className="space-y-1.5">
-                  <h4 className="text-xs font-bold text-slate-800 uppercase tracking-wider">Agenda Mesyuarat:</h4>
-                  <ul className="list-disc list-inside space-y-1 text-xs text-slate-600 bg-slate-50 p-3 rounded-xl border border-slate-200">
+                  <h4 className="text-xs font-bold text-slate-800 dark:text-slate-100 uppercase tracking-wider">Agenda Mesyuarat:</h4>
+                  <ul className="list-disc list-inside space-y-1 text-xs text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-[#1b2337] p-3 rounded-xl border border-slate-200 dark:border-white/10">
                     {selectedMeeting.agenda.map((ag, i) => (
                       <li key={i}>{ag}</li>
                     ))}
@@ -794,8 +794,8 @@ export const HemProgramsMeetings: React.FC = () => {
 
                 {/* Ringkasan Minit */}
                 <div className="space-y-1.5">
-                  <h4 className="text-xs font-bold text-slate-800 uppercase tracking-wider">Ringkasan Keputusan & Minit:</h4>
-                  <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-700 leading-relaxed">
+                  <h4 className="text-xs font-bold text-slate-800 dark:text-slate-100 uppercase tracking-wider">Ringkasan Keputusan & Minit:</h4>
+                  <div className="p-4 bg-slate-50 dark:bg-[#1b2337] rounded-xl border border-slate-200 dark:border-white/10 text-xs text-slate-700 dark:text-slate-200 leading-relaxed">
                     {selectedMeeting.minitRingkas}
                   </div>
                 </div>
@@ -803,32 +803,32 @@ export const HemProgramsMeetings: React.FC = () => {
                 {/* Follow Up Actions */}
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <h4 className="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
-                      <CheckSquare className="w-4 h-4 text-emerald-700" />
+                    <h4 className="text-xs font-bold text-slate-800 dark:text-slate-100 uppercase tracking-wider flex items-center gap-2">
+                      <CheckSquare className="w-4 h-4 text-emerald-700 dark:text-emerald-300" />
                       <span>Tindakan Susulan & Penanggungjawab ({selectedMeeting.tindakanSusulan.length})</span>
                     </h4>
                   </div>
 
-                  <div className="divide-y divide-slate-100 border border-slate-200 rounded-xl overflow-hidden">
+                  <div className="divide-y divide-slate-100 dark:divide-white/5 border border-slate-200 dark:border-white/10 rounded-xl overflow-hidden">
                     {selectedMeeting.tindakanSusulan.map(fu => {
                       const isDone = fu.status === 'selesai';
                       const isInProgress = fu.status === 'dalam_tindakan';
 
                       return (
-                        <div key={fu.id} className="p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white hover:bg-slate-50 transition-colors">
+                        <div key={fu.id} className="p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white dark:bg-[#222b42] hover:bg-slate-50 dark:hover:bg-[#28334e] transition-colors">
                           <div className="space-y-1">
                             <div className="flex items-center gap-2">
                               <span className={`w-2.5 h-2.5 rounded-full ${
                                 isDone ? 'bg-emerald-500' : isInProgress ? 'bg-amber-500' : 'bg-red-500'
                               }`} />
-                              <span className={`text-xs font-bold ${isDone ? 'line-through text-slate-400' : 'text-slate-900'}`}>
+                              <span className={`text-xs font-bold ${isDone ? 'line-through text-slate-400' : 'text-slate-900 dark:text-white'}`}>
                                 {fu.perkara}
                               </span>
                             </div>
-                            <div className="text-[11px] text-slate-500 flex items-center gap-2 pl-4.5">
+                            <div className="text-[11px] text-slate-500 dark:text-slate-400 flex items-center gap-2 pl-4.5">
                               <span>Tindakan: <strong>{fu.namaTindakanOleh}</strong></span>
                               <span>•</span>
-                              <span>Tarikh Akhir: <strong className="text-red-700">{fu.tarikhAkhir}</strong></span>
+                              <span>Tarikh Akhir: <strong className="text-red-700 dark:text-red-300">{fu.tarikhAkhir}</strong></span>
                             </div>
                           </div>
 
@@ -836,7 +836,7 @@ export const HemProgramsMeetings: React.FC = () => {
                             <select
                               value={fu.status}
                               onChange={e => handleUpdateFollowUpStatus(selectedMeeting, fu.id, e.target.value as any)}
-                              className="text-xs font-semibold py-1 px-2 border border-slate-300 rounded-lg bg-white"
+                              className="text-xs font-semibold py-1 px-2 border border-slate-300 dark:border-white/15 rounded-lg bg-white dark:bg-[#222b42]"
                             >
                               <option value="belum_selesai">Belum Selesai</option>
                               <option value="dalam_tindakan">Dalam Tindakan</option>
@@ -868,34 +868,34 @@ export const HemProgramsMeetings: React.FC = () => {
       {/* ================= MODAL: DAFTAR PROGRAM HEM ================= */}
       {showAddProgramModal && (
         <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center p-4">
-          <div className="bg-white w-full max-w-lg rounded-2xl p-6 shadow-xl space-y-4 max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-              <h3 className="font-extrabold text-slate-900 text-sm">Daftar Program / Aktiviti HEM Baharu</h3>
-              <button onClick={() => setShowAddProgramModal(false)} className="p-1 rounded-lg text-slate-400 hover:bg-slate-100">
+          <div className="bg-white dark:bg-[#222b42] w-full max-w-lg rounded-2xl p-6 shadow-xl space-y-4 max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between border-b border-slate-100 dark:border-white/5 pb-3">
+              <h3 className="font-extrabold text-slate-900 dark:text-white text-sm">Daftar Program / Aktiviti HEM Baharu</h3>
+              <button onClick={() => setShowAddProgramModal(false)} className="p-1 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-[#2a3552]">
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             <form onSubmit={handleSaveProgram} className="space-y-3 text-xs">
               <div>
-                <label className="font-bold text-slate-700 block mb-1">Nama Program</label>
+                <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Nama Program</label>
                 <input
                   type="text"
                   required
                   placeholder="cth: Kem Jati Diri & Sahsiah Unggul 2026"
                   value={progNama}
                   onChange={e => setProgNama(e.target.value)}
-                  className="w-full border border-slate-300 rounded-xl p-2.5"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2.5"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="font-bold text-slate-700 block mb-1">Unit Pengelola</label>
+                  <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Unit Pengelola</label>
                   <select
                     value={progUnit}
                     onChange={e => setProgUnit(e.target.value as any)}
-                    className="w-full border border-slate-300 rounded-xl p-2.5 font-medium"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2.5 font-medium"
                   >
                     <option value="Disiplin">Unit Disiplin</option>
                     <option value="UBK">Unit Bimbingan & Kaunseling</option>
@@ -908,11 +908,11 @@ export const HemProgramsMeetings: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="font-bold text-slate-700 block mb-1">Status Program</label>
+                  <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Status Program</label>
                   <select
                     value={progStatus}
                     onChange={e => setProgStatus(e.target.value as any)}
-                    className="w-full border border-slate-300 rounded-xl p-2.5 font-medium"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2.5 font-medium"
                   >
                     <option value="dirancang">Dirancang</option>
                     <option value="berjalan">Sedang Berjalan</option>
@@ -924,75 +924,75 @@ export const HemProgramsMeetings: React.FC = () => {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="font-bold text-slate-700 block mb-1">Tarikh Program</label>
+                  <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Tarikh Program</label>
                   <input
                     type="date"
                     required
                     value={progTarikh}
                     onChange={e => setProgTarikh(e.target.value)}
-                    className="w-full border border-slate-300 rounded-xl p-2.5"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2.5"
                   />
                 </div>
 
                 <div>
-                  <label className="font-bold text-slate-700 block mb-1">Masa / Waktu</label>
+                  <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Masa / Waktu</label>
                   <input
                     type="text"
                     value={progMasa}
                     onChange={e => setProgMasa(e.target.value)}
-                    className="w-full border border-slate-300 rounded-xl p-2.5"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2.5"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="font-bold text-slate-700 block mb-1">Tempat</label>
+                  <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Tempat</label>
                   <input
                     type="text"
                     value={progTempat}
                     onChange={e => setProgTempat(e.target.value)}
-                    className="w-full border border-slate-300 rounded-xl p-2.5"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2.5"
                   />
                 </div>
 
                 <div>
-                  <label className="font-bold text-slate-700 block mb-1">Bajet Anggaran (RM)</label>
+                  <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Bajet Anggaran (RM)</label>
                   <input
                     type="number"
                     value={progBajet}
                     onChange={e => setProgBajet(Number(e.target.value))}
-                    className="w-full border border-slate-300 rounded-xl p-2.5"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2.5"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="font-bold text-slate-700 block mb-1">Penyelaras Program</label>
+                <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Penyelaras Program</label>
                 <input
                   type="text"
                   value={progPenyelaras}
                   onChange={e => setProgPenyelaras(e.target.value)}
-                  className="w-full border border-slate-300 rounded-xl p-2.5"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2.5"
                 />
               </div>
 
               <div>
-                <label className="font-bold text-slate-700 block mb-1">Refleksi / Catatan Ringkas</label>
+                <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Refleksi / Catatan Ringkas</label>
                 <textarea
                   rows={2}
                   placeholder="Catatan pelaksanaan atau hasil pemantauan..."
                   value={progRefleksi}
                   onChange={e => setProgRefleksi(e.target.value)}
-                  className="w-full border border-slate-300 rounded-xl p-2.5"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2.5"
                 />
               </div>
 
-              <div className="flex justify-end gap-2 pt-2 border-t border-slate-100">
+              <div className="flex justify-end gap-2 pt-2 border-t border-slate-100 dark:border-white/5">
                 <button
                   type="button"
                   onClick={() => setShowAddProgramModal(false)}
-                  className="px-4 py-2 border border-slate-300 text-slate-700 font-bold rounded-xl"
+                  className="px-4 py-2 border border-slate-300 dark:border-white/15 text-slate-700 dark:text-slate-200 font-bold rounded-xl"
                 >
                   Batal
                 </button>
@@ -1011,10 +1011,10 @@ export const HemProgramsMeetings: React.FC = () => {
       {/* ================= MODAL: TETAPKAN GURU PERHIMPUNAN ================= */}
       {showAddAssemblyModal && (
         <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center p-4">
-          <div className="bg-white w-full max-w-md rounded-2xl p-6 shadow-xl space-y-4">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-              <h3 className="font-extrabold text-slate-900 text-sm">Tetapkan Jadual Pemandu Perhimpunan</h3>
-              <button onClick={() => setShowAddAssemblyModal(false)} className="p-1 rounded-lg text-slate-400 hover:bg-slate-100">
+          <div className="bg-white dark:bg-[#222b42] w-full max-w-md rounded-2xl p-6 shadow-xl space-y-4">
+            <div className="flex items-center justify-between border-b border-slate-100 dark:border-white/5 pb-3">
+              <h3 className="font-extrabold text-slate-900 dark:text-white text-sm">Tetapkan Jadual Pemandu Perhimpunan</h3>
+              <button onClick={() => setShowAddAssemblyModal(false)} className="p-1 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-[#2a3552]">
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -1022,7 +1022,7 @@ export const HemProgramsMeetings: React.FC = () => {
             <form onSubmit={handleSaveAssembly} className="space-y-3 text-xs">
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="font-bold text-slate-700 block mb-1">Minggu Persekolahan</label>
+                  <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Minggu Persekolahan</label>
                   <input
                     type="number"
                     min={1}
@@ -1030,60 +1030,60 @@ export const HemProgramsMeetings: React.FC = () => {
                     required
                     value={assMinggu}
                     onChange={e => setAssMinggu(Number(e.target.value))}
-                    className="w-full border border-slate-300 rounded-xl p-2.5"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2.5"
                   />
                 </div>
 
                 <div>
-                  <label className="font-bold text-slate-700 block mb-1">Tarikh Hari Isnin</label>
+                  <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Tarikh Hari Isnin</label>
                   <input
                     type="date"
                     required
                     value={assTarikh}
                     onChange={e => setAssTarikh(e.target.value)}
-                    className="w-full border border-slate-300 rounded-xl p-2.5"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2.5"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="font-bold text-slate-700 block mb-1">Guru Bertugas Mingguan (Asingkan koma)</label>
+                <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Guru Bertugas Mingguan (Asingkan koma)</label>
                 <input
                   type="text"
                   required
                   placeholder="Cikgu A, Cikgu B, Cikgu C"
                   value={assGuru}
                   onChange={e => setAssGuru(e.target.value)}
-                  className="w-full border border-slate-300 rounded-xl p-2.5"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2.5"
                 />
               </div>
 
               <div>
-                <label className="font-bold text-slate-700 block mb-1">Tema / Tajuk Ucapan Perhimpunan</label>
+                <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Tema / Tajuk Ucapan Perhimpunan</label>
                 <input
                   type="text"
                   required
                   value={assTema}
                   onChange={e => setAssTema(e.target.value)}
-                  className="w-full border border-slate-300 rounded-xl p-2.5"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2.5"
                 />
               </div>
 
               <div>
-                <label className="font-bold text-slate-700 block mb-1">Fokus Peringatan Disiplin / Tindakan</label>
+                <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Fokus Peringatan Disiplin / Tindakan</label>
                 <textarea
                   rows={2}
                   value={assPeringatan}
                   onChange={e => setAssPeringatan(e.target.value)}
-                  className="w-full border border-slate-300 rounded-xl p-2.5"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2.5"
                 />
               </div>
 
-              <div className="flex justify-end gap-2 pt-2 border-t border-slate-100">
+              <div className="flex justify-end gap-2 pt-2 border-t border-slate-100 dark:border-white/5">
                 <button
                   type="button"
                   onClick={() => setShowAddAssemblyModal(false)}
-                  className="px-4 py-2 border border-slate-300 text-slate-700 font-bold rounded-xl"
+                  className="px-4 py-2 border border-slate-300 dark:border-white/15 text-slate-700 dark:text-slate-200 font-bold rounded-xl"
                 >
                   Batal
                 </button>
@@ -1102,10 +1102,10 @@ export const HemProgramsMeetings: React.FC = () => {
       {/* ================= MODAL: REKOD MESYUARAT HEM ================= */}
       {showAddMeetingModal && (
         <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center p-4">
-          <div className="bg-white w-full max-w-2xl rounded-2xl p-6 shadow-xl space-y-4 max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-              <h3 className="font-extrabold text-slate-900 text-sm">Rekod Mesyuarat Jawatankuasa HEM Baharu</h3>
-              <button onClick={() => setShowAddMeetingModal(false)} className="p-1 rounded-lg text-slate-400 hover:bg-slate-100">
+          <div className="bg-white dark:bg-[#222b42] w-full max-w-2xl rounded-2xl p-6 shadow-xl space-y-4 max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between border-b border-slate-100 dark:border-white/5 pb-3">
+              <h3 className="font-extrabold text-slate-900 dark:text-white text-sm">Rekod Mesyuarat Jawatankuasa HEM Baharu</h3>
+              <button onClick={() => setShowAddMeetingModal(false)} className="p-1 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-[#2a3552]">
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -1113,113 +1113,113 @@ export const HemProgramsMeetings: React.FC = () => {
             <form onSubmit={handleSaveMeeting} className="space-y-4 text-xs">
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="font-bold text-slate-700 block mb-1">Tajuk Mesyuarat</label>
+                  <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Tajuk Mesyuarat</label>
                   <input
                     type="text"
                     required
                     value={meetTajuk}
                     onChange={e => setMeetTajuk(e.target.value)}
-                    className="w-full border border-slate-300 rounded-xl p-2.5"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2.5"
                   />
                 </div>
 
                 <div>
-                  <label className="font-bold text-slate-700 block mb-1">Bilangan Mesyuarat</label>
+                  <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Bilangan Mesyuarat</label>
                   <input
                     type="text"
                     required
                     placeholder="cth: Bil. 2/2026"
                     value={meetBil}
                     onChange={e => setMeetBil(e.target.value)}
-                    className="w-full border border-slate-300 rounded-xl p-2.5 font-bold"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2.5 font-bold"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-3 gap-3">
                 <div>
-                  <label className="font-bold text-slate-700 block mb-1">Tarikh</label>
+                  <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Tarikh</label>
                   <input
                     type="date"
                     required
                     value={meetTarikh}
                     onChange={e => setMeetTarikh(e.target.value)}
-                    className="w-full border border-slate-300 rounded-xl p-2.5"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2.5"
                   />
                 </div>
 
                 <div>
-                  <label className="font-bold text-slate-700 block mb-1">Masa</label>
+                  <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Masa</label>
                   <input
                     type="text"
                     value={meetMasa}
                     onChange={e => setMeetMasa(e.target.value)}
-                    className="w-full border border-slate-300 rounded-xl p-2.5"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2.5"
                   />
                 </div>
 
                 <div>
-                  <label className="font-bold text-slate-700 block mb-1">Tempat</label>
+                  <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Tempat</label>
                   <input
                     type="text"
                     value={meetTempat}
                     onChange={e => setMeetTempat(e.target.value)}
-                    className="w-full border border-slate-300 rounded-xl p-2.5"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2.5"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="font-bold text-slate-700 block mb-1">Pengerusi</label>
+                  <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Pengerusi</label>
                   <input
                     type="text"
                     value={meetPengerusi}
                     onChange={e => setMeetPengerusi(e.target.value)}
-                    className="w-full border border-slate-300 rounded-xl p-2.5"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2.5"
                   />
                 </div>
 
                 <div>
-                  <label className="font-bold text-slate-700 block mb-1">Pencatat Minit</label>
+                  <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Pencatat Minit</label>
                   <input
                     type="text"
                     value={meetPencatat}
                     onChange={e => setMeetPencatat(e.target.value)}
-                    className="w-full border border-slate-300 rounded-xl p-2.5"
+                    className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2.5"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="font-bold text-slate-700 block mb-1">Agenda Mesyuarat (1 baris setiap agenda)</label>
+                <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Agenda Mesyuarat (1 baris setiap agenda)</label>
                 <textarea
                   rows={3}
                   value={meetAgenda}
                   onChange={e => setMeetAgenda(e.target.value)}
-                  className="w-full border border-slate-300 rounded-xl p-2.5"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2.5"
                 />
               </div>
 
               <div>
-                <label className="font-bold text-slate-700 block mb-1">Ringkasan Minit & Keputusan Utama</label>
+                <label className="font-bold text-slate-700 dark:text-slate-200 block mb-1">Ringkasan Minit & Keputusan Utama</label>
                 <textarea
                   rows={3}
                   value={meetMinit}
                   onChange={e => setMeetMinit(e.target.value)}
-                  className="w-full border border-slate-300 rounded-xl p-2.5"
+                  className="w-full border border-slate-300 dark:border-white/15 rounded-xl p-2.5"
                 />
               </div>
 
               {/* Seksyen Tindakan Susulan */}
-              <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
-                <span className="font-bold block text-slate-800">Senarai Tindakan Susulan (Tugasan Pegawai):</span>
+              <div className="p-3 bg-slate-50 dark:bg-[#1b2337] border border-slate-200 dark:border-white/10 rounded-xl space-y-2">
+                <span className="font-bold block text-slate-800 dark:text-slate-100">Senarai Tindakan Susulan (Tugasan Pegawai):</span>
                 <div className="space-y-1.5">
                   {followUps.map(fu => (
-                    <div key={fu.id} className="flex items-center justify-between p-2 bg-white rounded-lg border border-slate-200">
+                    <div key={fu.id} className="flex items-center justify-between p-2 bg-white dark:bg-[#222b42] rounded-lg border border-slate-200 dark:border-white/10">
                       <div>
-                        <strong className="block text-slate-900">{fu.perkara}</strong>
-                        <span className="text-[10px] text-slate-500">Tindakan: {fu.namaTindakanOleh} • Akhir: {fu.tarikhAkhir}</span>
+                        <strong className="block text-slate-900 dark:text-white">{fu.perkara}</strong>
+                        <span className="text-[10px] text-slate-500 dark:text-slate-400">Tindakan: {fu.namaTindakanOleh} • Akhir: {fu.tarikhAkhir}</span>
                       </div>
                       <button
                         type="button"
@@ -1238,21 +1238,21 @@ export const HemProgramsMeetings: React.FC = () => {
                     placeholder="Perkara / Tugasan..."
                     value={newFuPerkara}
                     onChange={e => setNewFuPerkara(e.target.value)}
-                    className="border border-slate-300 rounded-lg p-1.5 col-span-1"
+                    className="border border-slate-300 dark:border-white/15 rounded-lg p-1.5 col-span-1"
                   />
                   <input
                     type="text"
                     placeholder="Penanggungjawab..."
                     value={newFuPegawai}
                     onChange={e => setNewFuPegawai(e.target.value)}
-                    className="border border-slate-300 rounded-lg p-1.5"
+                    className="border border-slate-300 dark:border-white/15 rounded-lg p-1.5"
                   />
                   <div className="flex gap-1">
                     <input
                       type="date"
                       value={newFuTarikh}
                       onChange={e => setNewFuTarikh(e.target.value)}
-                      className="border border-slate-300 rounded-lg p-1.5 flex-1"
+                      className="border border-slate-300 dark:border-white/15 rounded-lg p-1.5 flex-1"
                     />
                     <button
                       type="button"
@@ -1265,11 +1265,11 @@ export const HemProgramsMeetings: React.FC = () => {
                 </div>
               </div>
 
-              <div className="flex justify-end gap-2 pt-2 border-t border-slate-100">
+              <div className="flex justify-end gap-2 pt-2 border-t border-slate-100 dark:border-white/5">
                 <button
                   type="button"
                   onClick={() => setShowAddMeetingModal(false)}
-                  className="px-4 py-2 border border-slate-300 text-slate-700 font-bold rounded-xl"
+                  className="px-4 py-2 border border-slate-300 dark:border-white/15 text-slate-700 dark:text-slate-200 font-bold rounded-xl"
                 >
                   Batal
                 </button>
@@ -1288,9 +1288,9 @@ export const HemProgramsMeetings: React.FC = () => {
       {/* ================= MODAL: JANA MINIT (CETAK/PDF) ================= */}
       {showPrintModal && selectedMeeting && (
         <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center p-4">
-          <div className="bg-white w-full max-w-3xl rounded-2xl p-6 sm:p-8 shadow-2xl max-h-[92vh] overflow-y-auto space-y-6">
-            <div className="flex items-center justify-between border-b border-slate-200 pb-3 no-print">
-              <span className="font-extrabold text-xs text-slate-500 uppercase tracking-wider">
+          <div className="bg-white dark:bg-[#222b42] w-full max-w-3xl rounded-2xl p-6 sm:p-8 shadow-2xl max-h-[92vh] overflow-y-auto space-y-6">
+            <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/10 pb-3 no-print">
+              <span className="font-extrabold text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                 Pratonton Minit Mesyuarat Rasmi KPM
               </span>
               <div className="flex items-center gap-2">
@@ -1301,7 +1301,7 @@ export const HemProgramsMeetings: React.FC = () => {
                   <Printer className="w-4 h-4" />
                   <span>Cetak / Simpan PDF</span>
                 </button>
-                <button onClick={() => setShowPrintModal(false)} className="p-1 rounded-lg text-slate-400 hover:bg-slate-100">
+                <button onClick={() => setShowPrintModal(false)} className="p-1 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-[#2a3552]">
                   <X className="w-5 h-5" />
                 </button>
               </div>
@@ -1309,24 +1309,24 @@ export const HemProgramsMeetings: React.FC = () => {
 
             {/* Document Printable Header */}
             <div className="text-center border-b-2 border-slate-900 pb-4 space-y-1">
-              <h2 className="text-base font-black text-slate-900 uppercase tracking-wide">
+              <h2 className="text-base font-black text-slate-900 dark:text-white uppercase tracking-wide">
                 {school.nama}
               </h2>
-              <p className="text-xs text-slate-600">
+              <p className="text-xs text-slate-600 dark:text-slate-300">
                 {school.alamat}, {school.poskod} {school.bandar}, {school.negeri}
               </p>
-              <p className="text-[11px] text-slate-500 font-mono">
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 font-mono">
                 KOD SEKOLAH: {school.kodSekolah} • TEL: {school.noTelefon} • EMEL: {school.emel}
               </p>
               <div className="pt-2">
-                <h3 className="text-sm font-black text-slate-900 uppercase underline">
+                <h3 className="text-sm font-black text-slate-900 dark:text-white uppercase underline">
                   MINIT {selectedMeeting.tajuk.toUpperCase()} ({selectedMeeting.bilangan})
                 </h3>
               </div>
             </div>
 
             {/* Meeting Details Table */}
-            <div className="grid grid-cols-2 gap-2 text-xs border border-slate-300 p-3 bg-slate-50/50">
+            <div className="grid grid-cols-2 gap-2 text-xs border border-slate-300 dark:border-white/15 p-3 bg-slate-50/50 dark:bg-[#1b2337]">
               <div><strong>Tarikh:</strong> {selectedMeeting.tarikh}</div>
               <div><strong>Masa:</strong> {selectedMeeting.masa}</div>
               <div><strong>Tempat:</strong> {selectedMeeting.tempat}</div>
@@ -1334,7 +1334,7 @@ export const HemProgramsMeetings: React.FC = () => {
             </div>
 
             {/* Agenda & Discussion */}
-            <div className="space-y-3 text-xs text-slate-800 leading-relaxed">
+            <div className="space-y-3 text-xs text-slate-800 dark:text-slate-100 leading-relaxed">
               <div>
                 <h4 className="font-bold underline uppercase mb-1">1. Perutusan Pengerusi</h4>
                 <p>{selectedMeeting.minitRingkas}</p>
@@ -1347,24 +1347,24 @@ export const HemProgramsMeetings: React.FC = () => {
 
               <div>
                 <h4 className="font-bold underline uppercase mb-1">3. Tindakan Susulan Jawatankuasa</h4>
-                <table className="w-full border-collapse border border-slate-300 text-[11px] mt-2">
+                <table className="w-full border-collapse border border-slate-300 dark:border-white/15 text-[11px] mt-2">
                   <thead>
-                    <tr className="bg-slate-100">
-                      <th className="border border-slate-300 p-1.5 text-left">Bil</th>
-                      <th className="border border-slate-300 p-1.5 text-left">Perkara / Tugasan</th>
-                      <th className="border border-slate-300 p-1.5 text-left">Tindakan</th>
-                      <th className="border border-slate-300 p-1.5 text-left">Tarikh Akhir</th>
-                      <th className="border border-slate-300 p-1.5 text-center">Status</th>
+                    <tr className="bg-slate-100 dark:bg-[#161e31]">
+                      <th className="border border-slate-300 dark:border-white/15 p-1.5 text-left">Bil</th>
+                      <th className="border border-slate-300 dark:border-white/15 p-1.5 text-left">Perkara / Tugasan</th>
+                      <th className="border border-slate-300 dark:border-white/15 p-1.5 text-left">Tindakan</th>
+                      <th className="border border-slate-300 dark:border-white/15 p-1.5 text-left">Tarikh Akhir</th>
+                      <th className="border border-slate-300 dark:border-white/15 p-1.5 text-center">Status</th>
                     </tr>
                   </thead>
                   <tbody>
                     {selectedMeeting.tindakanSusulan.map((fu, idx) => (
                       <tr key={fu.id}>
-                        <td className="border border-slate-300 p-1.5 text-center">{idx + 1}</td>
-                        <td className="border border-slate-300 p-1.5 font-medium">{fu.perkara}</td>
-                        <td className="border border-slate-300 p-1.5">{fu.namaTindakanOleh}</td>
-                        <td className="border border-slate-300 p-1.5">{fu.tarikhAkhir}</td>
-                        <td className="border border-slate-300 p-1.5 text-center font-bold">
+                        <td className="border border-slate-300 dark:border-white/15 p-1.5 text-center">{idx + 1}</td>
+                        <td className="border border-slate-300 dark:border-white/15 p-1.5 font-medium">{fu.perkara}</td>
+                        <td className="border border-slate-300 dark:border-white/15 p-1.5">{fu.namaTindakanOleh}</td>
+                        <td className="border border-slate-300 dark:border-white/15 p-1.5">{fu.tarikhAkhir}</td>
+                        <td className="border border-slate-300 dark:border-white/15 p-1.5 text-center font-bold">
                           {fu.status === 'selesai' ? 'SELESAI' : 'DALAM TINDAKAN'}
                         </td>
                       </tr>
@@ -1375,12 +1375,12 @@ export const HemProgramsMeetings: React.FC = () => {
             </div>
 
             {/* Signatures */}
-            <div className="grid grid-cols-2 gap-8 pt-8 text-xs text-slate-900 border-t border-slate-200">
+            <div className="grid grid-cols-2 gap-8 pt-8 text-xs text-slate-900 dark:text-white border-t border-slate-200 dark:border-white/10">
               <div className="space-y-12">
                 <p>Disediakan oleh:</p>
                 <div>
                   <strong className="block underline uppercase">{selectedMeeting.pencatatMinit}</strong>
-                  <span className="text-[11px] text-slate-500">Pencatat Minit / Setiausaha HEM</span>
+                  <span className="text-[11px] text-slate-500 dark:text-slate-400">Pencatat Minit / Setiausaha HEM</span>
                 </div>
               </div>
 
@@ -1388,7 +1388,7 @@ export const HemProgramsMeetings: React.FC = () => {
                 <p>Disahkan oleh:</p>
                 <div>
                   <strong className="block underline uppercase">{selectedMeeting.pengerusi}</strong>
-                  <span className="text-[11px] text-slate-500">Pengerusi / GPK Hal Ehwal Murid</span>
+                  <span className="text-[11px] text-slate-500 dark:text-slate-400">Pengerusi / GPK Hal Ehwal Murid</span>
                 </div>
               </div>
             </div>
